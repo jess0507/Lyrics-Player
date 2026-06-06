@@ -1,0 +1,18 @@
+# 多語言來源設定（供 tool/gen_l10n_from_sheet.dart 使用）
+
+# Google Sheet 發布的 CSV 連結（export 端點）
+csv_url: "https://docs.google.com/spreadsheets/d/1gqtCfGthdTm9boTE2_ez0aCVxBxq1QnGaNucq82bEOs/export?format=csv&gid=0"
+
+# 產出的 .arb 目錄
+output_dir: "lib/l10n"
+
+# CSV 第一欄為 key 欄的欄名
+key_column: "key"
+
+# template locale（gen-l10n 的 template-arb-file，需與 l10n.yaml 一致）
+template_locale: "en"
+
+# 基底語系 fallback：當有 xx_YY（帶國碼）時，gen-l10n 要求存在不帶後綴的 xx.arb。
+# 腳本會自動產生基底檔，這裡指定要從哪個變體複製（不設則取第一個出現的變體）。
+# 格式："zh=zh_CN,sr=sr_RS"
+base_fallbacks: "zh=zh_TW"
