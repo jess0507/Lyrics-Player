@@ -15,7 +15,29 @@ dependencies:
   intl: any
 
   cupertino_icons: ^1.0.8
+
+  # 狀態管理 / 路由
+  flutter_riverpod: ^2.6.1
+  go_router: ^14.6.2
+
+  # 音訊播放 + 背景播放 / 通知列
+  just_audio: ^0.9.42
+  just_audio_background: ^0.0.1-beta.15
+  rxdart: ^0.28.0
+
+  # 權限
+  permission_handler: ^11.3.1
+
+  # 檔案匯入
+  file_picker: ^8.1.6
+
+  # 本地儲存
+  shared_preferences: ^2.3.3
+
+  # 帳戶（Firebase）
   firebase_core: ^4.10.0
+  firebase_auth: ^6.4.0
+  google_sign_in: ^6.2.2
 
 dev_dependencies:
   flutter_test:

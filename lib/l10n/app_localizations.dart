@@ -198,6 +198,24 @@ abstract class AppLocalizations {
   /// **'Previous'**
   String get player_previous;
 
+  /// No description provided for @player_shuffle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shuffle'**
+  String get player_shuffle;
+
+  /// No description provided for @player_loop.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat'**
+  String get player_loop;
+
+  /// No description provided for @player_nothing_playing.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing playing'**
+  String get player_nothing_playing;
+
   /// No description provided for @music_import.
   ///
   /// In en, this message translates to:
@@ -213,8 +231,14 @@ abstract class AppLocalizations {
   /// No description provided for @music_empty.
   ///
   /// In en, this message translates to:
-  /// **'No music found'**
+  /// **'No music yet. Tap import to add songs.'**
   String get music_empty;
+
+  /// No description provided for @music_remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get music_remove;
 
   /// No description provided for @permission_title.
   ///
@@ -252,11 +276,185 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get settings_language;
 
+  /// No description provided for @settings_language_system.
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get settings_language_system;
+
   /// No description provided for @settings_theme.
   ///
   /// In en, this message translates to:
   /// **'Theme'**
   String get settings_theme;
+
+  /// No description provided for @settings_theme_system.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get settings_theme_system;
+
+  /// No description provided for @settings_theme_light.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get settings_theme_light;
+
+  /// No description provided for @settings_theme_dark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get settings_theme_dark;
+
+  /// No description provided for @statistics_total_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Total listening time'**
+  String get statistics_total_time;
+
+  /// No description provided for @statistics_play_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Total plays'**
+  String get statistics_play_count;
+
+  /// No description provided for @statistics_top_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Most played'**
+  String get statistics_top_tracks;
+
+  /// No description provided for @statistics_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No statistics yet'**
+  String get statistics_empty;
+
+  /// No description provided for @statistics_reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset statistics'**
+  String get statistics_reset;
+
+  /// No description provided for @about_version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get about_version;
+
+  /// No description provided for @about_developer.
+  ///
+  /// In en, this message translates to:
+  /// **'Developer'**
+  String get about_developer;
+
+  /// No description provided for @about_licenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Open source licenses'**
+  String get about_licenses;
+
+  /// No description provided for @about_privacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get about_privacy;
+
+  /// No description provided for @about_open_source.
+  ///
+  /// In en, this message translates to:
+  /// **'Open source packages'**
+  String get about_open_source;
+
+  /// No description provided for @account_guest.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get account_guest;
+
+  /// No description provided for @account_signed_out_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to sync, or continue as a guest.'**
+  String get account_signed_out_message;
+
+  /// No description provided for @account_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get account_email;
+
+  /// No description provided for @account_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get account_password;
+
+  /// No description provided for @account_sign_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get account_sign_in;
+
+  /// No description provided for @account_sign_up.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up'**
+  String get account_sign_up;
+
+  /// No description provided for @account_sign_in_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get account_sign_in_google;
+
+  /// No description provided for @account_continue_guest.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue as guest'**
+  String get account_continue_guest;
+
+  /// No description provided for @account_sign_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get account_sign_out;
+
+  /// No description provided for @account_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get account_delete;
+
+  /// No description provided for @account_delete_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account? This cannot be undone.'**
+  String get account_delete_confirm;
+
+  /// No description provided for @account_forgot_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get account_forgot_password;
+
+  /// No description provided for @account_reset_sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset email sent'**
+  String get account_reset_sent;
+
+  /// No description provided for @account_anonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous account'**
+  String get account_anonymous;
+
+  /// No description provided for @firebase_unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Account features are unavailable because Firebase is not configured.'**
+  String get firebase_unavailable;
 
   /// No description provided for @common_cancel.
   ///
@@ -269,6 +467,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm'**
   String get common_confirm;
+
+  /// No description provided for @common_ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get common_ok;
+
+  /// No description provided for @common_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get common_delete;
+
+  /// No description provided for @common_retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get common_retry;
 }
 
 class _AppLocalizationsDelegate

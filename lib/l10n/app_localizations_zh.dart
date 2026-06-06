@@ -45,6 +45,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get player_previous => '上一首';
 
   @override
+  String get player_shuffle => 'Shuffle';
+
+  @override
+  String get player_loop => 'Repeat';
+
+  @override
+  String get player_nothing_playing => 'Nothing playing';
+
+  @override
   String get music_import => '匯入音樂';
 
   @override
@@ -52,6 +61,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get music_empty => '找不到音樂';
+
+  @override
+  String get music_remove => 'Remove';
 
   @override
   String get permission_title => '需要儲存權限';
@@ -72,13 +84,112 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settings_language => '語言';
 
   @override
+  String get settings_language_system => 'System default';
+
+  @override
   String get settings_theme => '主題';
+
+  @override
+  String get settings_theme_system => 'System';
+
+  @override
+  String get settings_theme_light => 'Light';
+
+  @override
+  String get settings_theme_dark => 'Dark';
+
+  @override
+  String get statistics_total_time => 'Total listening time';
+
+  @override
+  String get statistics_play_count => 'Total plays';
+
+  @override
+  String get statistics_top_tracks => 'Most played';
+
+  @override
+  String get statistics_empty => 'No statistics yet';
+
+  @override
+  String get statistics_reset => 'Reset statistics';
+
+  @override
+  String get about_version => 'Version';
+
+  @override
+  String get about_developer => 'Developer';
+
+  @override
+  String get about_licenses => 'Open source licenses';
+
+  @override
+  String get about_privacy => 'Privacy policy';
+
+  @override
+  String get about_open_source => 'Open source packages';
+
+  @override
+  String get account_guest => 'Guest';
+
+  @override
+  String get account_signed_out_message =>
+      'Sign in to sync, or continue as a guest.';
+
+  @override
+  String get account_email => 'Email';
+
+  @override
+  String get account_password => 'Password';
+
+  @override
+  String get account_sign_in => 'Sign in';
+
+  @override
+  String get account_sign_up => 'Sign up';
+
+  @override
+  String get account_sign_in_google => 'Sign in with Google';
+
+  @override
+  String get account_continue_guest => 'Continue as guest';
+
+  @override
+  String get account_sign_out => 'Sign out';
+
+  @override
+  String get account_delete => 'Delete account';
+
+  @override
+  String get account_delete_confirm =>
+      'Are you sure you want to delete your account? This cannot be undone.';
+
+  @override
+  String get account_forgot_password => 'Forgot password?';
+
+  @override
+  String get account_reset_sent => 'Password reset email sent';
+
+  @override
+  String get account_anonymous => 'Anonymous account';
+
+  @override
+  String get firebase_unavailable =>
+      'Account features are unavailable because Firebase is not configured.';
 
   @override
   String get common_cancel => '取消';
 
   @override
   String get common_confirm => '確定';
+
+  @override
+  String get common_ok => 'OK';
+
+  @override
+  String get common_delete => 'Delete';
+
+  @override
+  String get common_retry => 'Retry';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -122,13 +233,25 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get player_previous => '上一首';
 
   @override
+  String get player_shuffle => '随机播放';
+
+  @override
+  String get player_loop => '循环播放';
+
+  @override
+  String get player_nothing_playing => '当前没有正在播放的曲目';
+
+  @override
   String get music_import => '导入音乐';
 
   @override
   String get music_search => '搜索';
 
   @override
-  String get music_empty => '未找到音乐';
+  String get music_empty => '暂无音乐，点击导入以添加歌曲。';
+
+  @override
+  String get music_remove => '移除';
 
   @override
   String get permission_title => '需要存储权限';
@@ -149,13 +272,109 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get settings_language => '语言';
 
   @override
+  String get settings_language_system => '跟随系统';
+
+  @override
   String get settings_theme => '主题';
+
+  @override
+  String get settings_theme_system => '跟随系统';
+
+  @override
+  String get settings_theme_light => '浅色';
+
+  @override
+  String get settings_theme_dark => '深色';
+
+  @override
+  String get statistics_total_time => '总收听时长';
+
+  @override
+  String get statistics_play_count => '总播放次数';
+
+  @override
+  String get statistics_top_tracks => '最常收听';
+
+  @override
+  String get statistics_empty => '暂无统计数据';
+
+  @override
+  String get statistics_reset => '重置统计数据';
+
+  @override
+  String get about_version => '版本';
+
+  @override
+  String get about_developer => '开发者';
+
+  @override
+  String get about_licenses => '开源许可';
+
+  @override
+  String get about_privacy => '隐私政策';
+
+  @override
+  String get about_open_source => '开源依赖';
+
+  @override
+  String get account_guest => '访客';
+
+  @override
+  String get account_signed_out_message => '登录以同步数据，或以访客身份继续使用。';
+
+  @override
+  String get account_email => '电子邮件';
+
+  @override
+  String get account_password => '密码';
+
+  @override
+  String get account_sign_in => '登录';
+
+  @override
+  String get account_sign_up => '注册';
+
+  @override
+  String get account_sign_in_google => '使用 Google 登录';
+
+  @override
+  String get account_continue_guest => '以访客身份继续';
+
+  @override
+  String get account_sign_out => '退出登录';
+
+  @override
+  String get account_delete => '删除账号';
+
+  @override
+  String get account_delete_confirm => '确定要删除账号吗？此操作无法撤销。';
+
+  @override
+  String get account_forgot_password => '忘记密码？';
+
+  @override
+  String get account_reset_sent => '已发送密码重置邮件';
+
+  @override
+  String get account_anonymous => '匿名账号';
+
+  @override
+  String get firebase_unavailable => '由于 Firebase 尚未配置，账户功能暂时不可用。';
 
   @override
   String get common_cancel => '取消';
 
   @override
   String get common_confirm => '确定';
+
+  @override
+  String get common_ok => '好';
+
+  @override
+  String get common_delete => '删除';
+
+  @override
+  String get common_retry => '重试';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -199,13 +418,25 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get player_previous => '上一首';
 
   @override
+  String get player_shuffle => '隨機播放';
+
+  @override
+  String get player_loop => '循環播放';
+
+  @override
+  String get player_nothing_playing => '目前沒有播放中的曲目';
+
+  @override
   String get music_import => '匯入音樂';
 
   @override
   String get music_search => '搜尋';
 
   @override
-  String get music_empty => '找不到音樂';
+  String get music_empty => '尚無音樂，點擊匯入以新增歌曲。';
+
+  @override
+  String get music_remove => '移除';
 
   @override
   String get permission_title => '需要儲存權限';
@@ -226,11 +457,107 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get settings_language => '語言';
 
   @override
+  String get settings_language_system => '跟隨系統';
+
+  @override
   String get settings_theme => '主題';
+
+  @override
+  String get settings_theme_system => '跟隨系統';
+
+  @override
+  String get settings_theme_light => '淺色';
+
+  @override
+  String get settings_theme_dark => '深色';
+
+  @override
+  String get statistics_total_time => '總聆聽時長';
+
+  @override
+  String get statistics_play_count => '總播放次數';
+
+  @override
+  String get statistics_top_tracks => '最常聆聽';
+
+  @override
+  String get statistics_empty => '尚無統計數據';
+
+  @override
+  String get statistics_reset => '重設統計數據';
+
+  @override
+  String get about_version => '版本';
+
+  @override
+  String get about_developer => '開發者';
+
+  @override
+  String get about_licenses => '開源授權';
+
+  @override
+  String get about_privacy => '隱私權政策';
+
+  @override
+  String get about_open_source => '開源套件';
+
+  @override
+  String get account_guest => '訪客';
+
+  @override
+  String get account_signed_out_message => '登入以同步資料，或以訪客身分繼續使用。';
+
+  @override
+  String get account_email => '電子郵件';
+
+  @override
+  String get account_password => '密碼';
+
+  @override
+  String get account_sign_in => '登入';
+
+  @override
+  String get account_sign_up => '註冊';
+
+  @override
+  String get account_sign_in_google => '使用 Google 登入';
+
+  @override
+  String get account_continue_guest => '以訪客身分繼續';
+
+  @override
+  String get account_sign_out => '登出';
+
+  @override
+  String get account_delete => '刪除帳號';
+
+  @override
+  String get account_delete_confirm => '確定要刪除帳號嗎？此操作無法復原。';
+
+  @override
+  String get account_forgot_password => '忘記密碼？';
+
+  @override
+  String get account_reset_sent => '已寄出密碼重設信';
+
+  @override
+  String get account_anonymous => '匿名帳號';
+
+  @override
+  String get firebase_unavailable => '因 Firebase 尚未設定，帳戶功能暫時無法使用。';
 
   @override
   String get common_cancel => '取消';
 
   @override
   String get common_confirm => '確定';
+
+  @override
+  String get common_ok => '好';
+
+  @override
+  String get common_delete => '刪除';
+
+  @override
+  String get common_retry => '重試';
 }

@@ -4,7 +4,7 @@
 
 一個 **Android** 簡易音樂播放器，**僅播放本機音樂檔案**，支援 16 種語言。多語言字串由 Google Sheet 維護，透過腳本下載為 `.csv` 後自動產生 `.arb` 檔案，再由 `flutter_localizations` / `gen-l10n` 生成型別安全的 Dart 程式碼。帳戶採 Firebase Authentication（匿名 / Email / Google）。
 
-> 📌 **版本範圍**：本文件為 **版本一 (v1)，僅 Android**。Apple 登入與 iOS 支援規劃於 [`plan2.md`](plan2.md)，v1 不實作。
+> 📌 **版本範圍**：本文件為 **版本一 (v1)，僅 Android**。Apple 登入與 iOS 支援規劃於 [`plan2.md`](becklog.md)，v1 不實作。
 
 ### 核心目標
 - 多語言（i18n）：以 Google Sheet 作為翻譯來源，腳本化產生 `.arb`，支援 16 語系（含 RTL）。
@@ -171,7 +171,7 @@ ListView 形式，四個入口：
 - 匿名 → 正式帳號可用 `linkWithCredential` 升級，保留既有資料。
 - Firebase 設定：`flutterfire configure` 產生 `firebase_options.dart`；Android 需 `google-services.json`。
 - 注意：Google 登入需在 Firebase Console 啟用並設定 SHA-1（Android）。
-- 🔜 **Apple 登入**：規劃於 [`plan2.md`](plan2.md)，v1 不實作。
+- 🔜 **Apple 登入**：規劃於 [`plan2.md`](becklog.md)，v1 不實作。
 
 ---
 
@@ -277,5 +277,39 @@ seek_player/
 - ✅ 音樂來源：僅本機音訊檔案。
 - ✅ 帳戶：Firebase Auth — 選用登入（匿名）+ Email / Google（Apple 延後至 v2，見 `plan2.md`）。
 - ✅ 翻譯來源 Google Sheet 連結（已提供，已接入腳本，16 語系 .arb 已產生）。
-- ⬜ Firebase 專案是否已建立？需要 Android package name（applicationId）來設定。
-- ⬜ 統計數據是否需雲端同步（Firestore），或僅存本機 sqflite。
+- ✅ Firebase 專案已建立：`seek-player-f724e`，package `com.example.seek_player`（`android/app/google-services.json` 已就位，`lib/firebase_options.dart` 由其手動轉出，僅 Android）。
+- ⬜ 統計數據是否需雲端同步（Firestore），或僅存本機 sqflite。→ v1 暫存本機（`shared_preferences`）。
+
+---
+
+## 9. 實作狀態（v1，2026-06-06）
+
+驗證：`flutter analyze` 0 issues、`flutter test` 通過、`flutter build apk --debug` 成功。
+
+### 已完成
+| 里程碑 | 狀態 | 主要檔案 |
+|--------|------|----------|
+| M1 骨架 | ✅ | `main.dart`、`app.dart`、`router/app_router.dart`、`shared/widgets/scaffold_with_nav.dart` |
+| M2 多語言 | ✅ | `lib/l10n/`（16 .arb + 生成 Dart）、`tool/gen_l10n_from_sheet.dart` |
+| M3 權限 | ✅ | `core/permissions/`、AndroidManifest 權限與背景播放 service/receiver |
+| M4 音樂列表 | ✅ | `features/music_list/`（匯入/搜尋/滑動刪除/點擊播放） |
+| M5 播放器 | ✅ | `features/player/`、`core/audio/audio_player_service.dart`（seek/隨機/循環/背景） |
+| M6 我的 | ✅ | `features/profile/`（帳戶/統計/設定/關於） |
+| M7 收尾 | ✅ | 深淺色主題、RTL（`EdgeInsetsDirectional`）、測試、analyze |
+
+### 與原規劃的務實取捨
+- **本地儲存**：設定 / 音樂庫 / 統計皆用 `shared_preferences`（JSON），**未用 `sqflite`**。repository 有抽象層，日後可替換。
+- **音樂來源**：以 `file_picker` 由使用者主動匯入，**未做 `on_audio_query` 全媒體庫自動掃描**（相容性風險）；`MusicLibrary` notifier 之上可擴充。
+- **背景播放**：採 `just_audio_background`（較少樣板），非完整 `audio_service`。
+- **登入**：`google_sign_in` 6.x（v6 API）。
+- **`firebase_options.dart`** 為手動由 `google-services.json` 轉出（非 `flutterfire configure`）。
+
+### 待辦（缺少 / 需後續處理）
+- ⬜ **Google 登入需設 SHA-1**：`google-services.json` 目前 0 個 oauth_client，Google 登入會失敗；需在 Firebase Console 加入 Android SHA-1 並重新下載設定檔。Email / 匿名登入已可用。
+- ⬜ **i18n 新增字串尚未進 Sheet**：本次新增的 UI key 僅 `en`/`zh_TW`/`zh_CN` 有翻譯，其餘 13 語系 gen-l10n fallback 到 `en`。需將新 key 補進 Google Sheet 後重跑 `dart run tool/gen_l10n_from_sheet.dart && flutter gen-l10n`。
+- ⬜ **媒體庫自動掃描**：目前僅手動匯入，未實作開機掃描裝置音訊（可導入 `on_audio_query` 之類）。
+- ⬜ **曲目中繼資料**：標題取自檔名，未讀取 ID3（封面 / 演出者 / 專輯）。
+- ⬜ **統計精度**：聆聽時長以 5 秒取樣累加，為近似值。
+- ⬜ **sqflite / Firestore**：統計目前僅本機 `shared_preferences`，雲端同步未實作。
+- ⬜ **關於頁**：隱私權政策連結為占位，尚未接實際網址。
+- ⬜ **實機驗證**：尚未在實體裝置 / 模擬器執行（僅通過 build / analyze / test）。
