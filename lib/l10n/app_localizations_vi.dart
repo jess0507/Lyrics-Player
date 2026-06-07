@@ -51,6 +51,18 @@ class AppLocalizationsVi extends AppLocalizations {
   String get player_loop => 'Repeat';
 
   @override
+  String get player_forward => 'Tua tới 5 giây';
+
+  @override
+  String get player_rewind => 'Tua lại 5 giây';
+
+  @override
+  String get player_speed => 'Tốc độ phát';
+
+  @override
+  String get player_speed_reset => 'Đặt lại';
+
+  @override
   String get player_nothing_playing => 'Nothing playing';
 
   @override

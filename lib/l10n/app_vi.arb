@@ -23,5 +23,9 @@
   "settings_language": "Ngôn ngữ",
   "settings_theme": "Giao diện",
   "common_cancel": "Hủy",
-  "common_confirm": "Xác nhận"
+  "common_confirm": "Xác nhận",
+  "player_forward": "Tua tới 5 giây",
+  "player_rewind": "Tua lại 5 giây",
+  "player_speed": "Tốc độ phát",
+  "player_speed_reset": "Đặt lại"
 }

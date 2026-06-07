@@ -23,5 +23,9 @@
   "settings_language": "Язык",
   "settings_theme": "Тема",
   "common_cancel": "Отмена",
-  "common_confirm": "Подтвердить"
+  "common_confirm": "Подтвердить",
+  "player_forward": "Вперёд 5с",
+  "player_rewind": "Назад 5с",
+  "player_speed": "Скорость воспроизведения",
+  "player_speed_reset": "Сброс"
 }

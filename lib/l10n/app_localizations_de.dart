@@ -51,6 +51,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get player_loop => 'Repeat';
 
   @override
+  String get player_forward => '5s vor';
+
+  @override
+  String get player_rewind => '5s zurück';
+
+  @override
+  String get player_speed => 'Wiedergabegeschwindigkeit';
+
+  @override
+  String get player_speed_reset => 'Zurücksetzen';
+
+  @override
   String get player_nothing_playing => 'Nothing playing';
 
   @override

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 
 import 'app.dart';
+import 'core/storage/isar_service.dart';
 import 'core/storage/preferences_service.dart';
 import 'firebase_options.dart';
 
@@ -29,11 +30,14 @@ Future<void> main() async {
   }
 
   final prefs = await PreferencesService.create();
+  // 本地資料庫：媒體檔案資料存於 Isar；使用者設定仍由 SharedPreferences 管理。
+  final isar = await openIsar();
 
   runApp(
     ProviderScope(
       overrides: [
         preferencesServiceProvider.overrideWithValue(prefs),
+        isarProvider.overrideWithValue(isar),
         firebaseAvailableProvider.overrideWithValue(firebaseAvailable),
       ],
       child: const SeekPlayerApp(),

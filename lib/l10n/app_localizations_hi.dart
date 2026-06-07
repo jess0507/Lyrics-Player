@@ -51,6 +51,18 @@ class AppLocalizationsHi extends AppLocalizations {
   String get player_loop => 'Repeat';
 
   @override
+  String get player_forward => '5 सेकंड आगे';
+
+  @override
+  String get player_rewind => '5 सेकंड पीछे';
+
+  @override
+  String get player_speed => 'प्लेबैक गति';
+
+  @override
+  String get player_speed_reset => 'रीसेट';
+
+  @override
   String get player_nothing_playing => 'Nothing playing';
 
   @override

@@ -23,5 +23,9 @@
   "settings_language": "Dil",
   "settings_theme": "Tema",
   "common_cancel": "İptal",
-  "common_confirm": "Onayla"
+  "common_confirm": "Onayla",
+  "player_forward": "5sn ileri",
+  "player_rewind": "5sn geri",
+  "player_speed": "Oynatma hızı",
+  "player_speed_reset": "Sıfırla"
 }

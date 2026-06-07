@@ -23,5 +23,9 @@
   "settings_language": "Lingua",
   "settings_theme": "Tema",
   "common_cancel": "Annulla",
-  "common_confirm": "Conferma"
+  "common_confirm": "Conferma",
+  "player_forward": "Avanti 5s",
+  "player_rewind": "Indietro 5s",
+  "player_speed": "Velocità di riproduzione",
+  "player_speed_reset": "Reimposta"
 }

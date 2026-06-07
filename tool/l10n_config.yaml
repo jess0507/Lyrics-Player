@@ -1,7 +1,10 @@
 # 多語言來源設定（供 tool/gen_l10n_from_sheet.dart 使用）
 
-# Google Sheet 發布的 CSV 連結（export 端點）
+# Google Sheet 發布的 CSV 連結（export 端點，供 gen_l10n_from_sheet.dart 使用）
 csv_url: "https://docs.google.com/spreadsheets/d/1gqtCfGthdTm9boTE2_ez0aCVxBxq1QnGaNucq82bEOs/export?format=csv&gid=0"
+
+# 本地 CSV 來源（供 gen_l10n_from_local.dart 使用，免下載、以本地翻譯為主）
+local_csv: "tool/app_strings.csv"
 
 # 產出的 .arb 目錄
 output_dir: "lib/l10n"

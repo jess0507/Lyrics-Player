@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
@@ -138,6 +140,9 @@ class _SeekBar extends StatelessWidget {
   }
 }
 
+/// 快進 / 快退的單次步進量。
+const _kSeekStep = Duration(seconds: 5);
+
 class _Controls extends StatelessWidget {
   const _Controls({required this.audio, required this.enabled});
 
@@ -146,8 +151,42 @@ class _Controls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
+        // 主控制列：上一首、快退、播放/暫停、快進、下一首。
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              iconSize: 36,
+              onPressed: enabled ? audio.seekToPrevious : null,
+              icon: const Icon(Icons.skip_previous),
+            ),
+            _SeekHoldButton(
+              audio: audio,
+              enabled: enabled,
+              delta: -_kSeekStep,
+              icon: Icons.replay_5,
+              tooltip: l10n.player_rewind,
+            ),
+            _PlayPauseButton(audio: audio, enabled: enabled),
+            _SeekHoldButton(
+              audio: audio,
+              enabled: enabled,
+              delta: _kSeekStep,
+              icon: Icons.forward_5,
+              tooltip: l10n.player_forward,
+            ),
+            IconButton(
+              iconSize: 36,
+              onPressed: enabled ? audio.seekToNext : null,
+              icon: const Icon(Icons.skip_next),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        // 次控制列：隨機、播放速度、循環。
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -164,17 +203,7 @@ class _Controls extends StatelessWidget {
                 );
               },
             ),
-            IconButton(
-              iconSize: 40,
-              onPressed: enabled ? audio.seekToPrevious : null,
-              icon: const Icon(Icons.skip_previous),
-            ),
-            _PlayPauseButton(audio: audio, enabled: enabled),
-            IconButton(
-              iconSize: 40,
-              onPressed: enabled ? audio.seekToNext : null,
-              icon: const Icon(Icons.skip_next),
-            ),
+            _SpeedButton(audio: audio, enabled: enabled),
             StreamBuilder<LoopMode>(
               stream: audio.loopModeStream,
               builder: (context, snapshot) {
@@ -204,6 +233,144 @@ class _Controls extends StatelessWidget {
     };
     audio.setLoopMode(next);
   }
+}
+
+/// 快進 / 快退按鈕：點擊一下步進 [delta]，持續長按時每 300ms 連續步進。
+class _SeekHoldButton extends StatefulWidget {
+  const _SeekHoldButton({
+    required this.audio,
+    required this.enabled,
+    required this.delta,
+    required this.icon,
+    required this.tooltip,
+  });
+
+  final AudioPlayerService audio;
+  final bool enabled;
+  final Duration delta;
+  final IconData icon;
+  final String tooltip;
+
+  @override
+  State<_SeekHoldButton> createState() => _SeekHoldButtonState();
+}
+
+class _SeekHoldButtonState extends State<_SeekHoldButton> {
+  Timer? _timer;
+
+  void _startRepeat() {
+    _timer?.cancel();
+    _timer = Timer.periodic(
+      const Duration(milliseconds: 300),
+      (_) => widget.audio.seekRelative(widget.delta),
+    );
+  }
+
+  void _stopRepeat() {
+    _timer?.cancel();
+    _timer = null;
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onLongPress: widget.enabled ? _startRepeat : null,
+      onLongPressUp: _stopRepeat,
+      child: IconButton(
+        iconSize: 40,
+        tooltip: widget.tooltip,
+        onPressed:
+            widget.enabled ? () => widget.audio.seekRelative(widget.delta) : null,
+        icon: Icon(widget.icon),
+      ),
+    );
+  }
+}
+
+/// 播放速度按鈕：顯示目前倍速，點擊開啟速度選擇對話框。
+class _SpeedButton extends StatelessWidget {
+  const _SpeedButton({required this.audio, required this.enabled});
+
+  final AudioPlayerService audio;
+  final bool enabled;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<double>(
+      stream: audio.speedStream,
+      builder: (context, snapshot) {
+        final speed = snapshot.data ?? 1.0;
+        return TextButton.icon(
+          onPressed:
+              enabled ? () => _showSpeedDialog(context, audio, speed) : null,
+          icon: const Icon(Icons.speed),
+          label: Text('${speed.toStringAsFixed(1)}x'),
+        );
+      },
+    );
+  }
+}
+
+/// 速度選擇對話框：0.5x ~ 4.0x，間隔 0.1，調整時即時套用。
+Future<void> _showSpeedDialog(
+  BuildContext context,
+  AudioPlayerService audio,
+  double current,
+) async {
+  var value = current.clamp(0.5, 4.0);
+  await showDialog<void>(
+    context: context,
+    builder: (context) {
+      final l10n = AppLocalizations.of(context)!;
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            title: Text(l10n.player_speed),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  '${value.toStringAsFixed(1)}x',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                Slider(
+                  min: 0.5,
+                  max: 4.0,
+                  divisions: 35,
+                  value: value,
+                  label: '${value.toStringAsFixed(1)}x',
+                  onChanged: (v) {
+                    final snapped = double.parse(v.toStringAsFixed(1));
+                    setState(() => value = snapped);
+                    audio.setSpeed(snapped);
+                  },
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  audio.setSpeed(1.0);
+                  Navigator.of(context).pop();
+                },
+                child: Text(l10n.player_speed_reset),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(l10n.common_ok),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
 }
 
 class _PlayPauseButton extends StatelessWidget {

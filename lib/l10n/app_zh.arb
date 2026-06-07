@@ -14,7 +14,7 @@
   "player_previous": "上一首",
   "music_import": "匯入音樂",
   "music_search": "搜尋",
-  "music_empty": "找不到音樂",
+  "music_empty": "尚無音樂，點擊匯入以新增歌曲。",
   "permission_title": "需要儲存權限",
   "permission_message": "我們需要存取您的音訊檔案以掃描並播放本機音樂。",
   "permission_allow": "允許",
@@ -23,5 +23,9 @@
   "settings_language": "語言",
   "settings_theme": "主題",
   "common_cancel": "取消",
-  "common_confirm": "確定"
+  "common_confirm": "確定",
+  "player_forward": "快進5秒",
+  "player_rewind": "快退5秒",
+  "player_speed": "播放速度",
+  "player_speed_reset": "重設"
 }

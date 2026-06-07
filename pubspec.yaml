@@ -34,6 +34,13 @@ dependencies:
   # 本地儲存
   shared_preferences: ^2.3.3
 
+  # 本地資料庫（媒體檔案資料）。
+  # 註：isar_flutter_libs 3.1.0+1 未宣告 AGP namespace，
+  # 由 android/build.gradle.kts 的 subprojects 區塊補上以相容新版 AGP。
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.1.4
+
   # 帳戶（Firebase）
   firebase_core: ^4.10.0
   firebase_auth: ^6.4.0
@@ -44,6 +51,10 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+
+  # Isar 程式碼產生
+  isar_generator: ^3.1.0+1
+  build_runner: ^2.4.13
 
 flutter:
   uses-material-design: true

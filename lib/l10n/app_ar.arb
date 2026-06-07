@@ -23,5 +23,9 @@
   "settings_language": "اللغة",
   "settings_theme": "السمة",
   "common_cancel": "إلغاء",
-  "common_confirm": "تأكيد"
+  "common_confirm": "تأكيد",
+  "player_forward": "تقديم ٥ ثوانٍ",
+  "player_rewind": "ترجيع ٥ ثوانٍ",
+  "player_speed": "سرعة التشغيل",
+  "player_speed_reset": "إعادة تعيين"
 }

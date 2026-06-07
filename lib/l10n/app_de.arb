@@ -23,5 +23,9 @@
   "settings_language": "Sprache",
   "settings_theme": "Design",
   "common_cancel": "Abbrechen",
-  "common_confirm": "Bestätigen"
+  "common_confirm": "Bestätigen",
+  "player_forward": "5s vor",
+  "player_rewind": "5s zurück",
+  "player_speed": "Wiedergabegeschwindigkeit",
+  "player_speed_reset": "Zurücksetzen"
 }

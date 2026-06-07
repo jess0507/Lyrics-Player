@@ -23,5 +23,9 @@
   "settings_language": "भाषा",
   "settings_theme": "थीम",
   "common_cancel": "रद्द करें",
-  "common_confirm": "पुष्टि करें"
+  "common_confirm": "पुष्टि करें",
+  "player_forward": "5 सेकंड आगे",
+  "player_rewind": "5 सेकंड पीछे",
+  "player_speed": "प्लेबैक गति",
+  "player_speed_reset": "रीसेट"
 }

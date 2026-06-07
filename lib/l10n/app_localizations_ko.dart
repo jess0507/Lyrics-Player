@@ -51,6 +51,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get player_loop => 'Repeat';
 
   @override
+  String get player_forward => '5초 앞으로';
+
+  @override
+  String get player_rewind => '5초 뒤로';
+
+  @override
+  String get player_speed => '재생 속도';
+
+  @override
+  String get player_speed_reset => '초기화';
+
+  @override
   String get player_nothing_playing => 'Nothing playing';
 
   @override

@@ -51,6 +51,18 @@ class AppLocalizationsTr extends AppLocalizations {
   String get player_loop => 'Repeat';
 
   @override
+  String get player_forward => '5sn ileri';
+
+  @override
+  String get player_rewind => '5sn geri';
+
+  @override
+  String get player_speed => 'Oynatma hızı';
+
+  @override
+  String get player_speed_reset => 'Sıfırla';
+
+  @override
   String get player_nothing_playing => 'Nothing playing';
 
   @override

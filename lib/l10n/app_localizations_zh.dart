@@ -51,6 +51,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get player_loop => 'Repeat';
 
   @override
+  String get player_forward => '快進5秒';
+
+  @override
+  String get player_rewind => '快退5秒';
+
+  @override
+  String get player_speed => '播放速度';
+
+  @override
+  String get player_speed_reset => '重設';
+
+  @override
   String get player_nothing_playing => 'Nothing playing';
 
   @override
@@ -60,7 +72,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get music_search => '搜尋';
 
   @override
-  String get music_empty => '找不到音樂';
+  String get music_empty => '尚無音樂，點擊匯入以新增歌曲。';
 
   @override
   String get music_remove => 'Remove';
@@ -237,6 +249,18 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get player_loop => '循环播放';
+
+  @override
+  String get player_forward => '快进5秒';
+
+  @override
+  String get player_rewind => '快退5秒';
+
+  @override
+  String get player_speed => '播放速度';
+
+  @override
+  String get player_speed_reset => '重置';
 
   @override
   String get player_nothing_playing => '当前没有正在播放的曲目';
@@ -422,6 +446,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get player_loop => '循環播放';
+
+  @override
+  String get player_forward => '快進5秒';
+
+  @override
+  String get player_rewind => '快退5秒';
+
+  @override
+  String get player_speed => '播放速度';
+
+  @override
+  String get player_speed_reset => '重設';
 
   @override
   String get player_nothing_playing => '目前沒有播放中的曲目';

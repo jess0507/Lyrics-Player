@@ -23,5 +23,9 @@
   "settings_language": "Bahasa",
   "settings_theme": "Tema",
   "common_cancel": "Batal",
-  "common_confirm": "Konfirmasi"
+  "common_confirm": "Konfirmasi",
+  "player_forward": "Maju 5d",
+  "player_rewind": "Mundur 5d",
+  "player_speed": "Kecepatan pemutaran",
+  "player_speed_reset": "Atur ulang"
 }

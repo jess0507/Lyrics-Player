@@ -51,6 +51,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get player_loop => 'Repeat';
 
   @override
+  String get player_forward => '5秒進む';
+
+  @override
+  String get player_rewind => '5秒戻る';
+
+  @override
+  String get player_speed => '再生速度';
+
+  @override
+  String get player_speed_reset => 'リセット';
+
+  @override
   String get player_nothing_playing => 'Nothing playing';
 
   @override

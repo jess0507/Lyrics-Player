@@ -29,7 +29,9 @@ class AudioPlayerService {
   Stream<bool> get shuffleModeEnabledStream =>
       _player.shuffleModeEnabledStream;
   Stream<LoopMode> get loopModeStream => _player.loopModeStream;
+  Stream<double> get speedStream => _player.speedStream;
   bool get playing => _player.playing;
+  double get speed => _player.speed;
 
   Stream<PositionData> get positionDataStream =>
       Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
@@ -69,6 +71,19 @@ class AudioPlayerService {
   Future<void> setLoopMode(LoopMode mode) => _player.setLoopMode(mode);
   Future<void> setShuffle(bool enabled) =>
       _player.setShuffleModeEnabled(enabled);
+
+  /// 設定播放速度（0.5x ~ 4.0x）。
+  Future<void> setSpeed(double speed) =>
+      _player.setSpeed(speed.clamp(0.5, 4.0));
+
+  /// 相對目前位置快進（正值）或快退（負值），並夾在 [0, 總時長] 範圍內。
+  Future<void> seekRelative(Duration delta) {
+    final duration = _player.duration ?? Duration.zero;
+    var target = _player.position + delta;
+    if (target < Duration.zero) target = Duration.zero;
+    if (duration > Duration.zero && target > duration) target = duration;
+    return _player.seek(target);
+  }
 
   void dispose() => _player.dispose();
 }

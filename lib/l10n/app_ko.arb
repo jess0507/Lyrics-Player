@@ -23,5 +23,9 @@
   "settings_language": "언어",
   "settings_theme": "테마",
   "common_cancel": "취소",
-  "common_confirm": "확인"
+  "common_confirm": "확인",
+  "player_forward": "5초 앞으로",
+  "player_rewind": "5초 뒤로",
+  "player_speed": "재생 속도",
+  "player_speed_reset": "초기화"
 }

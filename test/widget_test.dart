@@ -4,6 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:seek_player/app.dart';
 import 'package:seek_player/core/storage/preferences_service.dart';
+import 'package:seek_player/features/music_list/music_library.dart';
+import 'package:seek_player/features/music_list/track.dart';
+
+/// 測試用音樂庫：不觸碰 Isar 原生資料庫，回傳空清單。
+class _FakeMusicLibrary extends MusicLibrary {
+  @override
+  List<Track> build() => const [];
+}
 
 void main() {
   testWidgets('App boots to the music tab', (tester) async {
@@ -12,7 +20,10 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [preferencesServiceProvider.overrideWithValue(prefs)],
+        overrides: [
+          preferencesServiceProvider.overrideWithValue(prefs),
+          musicLibraryProvider.overrideWith(_FakeMusicLibrary.new),
+        ],
         child: const SeekPlayerApp(),
       ),
     );
