@@ -202,6 +202,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get common_retry => 'Retry';
+
+  @override
+  String get settings_color => '主題顏色';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -399,6 +402,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get common_retry => '重试';
+
+  @override
+  String get settings_color => '主题颜色';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -596,4 +602,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get common_retry => '重試';
+
+  @override
+  String get settings_color => '主題顏色';
 }

@@ -509,6 +509,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get common_retry;
+
+  /// No description provided for @settings_color.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme color'**
+  String get settings_color;
 }
 
 class _AppLocalizationsDelegate

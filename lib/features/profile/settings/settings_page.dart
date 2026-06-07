@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/app_locales.dart';
 import '../../../shared/providers/settings_controller.dart';
+import '../../../shared/theme/app_theme.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -49,6 +50,26 @@ class SettingsPage extends ConsumerWidget {
                   value: ThemeMode.dark,
                   title: Text(l10n.settings_theme_dark),
                 ),
+              ],
+            ),
+          ),
+          const Divider(height: 1),
+          ListTile(
+            leading: const Icon(Icons.palette_outlined),
+            title: Text(l10n.settings_color),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            child: Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: [
+                for (final seed in AppColorSeed.values)
+                  _ColorSwatch(
+                    color: seed.color,
+                    selected: seed == settings.seedColor,
+                    onTap: () => controller.setSeedColor(seed),
+                  ),
               ],
             ),
           ),
@@ -105,6 +126,55 @@ class SettingsPage extends ConsumerWidget {
           ),
         );
       },
+    );
+  }
+}
+
+/// 設定頁的單一主題色色塊；選中時顯示外圈與勾選圖示。
+class _ColorSwatch extends StatelessWidget {
+  const _ColorSwatch({
+    required this.color,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final Color color;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    const size = 44.0;
+    return Semantics(
+      selected: selected,
+      button: true,
+      child: InkResponse(
+        onTap: onTap,
+        radius: size / 2 + 4,
+        child: Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+            border: selected
+                ? Border.all(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    width: 3,
+                  )
+                : null,
+          ),
+          child: selected
+              ? Icon(
+                  Icons.check,
+                  color: ThemeData.estimateBrightnessForColor(color) ==
+                          Brightness.dark
+                      ? Colors.white
+                      : Colors.black,
+                )
+              : null,
+        ),
+      ),
     );
   }
 }

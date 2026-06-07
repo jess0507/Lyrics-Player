@@ -20,8 +20,8 @@ class SeekPlayerApp extends ConsumerWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: settings.locale,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
+      theme: AppTheme.light(settings.seedColor),
+      darkTheme: AppTheme.dark(settings.seedColor),
       themeMode: settings.themeMode,
       routerConfig: router,
     );

@@ -27,5 +27,6 @@
   "player_forward": "Maju 5d",
   "player_rewind": "Mundur 5d",
   "player_speed": "Kecepatan pemutaran",
-  "player_speed_reset": "Atur ulang"
+  "player_speed_reset": "Atur ulang",
+  "settings_color": "Warna tema"
 }

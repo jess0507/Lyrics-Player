@@ -203,4 +203,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get common_retry => 'Retry';
+
+  @override
+  String get settings_color => 'Couleur du thème';
 }

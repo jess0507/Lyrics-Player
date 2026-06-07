@@ -27,5 +27,6 @@
   "player_forward": "Avancer 5s",
   "player_rewind": "Reculer 5s",
   "player_speed": "Vitesse de lecture",
-  "player_speed_reset": "Réinitialiser"
+  "player_speed_reset": "Réinitialiser",
+  "settings_color": "Couleur du thème"
 }

@@ -63,5 +63,6 @@
   "common_confirm": "Confirm",
   "common_ok": "OK",
   "common_delete": "Delete",
-  "common_retry": "Retry"
+  "common_retry": "Retry",
+  "settings_color": "Theme color"
 }

@@ -203,4 +203,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get common_retry => 'Retry';
+
+  @override
+  String get settings_color => 'Màu giao diện';
 }

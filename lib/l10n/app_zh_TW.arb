@@ -63,5 +63,6 @@
   "common_confirm": "確定",
   "common_ok": "好",
   "common_delete": "刪除",
-  "common_retry": "重試"
+  "common_retry": "重試",
+  "settings_color": "主題顏色"
 }

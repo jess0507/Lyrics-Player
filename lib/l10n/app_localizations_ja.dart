@@ -202,4 +202,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get common_retry => 'Retry';
+
+  @override
+  String get settings_color => 'テーマカラー';
 }

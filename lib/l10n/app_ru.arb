@@ -27,5 +27,6 @@
   "player_forward": "Вперёд 5с",
   "player_rewind": "Назад 5с",
   "player_speed": "Скорость воспроизведения",
-  "player_speed_reset": "Сброс"
+  "player_speed_reset": "Сброс",
+  "settings_color": "Цвет темы"
 }

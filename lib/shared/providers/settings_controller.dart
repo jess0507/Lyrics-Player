@@ -2,22 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/storage/preferences_service.dart';
+import '../theme/app_theme.dart';
 
-/// 應用程式偏好：語言與主題模式（持久化於 SharedPreferences）。
+/// 應用程式偏好：語言、主題模式與主題色（持久化於 SharedPreferences）。
 class SettingsState {
-  const SettingsState({this.locale, this.themeMode = ThemeMode.system});
+  const SettingsState({
+    this.locale,
+    this.themeMode = ThemeMode.system,
+    this.seedColor = AppColorSeed.defaultSeed,
+  });
 
   /// null 代表「跟隨系統語言」。
   final Locale? locale;
   final ThemeMode themeMode;
+  final AppColorSeed seedColor;
 
   SettingsState copyWith({
     Object? locale = _sentinel,
     ThemeMode? themeMode,
+    AppColorSeed? seedColor,
   }) {
     return SettingsState(
       locale: identical(locale, _sentinel) ? this.locale : locale as Locale?,
       themeMode: themeMode ?? this.themeMode,
+      seedColor: seedColor ?? this.seedColor,
     );
   }
 
@@ -27,6 +35,7 @@ class SettingsState {
 class SettingsController extends Notifier<SettingsState> {
   static const _kLocale = 'settings.locale';
   static const _kThemeMode = 'settings.themeMode';
+  static const _kSeedColor = 'settings.seedColor';
 
   PreferencesService get _prefs => ref.read(preferencesServiceProvider);
 
@@ -35,6 +44,7 @@ class SettingsController extends Notifier<SettingsState> {
     return SettingsState(
       locale: _decodeLocale(_prefs.getString(_kLocale)),
       themeMode: _decodeThemeMode(_prefs.getString(_kThemeMode)),
+      seedColor: AppColorSeed.fromName(_prefs.getString(_kSeedColor)),
     );
   }
 
@@ -50,6 +60,11 @@ class SettingsController extends Notifier<SettingsState> {
   void setThemeMode(ThemeMode mode) {
     state = state.copyWith(themeMode: mode);
     _prefs.setString(_kThemeMode, mode.name);
+  }
+
+  void setSeedColor(AppColorSeed seed) {
+    state = state.copyWith(seedColor: seed);
+    _prefs.setString(_kSeedColor, seed.name);
   }
 
   static String _encodeLocale(Locale locale) {

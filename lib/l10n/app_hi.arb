@@ -27,5 +27,6 @@
   "player_forward": "5 सेकंड आगे",
   "player_rewind": "5 सेकंड पीछे",
   "player_speed": "प्लेबैक गति",
-  "player_speed_reset": "रीसेट"
+  "player_speed_reset": "रीसेट",
+  "settings_color": "थीम रंग"
 }
