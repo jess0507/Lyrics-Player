@@ -275,10 +275,8 @@ seek_player/
 ## 8. 待確認事項
 - ✅ 支援語系：16 語系（en, zh_CN, zh_TW, es, fr, de, ja, ko, pt, it, ru, tr, hi, id, vi, ar）。
 - ✅ 音樂來源：僅本機音訊檔案。
-- ✅ 帳戶：Firebase Auth — 選用登入（匿名）+ Email / Google（Apple 延後至 v2，見 `plan2.md`）。
 - ✅ 翻譯來源 Google Sheet 連結（已提供，已接入腳本，16 語系 .arb 已產生）。
 - ✅ Firebase 專案已建立：`seek-player-f724e`，package `com.example.seek_player`（`android/app/google-services.json` 已就位，`lib/firebase_options.dart` 由其手動轉出，僅 Android）。
-- ⬜ 統計數據是否需雲端同步（Firestore），或僅存本機 sqflite。→ v1 暫存本機（`shared_preferences`）。
 
 ---
 
@@ -305,11 +303,10 @@ seek_player/
 - **`firebase_options.dart`** 為手動由 `google-services.json` 轉出（非 `flutterfire configure`）。
 
 ### 待辦（缺少 / 需後續處理）
-- ⬜ **Google 登入需設 SHA-1**：`google-services.json` 目前 0 個 oauth_client，Google 登入會失敗；需在 Firebase Console 加入 Android SHA-1 並重新下載設定檔。Email / 匿名登入已可用。
-- ⬜ **i18n 新增字串尚未進 Sheet**：本次新增的 UI key 僅 `en`/`zh_TW`/`zh_CN` 有翻譯，其餘 13 語系 gen-l10n fallback 到 `en`。需將新 key 補進 Google Sheet 後重跑 `dart run tool/gen_l10n_from_sheet.dart && flutter gen-l10n`。
-- ⬜ **媒體庫自動掃描**：目前僅手動匯入，未實作開機掃描裝置音訊（可導入 `on_audio_query` 之類）。
-- ⬜ **曲目中繼資料**：標題取自檔名，未讀取 ID3（封面 / 演出者 / 專輯）。
-- ⬜ **統計精度**：聆聽時長以 5 秒取樣累加，為近似值。
-- ⬜ **sqflite / Firestore**：統計目前僅本機 `shared_preferences`，雲端同步未實作。
-- ⬜ **關於頁**：隱私權政策連結為占位，尚未接實際網址。
-- ⬜ **實機驗證**：尚未在實體裝置 / 模擬器執行（僅通過 build / analyze / test）。
+1. ✅ **Google 登入需設 SHA-1**：`google-services.json` 目前 0 個 oauth_client，Google 登入會失敗；需在 Firebase Console 加入 Android SHA-1 並重新下載設定檔。Email / 匿名登入已可用。 
+2. ⬜ **增加播放器快進或快退按鈕**：點擊一下會快進、退後5秒，持續點著會快速進退。 
+3. ⬜ **i18n 新增字串尚未進 Sheet**：本次新增的 UI key 僅 `en`/`zh_TW`/`zh_CN` 有翻譯，其餘 13 語系 gen-l10n fallback 到 `en`。需將新 key 補進 Google Sheet 後重跑 `dart run tool/gen_l10n_from_sheet.dart && flutter gen-l10n`。 
+4. ⬜ **本地資料**: 使用 Drift
+5. ⬜ **關於頁**：隱私權政策連結為占位，尚未接實際網址。 
+6. ⬜ **實機驗證**：尚未在實體裝置 / 模擬器執行（僅通過 build / analyze / test）。 
+7. ⬜ Google 登入需設 SHA-1, Release App 也要設定
