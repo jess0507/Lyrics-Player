@@ -1,0 +1,4 @@
+title: Seek Player
+# baseurl 對應 project pages 的子路徑，使網址為
+# https://jess0507.github.io/seek_player/privacy-policy
+baseurl: "/seek_player"

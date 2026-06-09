@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../l10n/app_localizations.dart';
 
@@ -7,6 +8,13 @@ class AboutPage extends StatelessWidget {
 
   // 對應 pubspec.yaml 的 version。
   static const _version = '1.0.0+1';
+
+  static final _privacyPolicyUrl =
+      Uri.parse('https://jess0507.github.io/seek_player/privacy-policy');
+
+  Future<void> _openPrivacyPolicy() async {
+    await launchUrl(_privacyPolicyUrl, mode: LaunchMode.externalApplication);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +49,7 @@ class AboutPage extends StatelessWidget {
             leading: const Icon(Icons.privacy_tip_outlined),
             title: Text(l10n.about_privacy),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () {},
+            onTap: _openPrivacyPolicy,
           ),
           ListTile(
             leading: const Icon(Icons.description_outlined),

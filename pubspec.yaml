@@ -34,6 +34,9 @@ dependencies:
   # 本地儲存
   shared_preferences: ^2.3.3
 
+  # 開啟外部連結（隱私權政策等）
+  url_launcher: ^6.3.1
+
   # 本地資料庫（媒體檔案資料）。
   # 註：isar_flutter_libs 3.1.0+1 未宣告 AGP namespace，
   # 由 android/build.gradle.kts 的 subprojects 區塊補上以相容新版 AGP。
