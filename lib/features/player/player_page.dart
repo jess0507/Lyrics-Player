@@ -8,7 +8,26 @@ import 'package:just_audio_background/just_audio_background.dart';
 import '../../core/audio/audio_player_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/format.dart';
+import '../../shared/widgets/marquee_text.dart';
 import 'playback_controller.dart';
+
+/// 以 modal bottom sheet 由下往上展開全螢幕播放器。
+Future<void> showPlayerSheet(BuildContext context) {
+  return showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    useRootNavigator: true,
+    useSafeArea: true,
+    backgroundColor: Theme.of(context).colorScheme.surface,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+    ),
+    builder: (_) => const FractionallySizedBox(
+      heightFactor: 1,
+      child: PlayerPage(),
+    ),
+  );
+}
 
 class PlayerPage extends ConsumerWidget {
   const PlayerPage({super.key});
@@ -21,7 +40,32 @@ class PlayerPage extends ConsumerWidget {
     final audio = ref.watch(audioPlayerServiceProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.tab_player)),
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
+        // 左上往下的箭頭：點擊收回成 mini player。
+        leading: IconButton(
+          icon: const Icon(Icons.keyboard_arrow_down),
+          tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        // 標題顯示目前曲名 / 檔名，過長時跑馬燈滾動。
+        title: StreamBuilder<SequenceState?>(
+          stream: audio.player.sequenceStateStream,
+          builder: (context, snapshot) {
+            final currentItem = snapshot.data?.currentSource?.tag;
+            final title = currentItem is MediaItem
+                ? currentItem.title
+                : l10n.player_nothing_playing;
+            return MarqueeText(
+              title,
+              style: Theme.of(context).appBarTheme.titleTextStyle ??
+                  Theme.of(context).textTheme.titleLarge,
+            );
+          },
+        ),
+      ),
       body: StreamBuilder<SequenceState?>(
         stream: audio.player.sequenceStateStream,
         builder: (context, snapshot) {

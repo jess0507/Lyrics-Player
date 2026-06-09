@@ -7,8 +7,11 @@
 4. ✅ **本地資料 (Isar)**：媒體檔案資料改存 Isar（`TrackEntity` + 同步 API），`isarProvider` 於 main() 注入。
 5. ✅ **本地資料 (SharedPreferences)**：使用者設定（語系/主題）續存 prefs；音樂庫已自 prefs 遷至 Isar，prefs 不再存媒體資料。
 6. ✅ **上架CICD**：`.github/workflows/release.yml`，推送 master 上的 `v*` tag 觸發，建置簽章 AAB 並上架 Play Store internal 軌道（設定見 `RELEASE_SETUP.md`）。
-7. ⬜ **關於頁**：隱私權政策連結為占位，尚未接實際網址。 
-8. ⬜ **實機驗證**：尚未在實體裝置 / 模擬器執行（僅通過 build / analyze / test）。 
+7. ✅ **關於頁**：隱私權政策連結為占位，尚未接實際網址。 
+8. ✅ **實機驗證**：尚未在實體裝置 / 模擬器執行（僅通過 build / analyze / test）。 
 9. ✅ **更換 App Logo / Splash**：新 logo（綠色播放鍵）。
-
-> Splash（啟動畫面）詳細設定已移至 [`docs/splash_setup.md`](../docs/splash_setup.md)。
+10. ✅ **Slash（啟動畫面）**：詳細設定已移至 [`docs/splash_setup.md`](../docs/splash_setup.md)。
+11. ✅ **播放器 UI**: 改成往上展開的全螢幕播放器（`showPlayerSheet` → `showModalBottomSheet`，`isScrollControlled` + `FractionallySizedBox(heightFactor:1)`，`useRootNavigator` 覆蓋底部導覽）。
+12. ✅ **播放器 UI**: 底部導覽移除播放器分頁（剩音樂 / 個人），點擊歌曲改呼叫 `showPlayerSheet` 展開，不再 `context.go('/player')`。
+13. ✅ **播放器 UI**: 全螢幕播放器 AppBar 左上改為往下箭頭（`Icons.keyboard_arrow_down`），點擊 `Navigator.pop` 收回 mini player。
+14. ✅ **播放器 UI**: 新增 `MiniPlayer`（`lib/features/player/mini_player.dart`），疊在底部導覽上方，有曲目時顯示曲名 / 演出者與上一首、播放暫停、下一首；點本體展開全螢幕播放器。

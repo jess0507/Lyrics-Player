@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/music_list/music_list_page.dart';
-import '../features/player/player_page.dart';
 import '../features/profile/about/about_page.dart';
 import '../features/profile/account/account_page.dart';
 import '../features/profile/profile_page.dart';
@@ -27,14 +26,6 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/music',
                 builder: (context, state) => const MusicListPage(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/player',
-                builder: (context, state) => const PlayerPage(),
               ),
             ],
           ),

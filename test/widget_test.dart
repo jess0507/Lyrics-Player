@@ -29,9 +29,9 @@ void main() {
     );
     await tester.pump();
 
-    // 預設語系 en：底部導覽應出現三個分頁標籤。
+    // 預設語系 en：底部導覽應只剩音樂與個人兩個分頁（播放器已改為 mini player + sheet）。
     expect(find.text('Music'), findsWidgets);
-    expect(find.text('Player'), findsWidgets);
     expect(find.text('Profile'), findsWidgets);
+    expect(find.text('Player'), findsNothing);
   });
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../core/permissions/permission_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/format.dart';
 import '../player/playback_controller.dart';
+import '../player/player_page.dart';
 import 'music_library.dart';
 import 'track.dart';
 
@@ -39,7 +39,7 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
 
   Future<void> _play(Track track) async {
     await ref.read(playbackControllerProvider).playTrack(track);
-    if (mounted) context.go('/player');
+    if (mounted) await showPlayerSheet(context);
   }
 
   @override
