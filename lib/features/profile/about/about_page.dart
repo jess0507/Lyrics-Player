@@ -38,11 +38,6 @@ class AboutPage extends StatelessWidget {
             trailing: const Text(_version),
           ),
           ListTile(
-            leading: const Icon(Icons.code),
-            title: Text(l10n.about_developer),
-            trailing: const Text('Seek Player'),
-          ),
-          ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
             title: Text(l10n.about_privacy),
             trailing: const Icon(Icons.chevron_right),
