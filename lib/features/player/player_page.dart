@@ -8,7 +8,6 @@ import 'package:just_audio_background/just_audio_background.dart';
 import '../../core/audio/audio_player_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/format.dart';
-import '../../shared/widgets/marquee_text.dart';
 import 'playback_controller.dart';
 
 /// 以 modal bottom sheet 由下往上展開全螢幕播放器。
@@ -22,10 +21,8 @@ Future<void> showPlayerSheet(BuildContext context) {
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
     ),
-    builder: (_) => const FractionallySizedBox(
-      heightFactor: 1,
-      child: PlayerPage(),
-    ),
+    builder: (_) =>
+        const FractionallySizedBox(heightFactor: 1, child: PlayerPage()),
   );
 }
 
@@ -51,20 +48,20 @@ class PlayerPage extends ConsumerWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         // 標題顯示目前曲名 / 檔名，過長時跑馬燈滾動。
-        title: StreamBuilder<SequenceState?>(
-          stream: audio.player.sequenceStateStream,
-          builder: (context, snapshot) {
-            final currentItem = snapshot.data?.currentSource?.tag;
-            final title = currentItem is MediaItem
-                ? currentItem.title
-                : l10n.player_nothing_playing;
-            return MarqueeText(
-              title,
-              style: Theme.of(context).appBarTheme.titleTextStyle ??
-                  Theme.of(context).textTheme.titleLarge,
-            );
-          },
-        ),
+        // title: StreamBuilder<SequenceState?>(
+        //   stream: audio.player.sequenceStateStream,
+        //   builder: (context, snapshot) {
+        //     final currentItem = snapshot.data?.currentSource?.tag;
+        //     final title = currentItem is MediaItem
+        //         ? currentItem.title
+        //         : l10n.player_nothing_playing;
+        //     return MarqueeText(
+        //       title,
+        //       style: Theme.of(context).appBarTheme.titleTextStyle ??
+        //           Theme.of(context).textTheme.titleLarge,
+        //     );
+        //   },
+        // ),
       ),
       body: StreamBuilder<SequenceState?>(
         stream: audio.player.sequenceStateStream,
@@ -74,8 +71,9 @@ class PlayerPage extends ConsumerWidget {
           final title = currentItem is MediaItem
               ? currentItem.title
               : l10n.player_nothing_playing;
-          final artist =
-              currentItem is MediaItem ? currentItem.artist ?? '' : '';
+          final artist = currentItem is MediaItem
+              ? currentItem.artist ?? ''
+              : '';
           final hasTrack = currentItem is MediaItem;
 
           return Padding(
@@ -97,8 +95,8 @@ class PlayerPage extends ConsumerWidget {
                   Text(
                     artist,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
                   ),
                 ],
                 const SizedBox(height: 32),
@@ -152,7 +150,8 @@ class _SeekBar extends StatelessWidget {
       stream: audio.positionDataStream,
       builder: (context, snapshot) {
         final data =
-            snapshot.data ?? const PositionData(Duration.zero, Duration.zero, Duration.zero);
+            snapshot.data ??
+            const PositionData(Duration.zero, Duration.zero, Duration.zero);
         final total = data.duration.inMilliseconds.toDouble();
         final value = data.position.inMilliseconds
             .clamp(0, total == 0 ? 0 : total.toInt())
@@ -240,9 +239,7 @@ class _Controls extends StatelessWidget {
                 final shuffle = snapshot.data ?? false;
                 return IconButton(
                   isSelected: shuffle,
-                  onPressed: enabled
-                      ? () => audio.setShuffle(!shuffle)
-                      : null,
+                  onPressed: enabled ? () => audio.setShuffle(!shuffle) : null,
                   icon: const Icon(Icons.shuffle),
                 );
               },
@@ -329,8 +326,9 @@ class _SeekHoldButtonState extends State<_SeekHoldButton> {
       child: IconButton(
         iconSize: 40,
         tooltip: widget.tooltip,
-        onPressed:
-            widget.enabled ? () => widget.audio.seekRelative(widget.delta) : null,
+        onPressed: widget.enabled
+            ? () => widget.audio.seekRelative(widget.delta)
+            : null,
         icon: Icon(widget.icon),
       ),
     );
@@ -351,8 +349,9 @@ class _SpeedButton extends StatelessWidget {
       builder: (context, snapshot) {
         final speed = snapshot.data ?? 1.0;
         return TextButton.icon(
-          onPressed:
-              enabled ? () => _showSpeedDialog(context, audio, speed) : null,
+          onPressed: enabled
+              ? () => _showSpeedDialog(context, audio, speed)
+              : null,
           icon: const Icon(Icons.speed),
           label: Text('${speed.toStringAsFixed(1)}x'),
         );
@@ -442,9 +441,7 @@ class _PlayPauseButton extends StatelessWidget {
         }
         return IconButton.filled(
           iconSize: 40,
-          onPressed: !enabled
-              ? null
-              : (playing ? audio.pause : audio.play),
+          onPressed: !enabled ? null : (playing ? audio.pause : audio.play),
           icon: Icon(playing ? Icons.pause : Icons.play_arrow),
         );
       },
