@@ -5,7 +5,6 @@ import '../../core/permissions/permission_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/format.dart';
 import '../player/playback_controller.dart';
-import '../player/player_page.dart';
 import 'music_library.dart';
 import 'track.dart';
 
@@ -38,8 +37,8 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
   }
 
   Future<void> _play(Track track) async {
+    // 點擊播放後只在底部顯示 mini player，不自動展開全螢幕 PlayerPage。
     await ref.read(playbackControllerProvider).playTrack(track);
-    if (mounted) await showPlayerSheet(context);
   }
 
   @override
