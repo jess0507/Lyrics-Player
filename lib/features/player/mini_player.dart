@@ -42,7 +42,9 @@ class MiniPlayer extends ConsumerWidget {
                 // 控制按鈕置於 InkWell 之外，避免點按鈕（含載入中的 spinner）穿透成展開。
                 Expanded(
                   child: InkWell(
-                    onTap: () => showPlayerSheet(context),
+                    onTap: () => ref
+                        .read(playerSheetControllerProvider.notifier)
+                        .open(context),
                     child: Row(
                       children: [
                         const SizedBox(width: 16),
