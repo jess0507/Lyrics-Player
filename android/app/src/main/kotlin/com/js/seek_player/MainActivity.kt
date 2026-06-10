@@ -1,4 +1,4 @@
-package com.example.seek_player
+package com.js.seek_player
 
 import com.ryanheise.audioservice.AudioServiceActivity
 
