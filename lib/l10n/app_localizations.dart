@@ -255,7 +255,7 @@ abstract class AppLocalizations {
   /// No description provided for @music_empty.
   ///
   /// In en, this message translates to:
-  /// **'No music yet. Tap import to add songs.'**
+  /// **'No music found. Tap rescan to load songs from your device.'**
   String get music_empty;
 
   /// No description provided for @music_remove.
@@ -263,6 +263,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove'**
   String get music_remove;
+
+  /// No description provided for @music_rescan.
+  ///
+  /// In en, this message translates to:
+  /// **'Rescan'**
+  String get music_rescan;
 
   /// No description provided for @permission_title.
   ///

@@ -78,6 +78,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get music_remove => 'Remove';
 
   @override
+  String get music_rescan => 'Rescan';
+
+  @override
   String get permission_title => 'Permissão de armazenamento necessária';
 
   @override

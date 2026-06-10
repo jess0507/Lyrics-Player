@@ -72,10 +72,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get music_search => '搜尋';
 
   @override
-  String get music_empty => '尚無音樂，點擊匯入以新增歌曲。';
+  String get music_empty => '尚無音樂，點擊重新掃描以載入裝置音樂。';
 
   @override
   String get music_remove => 'Remove';
+
+  @override
+  String get music_rescan => '重新掃描';
 
   @override
   String get permission_title => '需要儲存權限';
@@ -275,10 +278,13 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get music_search => '搜索';
 
   @override
-  String get music_empty => '暂无音乐，点击导入以添加歌曲。';
+  String get music_empty => '找不到音乐，点击重新扫描以加载设备音乐。';
 
   @override
   String get music_remove => '移除';
+
+  @override
+  String get music_rescan => '重新扫描';
 
   @override
   String get permission_title => '需要存储权限';
@@ -475,10 +481,13 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get music_search => '搜尋';
 
   @override
-  String get music_empty => '尚無音樂，點擊匯入以新增歌曲。';
+  String get music_empty => '找不到音樂，點擊重新掃描以載入裝置音樂。';
 
   @override
   String get music_remove => '移除';
+
+  @override
+  String get music_rescan => '重新掃描';
 
   @override
   String get permission_title => '需要儲存權限';

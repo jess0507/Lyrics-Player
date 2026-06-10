@@ -16,23 +16,18 @@ class MusicListPage extends ConsumerStatefulWidget {
 }
 
 class _MusicListPageState extends ConsumerState<MusicListPage> {
-  bool _importing = false;
+  bool _scanning = false;
 
-  Future<void> _import() async {
+  /// 確保權限後重新掃描裝置音樂庫。
+  Future<void> _rescan() async {
     final granted = await permissionService.ensureAudioPermission(context);
     if (!granted || !mounted) return;
 
-    setState(() => _importing = true);
+    setState(() => _scanning = true);
     try {
-      final count = await ref.read(musicLibraryProvider.notifier).importFiles();
-      if (!mounted) return;
-      if (count > 0) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('+$count')),
-        );
-      }
+      await ref.read(musicLibraryProvider.notifier).refresh();
     } finally {
-      if (mounted) setState(() => _importing = false);
+      if (mounted) setState(() => _scanning = false);
     }
   }
 
@@ -44,23 +39,24 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final libraryAsync = ref.watch(musicLibraryProvider);
     final tracks = ref.watch(filteredTracksProvider);
-    final hasLibrary = ref.watch(musicLibraryProvider).isNotEmpty;
+    final hasLibrary = libraryAsync.valueOrNull?.isNotEmpty ?? false;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.tab_music_list),
         actions: [
           IconButton(
-            tooltip: l10n.music_import,
-            onPressed: _importing ? null : _import,
-            icon: _importing
+            tooltip: l10n.music_rescan,
+            onPressed: _scanning ? null : _rescan,
+            icon: _scanning
                 ? const SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : const Icon(Icons.add),
+                : const Icon(Icons.refresh),
           ),
         ],
         bottom: hasLibrary
@@ -79,49 +75,59 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
               )
             : null,
       ),
-      body: tracks.isEmpty
-          ? _EmptyState(message: l10n.music_empty)
-          : ListView.builder(
-              itemCount: tracks.length,
-              itemBuilder: (context, index) {
-                final track = tracks[index];
-                return Dismissible(
-                  key: ValueKey(track.id),
-                  direction: DismissDirection.endToStart,
-                  background: Container(
-                    alignment: AlignmentDirectional.centerEnd,
-                    color: Theme.of(context).colorScheme.errorContainer,
-                    padding: const EdgeInsetsDirectional.only(end: 20),
-                    child: const Icon(Icons.delete_outline),
-                  ),
-                  onDismissed: (_) =>
-                      ref.read(musicLibraryProvider.notifier).remove(track.id),
-                  child: ListTile(
-                    leading: const CircleAvatar(child: Icon(Icons.music_note)),
-                    title: Text(
-                      track.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    subtitle: track.artist == null
-                        ? null
-                        : Text(track.artist!, maxLines: 1),
-                    trailing: track.duration == null
-                        ? null
-                        : Text(formatDuration(track.duration!)),
-                    onTap: () => _play(track),
-                  ),
-                );
-              },
-            ),
+      body: _buildBody(l10n, libraryAsync, tracks),
+    );
+  }
+
+  Widget _buildBody(
+    AppLocalizations l10n,
+    AsyncValue<List<Track>> libraryAsync,
+    List<Track> tracks,
+  ) {
+    // 首次掃描中（尚無資料）顯示進度。
+    if (libraryAsync.isLoading && !(libraryAsync.valueOrNull?.isNotEmpty ?? false)) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (tracks.isEmpty) {
+      return _EmptyState(
+        message: l10n.music_empty,
+        actionLabel: l10n.music_rescan,
+        onAction: _scanning ? null : _rescan,
+      );
+    }
+    return ListView.builder(
+      itemCount: tracks.length,
+      itemBuilder: (context, index) {
+        final track = tracks[index];
+        return ListTile(
+          leading: const CircleAvatar(child: Icon(Icons.music_note)),
+          title: Text(
+            track.title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle:
+              track.artist == null ? null : Text(track.artist!, maxLines: 1),
+          trailing: track.duration == null
+              ? null
+              : Text(formatDuration(track.duration!)),
+          onTap: () => _play(track),
+        );
+      },
     );
   }
 }
 
 class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.message});
+  const _EmptyState({
+    required this.message,
+    this.actionLabel,
+    this.onAction,
+  });
 
   final String message;
+  final String? actionLabel;
+  final VoidCallback? onAction;
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +144,14 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(message, textAlign: TextAlign.center),
+            if (actionLabel != null) ...[
+              const SizedBox(height: 16),
+              FilledButton.tonalIcon(
+                onPressed: onAction,
+                icon: const Icon(Icons.refresh),
+                label: Text(actionLabel!),
+              ),
+            ],
           ],
         ),
       ),

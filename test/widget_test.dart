@@ -7,10 +7,10 @@ import 'package:seek_player/core/storage/preferences_service.dart';
 import 'package:seek_player/features/music_list/music_library.dart';
 import 'package:seek_player/features/music_list/track.dart';
 
-/// 測試用音樂庫：不觸碰 Isar 原生資料庫，回傳空清單。
+/// 測試用音樂庫：不觸碰裝置 MediaStore，回傳空清單。
 class _FakeMusicLibrary extends MusicLibrary {
   @override
-  List<Track> build() => const [];
+  Future<List<Track>> build() async => const [];
 }
 
 void main() {

@@ -78,6 +78,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get music_remove => 'Remove';
 
   @override
+  String get music_rescan => 'Rescan';
+
+  @override
   String get permission_title => 'Cần quyền truy cập bộ nhớ';
 
   @override

@@ -1,102 +1,65 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-import '../../core/storage/isar_service.dart';
 import 'track.dart';
-import 'track_entity.dart';
 
-/// 本機音樂庫：透過 file_picker 匯入檔案，並以 Isar 持久化媒體檔案資料。
+/// 本機音樂庫：直接掃描裝置 MediaStore（不複製檔案、不另存資料庫）。
 ///
-/// 註：v1 以「使用者主動匯入」為主要來源；完整媒體庫自動掃描
-/// （如 on_audio_query）可在此 repository 之上擴充。
-class MusicLibrary extends Notifier<List<Track>> {
-  Isar get _isar => ref.read(isarProvider);
+/// 曲目以 MediaStore 的 content URI 播放，因此無需把檔案複製到 App 私有目錄；
+/// 缺點是來源檔被刪除／移走後，重新掃描即不再出現（屬預期）。
+class MusicLibrary extends AsyncNotifier<List<Track>> {
+  final OnAudioQuery _audioQuery = OnAudioQuery();
 
   @override
-  List<Track> build() => _isar.trackEntitys
-      .where()
-      .findAllSync()
-      .map((e) => e.toTrack())
-      .toList(growable: true);
-
-  /// 開啟系統檔案選擇器匯入音訊；回傳本次新增的數量。
-  Future<int> importFiles() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.audio,
-      allowMultiple: true,
-    );
-    if (result == null) return 0;
-
-    final existing = {for (final t in state) t.id};
-    final added = <Track>[];
-    for (final file in result.files) {
-      final path = file.path;
-      if (path == null) continue;
-      final uri = Uri.file(path).toString();
-      if (existing.contains(uri)) continue;
-      existing.add(uri);
-      added.add(Track(id: uri, uri: uri, title: _titleFromName(file.name)));
+  Future<List<Track>> build() async {
+    // build 不主動彈權限對話框；已授權才掃描，否則回空清單，
+    // 待使用者於列表頁透過 refresh() 觸發授權流程。
+    if (await Permission.audio.isGranted) {
+      return _scan();
     }
-    if (added.isEmpty) return 0;
-
-    _isar.writeTxnSync(() {
-      _isar.trackEntitys.putAllSync(
-        added.map(TrackEntity.fromTrack).toList(),
-      );
-    });
-    state = [...state, ...added];
-    return added.length;
+    return const [];
   }
 
-  void remove(String id) {
-    _isar.writeTxnSync(() => _isar.trackEntitys.deleteByTrackIdSync(id));
-    state = state.where((t) => t.id != id).toList();
-  }
-
-  void clear() {
-    _isar.writeTxnSync(() => _isar.trackEntitys.clearSync());
-    state = [];
-  }
-
-  /// 播放後若得知實際時長，回寫以利列表顯示與統計。
-  void updateDuration(String id, Duration duration) {
-    var changed = false;
-    state = [
-      for (final t in state)
-        if (t.id == id && t.durationMs != duration.inMilliseconds)
-          () {
-            changed = true;
-            return t.copyWith(durationMs: duration.inMilliseconds);
-          }()
-        else
-          t,
+  /// 查詢裝置上所有音樂並映射為 [Track]。
+  Future<List<Track>> _scan() async {
+    final songs = await _audioQuery.querySongs(
+      sortType: SongSortType.TITLE,
+      orderType: OrderType.ASC_OR_SMALLER,
+      uriType: UriType.EXTERNAL,
+      ignoreCase: true,
+    );
+    return [
+      for (final s in songs)
+        if (s.isMusic ?? true)
+          Track(
+            id: s.id.toString(),
+            uri: s.uri ?? Uri.file(s.data).toString(),
+            title: s.title,
+            artist: (s.artist == null || s.artist == '<unknown>')
+                ? null
+                : s.artist,
+            durationMs: s.duration,
+          ),
     ];
-    if (!changed) return;
-    _isar.writeTxnSync(() {
-      final entity = _isar.trackEntitys.getByTrackIdSync(id);
-      if (entity != null) {
-        entity.durationMs = duration.inMilliseconds;
-        _isar.trackEntitys.putSync(entity);
-      }
-    });
   }
 
-  static String _titleFromName(String fileName) {
-    final dot = fileName.lastIndexOf('.');
-    return dot > 0 ? fileName.substring(0, dot) : fileName;
+  /// 重新掃描裝置音樂庫（權限應由呼叫端先確保）。
+  Future<void> refresh() async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(_scan);
   }
 }
 
 final musicLibraryProvider =
-    NotifierProvider<MusicLibrary, List<Track>>(MusicLibrary.new);
+    AsyncNotifierProvider<MusicLibrary, List<Track>>(MusicLibrary.new);
 
 /// 音樂列表搜尋字串。
 final musicSearchQueryProvider = StateProvider<String>((ref) => '');
 
-/// 套用搜尋過濾後的曲目清單。
+/// 套用搜尋過濾後的曲目清單（掃描中／失敗時回空清單）。
 final filteredTracksProvider = Provider<List<Track>>((ref) {
-  final tracks = ref.watch(musicLibraryProvider);
+  final tracks = ref.watch(musicLibraryProvider).valueOrNull ?? const [];
   final query = ref.watch(musicSearchQueryProvider).trim().toLowerCase();
   if (query.isEmpty) return tracks;
   return tracks.where((t) {

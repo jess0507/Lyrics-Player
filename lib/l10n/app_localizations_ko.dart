@@ -78,6 +78,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get music_remove => 'Remove';
 
   @override
+  String get music_rescan => 'Rescan';
+
+  @override
   String get permission_title => '저장소 권한이 필요합니다';
 
   @override

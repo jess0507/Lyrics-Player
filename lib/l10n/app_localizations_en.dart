@@ -72,10 +72,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get music_search => 'Search';
 
   @override
-  String get music_empty => 'No music yet. Tap import to add songs.';
+  String get music_empty =>
+      'No music found. Tap rescan to load songs from your device.';
 
   @override
   String get music_remove => 'Remove';
+
+  @override
+  String get music_rescan => 'Rescan';
 
   @override
   String get permission_title => 'Storage permission required';

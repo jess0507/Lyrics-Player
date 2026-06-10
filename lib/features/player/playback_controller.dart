@@ -19,27 +19,19 @@ class PlaybackController {
 
   AudioPlayerService get _audio => ref.read(audioPlayerServiceProvider);
 
+  /// 目前已掃描完成的曲目清單（掃描中／失敗時為空）。
+  List<Track> get _tracks =>
+      ref.read(musicLibraryProvider).valueOrNull ?? const [];
+
   void _setupListeners() {
     // 切換到某首（含初次載入）時記錄一次播放。
     _subs.add(_audio.currentIndexStream.listen((index) {
       if (index == null) return;
-      final tracks = ref.read(musicLibraryProvider);
+      final tracks = _tracks;
       if (index >= 0 && index < tracks.length) {
         ref.read(statisticsControllerProvider.notifier).recordPlay(
               tracks[index],
             );
-      }
-    }));
-
-    // 取得實際時長後回寫至音樂庫，供列表顯示。
-    _subs.add(_audio.player.durationStream.listen((duration) {
-      if (duration == null) return;
-      final index = _audio.player.currentIndex;
-      final tracks = ref.read(musicLibraryProvider);
-      if (index != null && index >= 0 && index < tracks.length) {
-        ref
-            .read(musicLibraryProvider.notifier)
-            .updateDuration(tracks[index].id, duration);
       }
     }));
 
@@ -62,14 +54,14 @@ class PlaybackController {
 
   /// 以整個音樂庫為播放清單，從 [index] 開始播放。
   Future<void> playLibraryAt(int index) async {
-    final tracks = ref.read(musicLibraryProvider);
+    final tracks = _tracks;
     if (index < 0 || index >= tracks.length) return;
     await _audio.setPlaylist(tracks, initialIndex: index);
     await _audio.play();
   }
 
   Future<void> playTrack(Track track) async {
-    final tracks = ref.read(musicLibraryProvider);
+    final tracks = _tracks;
     final index = tracks.indexWhere((t) => t.id == track.id);
     if (index >= 0) await playLibraryAt(index);
   }
