@@ -444,6 +444,42 @@ abstract class AppLocalizations {
   /// **'Sign in with email'**
   String get account_method_email;
 
+  /// No description provided for @account_method_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with phone'**
+  String get account_method_phone;
+
+  /// No description provided for @account_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get account_phone;
+
+  /// No description provided for @account_send_code.
+  ///
+  /// In en, this message translates to:
+  /// **'Send code'**
+  String get account_send_code;
+
+  /// No description provided for @account_sms_code.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code'**
+  String get account_sms_code;
+
+  /// No description provided for @account_verify_code.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify and sign in'**
+  String get account_verify_code;
+
+  /// No description provided for @account_code_sent.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve texted you a verification code.'**
+  String get account_code_sent;
+
   /// No description provided for @account_send_link.
   ///
   /// In en, this message translates to:

@@ -170,6 +170,24 @@ class AppLocalizationsRu extends AppLocalizations {
   String get account_method_email => 'Sign in with email';
 
   @override
+  String get account_method_phone => 'Sign in with phone';
+
+  @override
+  String get account_phone => 'Phone number';
+
+  @override
+  String get account_send_code => 'Send code';
+
+  @override
+  String get account_sms_code => 'Verification code';
+
+  @override
+  String get account_verify_code => 'Verify and sign in';
+
+  @override
+  String get account_code_sent => 'We\'ve texted you a verification code.';
+
+  @override
   String get account_send_link => 'Send sign-in link';
 
   @override

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -50,6 +52,43 @@ class AuthService {
       idToken: auth.idToken,
     );
     await _auth.signInWithCredential(credential);
+  }
+
+  /// 手機簡訊 OTP:寄送驗證碼。需在 Firebase Console 啟用 Phone 登入方式。
+  ///
+  /// 回傳由 `codeSent` 回呼取得的 verificationId,供 [signInWithSmsCode] 使用。
+  /// [onAutoVerified] 在部分 Android 裝置自動帶入驗證碼時直接完成登入。
+  Future<String> sendPhoneOtp(
+    String phoneNumber, {
+    void Function()? onAutoVerified,
+  }) async {
+    final completer = Completer<String>();
+    await _auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (credential) async {
+        await _auth.signInWithCredential(credential);
+        onAutoVerified?.call();
+      },
+      verificationFailed: (e) {
+        if (!completer.isCompleted) completer.completeError(e);
+      },
+      codeSent: (verificationId, _) {
+        if (!completer.isCompleted) completer.complete(verificationId);
+      },
+      codeAutoRetrievalTimeout: (verificationId) {
+        if (!completer.isCompleted) completer.complete(verificationId);
+      },
+    );
+    return completer.future;
+  }
+
+  /// 以收到的簡訊驗證碼([smsCode])配合 [verificationId] 完成登入。
+  Future<void> signInWithSmsCode(String verificationId, String smsCode) {
+    final credential = PhoneAuthProvider.credential(
+      verificationId: verificationId,
+      smsCode: smsCode,
+    );
+    return _auth.signInWithCredential(credential);
   }
 
   Future<void> signOut() async {

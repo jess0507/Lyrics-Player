@@ -169,6 +169,24 @@ class AppLocalizationsZh extends AppLocalizations {
   String get account_method_email => 'Sign in with email';
 
   @override
+  String get account_method_phone => 'Sign in with phone';
+
+  @override
+  String get account_phone => 'Phone number';
+
+  @override
+  String get account_send_code => 'Send code';
+
+  @override
+  String get account_sms_code => 'Verification code';
+
+  @override
+  String get account_verify_code => 'Verify and sign in';
+
+  @override
+  String get account_code_sent => 'We\'ve texted you a verification code.';
+
+  @override
   String get account_send_link => 'Send sign-in link';
 
   @override
@@ -384,6 +402,24 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get account_method_email => '使用 Email 登录';
 
   @override
+  String get account_method_phone => '使用手机号码登录';
+
+  @override
+  String get account_phone => '手机号码';
+
+  @override
+  String get account_send_code => '发送验证码';
+
+  @override
+  String get account_sms_code => '验证码';
+
+  @override
+  String get account_verify_code => '验证并登录';
+
+  @override
+  String get account_code_sent => '已将验证码以短信发送到你的手机。';
+
+  @override
   String get account_send_link => '发送登录链接';
 
   @override
@@ -594,6 +630,24 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get account_method_email => '使用 Email 登入';
+
+  @override
+  String get account_method_phone => '使用手機號碼登入';
+
+  @override
+  String get account_phone => '手機號碼';
+
+  @override
+  String get account_send_code => '傳送驗證碼';
+
+  @override
+  String get account_sms_code => '驗證碼';
+
+  @override
+  String get account_verify_code => '驗證並登入';
+
+  @override
+  String get account_code_sent => '已將驗證碼以簡訊傳送到你的手機。';
 
   @override
   String get account_send_link => '傳送登入連結';
