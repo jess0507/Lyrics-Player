@@ -5,7 +5,9 @@ import '../../core/permissions/permission_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/format.dart';
 import '../player/playback_controller.dart';
+import 'filtered_tracks_provider.dart';
 import 'music_library.dart';
+import 'music_search_query_provider.dart';
 import 'track.dart';
 
 class MusicListPage extends ConsumerStatefulWidget {

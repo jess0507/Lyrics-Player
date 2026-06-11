@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/auth/auth_service.dart';
-import '../../../core/storage/preferences_service.dart';
+import '../../../core/auth/auth_state_provider.dart';
+import '../../../core/firebase_available_provider.dart';
 import '../../../l10n/app_localizations.dart';
 
 class AccountPage extends ConsumerWidget {

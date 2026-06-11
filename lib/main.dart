@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 
 import 'app.dart';
+import 'core/firebase_available_provider.dart';
 import 'core/storage/preferences_service.dart';
 import 'firebase_options.dart';
 

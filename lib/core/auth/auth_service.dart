@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../storage/preferences_service.dart';
-
 /// Firebase Authentication 封裝：匿名 / Email / Google。
 class AuthService {
   AuthService(this._auth);
@@ -61,10 +59,4 @@ class AuthService {
 
 final authServiceProvider = Provider<AuthService>((ref) {
   return AuthService(FirebaseAuth.instance);
-});
-
-/// 監聽登入狀態；Firebase 不可用時不應被讀取（UI 會先檢查
-/// [firebaseAvailableProvider]）。
-final authStateProvider = StreamProvider<User?>((ref) {
-  return ref.watch(authServiceProvider).authStateChanges();
 });

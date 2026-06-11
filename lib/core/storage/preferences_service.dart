@@ -25,6 +25,3 @@ class PreferencesService {
 final preferencesServiceProvider = Provider<PreferencesService>(
   (ref) => throw UnimplementedError('preferencesServiceProvider 必須被覆寫'),
 );
-
-/// 標記 Firebase 是否成功初始化（無設定 / 無網路時為 false）。
-final firebaseAvailableProvider = Provider<bool>((ref) => false);
