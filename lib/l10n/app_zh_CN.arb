@@ -59,8 +59,6 @@
   "account_sms_code": "验证码",
   "account_verify_code": "验证并登录",
   "account_code_sent": "已将验证码以短信发送到你的手机。",
-  "account_send_link": "发送登录链接",
-  "account_link_sent": "已将登录链接发送到你的邮箱,请点击链接完成登录。",
   "account_continue_guest": "以访客身份继续",
   "account_sign_out": "退出登录",
   "account_delete": "删除账号",

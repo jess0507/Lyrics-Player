@@ -480,18 +480,6 @@ abstract class AppLocalizations {
   /// **'We\'ve texted you a verification code.'**
   String get account_code_sent;
 
-  /// No description provided for @account_send_link.
-  ///
-  /// In en, this message translates to:
-  /// **'Send sign-in link'**
-  String get account_send_link;
-
-  /// No description provided for @account_link_sent.
-  ///
-  /// In en, this message translates to:
-  /// **'We\'ve emailed you a sign-in link. Tap it to finish signing in.'**
-  String get account_link_sent;
-
   /// No description provided for @account_continue_guest.
   ///
   /// In en, this message translates to:

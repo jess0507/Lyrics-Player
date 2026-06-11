@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/auth/auth_service.dart';
-import '../../../../core/auth/email_link_controller.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'country_code_dropdown.dart';
 
-/// 未登入:選擇 Google、手機簡訊 OTP 或 Email 登入連結。
+/// 未登入:選擇 Google、手機簡訊 OTP 或 Email/密碼登入。
 /// 選擇手機或 Email 後,於登入選項上方顯示對應的輸入表單。
 class SignedOutView extends ConsumerStatefulWidget {
   const SignedOutView({super.key});
@@ -21,6 +20,7 @@ enum _Method { none, phone, email }
 
 class _SignedOutViewState extends ConsumerState<SignedOutView> {
   final _email = TextEditingController();
+  final _password = TextEditingController();
   final _phone = TextEditingController();
   final _smsCode = TextEditingController();
   bool _busy = false;
@@ -35,6 +35,7 @@ class _SignedOutViewState extends ConsumerState<SignedOutView> {
   @override
   void dispose() {
     _email.dispose();
+    _password.dispose();
     _phone.dispose();
     _smsCode.dispose();
     super.dispose();
@@ -105,14 +106,29 @@ class _SignedOutViewState extends ConsumerState<SignedOutView> {
     await _run(() => _auth.signInWithSmsCode(id, code));
   }
 
-  Future<void> _sendLink() async {
+  /// Email/密碼登入。成功後 authState 變更,畫面自動切換為已登入。
+  Future<void> _signInEmail() async {
+    final email = _email.text.trim();
+    final password = _password.text;
+    if (email.isEmpty || password.isEmpty) return;
+    await _run(() => _auth.signInWithEmail(email, password));
+  }
+
+  /// 以 email/密碼註冊新帳號(成功即自動登入)。
+  Future<void> _signUpEmail() async {
+    final email = _email.text.trim();
+    final password = _password.text;
+    if (email.isEmpty || password.isEmpty) return;
+    await _run(() => _auth.signUpWithEmail(email, password));
+  }
+
+  /// 寄送密碼重設信。
+  Future<void> _resetPassword() async {
     final l10n = AppLocalizations.of(context)!;
     final email = _email.text.trim();
     if (email.isEmpty) return;
-    final controller = ref.read(emailLinkControllerProvider);
-    if (controller == null) return; // Firebase 不可用
-    final ok = await _run(() => controller.sendLink(email));
-    if (ok) _showMessage(l10n.account_link_sent);
+    final ok = await _run(() => _auth.sendPasswordReset(email));
+    if (ok) _showMessage(l10n.account_reset_sent);
   }
 
   @override
@@ -221,7 +237,7 @@ class _SignedOutViewState extends ConsumerState<SignedOutView> {
     );
   }
 
-  /// Email 登入連結表單。
+  /// Email/密碼表單:可登入既有帳號或註冊新帳號,並提供忘記密碼。
   Widget _emailForm(AppLocalizations l10n) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -236,9 +252,30 @@ class _SignedOutViewState extends ConsumerState<SignedOutView> {
           ),
         ),
         const SizedBox(height: 12),
+        TextField(
+          controller: _password,
+          obscureText: true,
+          decoration: InputDecoration(
+            labelText: l10n.account_password,
+            border: const OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 12),
         FilledButton(
-          onPressed: _busy ? null : _sendLink,
-          child: Text(l10n.account_send_link),
+          onPressed: _busy ? null : _signInEmail,
+          child: Text(l10n.account_sign_in),
+        ),
+        const SizedBox(height: 8),
+        OutlinedButton(
+          onPressed: _busy ? null : _signUpEmail,
+          child: Text(l10n.account_sign_up),
+        ),
+        Align(
+          alignment: AlignmentDirectional.centerEnd,
+          child: TextButton(
+            onPressed: _busy ? null : _resetPassword,
+            child: Text(l10n.account_forgot_password),
+          ),
         ),
       ],
     );

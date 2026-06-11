@@ -35,23 +35,6 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <!-- Email Link 登入:直接攔截信中帶 oobCode 的 Firebase action 連結
-                 (https://seek-player-f724e.firebaseapp.com/__/auth/action?mode=signIn&oobCode=...),
-                 App 一開即取得 oobCode 完成登入,不依賴已停用的 Dynamic Links。
-                 autoVerify 需搭配 firebaseapp.com 與 web.app 兩網域的
-                 /.well-known/assetlinks.json,且其 SHA-256 須與安裝 build 的簽章一致。 -->
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="https"
-                    android:host="seek-player-f724e.firebaseapp.com"
-                    android:pathPrefix="/__/auth/action"/>
-                <!-- continueUrl 落地頁(不帶 oobCode),保留作為回跳路徑。 -->
-                <data android:scheme="https"
-                    android:host="seek-player-f724e.web.app"
-                    android:pathPrefix="/signin"/>
-            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

@@ -188,13 +188,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get account_code_sent => 'We\'ve texted you a verification code.';
 
   @override
-  String get account_send_link => 'Send sign-in link';
-
-  @override
-  String get account_link_sent =>
-      'We\'ve emailed you a sign-in link. Tap it to finish signing in.';
-
-  @override
   String get account_continue_guest => 'Continue as guest';
 
   @override

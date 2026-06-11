@@ -59,8 +59,6 @@
   "account_sms_code": "Verification code",
   "account_verify_code": "Verify and sign in",
   "account_code_sent": "We've texted you a verification code.",
-  "account_send_link": "Send sign-in link",
-  "account_link_sent": "We've emailed you a sign-in link. Tap it to finish signing in.",
   "account_continue_guest": "Continue as guest",
   "account_sign_out": "Sign out",
   "account_delete": "Delete account",

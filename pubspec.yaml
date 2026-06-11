@@ -43,7 +43,6 @@ dependencies:
   firebase_core: ^4.10.0
   firebase_auth: ^6.4.0
   google_sign_in: ^6.2.2
-  app_links: ^6.3.0 # 接收 Email Link 回跳
 
 dev_dependencies:
   flutter_test:

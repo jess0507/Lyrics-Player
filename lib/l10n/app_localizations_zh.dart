@@ -187,13 +187,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get account_code_sent => 'We\'ve texted you a verification code.';
 
   @override
-  String get account_send_link => 'Send sign-in link';
-
-  @override
-  String get account_link_sent =>
-      'We\'ve emailed you a sign-in link. Tap it to finish signing in.';
-
-  @override
   String get account_continue_guest => 'Continue as guest';
 
   @override
@@ -420,12 +413,6 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get account_code_sent => '已将验证码以短信发送到你的手机。';
 
   @override
-  String get account_send_link => '发送登录链接';
-
-  @override
-  String get account_link_sent => '已将登录链接发送到你的邮箱,请点击链接完成登录。';
-
-  @override
   String get account_continue_guest => '以访客身份继续';
 
   @override
@@ -648,12 +635,6 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get account_code_sent => '已將驗證碼以簡訊傳送到你的手機。';
-
-  @override
-  String get account_send_link => '傳送登入連結';
-
-  @override
-  String get account_link_sent => '已將登入連結寄到你的信箱,請點擊連結完成登入。';
 
   @override
   String get account_continue_guest => '以訪客身分繼續';

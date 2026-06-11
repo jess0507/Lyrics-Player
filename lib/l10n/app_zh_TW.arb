@@ -59,8 +59,6 @@
   "account_sms_code": "驗證碼",
   "account_verify_code": "驗證並登入",
   "account_code_sent": "已將驗證碼以簡訊傳送到你的手機。",
-  "account_send_link": "傳送登入連結",
-  "account_link_sent": "已將登入連結寄到你的信箱,請點擊連結完成登入。",
   "account_continue_guest": "以訪客身分繼續",
   "account_sign_out": "登出",
   "account_delete": "刪除帳號",
