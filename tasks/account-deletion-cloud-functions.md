@@ -1,6 +1,6 @@
 # 刪除帳號 / 刪除帳號資料(Cloud Functions)
 
-狀態:程式碼完成(`flutter analyze` 0 issues、`flutter test` 過、`py_compile` 過);**尚未部署**,Firestore 與 Blaze 方案待開通。
+狀態:**已部署**(2026-06-11,本機 Owner 身分 deploy,兩支函式建立於 asia-east1,artifact 清理政策已設 1 天)。待辦:runtime SA 權限驗證(實機呼叫兩支 API)、CICD 的 SA 權限驗證(Actions 手動 Run workflow)。
 影響範圍:`functions/`、`firebase.json`、`lib/core/auth/auth_service.dart`、`lib/features/profile/account/`、`lib/l10n/`、`.github/workflows/firebase-functions-deploy.yml`
 後端:Firebase Cloud Functions(Python)+ Firebase Admin SDK
 
@@ -28,20 +28,31 @@ App 商店(Google Play / App Store)要求提供「刪除帳號」與「刪除帳
 - l10n 新增 `account_delete_data` / `account_delete_data_confirm` / `account_delete_data_done`(en / zh_TW / zh_CN,其餘語系 fallback 到 en)。**待辦**:補進 Google Sheet。
 - 依賴:`cloud_functions: ^6.3.2`。
 
-## 部署前置(尚未完成)
+## 部署前置
 
-1. **Firestore**:Console 啟用 Firestore database(否則 `recursive_delete` 無對象)。
-2. **Blaze 方案**:Cloud Functions 需付費方案。
-3. **本機部署**:`firebase deploy --only functions`(Python runtime 由 CLI 在 Cloud Build 端打包,本機免建 venv)。
+1. ~~**Firestore**:Console 啟用 Firestore database~~ ✅ 已開通。
+2. ~~**Blaze 方案**~~ ✅ 已升級。
+3. ~~**首次部署的 GCP API**~~ ✅ 已由首次本機 deploy 自動開通(cloudfunctions/cloudbuild/artifactregistry/run/eventarc/pubsub/storage)。**注意**:首次開通後第一次 deploy 可能因 service agent(`gcf-admin-robot`)尚未傳播而 404(`generateUploadUrl ... Could not authenticate`),等 1–2 分鐘重試即可,非權限問題。
+4. **本機/CI 都要先建 `functions/venv`**:firebase CLI 部署前會用 venv 載入 `main.py` 探測函式,缺 venv 直接報錯(`Missing virtual environment at venv directory`)。Python 版本須與 `firebase.json` 的 `"runtime": "python312"` 一致(**勿用 3.14**,runtime 最高支援 3.13,CLI 抓系統預設 python3 會踩到):
+   ```bash
+   cd functions && python3.12 -m venv venv && ./venv/bin/pip install -r requirements.txt
+   ```
+   CICD workflow 已內建此步驟(setup-python 3.12 + 建 venv 後才 deploy)。venv/ 已在 functions/.gitignore。
+5. ⚠️ **Runtime service account 權限(最易漏)**:函式以 Admin SDK 刪 Auth user + Firestore,2nd gen 預設跑在 default compute SA(`<專案編號>-compute@developer.gserviceaccount.com`)。**Google 從 2024 起新專案的 default compute SA 不再自動帶 Editor**,故需確認該 SA 具備:
+   - **Firebase Authentication Admin**(`roles/firebaseauth.admin`)→ `auth.delete_user`
+   - **Cloud Datastore User**(`roles/datastore.user`)→ 刪 Firestore
+   - (或一次給 **Editor**)
+   - 權限不足會在**執行期**(非部署期)失敗,易誤判。部署後**兩支都要驗**(踩的權限不同):先用測試帳號呼叫 `delete_account_data`(只驗 Firestore 權限,帳號還在可重測),再呼叫 `delete_account`(多驗 Auth Admin 權限,帳號會被刪,順帶驗 client 登出流程)。
 
 ## CICD(`.github/workflows/firebase-functions-deploy.yml`)
 
 - 觸發:push 到 `master` 且 `functions/**`、`firebase.json`、`.firebaserc` 或本 workflow 變更;另支援手動 `workflow_dispatch`。
-- 以 `w9jds/firebase-action` 跑 `firebase deploy --only functions`,憑證用既有 secret **`FIREBASE_SERVICE_ACCOUNT_SEEK_PLAYER_F724E`**(與 hosting workflow 共用)。
+- 流程:setup-python 3.12 → 建 `functions/venv` + 裝依賴 → `npx firebase-tools deploy --only functions --non-interactive`;憑證用既有 secret **`FIREBASE_SERVICE_ACCOUNT_SEEK_PLAYER_F724E`**(與 hosting workflow 共用),經 `GOOGLE_APPLICATION_CREDENTIALS` 注入,deploy 後清除。
 - **權限注意**:hosting 用的 service account 不一定有 functions 部署權限。若 deploy 失敗,需在 GCP IAM 給該 service account 加上 **Cloud Functions Admin**、**Service Account User**、**Cloud Build Editor**(及首次部署所需的 Artifact Registry 權限)。
 - functions 的部署與 App 上架(`release.yml`,推 `v*` tag 觸發)各自獨立,互不影響。
 
 ## 後續
 
 - 重新引入資料儲存層後(見 `impl-decisions.md` Isar 待辦),把新增的雲端資料路徑補進 `_delete_user_data`。
-- 視需要加 Firestore security rules / emulator 測試。
+- **Firestore security rules**:兩支刪除 API 走 Admin SDK、**繞過 rules**,故 API 本身不需 rules。但 app 目前無 client 端直連 Firestore(無 `cloud_firestore`),正確狀態是**全拒絕**——若 Console 開通時選了 **test mode**(30 天任何人可讀寫),需立即改成 `allow read, write: if false;`;選 production mode 則免動。日後 client 直讀寫 `users/{uid}` 時再開本人限定規則(`request.auth.uid == uid`),屆時把 `firestore.rules` 收進 repo + `firebase.json`,跟 CICD 一起部署。
+- 視需要加 emulator 測試。
