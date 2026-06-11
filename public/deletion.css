@@ -1,0 +1,114 @@
+/* Seek Player 帳號/資料刪除頁共用樣式 */
+body {
+  background: #ECEFF1;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Roboto, "Noto Sans TC", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+main {
+  background: white;
+  max-width: 420px;
+  margin: 48px auto;
+  padding: 32px 24px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+h1 {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 4px;
+}
+h1 .en {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.54);
+}
+.desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.7);
+}
+section {
+  margin-top: 24px;
+}
+button {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 16px;
+  margin-top: 12px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #B0BEC5;
+  background: #FFFFFF;
+  cursor: pointer;
+}
+button:hover:not(:disabled) {
+  background: #F5F7F8;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+button.danger {
+  background: #C62828;
+  border-color: #C62828;
+  color: white;
+}
+button.danger:hover:not(:disabled) {
+  background: #B71C1C;
+}
+input[type="email"],
+input[type="password"] {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  margin-top: 12px;
+  font-size: 15px;
+  border: 1px solid #B0BEC5;
+  border-radius: 6px;
+}
+.divider {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 13px;
+  margin-top: 16px;
+}
+label.ack {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 16px;
+}
+.hint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 6px 0 0;
+}
+#recaptcha-container {
+  margin-top: 12px;
+}
+.error {
+  color: #C62828;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+.done {
+  color: #2E7D32;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.signed-in-as {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.7);
+  word-break: break-all;
+}
+.footer-link {
+  font-size: 13px;
+  margin-top: 24px;
+}

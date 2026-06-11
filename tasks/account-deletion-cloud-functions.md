@@ -51,6 +51,21 @@ App 商店(Google Play / App Store)要求提供「刪除帳號」與「刪除帳
 - **權限注意**:hosting 用的 service account 不一定有 functions 部署權限。若 deploy 失敗,需在 GCP IAM 給該 service account 加上 **Cloud Functions Admin**、**Service Account User**、**Cloud Build Editor**(及首次部署所需的 Artifact Registry 權限)。
 - functions 的部署與 App 上架(`release.yml`,推 `v*` tag 觸發)各自獨立,互不影響。
 
+## Google Play Console「資料刪除」連結(網頁已上線)
+
+Play Console → **應用程式內容 → 資料刪除** 填:
+
+| 欄位 | URL |
+| --- | --- |
+| 帳戶刪除要求網址(必填) | `https://seek-player-f724e.web.app/delete-account.html` |
+| 資料刪除要求網址(選填) | `https://seek-player-f724e.web.app/delete-data.html` |
+
+- 頁面在 `public/delete-account.html` / `public/delete-data.html`,共用 `public/deletion.js`(登入:Google popup + Email/密碼 + **手機 OTP**,與 App 支援的三種方式一致;手機登入用 `signInWithPhoneNumber` + 可見 reCAPTCHA,點「使用手機號碼登入」才渲染)與 `deletion.css`;Firebase 設定走 Hosting 保留路徑 `/__/firebase/init.js`(compat SDK 12.14.0,版本跟著 `index.html`)。
+- **不可**填 callable function 端點(`cloudfunctions.net/...`)— 那是帶 token 的 POST API,瀏覽器打開只會錯誤;Play 要求已解除安裝者也能在瀏覽器完成刪除。
+- `firebase.json` 的 `** → /index.html` rewrite 不影響:實體檔案優先。
+- Data safety 表單記得勾「提供刪除機制」。
+- 已於 2026-06-11 `firebase deploy --only hosting` 部署,兩頁皆 200。日後改 `public/**` push master 會走 hosting workflow 自動部署。
+
 ## 後續
 
 - 重新引入資料儲存層後(見 `impl-decisions.md` Isar 待辦),把新增的雲端資料路徑補進 `_delete_user_data`。
