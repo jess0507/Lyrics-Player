@@ -34,10 +34,13 @@ class _SignedOutViewState extends ConsumerState<SignedOutView> {
     try {
       await action();
       return true;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e, s) {
+      debugPrint('[Account] FirebaseAuthException code=${e.code} '
+          'message=${e.message}\n$s');
       _showMessage(e.message ?? e.code);
       return false;
-    } catch (e) {
+    } catch (e, s) {
+      debugPrint('[Account] 登入流程錯誤:$e\n$s');
       _showMessage('$e');
       return false;
     } finally {

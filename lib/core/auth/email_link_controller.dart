@@ -31,36 +31,50 @@ class EmailLinkController {
 
   /// 寄送 Email Link,並暫存 email 供回跳時完成登入。
   Future<void> sendLink(String email) async {
+    debugPrint('[EmailLink] sendLink: 準備寄送至 $email');
     await _prefs.setString(_pendingEmailKey, email);
-    await _auth.sendSignInLink(email);
+    try {
+      await _auth.sendSignInLink(email);
+      debugPrint('[EmailLink] sendLink: 寄送成功 → $email');
+    } catch (e, s) {
+      debugPrint('[EmailLink] sendLink 失敗:$e\n$s');
+      rethrow; // 交由 UI 顯示錯誤訊息
+    }
   }
 
   Future<void> _init() async {
     try {
       final initial = await _appLinks.getInitialLink();
+      debugPrint('[EmailLink] 初始連結:${initial ?? '(無)'}');
       if (initial != null) await _handleLink(initial);
-    } catch (e) {
-      debugPrint('Email Link 初始連結處理失敗:$e');
+    } catch (e, s) {
+      debugPrint('[EmailLink] 初始連結處理失敗:$e\n$s');
     }
     _sub = _appLinks.uriLinkStream.listen(
       _handleLink,
-      onError: (e) => debugPrint('Email Link 連結串流錯誤:$e'),
+      onError: (e, s) => debugPrint('[EmailLink] 連結串流錯誤:$e\n$s'),
     );
   }
 
   Future<void> _handleLink(Uri uri) async {
     final link = uri.toString();
-    if (!_auth.isSignInLink(link)) return;
-    final email = _prefs.getString(_pendingEmailKey);
-    if (email == null) {
-      debugPrint('收到 Email Link 但無暫存 email,無法完成登入');
+    debugPrint('[EmailLink] 收到連結:$link');
+    if (!_auth.isSignInLink(link)) {
+      debugPrint('[EmailLink] 此連結非登入連結,略過');
       return;
     }
+    final email = _prefs.getString(_pendingEmailKey);
+    if (email == null) {
+      debugPrint('[EmailLink] 收到登入連結但無暫存 email,無法完成登入');
+      return;
+    }
+    debugPrint('[EmailLink] 以 $email 嘗試完成登入…');
     try {
       await _auth.signInWithEmailLink(email, link);
       await _prefs.remove(_pendingEmailKey);
-    } catch (e) {
-      debugPrint('Email Link 登入失敗:$e');
+      debugPrint('[EmailLink] 登入成功 → $email');
+    } catch (e, s) {
+      debugPrint('[EmailLink] 登入失敗:$e\n$s');
     }
   }
 
