@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,6 +48,12 @@ class SignedInView extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
         OutlinedButton.icon(
+          onPressed: () => _confirmDeleteData(context, auth),
+          icon: const Icon(Icons.cleaning_services_outlined),
+          label: Text(l10n.account_delete_data),
+        ),
+        const SizedBox(height: 12),
+        OutlinedButton.icon(
           style: OutlinedButton.styleFrom(
             foregroundColor: Theme.of(context).colorScheme.error,
           ),
@@ -58,8 +65,43 @@ class SignedInView extends ConsumerWidget {
     );
   }
 
+  Future<void> _confirmDeleteData(
+    BuildContext context,
+    AuthService auth,
+  ) async {
+    final l10n = AppLocalizations.of(context)!;
+    final messenger = ScaffoldMessenger.of(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.account_delete_data),
+        content: Text(l10n.account_delete_data_confirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n.common_cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(l10n.common_delete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    try {
+      await auth.deleteAccountData();
+      messenger.showSnackBar(
+        SnackBar(content: Text(l10n.account_delete_data_done)),
+      );
+    } on FirebaseFunctionsException catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text(e.message ?? e.code)));
+    }
+  }
+
   Future<void> _confirmDelete(BuildContext context, AuthService auth) async {
     final l10n = AppLocalizations.of(context)!;
+    final messenger = ScaffoldMessenger.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -80,11 +122,10 @@ class SignedInView extends ConsumerWidget {
     if (confirmed != true) return;
     try {
       await auth.deleteAccount();
+    } on FirebaseFunctionsException catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text(e.message ?? e.code)));
     } on FirebaseAuthException catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(e.message ?? e.code)));
-      }
+      messenger.showSnackBar(SnackBar(content: Text(e.message ?? e.code)));
     }
   }
 }

@@ -200,6 +200,16 @@ class AppLocalizationsZh extends AppLocalizations {
       'Are you sure you want to delete your account? This cannot be undone.';
 
   @override
+  String get account_delete_data => 'Delete account data';
+
+  @override
+  String get account_delete_data_confirm =>
+      'Delete all your cloud data while keeping your account? This cannot be undone.';
+
+  @override
+  String get account_delete_data_done => 'Your account data has been deleted.';
+
+  @override
   String get account_forgot_password => 'Forgot password?';
 
   @override
@@ -425,6 +435,15 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get account_delete_confirm => '确定要删除账号吗？此操作无法撤销。';
 
   @override
+  String get account_delete_data => '删除账号数据';
+
+  @override
+  String get account_delete_data_confirm => '确定要删除你的所有云端数据但保留账号吗？此操作无法撤销。';
+
+  @override
+  String get account_delete_data_done => '你的账号数据已删除。';
+
+  @override
   String get account_forgot_password => '忘记密码？';
 
   @override
@@ -647,6 +666,15 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get account_delete_confirm => '確定要刪除帳號嗎？此操作無法復原。';
+
+  @override
+  String get account_delete_data => '刪除帳號資料';
+
+  @override
+  String get account_delete_data_confirm => '確定要刪除你的所有雲端資料但保留帳號嗎？此操作無法復原。';
+
+  @override
+  String get account_delete_data_done => '你的帳號資料已刪除。';
 
   @override
   String get account_forgot_password => '忘記密碼？';

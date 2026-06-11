@@ -1,14 +1,19 @@
 import 'dart:async';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+/// 必須與 Cloud Functions 部署的 region(`functions/main.py` 的 `_REGION`)一致。
+const _functionsRegion = 'asia-east1';
+
 /// Firebase Authentication 封裝：Email/密碼 / 手機 OTP / Google。
 class AuthService {
-  AuthService(this._auth);
+  AuthService(this._auth, this._functions);
 
   final FirebaseAuth _auth;
+  final FirebaseFunctions _functions;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   User? get currentUser => _auth.currentUser;
@@ -80,11 +85,26 @@ class AuthService {
     await _auth.signOut();
   }
 
+  /// 只刪除使用者的雲端資料(Firestore `users/{uid}`),保留登入帳號。
+  ///
+  /// 由 Cloud Function `delete_account_data` 以 Admin SDK 執行。
+  Future<void> deleteAccountData() async {
+    await _functions.httpsCallable('delete_account_data').call();
+  }
+
+  /// 刪除使用者雲端資料後刪除其 Firebase Auth 帳號,最後在本地登出。
+  ///
+  /// 由 Cloud Function `delete_account` 以 Admin SDK 執行,避免 client 端
+  /// `currentUser.delete()` 需要近期重新登入而失敗。
   Future<void> deleteAccount() async {
-    await _auth.currentUser?.delete();
+    await _functions.httpsCallable('delete_account').call();
+    await signOut();
   }
 }
 
 final authServiceProvider = Provider<AuthService>((ref) {
-  return AuthService(FirebaseAuth.instance);
+  return AuthService(
+    FirebaseAuth.instance,
+    FirebaseFunctions.instanceFor(region: _functionsRegion),
+  );
 });

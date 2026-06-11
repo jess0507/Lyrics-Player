@@ -504,6 +504,24 @@ abstract class AppLocalizations {
   /// **'Are you sure you want to delete your account? This cannot be undone.'**
   String get account_delete_confirm;
 
+  /// No description provided for @account_delete_data.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account data'**
+  String get account_delete_data;
+
+  /// No description provided for @account_delete_data_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all your cloud data while keeping your account? This cannot be undone.'**
+  String get account_delete_data_confirm;
+
+  /// No description provided for @account_delete_data_done.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account data has been deleted.'**
+  String get account_delete_data_done;
+
   /// No description provided for @account_forgot_password.
   ///
   /// In en, this message translates to:

@@ -201,6 +201,16 @@ class AppLocalizationsHi extends AppLocalizations {
       'Are you sure you want to delete your account? This cannot be undone.';
 
   @override
+  String get account_delete_data => 'Delete account data';
+
+  @override
+  String get account_delete_data_confirm =>
+      'Delete all your cloud data while keeping your account? This cannot be undone.';
+
+  @override
+  String get account_delete_data_done => 'Your account data has been deleted.';
+
+  @override
   String get account_forgot_password => 'Forgot password?';
 
   @override
