@@ -1,0 +1,32 @@
+name: Deploy Cloud Functions
+
+# 當 master 上的 functions/ 或 Firebase 設定變更時，部署 Cloud Functions。
+# 也可在 Actions 頁手動觸發（workflow_dispatch）。
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "functions/**"
+      - "firebase.json"
+      - ".firebaserc"
+      - ".github/workflows/firebase-functions-deploy.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy functions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Python runtime 由 firebase CLI 在 Cloud Build 端打包，本機免建 venv。
+      # 憑證沿用 hosting 的 service account secret；若權限不足見
+      # tasks/account-deletion-cloud-functions.md 的「權限注意」。
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions
+        env:
+          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SEEK_PLAYER_F724E }}
+          PROJECT_ID: seek-player-f724e
