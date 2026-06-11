@@ -28,14 +28,18 @@ class _SignedOutViewState extends ConsumerState<SignedOutView> {
 
   AuthService get _auth => ref.read(authServiceProvider);
 
-  Future<void> _run(Future<void> Function() action) async {
+  /// 執行 [action],成功回傳 true、失敗顯示錯誤並回傳 false。
+  Future<bool> _run(Future<void> Function() action) async {
     setState(() => _busy = true);
     try {
       await action();
+      return true;
     } on FirebaseAuthException catch (e) {
       _showMessage(e.message ?? e.code);
+      return false;
     } catch (e) {
       _showMessage('$e');
+      return false;
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -53,8 +57,8 @@ class _SignedOutViewState extends ConsumerState<SignedOutView> {
     if (email.isEmpty) return;
     final controller = ref.read(emailLinkControllerProvider);
     if (controller == null) return; // Firebase 不可用
-    await _run(() => controller.sendLink(email));
-    _showMessage(l10n.account_link_sent);
+    final ok = await _run(() => controller.sendLink(email));
+    if (ok) _showMessage(l10n.account_link_sent);
   }
 
   @override

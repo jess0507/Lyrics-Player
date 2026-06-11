@@ -11,12 +11,11 @@ class AuthService {
 
   /// Email Link 的回跳設定。
   ///
-  /// TODO(後端設定)：
-  /// - [url] 需替換為實際在 Firebase Console「Authorized domains」中授權的
-  ///   Hosting 連結網域（Dynamic Links 已淘汰，改用 Hosting / App Links）。
-  /// - 並在 Firebase Console 啟用 Email/Password → Email link 登入方式。
+  /// [url] 為 Firebase Hosting 預設網域(已在 Authorized domains 中)。
+  /// 仍需在 Firebase Console 啟用 Email/Password → Email link 登入方式,
+  /// 並完成 App Links / Associated Domains 關聯(public/.well-known/*)。
   static final _signInLinkSettings = ActionCodeSettings(
-    url: 'https://seekplayer.example.com/signin', // TODO: 換成實際授權網域
+    url: 'https://seek-player-f724e.web.app/signin',
     handleCodeInApp: true,
     androidPackageName: 'com.js.seek_player',
     androidInstallApp: true,
