@@ -1,15 +1,24 @@
 # Android Keystore 與 SHA-256 指紋
 
-用途:App Links(Email Link 登入回跳)需要把 App 簽章的 **SHA-256 指紋** 寫進
-`public/.well-known/assetlinks.json`;簽章本身則由 keystore 產生。本文記錄如何
-產生 keystore 與取得 SHA-256。
 
-> 相關設定見 [tasks/auth-supported-methods.md](../tasks/auth-supported-methods.md)、
-> 簽章/上架見 [.github/workflows/RELEASE_SETUP.md](../.github/workflows/RELEASE_SETUP.md)。
+### 一次列出所有 variant 的指紋
+```
+cd android && ./gradlew signingReport
+```
 
----
+## Debug（本機開發）
+本機未設定 release 簽章時，build 會回退使用 debug keystore：
+```
+keytool -list -v -alias androiddebugkey \
+  -keystore ~/.android/debug.keystore \
+  -storepass android -keypass android
+```
 
-## 1. 產生 release keystore(只需一次,務必妥善保存)
+> debug keystore 每台機器不同，每位開發者需各自登記自己的 SHA。
+
+## Release（正式簽章）
+
+### 1. 產生 release keystore(只需一次,務必妥善保存)
 
 ```bash
 keytool -genkey -v -keystore upload-keystore.jks \
@@ -38,69 +47,11 @@ storeFile=/絕對路徑/upload-keystore.jks
 
 ---
 
-## 2. 取得 SHA-256 指紋
-
-### (a) 從 release / upload keystore
+### 2. 取得 SHA-256 指紋, 從 release / upload keystore
 
 ```bash
 keytool -list -v -keystore upload-keystore.jks -alias upload
 ```
 
 輸入 keystore 密碼後,於 `Certificate fingerprints` 區找 **SHA256** 那行,
-格式如 `AB:CD:EF:...`(冒號分隔的 32 組十六進位)。把它貼到
-`public/.well-known/assetlinks.json` 的 `sha256_cert_fingerprints`。
-
-### (b) debug keystore(本機開發測試用)
-
-debug 版簽章不同於 release,若要在 debug build 測 App Links,需另外把 debug 的
-SHA-256 也加進 `assetlinks.json`(可放多組指紋):
-
-```bash
-keytool -list -v \
-  -keystore ~/.android/debug.keystore \
-  -alias androiddebugkey -storepass android -keypass android
-```
-
-### (c) ⚠️ 若使用 Play App Signing(正式版關鍵)
-
-啟用 Play App Signing 後,Google 會用**自己的金鑰重新簽章**,實際安裝到使用者
-裝置的 App 指紋 ≠ 你的 upload keystore 指紋。此時 `assetlinks.json` 必須使用
-**Google 重簽後的 SHA-256**,否則正式版 App Links 驗證會失敗。
-
-取得位置:**Play Console → 你的 App → Test and release → App integrity →
-App signing**,複製「App signing key certificate」的 SHA-256。
-建議把 upload 與 Play 兩組指紋都放進 `assetlinks.json` 以涵蓋各情境。
-
----
-
-## 3. 填入 assetlinks.json
-
-```json
-[
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "com.js.seek_player",
-      "sha256_cert_fingerprints": [
-        "<release/upload 的 SHA-256>",
-        "<Play App Signing 的 SHA-256(若有啟用)>"
-      ]
-    }
-  }
-]
-```
-
-改到 `public/` 後 push master 會觸發 Firebase Hosting 部署。部署後驗證:
-
-```bash
-curl https://seek-player-f724e.web.app/.well-known/assetlinks.json
-```
-
-並可在裝置上重新驗證 App Links:
-
-```bash
-adb shell pm verify-app-links --re-verify com.js.seek_player
-adb shell am start -a android.intent.action.VIEW \
-  -d "https://seek-player-f724e.web.app/signin"
-```
+格式如 `AB:CD:EF:...`(冒號分隔的 32 組十六進位)。
