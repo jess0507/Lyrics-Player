@@ -405,7 +405,7 @@ abstract class AppLocalizations {
   /// No description provided for @account_signed_out_message.
   ///
   /// In en, this message translates to:
-  /// **'Sign in to sync, or continue as a guest.'**
+  /// **'Sign in to sync your data across devices.'**
   String get account_signed_out_message;
 
   /// No description provided for @account_email.
@@ -437,6 +437,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign in with Google'**
   String get account_sign_in_google;
+
+  /// No description provided for @account_method_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with email'**
+  String get account_method_email;
+
+  /// No description provided for @account_send_link.
+  ///
+  /// In en, this message translates to:
+  /// **'Send sign-in link'**
+  String get account_send_link;
+
+  /// No description provided for @account_link_sent.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ve emailed you a sign-in link. Tap it to finish signing in.'**
+  String get account_link_sent;
 
   /// No description provided for @account_continue_guest.
   ///
@@ -480,11 +498,11 @@ abstract class AppLocalizations {
   /// **'Anonymous account'**
   String get account_anonymous;
 
-  /// No description provided for @firebase_unavailable.
+  /// No description provided for @account_unavailable.
   ///
   /// In en, this message translates to:
-  /// **'Account features are unavailable because Firebase is not configured.'**
-  String get firebase_unavailable;
+  /// **'Account features are temporarily unavailable.'**
+  String get account_unavailable;
 
   /// No description provided for @common_cancel.
   ///

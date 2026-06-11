@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/auth/email_link_controller.dart';
 import 'l10n/app_localizations.dart';
 import 'router/app_router.dart';
 import 'shared/providers/settings_controller.dart';
@@ -13,6 +14,8 @@ class SeekPlayerApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsControllerProvider);
     final router = ref.watch(routerProvider);
+    // 啟動時建立 Email Link 監聽(處理點連結回跳完成登入)。
+    ref.watch(emailLinkControllerProvider);
 
     return MaterialApp.router(
       onGenerateTitle: (context) => AppLocalizations.of(context)!.app_title,

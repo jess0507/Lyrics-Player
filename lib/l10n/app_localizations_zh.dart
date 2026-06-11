@@ -148,7 +148,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get account_signed_out_message =>
-      'Sign in to sync, or continue as a guest.';
+      'Sign in to sync your data across devices.';
 
   @override
   String get account_email => 'Email';
@@ -164,6 +164,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get account_sign_in_google => 'Sign in with Google';
+
+  @override
+  String get account_method_email => 'Sign in with email';
+
+  @override
+  String get account_send_link => 'Send sign-in link';
+
+  @override
+  String get account_link_sent =>
+      'We\'ve emailed you a sign-in link. Tap it to finish signing in.';
 
   @override
   String get account_continue_guest => 'Continue as guest';
@@ -188,8 +198,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get account_anonymous => 'Anonymous account';
 
   @override
-  String get firebase_unavailable =>
-      'Account features are unavailable because Firebase is not configured.';
+  String get account_unavailable =>
+      'Account features are temporarily unavailable.';
 
   @override
   String get common_cancel => '取消';
@@ -353,7 +363,7 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get account_guest => '访客';
 
   @override
-  String get account_signed_out_message => '登录以同步数据，或以访客身份继续使用。';
+  String get account_signed_out_message => '登录以在不同设备间同步你的数据。';
 
   @override
   String get account_email => '电子邮件';
@@ -369,6 +379,15 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get account_sign_in_google => '使用 Google 登录';
+
+  @override
+  String get account_method_email => '使用 Email 登录';
+
+  @override
+  String get account_send_link => '发送登录链接';
+
+  @override
+  String get account_link_sent => '已将登录链接发送到你的邮箱,请点击链接完成登录。';
 
   @override
   String get account_continue_guest => '以访客身份继续';
@@ -392,7 +411,7 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get account_anonymous => '匿名账号';
 
   @override
-  String get firebase_unavailable => '由于 Firebase 尚未配置，账户功能暂时不可用。';
+  String get account_unavailable => '账户功能暂时不可用。';
 
   @override
   String get common_cancel => '取消';
@@ -556,7 +575,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get account_guest => '訪客';
 
   @override
-  String get account_signed_out_message => '登入以同步資料，或以訪客身分繼續使用。';
+  String get account_signed_out_message => '登入以在不同裝置間同步你的資料。';
 
   @override
   String get account_email => '電子郵件';
@@ -572,6 +591,15 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get account_sign_in_google => '使用 Google 登入';
+
+  @override
+  String get account_method_email => '使用 Email 登入';
+
+  @override
+  String get account_send_link => '傳送登入連結';
+
+  @override
+  String get account_link_sent => '已將登入連結寄到你的信箱,請點擊連結完成登入。';
 
   @override
   String get account_continue_guest => '以訪客身分繼續';
@@ -595,7 +623,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get account_anonymous => '匿名帳號';
 
   @override
-  String get firebase_unavailable => '因 Firebase 尚未設定，帳戶功能暫時無法使用。';
+  String get account_unavailable => '帳戶功能暫時無法使用。';
 
   @override
   String get common_cancel => '取消';

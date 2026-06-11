@@ -149,7 +149,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get account_signed_out_message =>
-      'Sign in to sync, or continue as a guest.';
+      'Sign in to sync your data across devices.';
 
   @override
   String get account_email => 'Email';
@@ -165,6 +165,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get account_sign_in_google => 'Sign in with Google';
+
+  @override
+  String get account_method_email => 'Sign in with email';
+
+  @override
+  String get account_send_link => 'Send sign-in link';
+
+  @override
+  String get account_link_sent =>
+      'We\'ve emailed you a sign-in link. Tap it to finish signing in.';
 
   @override
   String get account_continue_guest => 'Continue as guest';
@@ -189,8 +199,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get account_anonymous => 'Anonymous account';
 
   @override
-  String get firebase_unavailable =>
-      'Account features are unavailable because Firebase is not configured.';
+  String get account_unavailable =>
+      'Account features are temporarily unavailable.';
 
   @override
   String get common_cancel => 'Annuler';

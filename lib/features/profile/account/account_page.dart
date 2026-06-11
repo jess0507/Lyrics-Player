@@ -14,6 +14,9 @@ class AccountPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final firebaseReady = ref.watch(firebaseAvailableProvider);
+    if (!firebaseReady) {
+      debugPrint('帳戶頁面:Firebase 不可用,帳戶功能停用');
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.profile_account)),
@@ -22,7 +25,7 @@ class AccountPage extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(32),
                 child: Text(
-                  l10n.firebase_unavailable,
+                  l10n.account_unavailable,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -31,8 +34,8 @@ class AccountPage extends ConsumerWidget {
                 loading: () =>
                     const Center(child: CircularProgressIndicator()),
                 error: (e, _) => Center(child: Text('$e')),
-                data: (user) => user == null || user.isAnonymous
-                    ? SignedOutView(anonymous: user?.isAnonymous ?? false)
+                data: (user) => user == null
+                    ? const SignedOutView()
                     : SignedInView(user: user),
               ),
     );
