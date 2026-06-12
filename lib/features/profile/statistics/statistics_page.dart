@@ -98,11 +98,12 @@ class StatisticsPage extends ConsumerWidget {
                   ListTile(
                     leading: CircleAvatar(child: Text('${i + 1}')),
                     title: Text(
-                      top[i].key,
+                      top[i].title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    trailing: Text('×${top[i].value}'),
+                    subtitle: Text(formatDuration(top[i].listenTime)),
+                    trailing: Text('×${top[i].playCount}'),
                   ),
               ],
             ),

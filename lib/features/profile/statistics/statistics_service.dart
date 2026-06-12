@@ -26,19 +26,42 @@ class StatisticsData {
 
   Duration get totalListenTime => Duration(milliseconds: totalListenMs);
 
-  /// 依播放次數排序的前幾名（標題, 次數）。
+  /// 依播放次數排序的前幾名（標題、次數、聆聽時長）。
   ///
   /// 以 title 聚合：從雲端還原的記錄帶舊裝置的 trackId，同一首歌在新裝置
   /// 播放會另起一筆，聚合後排行才不會同曲分裂成兩列。
-  List<MapEntry<String, int>> topTracks([int limit = 5]) {
-    final byTitle = <String, int>{};
+  List<TrackRanking> topTracks([int limit = 5]) {
+    final byTitle = <String, ({int playCount, int listenMs})>{};
     for (final t in tracks) {
-      byTitle[t.title] = (byTitle[t.title] ?? 0) + t.playCount;
+      final prev = byTitle[t.title] ?? (playCount: 0, listenMs: 0);
+      byTitle[t.title] = (
+        playCount: prev.playCount + t.playCount,
+        listenMs: prev.listenMs + t.listenMs,
+      );
     }
-    final entries = byTitle.entries.toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
+    final entries = [
+      for (final e in byTitle.entries)
+        TrackRanking(
+          title: e.key,
+          playCount: e.value.playCount,
+          listenTime: Duration(milliseconds: e.value.listenMs),
+        ),
+    ]..sort((a, b) => b.playCount.compareTo(a.playCount));
     return entries.take(limit).toList();
   }
+}
+
+/// 排行榜單一列：同 title 聚合後的次數與聆聽時長。
+class TrackRanking {
+  const TrackRanking({
+    required this.title,
+    required this.playCount,
+    required this.listenTime,
+  });
+
+  final String title;
+  final int playCount;
+  final Duration listenTime;
 }
 
 class StatisticsController extends Notifier<StatisticsData> {
