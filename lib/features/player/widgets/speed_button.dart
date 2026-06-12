@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
 
-/// 播放速度按鈕：顯示目前倍速，點擊開啟速度選擇對話框。
+/// 播放速度按鈕：點擊開啟速度選擇對話框，非 1.0x 時顯示選取狀態。
 class SpeedButton extends StatelessWidget {
-  const SpeedButton({super.key, required this.audio, required this.enabled});
+  const SpeedButton({
+    super.key,
+    required this.audio,
+    required this.enabled,
+    this.iconSize,
+    this.iconColor,
+  });
 
   final AudioPlayerService audio;
   final bool enabled;
+  final double? iconSize;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +24,15 @@ class SpeedButton extends StatelessWidget {
       stream: audio.speedStream,
       builder: (context, snapshot) {
         final speed = snapshot.data ?? 1.0;
-        return TextButton.icon(
+        return IconButton(
+          iconSize: iconSize,
+          color: iconColor,
+          isSelected: speed != 1.0,
+          tooltip: '${speed.toStringAsFixed(1)}x',
           onPressed: enabled
               ? () => _showSpeedDialog(context, audio, speed)
               : null,
           icon: const Icon(Icons.speed),
-          label: Text('${speed.toStringAsFixed(1)}x'),
         );
       },
     );

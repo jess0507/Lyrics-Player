@@ -19,6 +19,18 @@ class MusicListPage extends ConsumerStatefulWidget {
 
 class _MusicListPageState extends ConsumerState<MusicListPage> {
   bool _scanning = false;
+  final _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _clearSearch() {
+    _searchController.clear();
+    ref.read(musicSearchQueryProvider.notifier).state = '';
+  }
 
   /// 確保權限後重新掃描裝置音樂庫。
   Future<void> _rescan() async {
@@ -65,16 +77,34 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
             ? PreferredSize(
                 preferredSize: const Size.fromHeight(40),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                  child: SearchBar(
-                    elevation: const WidgetStatePropertyAll(0),
-                    constraints:
-                        const BoxConstraints(minHeight: 40, maxHeight: 40),
-                    leading: const Icon(Icons.search),
-                    hintText: l10n.music_search,
-                    onChanged: (value) =>
-                        ref.read(musicSearchQueryProvider.notifier).state =
-                            value,
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                  child: ValueListenableBuilder<TextEditingValue>(
+                    valueListenable: _searchController,
+                    builder: (context, value, _) => SearchBar(
+                      controller: _searchController,
+                      elevation: const WidgetStatePropertyAll(0),
+                      padding: const WidgetStatePropertyAll(
+                        EdgeInsets.only(left: 16, right: 4),
+                      ),
+                      constraints: const BoxConstraints(
+                        minHeight: 40,
+                        maxHeight: 40,
+                      ),
+                      leading: const Icon(Icons.search),
+                      trailing: value.text.isEmpty
+                          ? null
+                          : [
+                              IconButton(
+                                icon: const Icon(Icons.close),
+                                visualDensity: VisualDensity.compact,
+                                onPressed: _clearSearch,
+                              ),
+                            ],
+                      hintText: l10n.music_search,
+                      onChanged: (value) =>
+                          ref.read(musicSearchQueryProvider.notifier).state =
+                              value,
+                    ),
                   ),
                 ),
               )

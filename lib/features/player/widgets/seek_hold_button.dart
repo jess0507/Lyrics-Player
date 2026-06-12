@@ -53,7 +53,7 @@ class _SeekHoldButtonState extends State<SeekHoldButton> {
       onLongPress: widget.enabled ? _startRepeat : null,
       onLongPressUp: _stopRepeat,
       child: IconButton(
-        iconSize: 40,
+        iconSize: 30,
         tooltip: widget.tooltip,
         onPressed: widget.enabled
             ? () => widget.audio.seekRelative(widget.delta)

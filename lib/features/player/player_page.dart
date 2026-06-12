@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:seek_player/features/player/widgets/secondary_controls.dart';
 
 import '../../core/audio/audio_player_service.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/widgets/marquee_text.dart';
 import 'playback_controller.dart';
 import 'widgets/player_artwork.dart';
 import 'widgets/player_controls.dart';
@@ -31,61 +33,56 @@ class PlayerPage extends ConsumerWidget {
           tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
           onPressed: () => Navigator.of(context).pop(),
         ),
-        // 標題顯示目前曲名 / 檔名，過長時跑馬燈滾動。
-        // title: StreamBuilder<SequenceState?>(
-        //   stream: audio.player.sequenceStateStream,
-        //   builder: (context, snapshot) {
-        //     final currentItem = snapshot.data?.currentSource?.tag;
-        //     final title = currentItem is MediaItem
-        //         ? currentItem.title
-        //         : l10n.player_nothing_playing;
-        //     return MarqueeText(
-        //       title,
-        //       style: Theme.of(context).appBarTheme.titleTextStyle ??
-        //           Theme.of(context).textTheme.titleLarge,
-        //     );
-        //   },
-        // ),
+        // 標題顯示目前曲名 / 檔名與演出者，過長時跑馬燈滾動。
+        title: StreamBuilder<SequenceState?>(
+          stream: audio.player.sequenceStateStream,
+          builder: (context, snapshot) {
+            final currentItem = snapshot.data?.currentSource?.tag;
+            final title = currentItem is MediaItem
+                ? currentItem.title
+                : l10n.player_nothing_playing;
+            final artist = currentItem is MediaItem
+                ? currentItem.artist ?? ''
+                : '';
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                MarqueeText(
+                  title,
+                  style:
+                      Theme.of(context).appBarTheme.titleTextStyle ??
+                      Theme.of(context).textTheme.titleLarge,
+                ),
+                if (artist.isNotEmpty)
+                  MarqueeText(
+                    artist,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
       ),
       body: StreamBuilder<SequenceState?>(
         stream: audio.player.sequenceStateStream,
         builder: (context, snapshot) {
           final sequenceState = snapshot.data;
           final currentItem = sequenceState?.currentSource?.tag;
-          final title = currentItem is MediaItem
-              ? currentItem.title
-              : l10n.player_nothing_playing;
-          final artist = currentItem is MediaItem
-              ? currentItem.artist ?? ''
-              : '';
           final hasTrack = currentItem is MediaItem;
 
           return Padding(
             padding: const EdgeInsets.all(24),
             child: Column(
               children: [
-                const Spacer(),
+                Spacer(),
                 PlayerArtwork(active: hasTrack),
-                const SizedBox(height: 32),
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (artist.isNotEmpty) ...[
-                  const SizedBox(height: 8),
-                  Text(
-                    artist,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.outline,
-                    ),
-                  ),
-                ],
-                const SizedBox(height: 32),
-                SeekBar(audio: audio, enabled: hasTrack),
+                Spacer(),
+                SecondaryControls(audio: audio, enabled: hasTrack),
                 const SizedBox(height: 16),
+                SeekBar(audio: audio, enabled: hasTrack),
+                const SizedBox(height: 12),
                 PlayerControls(audio: audio, enabled: hasTrack),
                 const Spacer(),
               ],

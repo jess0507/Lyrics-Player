@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
 import 'play_pause_button.dart';
 import 'seek_hold_button.dart';
-import 'speed_button.dart';
 
 /// 快進 / 快退的單次步進量。
 const _kSeekStep = Duration(seconds: 5);
@@ -26,11 +24,6 @@ class PlayerControls extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            IconButton(
-              iconSize: 36,
-              onPressed: enabled ? audio.seekToPrevious : null,
-              icon: const Icon(Icons.skip_previous),
-            ),
             SeekHoldButton(
               audio: audio,
               enabled: enabled,
@@ -38,7 +31,17 @@ class PlayerControls extends StatelessWidget {
               icon: Icons.replay_5,
               tooltip: l10n.player_rewind,
             ),
+            IconButton(
+              iconSize: 30,
+              onPressed: enabled ? audio.seekToPrevious : null,
+              icon: const Icon(Icons.skip_previous),
+            ),
             PlayPauseButton(audio: audio, enabled: enabled),
+            IconButton(
+              iconSize: 30,
+              onPressed: enabled ? audio.seekToNext : null,
+              icon: const Icon(Icons.skip_next),
+            ),
             SeekHoldButton(
               audio: audio,
               enabled: enabled,
@@ -46,57 +49,9 @@ class PlayerControls extends StatelessWidget {
               icon: Icons.forward_5,
               tooltip: l10n.player_forward,
             ),
-            IconButton(
-              iconSize: 36,
-              onPressed: enabled ? audio.seekToNext : null,
-              icon: const Icon(Icons.skip_next),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        // 次控制列：隨機、播放速度、循環。
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            StreamBuilder<bool>(
-              stream: audio.shuffleModeEnabledStream,
-              builder: (context, snapshot) {
-                final shuffle = snapshot.data ?? false;
-                return IconButton(
-                  isSelected: shuffle,
-                  onPressed: enabled ? () => audio.setShuffle(!shuffle) : null,
-                  icon: const Icon(Icons.shuffle),
-                );
-              },
-            ),
-            SpeedButton(audio: audio, enabled: enabled),
-            StreamBuilder<LoopMode>(
-              stream: audio.loopModeStream,
-              builder: (context, snapshot) {
-                final mode = snapshot.data ?? LoopMode.off;
-                final icon = switch (mode) {
-                  LoopMode.one => Icons.repeat_one,
-                  _ => Icons.repeat,
-                };
-                return IconButton(
-                  isSelected: mode != LoopMode.off,
-                  onPressed: enabled ? () => _cycleLoop(mode) : null,
-                  icon: Icon(icon),
-                );
-              },
-            ),
           ],
         ),
       ],
     );
-  }
-
-  void _cycleLoop(LoopMode current) {
-    final next = switch (current) {
-      LoopMode.off => LoopMode.all,
-      LoopMode.all => LoopMode.one,
-      LoopMode.one => LoopMode.off,
-    };
-    audio.setLoopMode(next);
   }
 }
