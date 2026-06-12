@@ -366,6 +366,30 @@ abstract class AppLocalizations {
   /// **'Reset statistics'**
   String get statistics_reset;
 
+  /// No description provided for @statistics_reset_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset statistics?'**
+  String get statistics_reset_title;
+
+  /// No description provided for @statistics_reset_message.
+  ///
+  /// In en, this message translates to:
+  /// **'All listening statistics on this device will be deleted. This cannot be undone.'**
+  String get statistics_reset_message;
+
+  /// No description provided for @statistics_reset_message_cloud.
+  ///
+  /// In en, this message translates to:
+  /// **'All listening statistics on this device and your cloud backup will be deleted. This cannot be undone.'**
+  String get statistics_reset_message_cloud;
+
+  /// No description provided for @statistics_reset_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get statistics_reset_confirm;
+
   /// No description provided for @about_version.
   ///
   /// In en, this message translates to:

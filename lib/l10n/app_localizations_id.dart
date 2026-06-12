@@ -130,6 +130,20 @@ class AppLocalizationsId extends AppLocalizations {
   String get statistics_reset => 'Reset statistics';
 
   @override
+  String get statistics_reset_title => 'Reset statistics?';
+
+  @override
+  String get statistics_reset_message =>
+      'All listening statistics on this device will be deleted. This cannot be undone.';
+
+  @override
+  String get statistics_reset_message_cloud =>
+      'All listening statistics on this device and your cloud backup will be deleted. This cannot be undone.';
+
+  @override
+  String get statistics_reset_confirm => 'Reset';
+
+  @override
   String get about_version => 'Version';
 
   @override

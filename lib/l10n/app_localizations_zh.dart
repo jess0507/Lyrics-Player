@@ -129,6 +129,20 @@ class AppLocalizationsZh extends AppLocalizations {
   String get statistics_reset => 'Reset statistics';
 
   @override
+  String get statistics_reset_title => 'Reset statistics?';
+
+  @override
+  String get statistics_reset_message =>
+      'All listening statistics on this device will be deleted. This cannot be undone.';
+
+  @override
+  String get statistics_reset_message_cloud =>
+      'All listening statistics on this device and your cloud backup will be deleted. This cannot be undone.';
+
+  @override
+  String get statistics_reset_confirm => 'Reset';
+
+  @override
   String get about_version => 'Version';
 
   @override
@@ -369,6 +383,18 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get statistics_reset => '重置统计数据';
 
   @override
+  String get statistics_reset_title => '重置统计数据？';
+
+  @override
+  String get statistics_reset_message => '将删除此设备上的所有收听统计，此操作无法撤销。';
+
+  @override
+  String get statistics_reset_message_cloud => '将删除此设备上的所有收听统计与云端备份，此操作无法撤销。';
+
+  @override
+  String get statistics_reset_confirm => '重置';
+
+  @override
   String get about_version => '版本';
 
   @override
@@ -603,6 +629,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get statistics_reset => '重設統計數據';
+
+  @override
+  String get statistics_reset_title => '重設統計數據？';
+
+  @override
+  String get statistics_reset_message => '將刪除此裝置上的所有聆聽統計，此操作無法復原。';
+
+  @override
+  String get statistics_reset_message_cloud => '將刪除此裝置上的所有聆聽統計與雲端備份，此操作無法復原。';
+
+  @override
+  String get statistics_reset_confirm => '重設';
 
   @override
   String get about_version => '版本';
