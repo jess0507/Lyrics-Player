@@ -154,13 +154,21 @@ class _SignedOutViewState extends ConsumerState<SignedOutView> {
           const Divider(),
           const SizedBox(height: 8),
         ],
-        // 登入方式選項:Google → 手機 OTP → Email 登入連結。
+        // 登入方式選項:Google → Facebook → 手機 OTP → Email 登入連結。
         OutlinedButton.icon(
           onPressed: _busy ? null : () => _run(_auth.signInWithGoogle),
           icon: const Icon(Icons.account_circle),
           label: Text(l10n.account_sign_in_google),
         ),
         const SizedBox(height: 8),
+        // Facebook 登入暫時隱藏(Meta App / Firebase Console 尚未設定),
+        // 啟用方式見 tasks/auth-supported-methods.md。
+        // OutlinedButton.icon(
+        //   onPressed: _busy ? null : () => _run(_auth.signInWithFacebook),
+        //   icon: const Icon(Icons.facebook),
+        //   label: Text(l10n.account_sign_in_facebook),
+        // ),
+        // const SizedBox(height: 8),
         OutlinedButton.icon(
           onPressed: _busy ? null : () => _select(_Method.phone),
           icon: const Icon(Icons.sms_outlined),

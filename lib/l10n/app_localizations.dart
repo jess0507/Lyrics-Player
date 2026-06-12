@@ -438,6 +438,12 @@ abstract class AppLocalizations {
   /// **'Sign in with Google'**
   String get account_sign_in_google;
 
+  /// No description provided for @account_sign_in_facebook.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Facebook'**
+  String get account_sign_in_facebook;
+
   /// No description provided for @account_method_email.
   ///
   /// In en, this message translates to:

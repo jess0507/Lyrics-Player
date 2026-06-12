@@ -8,7 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 /// 必須與 Cloud Functions 部署的 region(`functions/main.py` 的 `_REGION`)一致。
 const _functionsRegion = 'asia-east1';
 
-/// Firebase Authentication 封裝：Email/密碼 / 手機 OTP / Google。
+/// Firebase Authentication 封裝：Email/密碼 / 手機 OTP / Google / Facebook。
 class AuthService {
   AuthService(this._auth, this._functions);
 
@@ -41,6 +41,19 @@ class AuthService {
       idToken: auth.idToken,
     );
     await _auth.signInWithCredential(credential);
+  }
+
+  /// Facebook 登入。走 Firebase 內建的 provider 流程(開啟系統瀏覽器),
+  /// 不需 Facebook SDK;需在 Firebase Console 啟用 Facebook 登入方式
+  /// (填入 Meta App ID / App Secret),否則會失敗。
+  Future<void> signInWithFacebook() async {
+    try {
+      await _auth.signInWithProvider(FacebookAuthProvider());
+    } on FirebaseAuthException catch (e) {
+      // 使用者中途關閉瀏覽器視為取消,不視為錯誤。
+      if (e.code == 'web-context-canceled' || e.code == 'canceled') return;
+      rethrow;
+    }
   }
 
   /// 手機簡訊 OTP:寄送驗證碼。需在 Firebase Console 啟用 Phone 登入方式。

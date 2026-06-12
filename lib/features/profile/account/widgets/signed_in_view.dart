@@ -32,7 +32,7 @@ class SignedInView extends ConsumerWidget {
         const SizedBox(height: 16),
         Center(
           child: Text(
-            user.displayName ?? user.email ?? l10n.account_guest,
+            user.displayName ?? user.email ?? user.phoneNumber ?? l10n.account_guest,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),

@@ -166,6 +166,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get account_sign_in_google => 'Sign in with Google';
 
   @override
+  String get account_sign_in_facebook => 'Sign in with Facebook';
+
+  @override
   String get account_method_email => 'Sign in with email';
 
   @override
@@ -402,6 +405,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get account_sign_in_google => '使用 Google 登录';
 
   @override
+  String get account_sign_in_facebook => '使用 Facebook 登录';
+
+  @override
   String get account_method_email => '使用 Email 登录';
 
   @override
@@ -633,6 +639,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get account_sign_in_google => '使用 Google 登入';
+
+  @override
+  String get account_sign_in_facebook => '使用 Facebook 登入';
 
   @override
   String get account_method_email => '使用 Email 登入';

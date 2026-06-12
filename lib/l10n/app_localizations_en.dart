@@ -168,6 +168,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get account_sign_in_google => 'Sign in with Google';
 
   @override
+  String get account_sign_in_facebook => 'Sign in with Facebook';
+
+  @override
   String get account_method_email => 'Sign in with email';
 
   @override
