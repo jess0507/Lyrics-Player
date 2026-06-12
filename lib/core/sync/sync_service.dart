@@ -13,9 +13,9 @@ import 'sync_state_store.dart';
 
 /// 使用者資料（設定 + 統計）與 Firestore `users/{uid}` 的同步。
 ///
-/// 上傳為主（背景備份，節流一天）、登入時還原；全程不阻塞 UI、
-/// 失敗靜默略過不重試，下次啟動自然再試。詳細策略見
-/// `tasks/statistics-isar-firestore-sync.md`。
+/// 登入中為上傳備份（背景、節流一天）；登入當下一律以雲端為準還原，
+/// 未登入期間的本機資料視為不保存。全程不阻塞 UI、失敗靜默略過不重試，
+/// 下次啟動自然再試。詳細策略見 `plans/statistics-isar-firestore-sync.md`。
 class SyncService {
   SyncService(this.ref) {
     _init();
@@ -35,7 +35,10 @@ class SyncService {
       FirebaseFirestore.instance.collection('users').doc(uid);
 
   void _init() {
-    if (!ref.read(firebaseAvailableProvider)) return;
+    if (!ref.read(firebaseAvailableProvider)) {
+      debugPrint('[Sync] Firebase 不可用，停用同步');
+      return;
+    }
     // 首個事件是啟動時的既有登入狀態（App 啟動觸發、節流一天）；
     // 其後的 null -> user 轉變才是「登入成功當下」（先還原判斷、上傳不節流）。
     var isStartupEvent = true;
@@ -43,7 +46,12 @@ class SyncService {
         ref.read(authServiceProvider).authStateChanges().listen((user) {
       final isStartup = isStartupEvent;
       isStartupEvent = false;
-      if (user == null) return; // 未登入 / 登出：不同步，本機資料照常累計。
+      if (user == null) {
+        // 未登入 / 登出：不同步，本機資料照常累計。
+        debugPrint('[Sync] auth 事件：未登入（startup=$isStartup），不同步');
+        return;
+      }
+      debugPrint('[Sync] auth 事件：uid=${user.uid}（startup=$isStartup）');
       if (isStartup) {
         unawaited(_maybeUpload(user.uid, throttled: true));
       } else {
@@ -53,25 +61,28 @@ class SyncService {
     ref.onDispose(sub.cancel);
   }
 
-  /// 登入成功當下：先判斷還原，不還原才走上傳判斷（互斥）。
+  /// 登入成功當下：一律以雲端為準還原；雲端沒有資料才走上傳（互斥）。
+  ///
+  /// 未登入期間累計的本機資料視為「不想保存」，登入時直接被雲端覆寫。
   Future<void> _onSignedIn(String uid) async {
     try {
-      if (await _maybeRestore(uid)) return;
+      if (await _restoreFromCloud(uid)) return;
     } catch (e) {
       debugPrint('[Sync] 還原失敗，略過：$e');
     }
     await _maybeUpload(uid, throttled: false);
   }
 
-  /// 只在本機沒有有意義的資料（per-track 記錄為空且從未同步）時還原，
-  /// 完全避免雙向合併。回傳是否已執行還原。
-  Future<bool> _maybeRestore(String uid) async {
-    final stats = ref.read(statisticsControllerProvider);
-    if (stats.tracks.isNotEmpty || _store.lastSyncAt != null) return false;
-
+  /// 以雲端快照整份覆寫本機（不合併）。回傳是否已執行還原；
+  /// 雲端沒有文件或 schema 不相容時回傳 false，由呼叫端走上傳判斷。
+  Future<bool> _restoreFromCloud(String uid) async {
     final snapshot = await _userDoc(uid).get();
     final data = snapshot.data();
-    if (data == null) return false; // 雲端沒有文件（首次使用）→ 走上傳判斷。
+    if (data == null) {
+      // 雲端沒有文件（首次使用）→ 走上傳判斷。
+      debugPrint('[Sync] 雲端無文件，跳過還原');
+      return false;
+    }
     final version = (data['schemaVersion'] as num?)?.toInt() ?? 1;
     if (version > _schemaVersion) {
       debugPrint('[Sync] 雲端 schemaVersion $version 較新，跳過還原');
@@ -103,24 +114,40 @@ class SyncService {
     // （遷移視為本機變更，會更新 lastModifiedAt）。
     final stats = ref.read(statisticsControllerProvider);
     final lastModified = _store.lastModifiedAt;
-    if (lastModified == null) return;
+    if (lastModified == null) {
+      debugPrint('[Sync] 本機從未變更（lastModifiedAt=null），跳過上傳');
+      return;
+    }
     final lastSync = _store.lastSyncAt;
     if (lastSync != null) {
-      if (!lastModified.isAfter(lastSync)) return;
+      if (!lastModified.isAfter(lastSync)) {
+        debugPrint('[Sync] 上次同步後無變更，跳過上傳'
+            '（lastModifiedAt=$lastModified, lastSyncAt=$lastSync）');
+        return;
+      }
       if (throttled &&
           DateTime.now().difference(lastSync) <= _minUploadInterval) {
+        debugPrint('[Sync] 距上次上傳未滿一天，節流跳過（lastSyncAt=$lastSync）');
         return;
       }
     }
+    debugPrint('[Sync] 開始上傳（throttled=$throttled, '
+        'lastModifiedAt=$lastModified, lastSyncAt=$lastSync）');
     await _upload(uid, stats);
   }
 
   /// 統計重設後呼叫：立即上傳歸零快照（tracks 清空、settings 維持現值），
   /// 不等下次同步班次。未登入 / Firebase 不可用時為 no-op。
   Future<void> uploadAfterReset() async {
-    if (!ref.read(firebaseAvailableProvider)) return;
+    if (!ref.read(firebaseAvailableProvider)) {
+      debugPrint('[Sync] Firebase 不可用，重設後不上傳');
+      return;
+    }
     final uid = ref.read(authServiceProvider).currentUser?.uid;
-    if (uid == null) return;
+    if (uid == null) {
+      debugPrint('[Sync] 未登入，重設後不上傳');
+      return;
+    }
     await _upload(uid, ref.read(statisticsControllerProvider));
   }
 
