@@ -63,15 +63,18 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
         ],
         bottom: hasLibrary
             ? PreferredSize(
-                preferredSize: const Size.fromHeight(56),
+                preferredSize: const Size.fromHeight(40),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                   child: SearchBar(
+                    elevation: const WidgetStatePropertyAll(0),
+                    constraints:
+                        const BoxConstraints(minHeight: 40, maxHeight: 40),
                     leading: const Icon(Icons.search),
                     hintText: l10n.music_search,
-                    onChanged: (value) => ref
-                        .read(musicSearchQueryProvider.notifier)
-                        .state = value,
+                    onChanged: (value) =>
+                        ref.read(musicSearchQueryProvider.notifier).state =
+                            value,
                   ),
                 ),
               )
@@ -87,7 +90,8 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
     List<Track> tracks,
   ) {
     // 首次掃描中（尚無資料）顯示進度。
-    if (libraryAsync.isLoading && !(libraryAsync.valueOrNull?.isNotEmpty ?? false)) {
+    if (libraryAsync.isLoading &&
+        !(libraryAsync.valueOrNull?.isNotEmpty ?? false)) {
       return const Center(child: CircularProgressIndicator());
     }
     if (tracks.isEmpty) {
@@ -108,8 +112,9 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          subtitle:
-              track.artist == null ? null : Text(track.artist!, maxLines: 1),
+          subtitle: track.artist == null
+              ? null
+              : Text(track.artist!, maxLines: 1),
           trailing: track.duration == null
               ? null
               : Text(formatDuration(track.duration!)),
@@ -121,11 +126,7 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
 }
 
 class _EmptyState extends StatelessWidget {
-  const _EmptyState({
-    required this.message,
-    this.actionLabel,
-    this.onAction,
-  });
+  const _EmptyState({required this.message, this.actionLabel, this.onAction});
 
   final String message;
   final String? actionLabel;
