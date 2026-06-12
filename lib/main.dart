@@ -5,6 +5,7 @@ import 'package:just_audio_background/just_audio_background.dart';
 
 import 'app.dart';
 import 'core/firebase_available_provider.dart';
+import 'core/storage/isar_service.dart';
 import 'core/storage/preferences_service.dart';
 import 'firebase_options.dart';
 
@@ -30,11 +31,13 @@ Future<void> main() async {
   }
 
   final prefs = await PreferencesService.create();
+  final isar = await openIsar();
 
   runApp(
     ProviderScope(
       overrides: [
         preferencesServiceProvider.overrideWithValue(prefs),
+        isarProvider.overrideWithValue(isar),
         firebaseAvailableProvider.overrideWithValue(firebaseAvailable),
       ],
       child: const SeekPlayerApp(),

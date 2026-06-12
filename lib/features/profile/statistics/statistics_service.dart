@@ -1,108 +1,138 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:isar/isar.dart';
 
+import '../../../core/storage/isar_service.dart';
 import '../../../core/storage/preferences_service.dart';
+import '../../../core/sync/sync_state_store.dart';
 import '../../music_list/track.dart';
+import 'track_stat_entity.dart';
 
-/// 聆聽統計數據。
+/// 聆聽統計：由 Isar 的 per-track 記錄導出的 view。
+///
+/// 不存任何總計欄位——總計與排行皆於讀取時由 [tracks] 加總導出，
+/// 本機與雲端結構對稱，不會有「總計與明細對不上」的問題。
 class StatisticsData {
-  const StatisticsData({
-    this.totalPlayCount = 0,
-    this.totalListenMs = 0,
-    this.perTrackCount = const {},
-    this.trackTitles = const {},
-  });
+  const StatisticsData(this.tracks);
 
-  final int totalPlayCount;
-  final int totalListenMs;
+  final List<TrackStatEntity> tracks;
 
-  /// trackId -> 播放次數。
-  final Map<String, int> perTrackCount;
+  int get totalPlayCount =>
+      tracks.fold(0, (sum, t) => sum + t.playCount);
 
-  /// trackId -> 顯示標題（供「最常聽」清單使用）。
-  final Map<String, String> trackTitles;
+  int get totalListenMs => tracks.fold(0, (sum, t) => sum + t.listenMs);
 
   Duration get totalListenTime => Duration(milliseconds: totalListenMs);
 
   /// 依播放次數排序的前幾名（標題, 次數）。
+  ///
+  /// 以 title 聚合：從雲端還原的記錄帶舊裝置的 trackId，同一首歌在新裝置
+  /// 播放會另起一筆，聚合後排行才不會同曲分裂成兩列。
   List<MapEntry<String, int>> topTracks([int limit = 5]) {
-    final entries = perTrackCount.entries.toList()
+    final byTitle = <String, int>{};
+    for (final t in tracks) {
+      byTitle[t.title] = (byTitle[t.title] ?? 0) + t.playCount;
+    }
+    final entries = byTitle.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
-    return entries
-        .take(limit)
-        .map((e) => MapEntry(trackTitles[e.key] ?? e.key, e.value))
-        .toList();
+    return entries.take(limit).toList();
   }
-
-  Map<String, dynamic> toJson() => {
-        'totalPlayCount': totalPlayCount,
-        'totalListenMs': totalListenMs,
-        'perTrackCount': perTrackCount,
-        'trackTitles': trackTitles,
-      };
-
-  factory StatisticsData.fromJson(Map<String, dynamic> json) => StatisticsData(
-        totalPlayCount: json['totalPlayCount'] as int? ?? 0,
-        totalListenMs: json['totalListenMs'] as int? ?? 0,
-        perTrackCount:
-            (json['perTrackCount'] as Map?)?.map(
-                  (k, v) => MapEntry(k as String, v as int),
-                ) ??
-                {},
-        trackTitles:
-            (json['trackTitles'] as Map?)?.map(
-                  (k, v) => MapEntry(k as String, v as String),
-                ) ??
-                {},
-      );
 }
 
 class StatisticsController extends Notifier<StatisticsData> {
-  static const _kKey = 'statistics.data';
+  /// 舊版 SharedPreferences 統計的 key，首次啟動遷移到 Isar 後移除。
+  static const _kLegacyKey = 'statistics.data';
 
-  PreferencesService get _prefs => ref.read(preferencesServiceProvider);
+  Isar get _isar => ref.read(isarProvider);
+  IsarCollection<TrackStatEntity> get _stats => _isar.trackStatEntitys;
 
   @override
   StatisticsData build() {
-    final raw = _prefs.getString(_kKey);
-    if (raw == null || raw.isEmpty) return const StatisticsData();
-    return StatisticsData.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+    _migrateFromPrefs();
+    return _load();
   }
+
+  StatisticsData _load() =>
+      StatisticsData(_stats.where().findAllSync());
 
   /// 一首曲目開始播放時呼叫。
   void recordPlay(Track track) {
-    final counts = Map<String, int>.from(state.perTrackCount);
-    counts[track.id] = (counts[track.id] ?? 0) + 1;
-    final titles = Map<String, String>.from(state.trackTitles)
-      ..[track.id] = track.title;
-    state = StatisticsData(
-      totalPlayCount: state.totalPlayCount + 1,
-      totalListenMs: state.totalListenMs,
-      perTrackCount: counts,
-      trackTitles: titles,
-    );
-    _persist();
+    _isar.writeTxnSync(() {
+      final entity = _getOrCreate(track)..playCount += 1;
+      entity.title = track.title;
+      _stats.putSync(entity);
+    });
+    _afterWrite();
   }
 
-  /// 累加聆聽時長（例如曲目播放完成時）。
-  void addListenTime(Duration duration) {
+  /// 累加該曲目的聆聽時長（播放期間定期取樣）。
+  void addListenTime(Track track, Duration duration) {
     if (duration <= Duration.zero) return;
-    state = StatisticsData(
-      totalPlayCount: state.totalPlayCount,
-      totalListenMs: state.totalListenMs + duration.inMilliseconds,
-      perTrackCount: state.perTrackCount,
-      trackTitles: state.trackTitles,
-    );
-    _persist();
+    _isar.writeTxnSync(() {
+      final entity = _getOrCreate(track)
+        ..listenMs += duration.inMilliseconds;
+      _stats.putSync(entity);
+    });
+    _afterWrite();
   }
 
+  /// 清空本機統計。雲端備份的刪除由呼叫端透過 SyncService 處理。
   void reset() {
-    state = const StatisticsData();
-    _prefs.remove(_kKey);
+    _isar.writeTxnSync(() => _stats.clearSync());
+    _afterWrite();
   }
 
-  void _persist() => _prefs.setString(_kKey, jsonEncode(state.toJson()));
+  /// 還原雲端備份（整份覆寫本機）。
+  ///
+  /// 還原不算本機變更：不更新 lastModifiedAt，避免還原後馬上又觸發上傳。
+  void restoreFromRemote(List<TrackStatEntity> entities) {
+    _isar.writeTxnSync(() {
+      _stats.clearSync();
+      _stats.putAllSync(entities);
+    });
+    state = _load();
+  }
+
+  TrackStatEntity _getOrCreate(Track track) =>
+      _stats.getByTrackIdSync(track.id) ??
+      (TrackStatEntity()
+        ..trackId = track.id
+        ..title = track.title);
+
+  void _afterWrite() {
+    state = _load();
+    ref.read(syncStateStoreProvider).markModified();
+  }
+
+  /// 把舊版 prefs 統計（perTrackCount + trackTitles）匯入 Isar 後移除舊 key。
+  ///
+  /// 舊版的全域 totalListenMs 攤不進 per-track，直接捨棄（已知取捨）。
+  void _migrateFromPrefs() {
+    final prefs = ref.read(preferencesServiceProvider);
+    final raw = prefs.getString(_kLegacyKey);
+    if (raw == null) return;
+    try {
+      final json = jsonDecode(raw) as Map<String, dynamic>;
+      final counts = (json['perTrackCount'] as Map?) ?? const {};
+      final titles = (json['trackTitles'] as Map?) ?? const {};
+      final entities = [
+        for (final entry in counts.entries)
+          TrackStatEntity()
+            ..trackId = entry.key as String
+            ..title = (titles[entry.key] as String?) ?? entry.key as String
+            ..playCount = entry.value as int,
+      ];
+      if (entities.isNotEmpty) {
+        _isar.writeTxnSync(() => _stats.putAllSync(entities));
+        ref.read(syncStateStoreProvider).markModified();
+      }
+    } catch (e) {
+      debugPrint('統計遷移失敗，捨棄舊資料：$e');
+    }
+    prefs.remove(_kLegacyKey);
+  }
 }
 
 final statisticsControllerProvider =

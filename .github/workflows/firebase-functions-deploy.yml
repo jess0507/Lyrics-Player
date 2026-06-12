@@ -1,6 +1,7 @@
 name: Deploy Cloud Functions
 
-# 當 master 上的 functions/ 或 Firebase 設定變更時，部署 Cloud Functions。
+# 當 master 上的 functions/、Firestore rules 或 Firebase 設定變更時，
+# 部署 Cloud Functions 與 Firestore security rules。
 # 也可在 Actions 頁手動觸發（workflow_dispatch）。
 on:
   push:
@@ -8,6 +9,7 @@ on:
       - master
     paths:
       - "functions/**"
+      - "firestore.rules"
       - "firebase.json"
       - ".firebaserc"
       - ".github/workflows/firebase-functions-deploy.yml"
@@ -40,7 +42,7 @@ jobs:
         run: |
           echo "$FIREBASE_SA" > "$RUNNER_TEMP/sa.json"
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
-          npx firebase-tools deploy --only functions --project seek-player-f724e --non-interactive
+          npx firebase-tools deploy --only functions,firestore:rules --project seek-player-f724e --non-interactive
 
       - name: Cleanup credentials
         if: always()

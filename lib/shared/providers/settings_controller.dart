@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/storage/preferences_service.dart';
+import '../../core/sync/sync_state_store.dart';
 import '../theme/app_theme.dart';
 
 /// 應用程式偏好：語言、主題模式與主題色（持久化於 SharedPreferences）。
@@ -29,6 +30,14 @@ class SettingsState {
     );
   }
 
+  /// 雲端同步（Firestore `users/{uid}.settings`）的欄位表示。
+  Map<String, dynamic> toRemoteMap() => {
+        'locale':
+            locale == null ? null : SettingsController._encodeLocale(locale!),
+        'themeMode': themeMode.name,
+        'seedColor': seedColor.name,
+      };
+
   static const Object _sentinel = Object();
 }
 
@@ -55,17 +64,46 @@ class SettingsController extends Notifier<SettingsState> {
     } else {
       _prefs.setString(_kLocale, _encodeLocale(locale));
     }
+    _markModified();
   }
 
   void setThemeMode(ThemeMode mode) {
     state = state.copyWith(themeMode: mode);
     _prefs.setString(_kThemeMode, mode.name);
+    _markModified();
   }
 
   void setSeedColor(AppColorSeed seed) {
     state = state.copyWith(seedColor: seed);
     _prefs.setString(_kSeedColor, seed.name);
+    _markModified();
   }
+
+  /// 還原雲端備份的設定（套用並落地 prefs）。
+  ///
+  /// 讀取容錯：缺欄位 / 未知值 fallback 預設。還原不算本機變更，
+  /// 不更新 lastModifiedAt，避免還原後馬上又觸發上傳。
+  void restoreFromRemote({
+    String? locale,
+    String? themeMode,
+    String? seedColor,
+  }) {
+    state = SettingsState(
+      locale: _decodeLocale(locale),
+      themeMode: _decodeThemeMode(themeMode),
+      seedColor: AppColorSeed.fromName(seedColor),
+    );
+    final restored = state.locale;
+    if (restored == null) {
+      _prefs.remove(_kLocale);
+    } else {
+      _prefs.setString(_kLocale, _encodeLocale(restored));
+    }
+    _prefs.setString(_kThemeMode, state.themeMode.name);
+    _prefs.setString(_kSeedColor, state.seedColor.name);
+  }
+
+  void _markModified() => ref.read(syncStateStoreProvider).markModified();
 
   static String _encodeLocale(Locale locale) {
     return locale.countryCode == null

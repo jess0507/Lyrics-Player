@@ -9,6 +9,12 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+# 排除程式碼產生器的輸出（如 Isar 的 *.g.dart 使用自身標為 experimental
+# 的 API，會產生 experimental_member_use 噪音）。
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`

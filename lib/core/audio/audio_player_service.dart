@@ -31,6 +31,7 @@ class AudioPlayerService {
   Stream<LoopMode> get loopModeStream => _player.loopModeStream;
   Stream<double> get speedStream => _player.speedStream;
   bool get playing => _player.playing;
+  int? get currentIndex => _player.currentIndex;
   double get speed => _player.speed;
 
   Stream<PositionData> get positionDataStream =>

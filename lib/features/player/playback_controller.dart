@@ -35,13 +35,15 @@ class PlaybackController {
       }
     }));
 
-    // 以 5 秒取樣累加實際聆聽時長。
+    // 以 5 秒取樣累加實際聆聽時長（記在目前播放的曲目上）。
     _listenTimer = Timer.periodic(const Duration(seconds: 5), (_) {
-      if (_audio.playing) {
-        ref
-            .read(statisticsControllerProvider.notifier)
-            .addListenTime(const Duration(seconds: 5));
-      }
+      if (!_audio.playing) return;
+      final index = _audio.currentIndex;
+      final tracks = _tracks;
+      if (index == null || index < 0 || index >= tracks.length) return;
+      ref
+          .read(statisticsControllerProvider.notifier)
+          .addListenTime(tracks[index], const Duration(seconds: 5));
     });
 
     ref.onDispose(() {

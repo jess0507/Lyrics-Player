@@ -1,12 +1,50 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/auth/auth_state_provider.dart';
+import '../../../core/firebase_available_provider.dart';
+import '../../../core/sync/sync_service.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/format.dart';
 import 'statistics_service.dart';
 
 class StatisticsPage extends ConsumerWidget {
   const StatisticsPage({super.key});
+
+  /// 重設前先跳確認 dialog（已登入時警告雲端備份也會刪除），
+  /// 確認後清空本機並立即上傳歸零快照覆寫雲端。
+  Future<void> _confirmReset(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
+    final signedIn = ref.read(firebaseAvailableProvider) &&
+        ref.read(authStateProvider).valueOrNull != null;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.statistics_reset_title),
+        content: Text(
+          signedIn
+              ? l10n.statistics_reset_message_cloud
+              : l10n.statistics_reset_message,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(l10n.common_cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(l10n.statistics_reset_confirm),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    ref.read(statisticsControllerProvider.notifier).reset();
+    // 背景覆寫雲端備份為歸零快照；失敗等下次同步達成最終一致。
+    unawaited(ref.read(syncServiceProvider).uploadAfterReset());
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,8 +59,7 @@ class StatisticsPage extends ConsumerWidget {
           if (stats.totalPlayCount > 0)
             IconButton(
               tooltip: l10n.statistics_reset,
-              onPressed: () =>
-                  ref.read(statisticsControllerProvider.notifier).reset(),
+              onPressed: () => _confirmReset(context, ref),
               icon: const Icon(Icons.restart_alt),
             ),
         ],

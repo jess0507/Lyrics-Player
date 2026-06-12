@@ -34,6 +34,12 @@ dependencies:
   # 本地儲存
   shared_preferences: ^2.3.3
 
+  # 本地資料庫（統計等資料儲存層）。
+  # 註：isar_flutter_libs 3.1.0+1 未宣告 AGP namespace，
+  # 由 android/build.gradle.kts 的 subprojects 區塊補上以相容新版 AGP。
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+
   # 開啟外部連結（隱私權政策等）
   url_launcher: ^6.3.1
 
@@ -44,6 +50,7 @@ dependencies:
   firebase_auth: ^6.4.0
   google_sign_in: ^6.2.2
   cloud_functions: ^6.3.2
+  cloud_firestore: ^6.1.0
   marquee: ^2.3.0
 
 dev_dependencies:
@@ -53,6 +60,9 @@ dev_dependencies:
   flutter_lints: ^6.0.0
 
   build_runner: ^2.4.13
+
+  # Isar 程式碼產生
+  isar_generator: ^3.1.0+1
 
   # App 圖示產生（Android / iOS 各尺寸）
   flutter_launcher_icons: ^0.14.1
