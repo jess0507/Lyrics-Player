@@ -1,0 +1,1243 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'daily_track_stat_entity.dart';
+
+// **************************************************************************
+// IsarCollectionGenerator
+// **************************************************************************
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+extension GetDailyTrackStatEntityCollection on Isar {
+  IsarCollection<DailyTrackStatEntity> get dailyTrackStatEntitys =>
+      this.collection();
+}
+
+const DailyTrackStatEntitySchema = CollectionSchema(
+  name: r'DailyTrackStatEntity',
+  id: -8362740062442503678,
+  properties: {
+    r'day': PropertySchema(
+      id: 0,
+      name: r'day',
+      type: IsarType.string,
+    ),
+    r'listenMs': PropertySchema(
+      id: 1,
+      name: r'listenMs',
+      type: IsarType.long,
+    ),
+    r'playCount': PropertySchema(
+      id: 2,
+      name: r'playCount',
+      type: IsarType.long,
+    ),
+    r'title': PropertySchema(
+      id: 3,
+      name: r'title',
+      type: IsarType.string,
+    ),
+    r'trackId': PropertySchema(
+      id: 4,
+      name: r'trackId',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _dailyTrackStatEntityEstimateSize,
+  serialize: _dailyTrackStatEntitySerialize,
+  deserialize: _dailyTrackStatEntityDeserialize,
+  deserializeProp: _dailyTrackStatEntityDeserializeProp,
+  idName: r'id',
+  indexes: {
+    r'day_trackId': IndexSchema(
+      id: 8221675378142751818,
+      name: r'day_trackId',
+      unique: true,
+      replace: true,
+      properties: [
+        IndexPropertySchema(
+          name: r'day',
+          type: IndexType.hash,
+          caseSensitive: true,
+        ),
+        IndexPropertySchema(
+          name: r'trackId',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
+  links: {},
+  embeddedSchemas: {},
+  getId: _dailyTrackStatEntityGetId,
+  getLinks: _dailyTrackStatEntityGetLinks,
+  attach: _dailyTrackStatEntityAttach,
+  version: '3.1.0+1',
+);
+
+int _dailyTrackStatEntityEstimateSize(
+  DailyTrackStatEntity object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.day.length * 3;
+  bytesCount += 3 + object.title.length * 3;
+  bytesCount += 3 + object.trackId.length * 3;
+  return bytesCount;
+}
+
+void _dailyTrackStatEntitySerialize(
+  DailyTrackStatEntity object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.day);
+  writer.writeLong(offsets[1], object.listenMs);
+  writer.writeLong(offsets[2], object.playCount);
+  writer.writeString(offsets[3], object.title);
+  writer.writeString(offsets[4], object.trackId);
+}
+
+DailyTrackStatEntity _dailyTrackStatEntityDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = DailyTrackStatEntity();
+  object.day = reader.readString(offsets[0]);
+  object.id = id;
+  object.listenMs = reader.readLong(offsets[1]);
+  object.playCount = reader.readLong(offsets[2]);
+  object.title = reader.readString(offsets[3]);
+  object.trackId = reader.readString(offsets[4]);
+  return object;
+}
+
+P _dailyTrackStatEntityDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readString(offset)) as P;
+    case 1:
+      return (reader.readLong(offset)) as P;
+    case 2:
+      return (reader.readLong(offset)) as P;
+    case 3:
+      return (reader.readString(offset)) as P;
+    case 4:
+      return (reader.readString(offset)) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+Id _dailyTrackStatEntityGetId(DailyTrackStatEntity object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _dailyTrackStatEntityGetLinks(
+    DailyTrackStatEntity object) {
+  return [];
+}
+
+void _dailyTrackStatEntityAttach(
+    IsarCollection<dynamic> col, Id id, DailyTrackStatEntity object) {
+  object.id = id;
+}
+
+extension DailyTrackStatEntityByIndex on IsarCollection<DailyTrackStatEntity> {
+  Future<DailyTrackStatEntity?> getByDayTrackId(String day, String trackId) {
+    return getByIndex(r'day_trackId', [day, trackId]);
+  }
+
+  DailyTrackStatEntity? getByDayTrackIdSync(String day, String trackId) {
+    return getByIndexSync(r'day_trackId', [day, trackId]);
+  }
+
+  Future<bool> deleteByDayTrackId(String day, String trackId) {
+    return deleteByIndex(r'day_trackId', [day, trackId]);
+  }
+
+  bool deleteByDayTrackIdSync(String day, String trackId) {
+    return deleteByIndexSync(r'day_trackId', [day, trackId]);
+  }
+
+  Future<List<DailyTrackStatEntity?>> getAllByDayTrackId(
+      List<String> dayValues, List<String> trackIdValues) {
+    final len = dayValues.length;
+    assert(trackIdValues.length == len,
+        'All index values must have the same length');
+    final values = <List<dynamic>>[];
+    for (var i = 0; i < len; i++) {
+      values.add([dayValues[i], trackIdValues[i]]);
+    }
+
+    return getAllByIndex(r'day_trackId', values);
+  }
+
+  List<DailyTrackStatEntity?> getAllByDayTrackIdSync(
+      List<String> dayValues, List<String> trackIdValues) {
+    final len = dayValues.length;
+    assert(trackIdValues.length == len,
+        'All index values must have the same length');
+    final values = <List<dynamic>>[];
+    for (var i = 0; i < len; i++) {
+      values.add([dayValues[i], trackIdValues[i]]);
+    }
+
+    return getAllByIndexSync(r'day_trackId', values);
+  }
+
+  Future<int> deleteAllByDayTrackId(
+      List<String> dayValues, List<String> trackIdValues) {
+    final len = dayValues.length;
+    assert(trackIdValues.length == len,
+        'All index values must have the same length');
+    final values = <List<dynamic>>[];
+    for (var i = 0; i < len; i++) {
+      values.add([dayValues[i], trackIdValues[i]]);
+    }
+
+    return deleteAllByIndex(r'day_trackId', values);
+  }
+
+  int deleteAllByDayTrackIdSync(
+      List<String> dayValues, List<String> trackIdValues) {
+    final len = dayValues.length;
+    assert(trackIdValues.length == len,
+        'All index values must have the same length');
+    final values = <List<dynamic>>[];
+    for (var i = 0; i < len; i++) {
+      values.add([dayValues[i], trackIdValues[i]]);
+    }
+
+    return deleteAllByIndexSync(r'day_trackId', values);
+  }
+
+  Future<Id> putByDayTrackId(DailyTrackStatEntity object) {
+    return putByIndex(r'day_trackId', object);
+  }
+
+  Id putByDayTrackIdSync(DailyTrackStatEntity object, {bool saveLinks = true}) {
+    return putByIndexSync(r'day_trackId', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByDayTrackId(List<DailyTrackStatEntity> objects) {
+    return putAllByIndex(r'day_trackId', objects);
+  }
+
+  List<Id> putAllByDayTrackIdSync(List<DailyTrackStatEntity> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'day_trackId', objects, saveLinks: saveLinks);
+  }
+}
+
+extension DailyTrackStatEntityQueryWhereSort
+    on QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QWhere> {
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterWhere>
+      anyId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+}
+
+extension DailyTrackStatEntityQueryWhere
+    on QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QWhereClause> {
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterWhereClause>
+      idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterWhereClause>
+      idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterWhereClause>
+      idGreaterThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterWhereClause>
+      idLessThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterWhereClause>
+      idBetween(
+    Id lowerId,
+    Id upperId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterWhereClause>
+      dayEqualToAnyTrackId(String day) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'day_trackId',
+        value: [day],
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterWhereClause>
+      dayNotEqualToAnyTrackId(String day) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'day_trackId',
+              lower: [],
+              upper: [day],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'day_trackId',
+              lower: [day],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'day_trackId',
+              lower: [day],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'day_trackId',
+              lower: [],
+              upper: [day],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterWhereClause>
+      dayTrackIdEqualTo(String day, String trackId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'day_trackId',
+        value: [day, trackId],
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterWhereClause>
+      dayEqualToTrackIdNotEqualTo(String day, String trackId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'day_trackId',
+              lower: [day],
+              upper: [day, trackId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'day_trackId',
+              lower: [day, trackId],
+              includeLower: false,
+              upper: [day],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'day_trackId',
+              lower: [day, trackId],
+              includeLower: false,
+              upper: [day],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'day_trackId',
+              lower: [day],
+              upper: [day, trackId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+}
+
+extension DailyTrackStatEntityQueryFilter on QueryBuilder<DailyTrackStatEntity,
+    DailyTrackStatEntity, QFilterCondition> {
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> dayEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'day',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> dayGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'day',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> dayLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'day',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> dayBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'day',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> dayStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'day',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> dayEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'day',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+          QAfterFilterCondition>
+      dayContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'day',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+          QAfterFilterCondition>
+      dayMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'day',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> dayIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'day',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> dayIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'day',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> idEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> idGreaterThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> idLessThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> idBetween(
+    Id lower,
+    Id upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> listenMsEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'listenMs',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> listenMsGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'listenMs',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> listenMsLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'listenMs',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> listenMsBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'listenMs',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> playCountEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'playCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> playCountGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'playCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> playCountLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'playCount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> playCountBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'playCount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> titleEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> titleGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> titleLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> titleBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'title',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> titleStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> titleEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+          QAfterFilterCondition>
+      titleContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+          QAfterFilterCondition>
+      titleMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'title',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> titleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> titleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> trackIdEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> trackIdGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> trackIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> trackIdBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'trackId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> trackIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> trackIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+          QAfterFilterCondition>
+      trackIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+          QAfterFilterCondition>
+      trackIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'trackId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> trackIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'trackId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity,
+      QAfterFilterCondition> trackIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'trackId',
+        value: '',
+      ));
+    });
+  }
+}
+
+extension DailyTrackStatEntityQueryObject on QueryBuilder<DailyTrackStatEntity,
+    DailyTrackStatEntity, QFilterCondition> {}
+
+extension DailyTrackStatEntityQueryLinks on QueryBuilder<DailyTrackStatEntity,
+    DailyTrackStatEntity, QFilterCondition> {}
+
+extension DailyTrackStatEntityQuerySortBy
+    on QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QSortBy> {
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      sortByDay() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'day', Sort.asc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      sortByDayDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'day', Sort.desc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      sortByListenMs() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listenMs', Sort.asc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      sortByListenMsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listenMs', Sort.desc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      sortByPlayCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playCount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      sortByPlayCountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playCount', Sort.desc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      sortByTitle() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      sortByTitleDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      sortByTrackId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'trackId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      sortByTrackIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'trackId', Sort.desc);
+    });
+  }
+}
+
+extension DailyTrackStatEntityQuerySortThenBy
+    on QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QSortThenBy> {
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenByDay() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'day', Sort.asc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenByDayDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'day', Sort.desc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenByIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenByListenMs() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listenMs', Sort.asc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenByListenMsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listenMs', Sort.desc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenByPlayCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playCount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenByPlayCountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playCount', Sort.desc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenByTitle() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenByTitleDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenByTrackId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'trackId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QAfterSortBy>
+      thenByTrackIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'trackId', Sort.desc);
+    });
+  }
+}
+
+extension DailyTrackStatEntityQueryWhereDistinct
+    on QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QDistinct> {
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QDistinct>
+      distinctByDay({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'day', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QDistinct>
+      distinctByListenMs() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'listenMs');
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QDistinct>
+      distinctByPlayCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'playCount');
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QDistinct>
+      distinctByTitle({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, DailyTrackStatEntity, QDistinct>
+      distinctByTrackId({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'trackId', caseSensitive: caseSensitive);
+    });
+  }
+}
+
+extension DailyTrackStatEntityQueryProperty on QueryBuilder<
+    DailyTrackStatEntity, DailyTrackStatEntity, QQueryProperty> {
+  QueryBuilder<DailyTrackStatEntity, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, String, QQueryOperations> dayProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'day');
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, int, QQueryOperations> listenMsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'listenMs');
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, int, QQueryOperations>
+      playCountProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'playCount');
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, String, QQueryOperations> titleProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'title');
+    });
+  }
+
+  QueryBuilder<DailyTrackStatEntity, String, QQueryOperations>
+      trackIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'trackId');
+    });
+  }
+}

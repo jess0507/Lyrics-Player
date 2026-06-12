@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/profile/statistics/daily_track_stat_entity.dart';
 import '../../features/profile/statistics/statistics_service.dart';
-import '../../features/profile/statistics/track_stat_entity.dart';
 import '../../shared/providers/settings_controller.dart';
 import '../auth/auth_service.dart';
 import '../firebase_available_provider.dart';
@@ -24,7 +24,9 @@ class SyncService {
   final Ref ref;
 
   /// Firestore 文件結構版本，欄位結構變動時遞增；還原端據此判斷相容性。
-  static const _schemaVersion = 1;
+  /// v2：`days`（每日 × 每首歌記錄）取代 v1 的 `tracks`（累計）。
+  /// v1 從未實際上傳過（上線前即改版），不留 v1 還原路徑。
+  static const _schemaVersion = 2;
 
   /// 上傳節流：距上次成功上傳超過此間隔才再上傳（登入當下的觸發不受限）。
   static const _minUploadInterval = Duration(days: 1);
@@ -99,7 +101,7 @@ class SyncService {
     }
     ref
         .read(statisticsControllerProvider.notifier)
-        .restoreFromRemote(_decodeTracks(data['tracks']));
+        .restoreFromRemote(_decodeDays(data['days']));
 
     // 還原後視同已同步；lastModifiedAt 不動（還原不算本機變更）。
     _store.markSynced();
@@ -158,35 +160,47 @@ class SyncService {
       await _userDoc(uid).set({
         'schemaVersion': _schemaVersion,
         'settings': ref.read(settingsControllerProvider).toRemoteMap(),
-        'tracks': {
-          for (final t in stats.tracks)
-            t.trackId: {
-              'title': t.title,
-              'playCount': t.playCount,
-              'listenMs': t.listenMs,
-            },
-        },
+        'days': _encodeDays(stats.days),
         'updatedAt': FieldValue.serverTimestamp(),
       });
       _store.markSynced();
-      debugPrint('[Sync] 已上傳統計與設定（${stats.tracks.length} 首）');
+      debugPrint('[Sync] 已上傳統計與設定（${stats.days.length} 筆每日記錄）');
     } catch (e) {
       // 離線、權限、逾時等：靜默略過，lastSyncAt 不動，下次啟動自然再試。
       debugPrint('[Sync] 上傳失敗，略過：$e');
     }
   }
 
-  /// 解析雲端 tracks map，容錯：缺欄位給預設值、格式不符的條目跳過。
-  List<TrackStatEntity> _decodeTracks(Object? raw) {
+  /// 攤平每日記錄為巢狀 map：`{ <day>: { <trackId>: { title, ... } } }`。
+  Map<String, Map<String, Object>> _encodeDays(
+    List<DailyTrackStatEntity> days,
+  ) {
+    final result = <String, Map<String, Object>>{};
+    for (final d in days) {
+      (result[d.day] ??= {})[d.trackId] = {
+        'title': d.title,
+        'playCount': d.playCount,
+        'listenMs': d.listenMs,
+      };
+    }
+    return result;
+  }
+
+  /// 解析雲端 days 巢狀 map，容錯：缺欄位給預設值、格式不符的條目跳過。
+  List<DailyTrackStatEntity> _decodeDays(Object? raw) {
     if (raw is! Map) return const [];
-    final entities = <TrackStatEntity>[];
-    raw.forEach((key, value) {
-      if (value is! Map) return;
-      entities.add(TrackStatEntity()
-        ..trackId = '$key'
-        ..title = (value['title'] as String?) ?? '$key'
-        ..playCount = (value['playCount'] as num? ?? 0).toInt()
-        ..listenMs = (value['listenMs'] as num? ?? 0).toInt());
+    final entities = <DailyTrackStatEntity>[];
+    raw.forEach((day, tracks) {
+      if (tracks is! Map) return;
+      tracks.forEach((trackId, value) {
+        if (value is! Map) return;
+        entities.add(DailyTrackStatEntity()
+          ..day = '$day'
+          ..trackId = '$trackId'
+          ..title = (value['title'] as String?) ?? '$trackId'
+          ..playCount = (value['playCount'] as num? ?? 0).toInt()
+          ..listenMs = (value['listenMs'] as num? ?? 0).toInt());
+      });
     });
     return entities;
   }

@@ -2,14 +2,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../features/profile/statistics/track_stat_entity.dart';
+import '../../features/profile/statistics/daily_track_stat_entity.dart';
 
 /// 開啟 Isar 資料庫（資料儲存層：目前存放聆聽統計，使用者設定仍用
 /// SharedPreferences）。
 Future<Isar> openIsar() async {
   final dir = await getApplicationDocumentsDirectory();
   return Isar.open(
-    [TrackStatEntitySchema],
+    [DailyTrackStatEntitySchema],
     directory: dir.path,
     name: 'seek_player',
   );

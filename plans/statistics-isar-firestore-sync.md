@@ -200,3 +200,43 @@ users/{uid}                     # 使用者根文件
   namespace 補丁如預期可共用），debug APK 安裝至 Android 模擬器啟動正常
   （Isar 開啟成功、未登入時同步靜默不動作、無例外）。
   尚未驗：登入帳號後的實際上傳 / 還原（需在實機登入測試帳號操作一輪）。
+
+## 增補：統計改為每日 × 每首歌記錄（2026-06-12）
+
+為時間軸圖表與「每天聽了哪些歌、各聽幾次／多久」加入按天明細。
+依「**不需要記錄總和**」的決策，唯一儲存的就是每日明細，
+原 per-track 累計 collection（TrackStatEntity）一併退役——
+累計總量本身就是「被記錄的總和」，改由每日記錄加總導出。
+
+- **唯一 collection `DailyTrackStatEntity`**（`daily_track_stat_entity.dart`）：
+  一天一首歌一筆，`day`（本地日期 `yyyy-MM-dd`）+ `trackId` 複合唯一索引
+  （replace），欄位另有 `title` / `playCount` / `listenMs`。
+- **一切導出**：`StatisticsData` 只持有 `days`（依日期升冪）；
+  `totalPlayCount` / `totalListenMs` 為跨日加總 getter，
+  `topTracks()` 跨日 + title 聚合（排行不變），新增
+  `dailyTotals()`（依日聚合，軸線圖資料點）與 `allTracks()`（期間內全曲明細）。
+  統計頁只用導出 getter，無須改動。
+- **期間子集 API**：`onDay` / `inMonth` / `inYear`（吃 `DateTime`）回傳
+  過濾後的 `StatisticsData`，所有導出 getter 自動只算該期間
+  （day key 定長 `yyyy-MM-dd`，prefix 比對即可取日／月／年）。
+  例：當日明細 = `stats.onDay(date).allTracks()`。
+- **state 增量更新**：寫入後把單筆 upsert 套進既有 state，
+  不再每次全量重讀 Isar（`addListenTime` 每 5 秒取樣一次，
+  資料量大時全量重讀划不來）；全量 `_load()` 只剩 build 與雲端還原兩處。
+- **累計時機**：`recordPlay` / `addListenTime` upsert（今天, trackId）一筆，
+  日期取裝置本地時區（`StatisticsController.dayKey`）。
+- **TrackStatEntity 整個移除**（決策：「不需要 TrackStatEntity」）：
+  entity / schema / 檔案皆刪，不做 Isar 端遷移——該 collection 是當天才實作、
+  未發布，既有資料只在開發機，直接捨棄（Isar 開檔時 schema 未註冊的
+  collection 會被清掉）。
+- **prefs 遷移保留**：`statistics.data`（已發布的舊版格式）→ 遷移當日的
+  每日記錄（掛在遷移當日，攤不進真實日期為已知取捨）。
+- **同步 schema v2**：`days: { <yyyy-MM-dd>: { <trackId>: { title, playCount,
+  listenMs } } }` 取代 v1 的 `tracks`，**舊 tracks 直接棄用**：
+  v1 從未實際上傳過（上線前即改版、雲端無 v1 文件），
+  還原端只 decode `days`、不留 v1 相容路徑。
+  文件大小：天數 × 當日曲數，重度使用數年內仍遠低於 1MB 上限；
+  若將來要瘦身，再加「保留最近 N 天 + 截斷」即可（總量會跟著少算，屆時再議）。
+- 驗證：`flutter analyze` 無 issue、`flutter test` 8 項全過
+  （總計導出 / topTracks 聚合 / tracksOn / dailyTotals / dayKey）。
+  UI 圖表（軸線圖）為後續任務，本次僅落資料層。
