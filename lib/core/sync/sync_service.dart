@@ -24,11 +24,7 @@ class SyncService {
 
   final Ref ref;
 
-  /// Firestore 文件結構版本，欄位結構變動時遞增；還原端據此判斷相容性。
-  /// v3：新增 `monthlyTotals`（月粒度期間總量）——它是未來 `days` 明細
-  /// 截斷後歷史總量的唯一來源，必須備份；day 粒度可由明細導出，不上傳。
-  /// v2：`days`（每日 × 每首歌記錄）取代 v1 的 `tracks`（累計）。
-  /// v1 從未實際上傳過（上線前即改版），不留 v1 還原路徑。
+  /// Firestore v3：新增 `monthlyTotals`（月粒度期間總量）——它是未來 `days` 明細
   static const _schemaVersion = 3;
 
   /// 上傳節流：距上次成功上傳超過此間隔才再上傳（登入當下的觸發不受限）。
@@ -47,8 +43,7 @@ class SyncService {
     // 首個事件是啟動時的既有登入狀態（App 啟動觸發、節流一天）；
     // 其後的 null -> user 轉變才是「登入成功當下」（先還原判斷、上傳不節流）。
     var isStartupEvent = true;
-    final sub =
-        ref.read(authServiceProvider).authStateChanges().listen((user) {
+    final sub = ref.read(authServiceProvider).authStateChanges().listen((user) {
       final isStartup = isStartupEvent;
       isStartupEvent = false;
       if (user == null) {
@@ -96,19 +91,21 @@ class SyncService {
 
     final settings = data['settings'];
     if (settings is Map) {
-      ref.read(settingsControllerProvider.notifier).restoreFromRemote(
+      ref
+          .read(settingsControllerProvider.notifier)
+          .restoreFromRemote(
             locale: settings['locale'] as String?,
             themeMode: settings['themeMode'] as String?,
             seedColor: settings['seedColor'] as String?,
           );
     }
-    // v3 文件帶 monthlyTotals（月粒度以雲端為準、day totals 由明細重建）；
-    // v2 舊文件（或欄位缺漏）傳 null，day / month totals 全由明細重建。
-    final rawTotals = data['monthlyTotals'];
-    ref.read(statisticsControllerProvider.notifier).restoreFromRemote(
-          _decodeDays(data['days']),
+    final rawTotals = data['monthlyTotals'] as Object?;
+    ref
+        .read(statisticsControllerProvider.notifier)
+        .restoreFromRemote(
+          (data['days'] as Object?).toDailyTrackStats(),
           monthlyTotals: version >= 3 && rawTotals is Map
-              ? _decodeMonthlyTotals(rawTotals)
+              ? rawTotals.toMonthlyTotals()
               : null,
         );
 
@@ -132,8 +129,10 @@ class SyncService {
     final lastSync = _store.lastSyncAt;
     if (lastSync != null) {
       if (!lastModified.isAfter(lastSync)) {
-        debugPrint('[Sync] 上次同步後無變更，跳過上傳'
-            '（lastModifiedAt=$lastModified, lastSyncAt=$lastSync）');
+        debugPrint(
+          '[Sync] 上次同步後無變更，跳過上傳'
+          '（lastModifiedAt=$lastModified, lastSyncAt=$lastSync）',
+        );
         return;
       }
       if (throttled &&
@@ -142,8 +141,10 @@ class SyncService {
         return;
       }
     }
-    debugPrint('[Sync] 開始上傳（throttled=$throttled, '
-        'lastModifiedAt=$lastModified, lastSyncAt=$lastSync）');
+    debugPrint(
+      '[Sync] 開始上傳（throttled=$throttled, '
+      'lastModifiedAt=$lastModified, lastSyncAt=$lastSync）',
+    );
     await _upload(uid, stats);
   }
 
@@ -168,13 +169,14 @@ class SyncService {
     try {
       // monthlyTotals 與 days 在同一個同步區塊內讀取（中間無 await），
       // 與本機為同一快照；整份 set() 覆寫，雲端明細與 totals 一致性不破。
-      final monthlyTotals =
-          ref.read(statisticsControllerProvider.notifier).monthlyTotals();
+      final monthlyTotals = ref
+          .read(statisticsControllerProvider.notifier)
+          .monthlyTotals();
       await _userDoc(uid).set({
         'schemaVersion': _schemaVersion,
         'settings': ref.read(settingsControllerProvider).toRemoteMap(),
-        'days': _encodeDays(stats.days),
-        'monthlyTotals': _encodeMonthlyTotals(monthlyTotals),
+        'days': stats.days.toRemoteMap(),
+        'monthlyTotals': monthlyTotals.toRemoteMap(),
         'updatedAt': FieldValue.serverTimestamp(),
       });
       _store.markSynced();
@@ -184,13 +186,17 @@ class SyncService {
       debugPrint('[Sync] 上傳失敗，略過：$e');
     }
   }
+}
 
+/// 於 App 根 widget watch 一次以啟動同步（建立後自行監聽登入狀態）。
+final syncServiceProvider = Provider<SyncService>((ref) => SyncService(ref));
+
+/// 每日記錄 -> 雲端 `days` map 的編碼。
+extension _DailyStatsRemoteEncode on List<DailyTrackStatEntity> {
   /// 攤平每日記錄為巢狀 map：`{ <day>: { <trackId>: { title, ... } } }`。
-  Map<String, Map<String, Object>> _encodeDays(
-    List<DailyTrackStatEntity> days,
-  ) {
+  Map<String, Map<String, Object>> toRemoteMap() {
     final result = <String, Map<String, Object>>{};
-    for (final d in days) {
+    for (final d in this) {
       (result[d.day] ??= {})[d.trackId] = {
         'title': d.title,
         'playCount': d.playCount,
@@ -199,51 +205,56 @@ class SyncService {
     }
     return result;
   }
+}
 
-  /// 解析雲端 days 巢狀 map，容錯：缺欄位給預設值、格式不符的條目跳過。
-  List<DailyTrackStatEntity> _decodeDays(Object? raw) {
+/// 月粒度 totals -> 雲端 `monthlyTotals` map 的編碼。
+extension _MonthlyTotalsRemoteEncode on List<PeriodStatEntity> {
+  /// 攤平月粒度 totals 為 map：`{ <yyyy-MM>: { playCount, listenMs } }`。
+  Map<String, Map<String, Object>> toRemoteMap() => {
+    for (final t in this)
+      t.period: {'playCount': t.playCount, 'listenMs': t.listenMs},
+  };
+}
+
+/// 雲端原始值（`Object?`）-> 統計實體的解碼，容錯：缺欄位給預設值、
+/// 格式不符的條目跳過。
+extension _RemoteStatsDecode on Object? {
+  /// 解析雲端 days 巢狀 map。
+  List<DailyTrackStatEntity> toDailyTrackStats() {
+    final raw = this;
     if (raw is! Map) return const [];
     final entities = <DailyTrackStatEntity>[];
     raw.forEach((day, tracks) {
       if (tracks is! Map) return;
       tracks.forEach((trackId, value) {
         if (value is! Map) return;
-        entities.add(DailyTrackStatEntity()
-          ..day = '$day'
-          ..trackId = '$trackId'
-          ..title = (value['title'] as String?) ?? '$trackId'
-          ..playCount = (value['playCount'] as num? ?? 0).toInt()
-          ..listenMs = (value['listenMs'] as num? ?? 0).toInt());
+        entities.add(
+          DailyTrackStatEntity()
+            ..day = '$day'
+            ..trackId = '$trackId'
+            ..title = (value['title'] as String?) ?? '$trackId'
+            ..playCount = (value['playCount'] as num? ?? 0).toInt()
+            ..listenMs = (value['listenMs'] as num? ?? 0).toInt(),
+        );
       });
     });
     return entities;
   }
 
-  /// 攤平月粒度 totals 為 map：`{ <yyyy-MM>: { playCount, listenMs } }`。
-  Map<String, Map<String, Object>> _encodeMonthlyTotals(
-    List<PeriodStatEntity> totals,
-  ) =>
-      {
-        for (final t in totals)
-          t.period: {'playCount': t.playCount, 'listenMs': t.listenMs},
-      };
-
-  /// 解析雲端 monthlyTotals map，容錯規則同 [_decodeDays]。
-  List<PeriodStatEntity> _decodeMonthlyTotals(Object? raw) {
+  /// 解析雲端 monthlyTotals map。
+  List<PeriodStatEntity> toMonthlyTotals() {
+    final raw = this;
     if (raw is! Map) return const [];
     final entities = <PeriodStatEntity>[];
     raw.forEach((month, value) {
       if (value is! Map) return;
-      entities.add(PeriodStatEntity()
-        ..period = '$month'
-        ..playCount = (value['playCount'] as num? ?? 0).toInt()
-        ..listenMs = (value['listenMs'] as num? ?? 0).toInt());
+      entities.add(
+        PeriodStatEntity()
+          ..period = '$month'
+          ..playCount = (value['playCount'] as num? ?? 0).toInt()
+          ..listenMs = (value['listenMs'] as num? ?? 0).toInt(),
+      );
     });
     return entities;
   }
 }
-
-/// 於 App 根 widget watch 一次以啟動同步（建立後自行監聽登入狀態）。
-final syncServiceProvider = Provider<SyncService>(
-  (ref) => SyncService(ref),
-);
