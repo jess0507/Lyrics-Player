@@ -45,10 +45,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get player_previous => 'Önceki';
 
   @override
-  String get player_shuffle => 'Shuffle';
+  String get player_shuffle => 'Karışık';
 
   @override
-  String get player_loop => 'Repeat';
+  String get player_loop => 'Tekrarla';
 
   @override
   String get player_forward => '5sn ileri';
@@ -63,7 +63,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get common_reset => 'Sıfırla';
 
   @override
-  String get player_nothing_playing => 'Nothing playing';
+  String get player_nothing_playing => 'Çalan bir şey yok';
 
   @override
   String get music_import => 'Müzik içe aktar';
@@ -75,10 +75,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get music_empty => 'Müzik bulunamadı';
 
   @override
-  String get music_remove => 'Remove';
+  String get music_remove => 'Kaldır';
 
   @override
-  String get music_rescan => 'Rescan';
+  String get music_rescan => 'Yeniden tara';
 
   @override
   String get permission_title => 'Depolama izni gerekli';
@@ -100,157 +100,157 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settings_language => 'Dil';
 
   @override
-  String get settings_language_system => 'System default';
+  String get settings_language_system => 'Sistem varsayılanı';
 
   @override
   String get settings_theme => 'Tema';
 
   @override
-  String get settings_theme_system => 'System';
+  String get settings_theme_system => 'Sistem';
 
   @override
-  String get settings_theme_light => 'Light';
+  String get settings_theme_light => 'Açık';
 
   @override
-  String get settings_theme_dark => 'Dark';
+  String get settings_theme_dark => 'Koyu';
 
   @override
-  String get statistics_total_time => 'Total listening time';
+  String get statistics_total_time => 'Toplam dinleme süresi';
 
   @override
-  String get statistics_play_count => 'Total plays';
+  String get statistics_play_count => 'Toplam çalma';
 
   @override
-  String get statistics_top_tracks => 'Most played';
+  String get statistics_top_tracks => 'En çok çalınanlar';
 
   @override
-  String get statistics_empty => 'No statistics yet';
+  String get statistics_empty => 'Henüz istatistik yok';
 
   @override
-  String get statistics_reset => 'Reset statistics';
+  String get statistics_reset => 'İstatistikleri sıfırla';
 
   @override
-  String get statistics_reset_title => 'Reset statistics?';
+  String get statistics_reset_title => 'İstatistikler sıfırlansın mı?';
 
   @override
   String get statistics_reset_message =>
-      'All listening statistics on this device will be deleted. This cannot be undone.';
+      'Bu cihazdaki tüm dinleme istatistikleri silinecek. Bu işlem geri alınamaz.';
 
   @override
   String get statistics_reset_message_cloud =>
-      'All listening statistics on this device and your cloud backup will be deleted. This cannot be undone.';
+      'Bu cihazdaki ve bulut yedeğinizdeki tüm dinleme istatistikleri silinecek. Bu işlem geri alınamaz.';
 
   @override
-  String get statistics_reset_confirm => 'Reset';
+  String get statistics_reset_confirm => 'Sıfırla';
 
   @override
-  String get statistics_chart_title => 'Listening time';
+  String get statistics_chart_title => 'Dinleme süresi';
 
   @override
-  String get statistics_chart_week => 'Week';
+  String get statistics_chart_week => 'Hafta';
 
   @override
-  String get statistics_chart_month => 'Month';
+  String get statistics_chart_month => 'Ay';
 
   @override
-  String get statistics_chart_year => 'Year';
+  String get statistics_chart_year => 'Yıl';
 
   @override
-  String get about_version => 'Version';
+  String get about_version => 'Sürüm';
 
   @override
-  String get about_developer => 'Developer';
+  String get about_developer => 'Geliştirici';
 
   @override
-  String get about_licenses => 'Open source licenses';
+  String get about_licenses => 'Açık kaynak lisansları';
 
   @override
-  String get about_privacy => 'Privacy policy';
+  String get about_privacy => 'Gizlilik politikası';
 
   @override
-  String get about_open_source => 'Open source packages';
+  String get about_open_source => 'Açık kaynak paketleri';
 
   @override
-  String get account_guest => 'Guest';
+  String get account_guest => 'Misafir';
 
   @override
   String get account_signed_out_message =>
-      'Sign in to sync your data across devices.';
+      'Verilerinizi cihazlar arasında senkronize etmek için oturum açın.';
 
   @override
-  String get account_email => 'Email';
+  String get account_email => 'E-posta';
 
   @override
-  String get account_password => 'Password';
+  String get account_password => 'Parola';
 
   @override
-  String get account_sign_in => 'Sign in';
+  String get account_sign_in => 'Oturum aç';
 
   @override
-  String get account_sign_up => 'Sign up';
+  String get account_sign_up => 'Kaydol';
 
   @override
-  String get account_sign_in_google => 'Sign in with Google';
+  String get account_sign_in_google => 'Google ile oturum aç';
 
   @override
-  String get account_sign_in_facebook => 'Sign in with Facebook';
+  String get account_sign_in_facebook => 'Facebook ile oturum aç';
 
   @override
-  String get account_method_email => 'Sign in with email';
+  String get account_method_email => 'E-posta ile oturum aç';
 
   @override
-  String get account_method_phone => 'Sign in with phone';
+  String get account_method_phone => 'Telefon ile oturum aç';
 
   @override
-  String get account_phone => 'Phone number';
+  String get account_phone => 'Telefon numarası';
 
   @override
-  String get account_send_code => 'Send code';
+  String get account_send_code => 'Kod gönder';
 
   @override
-  String get account_sms_code => 'Verification code';
+  String get account_sms_code => 'Doğrulama kodu';
 
   @override
-  String get account_verify_code => 'Verify and sign in';
+  String get account_verify_code => 'Doğrula ve oturum aç';
 
   @override
-  String get account_code_sent => 'We\'ve texted you a verification code.';
+  String get account_code_sent => 'Size SMS ile bir doğrulama kodu gönderdik.';
 
   @override
-  String get account_continue_guest => 'Continue as guest';
+  String get account_continue_guest => 'Misafir olarak devam et';
 
   @override
-  String get account_sign_out => 'Sign out';
+  String get account_sign_out => 'Oturumu kapat';
 
   @override
-  String get account_delete => 'Delete account';
+  String get account_delete => 'Hesabı sil';
 
   @override
   String get account_delete_confirm =>
-      'Are you sure you want to delete your account? This cannot be undone.';
+      'Hesabınızı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.';
 
   @override
-  String get account_delete_data => 'Delete account data';
+  String get account_delete_data => 'Hesap verilerini sil';
 
   @override
   String get account_delete_data_confirm =>
-      'Delete all your cloud data while keeping your account? This cannot be undone.';
+      'Hesabınızı koruyarak tüm bulut verilerinizi silmek istiyor musunuz? Bu işlem geri alınamaz.';
 
   @override
-  String get account_delete_data_done => 'Your account data has been deleted.';
+  String get account_delete_data_done => 'Hesap verileriniz silindi.';
 
   @override
-  String get account_forgot_password => 'Forgot password?';
+  String get account_forgot_password => 'Parolanızı mı unuttunuz?';
 
   @override
-  String get account_reset_sent => 'Password reset email sent';
+  String get account_reset_sent => 'Parola sıfırlama e-postası gönderildi';
 
   @override
-  String get account_anonymous => 'Anonymous account';
+  String get account_anonymous => 'Anonim hesap';
 
   @override
   String get account_unavailable =>
-      'Account features are temporarily unavailable.';
+      'Hesap özellikleri geçici olarak kullanılamıyor.';
 
   @override
   String get common_cancel => 'İptal';
@@ -259,50 +259,50 @@ class AppLocalizationsTr extends AppLocalizations {
   String get common_confirm => 'Onayla';
 
   @override
-  String get common_ok => 'OK';
+  String get common_ok => 'Tamam';
 
   @override
-  String get common_delete => 'Delete';
+  String get common_delete => 'Sil';
 
   @override
-  String get common_retry => 'Retry';
+  String get common_retry => 'Yeniden dene';
 
   @override
   String get settings_color => 'Tema rengi';
 
   @override
-  String get lyrics_import => 'Import lyrics';
+  String get lyrics_import => 'Şarkı sözü içe aktar';
 
   @override
-  String get lyrics_import_success => 'Lyrics imported';
+  String get lyrics_import_success => 'Şarkı sözü içe aktarıldı';
 
   @override
-  String get lyrics_import_failed => 'Couldn\'t import lyrics';
+  String get lyrics_import_failed => 'Şarkı sözü içe aktarılamadı';
 
   @override
-  String get lyrics_import_too_large => 'Lyrics file is too large';
+  String get lyrics_import_too_large => 'Şarkı sözü dosyası çok büyük';
 
   @override
-  String get lyrics_import_empty => 'No lyrics found in this file';
+  String get lyrics_import_empty => 'Bu dosyada şarkı sözü bulunamadı';
 
   @override
-  String get lyrics_empty => 'No lyrics for this track yet';
+  String get lyrics_empty => 'Bu parça için henüz şarkı sözü yok';
 
   @override
-  String get lyrics_reimport => 'Re-import';
+  String get lyrics_reimport => 'Yeniden içe aktar';
 
   @override
-  String get lyrics_delete => 'Delete lyrics';
+  String get lyrics_delete => 'Şarkı sözünü sil';
 
   @override
-  String get lyrics_delete_confirm => 'Delete lyrics for this track?';
+  String get lyrics_delete_confirm => 'Bu parçanın şarkı sözü silinsin mi?';
 
   @override
-  String get lyrics_show => 'Show lyrics';
+  String get lyrics_show => 'Şarkı sözünü göster';
 
   @override
-  String get lyrics_hide => 'Show artwork';
+  String get lyrics_hide => 'Albüm kapağını göster';
 
   @override
-  String get lyrics_font_size => 'Font size';
+  String get lyrics_font_size => 'Yazı tipi boyutu';
 }

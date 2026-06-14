@@ -45,10 +45,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get player_previous => '前へ';
 
   @override
-  String get player_shuffle => 'Shuffle';
+  String get player_shuffle => 'シャッフル';
 
   @override
-  String get player_loop => 'Repeat';
+  String get player_loop => 'リピート';
 
   @override
   String get player_forward => '5秒進む';
@@ -63,7 +63,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get common_reset => 'リセット';
 
   @override
-  String get player_nothing_playing => 'Nothing playing';
+  String get player_nothing_playing => '再生中の曲はありません';
 
   @override
   String get music_import => '音楽をインポート';
@@ -75,10 +75,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get music_empty => '音楽が見つかりません';
 
   @override
-  String get music_remove => 'Remove';
+  String get music_remove => '削除';
 
   @override
-  String get music_rescan => 'Rescan';
+  String get music_rescan => '再スキャン';
 
   @override
   String get permission_title => 'ストレージへのアクセス許可が必要です';
@@ -99,157 +99,153 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settings_language => '言語';
 
   @override
-  String get settings_language_system => 'System default';
+  String get settings_language_system => 'システムのデフォルト';
 
   @override
   String get settings_theme => 'テーマ';
 
   @override
-  String get settings_theme_system => 'System';
+  String get settings_theme_system => 'システム';
 
   @override
-  String get settings_theme_light => 'Light';
+  String get settings_theme_light => 'ライト';
 
   @override
-  String get settings_theme_dark => 'Dark';
+  String get settings_theme_dark => 'ダーク';
 
   @override
-  String get statistics_total_time => 'Total listening time';
+  String get statistics_total_time => '総再生時間';
 
   @override
-  String get statistics_play_count => 'Total plays';
+  String get statistics_play_count => '総再生回数';
 
   @override
-  String get statistics_top_tracks => 'Most played';
+  String get statistics_top_tracks => '再生回数が多い曲';
 
   @override
-  String get statistics_empty => 'No statistics yet';
+  String get statistics_empty => 'まだ統計がありません';
 
   @override
-  String get statistics_reset => 'Reset statistics';
+  String get statistics_reset => '統計をリセット';
 
   @override
-  String get statistics_reset_title => 'Reset statistics?';
+  String get statistics_reset_title => '統計をリセットしますか？';
 
   @override
-  String get statistics_reset_message =>
-      'All listening statistics on this device will be deleted. This cannot be undone.';
+  String get statistics_reset_message => 'このデバイスのすべての再生統計が削除されます。この操作は取り消せません。';
 
   @override
   String get statistics_reset_message_cloud =>
-      'All listening statistics on this device and your cloud backup will be deleted. This cannot be undone.';
+      'このデバイスとクラウドバックアップのすべての再生統計が削除されます。この操作は取り消せません。';
 
   @override
-  String get statistics_reset_confirm => 'Reset';
+  String get statistics_reset_confirm => 'リセット';
 
   @override
-  String get statistics_chart_title => 'Listening time';
+  String get statistics_chart_title => '再生時間';
 
   @override
-  String get statistics_chart_week => 'Week';
+  String get statistics_chart_week => '週';
 
   @override
-  String get statistics_chart_month => 'Month';
+  String get statistics_chart_month => '月';
 
   @override
-  String get statistics_chart_year => 'Year';
+  String get statistics_chart_year => '年';
 
   @override
-  String get about_version => 'Version';
+  String get about_version => 'バージョン';
 
   @override
-  String get about_developer => 'Developer';
+  String get about_developer => '開発者';
 
   @override
-  String get about_licenses => 'Open source licenses';
+  String get about_licenses => 'オープンソースライセンス';
 
   @override
-  String get about_privacy => 'Privacy policy';
+  String get about_privacy => 'プライバシーポリシー';
 
   @override
-  String get about_open_source => 'Open source packages';
+  String get about_open_source => 'オープンソースパッケージ';
 
   @override
-  String get account_guest => 'Guest';
+  String get account_guest => 'ゲスト';
 
   @override
-  String get account_signed_out_message =>
-      'Sign in to sync your data across devices.';
+  String get account_signed_out_message => 'サインインしてデバイス間でデータを同期します。';
 
   @override
-  String get account_email => 'Email';
+  String get account_email => 'メールアドレス';
 
   @override
-  String get account_password => 'Password';
+  String get account_password => 'パスワード';
 
   @override
-  String get account_sign_in => 'Sign in';
+  String get account_sign_in => 'サインイン';
 
   @override
-  String get account_sign_up => 'Sign up';
+  String get account_sign_up => '新規登録';
 
   @override
-  String get account_sign_in_google => 'Sign in with Google';
+  String get account_sign_in_google => 'Googleでサインイン';
 
   @override
-  String get account_sign_in_facebook => 'Sign in with Facebook';
+  String get account_sign_in_facebook => 'Facebookでサインイン';
 
   @override
-  String get account_method_email => 'Sign in with email';
+  String get account_method_email => 'メールでサインイン';
 
   @override
-  String get account_method_phone => 'Sign in with phone';
+  String get account_method_phone => '電話でサインイン';
 
   @override
-  String get account_phone => 'Phone number';
+  String get account_phone => '電話番号';
 
   @override
-  String get account_send_code => 'Send code';
+  String get account_send_code => 'コードを送信';
 
   @override
-  String get account_sms_code => 'Verification code';
+  String get account_sms_code => '確認コード';
 
   @override
-  String get account_verify_code => 'Verify and sign in';
+  String get account_verify_code => '確認してサインイン';
 
   @override
-  String get account_code_sent => 'We\'ve texted you a verification code.';
+  String get account_code_sent => '確認コードをSMSで送信しました。';
 
   @override
-  String get account_continue_guest => 'Continue as guest';
+  String get account_continue_guest => 'ゲストとして続行';
 
   @override
-  String get account_sign_out => 'Sign out';
+  String get account_sign_out => 'サインアウト';
 
   @override
-  String get account_delete => 'Delete account';
+  String get account_delete => 'アカウントを削除';
 
   @override
-  String get account_delete_confirm =>
-      'Are you sure you want to delete your account? This cannot be undone.';
+  String get account_delete_confirm => 'アカウントを削除してもよろしいですか？この操作は取り消せません。';
 
   @override
-  String get account_delete_data => 'Delete account data';
+  String get account_delete_data => 'アカウントデータを削除';
 
   @override
   String get account_delete_data_confirm =>
-      'Delete all your cloud data while keeping your account? This cannot be undone.';
+      'アカウントを残したままクラウドデータをすべて削除しますか？この操作は取り消せません。';
 
   @override
-  String get account_delete_data_done => 'Your account data has been deleted.';
+  String get account_delete_data_done => 'アカウントデータを削除しました。';
 
   @override
-  String get account_forgot_password => 'Forgot password?';
+  String get account_forgot_password => 'パスワードをお忘れですか？';
 
   @override
-  String get account_reset_sent => 'Password reset email sent';
+  String get account_reset_sent => 'パスワード再設定メールを送信しました';
 
   @override
-  String get account_anonymous => 'Anonymous account';
+  String get account_anonymous => '匿名アカウント';
 
   @override
-  String get account_unavailable =>
-      'Account features are temporarily unavailable.';
+  String get account_unavailable => 'アカウント機能は一時的に利用できません。';
 
   @override
   String get common_cancel => 'キャンセル';
@@ -261,47 +257,47 @@ class AppLocalizationsJa extends AppLocalizations {
   String get common_ok => 'OK';
 
   @override
-  String get common_delete => 'Delete';
+  String get common_delete => '削除';
 
   @override
-  String get common_retry => 'Retry';
+  String get common_retry => '再試行';
 
   @override
   String get settings_color => 'テーマカラー';
 
   @override
-  String get lyrics_import => 'Import lyrics';
+  String get lyrics_import => '歌詞をインポート';
 
   @override
-  String get lyrics_import_success => 'Lyrics imported';
+  String get lyrics_import_success => '歌詞をインポートしました';
 
   @override
-  String get lyrics_import_failed => 'Couldn\'t import lyrics';
+  String get lyrics_import_failed => '歌詞をインポートできませんでした';
 
   @override
-  String get lyrics_import_too_large => 'Lyrics file is too large';
+  String get lyrics_import_too_large => '歌詞ファイルが大きすぎます';
 
   @override
-  String get lyrics_import_empty => 'No lyrics found in this file';
+  String get lyrics_import_empty => 'このファイルに歌詞が見つかりません';
 
   @override
-  String get lyrics_empty => 'No lyrics for this track yet';
+  String get lyrics_empty => 'この曲の歌詞はまだありません';
 
   @override
-  String get lyrics_reimport => 'Re-import';
+  String get lyrics_reimport => '再インポート';
 
   @override
-  String get lyrics_delete => 'Delete lyrics';
+  String get lyrics_delete => '歌詞を削除';
 
   @override
-  String get lyrics_delete_confirm => 'Delete lyrics for this track?';
+  String get lyrics_delete_confirm => 'この曲の歌詞を削除しますか？';
 
   @override
-  String get lyrics_show => 'Show lyrics';
+  String get lyrics_show => '歌詞を表示';
 
   @override
-  String get lyrics_hide => 'Show artwork';
+  String get lyrics_hide => 'アートワークを表示';
 
   @override
-  String get lyrics_font_size => 'Font size';
+  String get lyrics_font_size => '文字サイズ';
 }

@@ -45,10 +45,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get player_previous => 'Sebelumnya';
 
   @override
-  String get player_shuffle => 'Shuffle';
+  String get player_shuffle => 'Acak';
 
   @override
-  String get player_loop => 'Repeat';
+  String get player_loop => 'Ulangi';
 
   @override
   String get player_forward => 'Maju 5d';
@@ -63,7 +63,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get common_reset => 'Atur ulang';
 
   @override
-  String get player_nothing_playing => 'Nothing playing';
+  String get player_nothing_playing => 'Tidak ada yang diputar';
 
   @override
   String get music_import => 'Impor musik';
@@ -75,10 +75,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get music_empty => 'Musik tidak ditemukan';
 
   @override
-  String get music_remove => 'Remove';
+  String get music_remove => 'Hapus';
 
   @override
-  String get music_rescan => 'Rescan';
+  String get music_rescan => 'Pindai ulang';
 
   @override
   String get permission_title => 'Izin penyimpanan diperlukan';
@@ -100,157 +100,159 @@ class AppLocalizationsId extends AppLocalizations {
   String get settings_language => 'Bahasa';
 
   @override
-  String get settings_language_system => 'System default';
+  String get settings_language_system => 'Default sistem';
 
   @override
   String get settings_theme => 'Tema';
 
   @override
-  String get settings_theme_system => 'System';
+  String get settings_theme_system => 'Sistem';
 
   @override
-  String get settings_theme_light => 'Light';
+  String get settings_theme_light => 'Terang';
 
   @override
-  String get settings_theme_dark => 'Dark';
+  String get settings_theme_dark => 'Gelap';
 
   @override
-  String get statistics_total_time => 'Total listening time';
+  String get statistics_total_time => 'Total waktu mendengarkan';
 
   @override
-  String get statistics_play_count => 'Total plays';
+  String get statistics_play_count => 'Total pemutaran';
 
   @override
-  String get statistics_top_tracks => 'Most played';
+  String get statistics_top_tracks => 'Paling sering diputar';
 
   @override
-  String get statistics_empty => 'No statistics yet';
+  String get statistics_empty => 'Belum ada statistik';
 
   @override
-  String get statistics_reset => 'Reset statistics';
+  String get statistics_reset => 'Atur ulang statistik';
 
   @override
-  String get statistics_reset_title => 'Reset statistics?';
+  String get statistics_reset_title => 'Atur ulang statistik?';
 
   @override
   String get statistics_reset_message =>
-      'All listening statistics on this device will be deleted. This cannot be undone.';
+      'Semua statistik mendengarkan di perangkat ini akan dihapus. Tindakan ini tidak dapat dibatalkan.';
 
   @override
   String get statistics_reset_message_cloud =>
-      'All listening statistics on this device and your cloud backup will be deleted. This cannot be undone.';
+      'Semua statistik mendengarkan di perangkat ini dan cadangan cloud Anda akan dihapus. Tindakan ini tidak dapat dibatalkan.';
 
   @override
-  String get statistics_reset_confirm => 'Reset';
+  String get statistics_reset_confirm => 'Atur ulang';
 
   @override
-  String get statistics_chart_title => 'Listening time';
+  String get statistics_chart_title => 'Waktu mendengarkan';
 
   @override
-  String get statistics_chart_week => 'Week';
+  String get statistics_chart_week => 'Minggu';
 
   @override
-  String get statistics_chart_month => 'Month';
+  String get statistics_chart_month => 'Bulan';
 
   @override
-  String get statistics_chart_year => 'Year';
+  String get statistics_chart_year => 'Tahun';
 
   @override
-  String get about_version => 'Version';
+  String get about_version => 'Versi';
 
   @override
-  String get about_developer => 'Developer';
+  String get about_developer => 'Pengembang';
 
   @override
-  String get about_licenses => 'Open source licenses';
+  String get about_licenses => 'Lisensi sumber terbuka';
 
   @override
-  String get about_privacy => 'Privacy policy';
+  String get about_privacy => 'Kebijakan privasi';
 
   @override
-  String get about_open_source => 'Open source packages';
+  String get about_open_source => 'Paket sumber terbuka';
 
   @override
-  String get account_guest => 'Guest';
+  String get account_guest => 'Tamu';
 
   @override
   String get account_signed_out_message =>
-      'Sign in to sync your data across devices.';
+      'Masuk untuk menyinkronkan data Anda di seluruh perangkat.';
 
   @override
   String get account_email => 'Email';
 
   @override
-  String get account_password => 'Password';
+  String get account_password => 'Kata sandi';
 
   @override
-  String get account_sign_in => 'Sign in';
+  String get account_sign_in => 'Masuk';
 
   @override
-  String get account_sign_up => 'Sign up';
+  String get account_sign_up => 'Daftar';
 
   @override
-  String get account_sign_in_google => 'Sign in with Google';
+  String get account_sign_in_google => 'Masuk dengan Google';
 
   @override
-  String get account_sign_in_facebook => 'Sign in with Facebook';
+  String get account_sign_in_facebook => 'Masuk dengan Facebook';
 
   @override
-  String get account_method_email => 'Sign in with email';
+  String get account_method_email => 'Masuk dengan email';
 
   @override
-  String get account_method_phone => 'Sign in with phone';
+  String get account_method_phone => 'Masuk dengan telepon';
 
   @override
-  String get account_phone => 'Phone number';
+  String get account_phone => 'Nomor telepon';
 
   @override
-  String get account_send_code => 'Send code';
+  String get account_send_code => 'Kirim kode';
 
   @override
-  String get account_sms_code => 'Verification code';
+  String get account_sms_code => 'Kode verifikasi';
 
   @override
-  String get account_verify_code => 'Verify and sign in';
+  String get account_verify_code => 'Verifikasi dan masuk';
 
   @override
-  String get account_code_sent => 'We\'ve texted you a verification code.';
+  String get account_code_sent =>
+      'Kami telah mengirimi Anda kode verifikasi melalui SMS.';
 
   @override
-  String get account_continue_guest => 'Continue as guest';
+  String get account_continue_guest => 'Lanjutkan sebagai tamu';
 
   @override
-  String get account_sign_out => 'Sign out';
+  String get account_sign_out => 'Keluar';
 
   @override
-  String get account_delete => 'Delete account';
+  String get account_delete => 'Hapus akun';
 
   @override
   String get account_delete_confirm =>
-      'Are you sure you want to delete your account? This cannot be undone.';
+      'Apakah Anda yakin ingin menghapus akun Anda? Tindakan ini tidak dapat dibatalkan.';
 
   @override
-  String get account_delete_data => 'Delete account data';
+  String get account_delete_data => 'Hapus data akun';
 
   @override
   String get account_delete_data_confirm =>
-      'Delete all your cloud data while keeping your account? This cannot be undone.';
+      'Hapus semua data cloud Anda sambil mempertahankan akun? Tindakan ini tidak dapat dibatalkan.';
 
   @override
-  String get account_delete_data_done => 'Your account data has been deleted.';
+  String get account_delete_data_done => 'Data akun Anda telah dihapus.';
 
   @override
-  String get account_forgot_password => 'Forgot password?';
+  String get account_forgot_password => 'Lupa kata sandi?';
 
   @override
-  String get account_reset_sent => 'Password reset email sent';
+  String get account_reset_sent =>
+      'Email pengaturan ulang kata sandi telah dikirim';
 
   @override
-  String get account_anonymous => 'Anonymous account';
+  String get account_anonymous => 'Akun anonim';
 
   @override
   String get account_unavailable =>
-      'Account features are temporarily unavailable.';
+      'Fitur akun tidak tersedia untuk sementara.';
 
   @override
   String get common_cancel => 'Batal';
@@ -262,47 +264,47 @@ class AppLocalizationsId extends AppLocalizations {
   String get common_ok => 'OK';
 
   @override
-  String get common_delete => 'Delete';
+  String get common_delete => 'Hapus';
 
   @override
-  String get common_retry => 'Retry';
+  String get common_retry => 'Coba lagi';
 
   @override
   String get settings_color => 'Warna tema';
 
   @override
-  String get lyrics_import => 'Import lyrics';
+  String get lyrics_import => 'Impor lirik';
 
   @override
-  String get lyrics_import_success => 'Lyrics imported';
+  String get lyrics_import_success => 'Lirik diimpor';
 
   @override
-  String get lyrics_import_failed => 'Couldn\'t import lyrics';
+  String get lyrics_import_failed => 'Tidak dapat mengimpor lirik';
 
   @override
-  String get lyrics_import_too_large => 'Lyrics file is too large';
+  String get lyrics_import_too_large => 'File lirik terlalu besar';
 
   @override
-  String get lyrics_import_empty => 'No lyrics found in this file';
+  String get lyrics_import_empty => 'Tidak ada lirik di file ini';
 
   @override
-  String get lyrics_empty => 'No lyrics for this track yet';
+  String get lyrics_empty => 'Belum ada lirik untuk lagu ini';
 
   @override
-  String get lyrics_reimport => 'Re-import';
+  String get lyrics_reimport => 'Impor ulang';
 
   @override
-  String get lyrics_delete => 'Delete lyrics';
+  String get lyrics_delete => 'Hapus lirik';
 
   @override
-  String get lyrics_delete_confirm => 'Delete lyrics for this track?';
+  String get lyrics_delete_confirm => 'Hapus lirik untuk lagu ini?';
 
   @override
-  String get lyrics_show => 'Show lyrics';
+  String get lyrics_show => 'Tampilkan lirik';
 
   @override
-  String get lyrics_hide => 'Show artwork';
+  String get lyrics_hide => 'Tampilkan sampul';
 
   @override
-  String get lyrics_font_size => 'Font size';
+  String get lyrics_font_size => 'Ukuran font';
 }

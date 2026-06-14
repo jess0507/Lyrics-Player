@@ -45,10 +45,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get player_previous => '上一首';
 
   @override
-  String get player_shuffle => 'Shuffle';
+  String get player_shuffle => '隨機播放';
 
   @override
-  String get player_loop => 'Repeat';
+  String get player_loop => '循環播放';
 
   @override
   String get player_forward => '快進5秒';
@@ -63,7 +63,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get common_reset => '重設';
 
   @override
-  String get player_nothing_playing => 'Nothing playing';
+  String get player_nothing_playing => '目前沒有播放中的曲目';
 
   @override
   String get music_import => '匯入音樂';
@@ -75,7 +75,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get music_empty => '尚無音樂，點擊重新掃描以載入裝置音樂。';
 
   @override
-  String get music_remove => 'Remove';
+  String get music_remove => '移除';
 
   @override
   String get music_rescan => '重新掃描';
@@ -99,157 +99,151 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settings_language => '語言';
 
   @override
-  String get settings_language_system => 'System default';
+  String get settings_language_system => '跟隨系統';
 
   @override
   String get settings_theme => '主題';
 
   @override
-  String get settings_theme_system => 'System';
+  String get settings_theme_system => '跟隨系統';
 
   @override
-  String get settings_theme_light => 'Light';
+  String get settings_theme_light => '淺色';
 
   @override
-  String get settings_theme_dark => 'Dark';
+  String get settings_theme_dark => '深色';
 
   @override
-  String get statistics_total_time => 'Total listening time';
+  String get statistics_total_time => '總聆聽時長';
 
   @override
-  String get statistics_play_count => 'Total plays';
+  String get statistics_play_count => '總播放次數';
 
   @override
-  String get statistics_top_tracks => 'Most played';
+  String get statistics_top_tracks => '最常聆聽';
 
   @override
-  String get statistics_empty => 'No statistics yet';
+  String get statistics_empty => '尚無統計數據';
 
   @override
-  String get statistics_reset => 'Reset statistics';
+  String get statistics_reset => '重設統計數據';
 
   @override
-  String get statistics_reset_title => 'Reset statistics?';
+  String get statistics_reset_title => '重設統計數據？';
 
   @override
-  String get statistics_reset_message =>
-      'All listening statistics on this device will be deleted. This cannot be undone.';
+  String get statistics_reset_message => '將刪除此裝置上的所有聆聽統計，此操作無法復原。';
 
   @override
-  String get statistics_reset_message_cloud =>
-      'All listening statistics on this device and your cloud backup will be deleted. This cannot be undone.';
+  String get statistics_reset_message_cloud => '將刪除此裝置上的所有聆聽統計與雲端備份，此操作無法復原。';
 
   @override
-  String get statistics_reset_confirm => 'Reset';
+  String get statistics_reset_confirm => '重設';
 
   @override
-  String get statistics_chart_title => 'Listening time';
+  String get statistics_chart_title => '聆聽時長';
 
   @override
-  String get statistics_chart_week => 'Week';
+  String get statistics_chart_week => '週';
 
   @override
-  String get statistics_chart_month => 'Month';
+  String get statistics_chart_month => '月';
 
   @override
-  String get statistics_chart_year => 'Year';
+  String get statistics_chart_year => '年';
 
   @override
-  String get about_version => 'Version';
+  String get about_version => '版本';
 
   @override
-  String get about_developer => 'Developer';
+  String get about_developer => '開發者';
 
   @override
-  String get about_licenses => 'Open source licenses';
+  String get about_licenses => '開源授權';
 
   @override
-  String get about_privacy => 'Privacy policy';
+  String get about_privacy => '隱私權政策';
 
   @override
-  String get about_open_source => 'Open source packages';
+  String get about_open_source => '開源套件';
 
   @override
-  String get account_guest => 'Guest';
+  String get account_guest => '訪客';
 
   @override
-  String get account_signed_out_message =>
-      'Sign in to sync your data across devices.';
+  String get account_signed_out_message => '登入以在不同裝置間同步你的資料。';
 
   @override
-  String get account_email => 'Email';
+  String get account_email => '電子郵件';
 
   @override
-  String get account_password => 'Password';
+  String get account_password => '密碼';
 
   @override
-  String get account_sign_in => 'Sign in';
+  String get account_sign_in => '登入';
 
   @override
-  String get account_sign_up => 'Sign up';
+  String get account_sign_up => '註冊';
 
   @override
-  String get account_sign_in_google => 'Sign in with Google';
+  String get account_sign_in_google => '使用 Google 登入';
 
   @override
-  String get account_sign_in_facebook => 'Sign in with Facebook';
+  String get account_sign_in_facebook => '使用 Facebook 登入';
 
   @override
-  String get account_method_email => 'Sign in with email';
+  String get account_method_email => '使用 Email 登入';
 
   @override
-  String get account_method_phone => 'Sign in with phone';
+  String get account_method_phone => '使用手機號碼登入';
 
   @override
-  String get account_phone => 'Phone number';
+  String get account_phone => '手機號碼';
 
   @override
-  String get account_send_code => 'Send code';
+  String get account_send_code => '傳送驗證碼';
 
   @override
-  String get account_sms_code => 'Verification code';
+  String get account_sms_code => '驗證碼';
 
   @override
-  String get account_verify_code => 'Verify and sign in';
+  String get account_verify_code => '驗證並登入';
 
   @override
-  String get account_code_sent => 'We\'ve texted you a verification code.';
+  String get account_code_sent => '已將驗證碼以簡訊傳送到你的手機。';
 
   @override
-  String get account_continue_guest => 'Continue as guest';
+  String get account_continue_guest => '以訪客身分繼續';
 
   @override
-  String get account_sign_out => 'Sign out';
+  String get account_sign_out => '登出';
 
   @override
-  String get account_delete => 'Delete account';
+  String get account_delete => '刪除帳號';
 
   @override
-  String get account_delete_confirm =>
-      'Are you sure you want to delete your account? This cannot be undone.';
+  String get account_delete_confirm => '確定要刪除帳號嗎？此操作無法復原。';
 
   @override
-  String get account_delete_data => 'Delete account data';
+  String get account_delete_data => '刪除帳號資料';
 
   @override
-  String get account_delete_data_confirm =>
-      'Delete all your cloud data while keeping your account? This cannot be undone.';
+  String get account_delete_data_confirm => '確定要刪除你的所有雲端資料但保留帳號嗎？此操作無法復原。';
 
   @override
-  String get account_delete_data_done => 'Your account data has been deleted.';
+  String get account_delete_data_done => '你的帳號資料已刪除。';
 
   @override
-  String get account_forgot_password => 'Forgot password?';
+  String get account_forgot_password => '忘記密碼？';
 
   @override
-  String get account_reset_sent => 'Password reset email sent';
+  String get account_reset_sent => '已寄出密碼重設信';
 
   @override
-  String get account_anonymous => 'Anonymous account';
+  String get account_anonymous => '匿名帳號';
 
   @override
-  String get account_unavailable =>
-      'Account features are temporarily unavailable.';
+  String get account_unavailable => '帳戶功能暫時無法使用。';
 
   @override
   String get common_cancel => '取消';
@@ -258,52 +252,52 @@ class AppLocalizationsZh extends AppLocalizations {
   String get common_confirm => '確定';
 
   @override
-  String get common_ok => 'OK';
+  String get common_ok => '好';
 
   @override
-  String get common_delete => 'Delete';
+  String get common_delete => '刪除';
 
   @override
-  String get common_retry => 'Retry';
+  String get common_retry => '重試';
 
   @override
   String get settings_color => '主題顏色';
 
   @override
-  String get lyrics_import => 'Import lyrics';
+  String get lyrics_import => '匯入歌詞';
 
   @override
-  String get lyrics_import_success => 'Lyrics imported';
+  String get lyrics_import_success => '歌詞已匯入';
 
   @override
-  String get lyrics_import_failed => 'Couldn\'t import lyrics';
+  String get lyrics_import_failed => '無法匯入歌詞';
 
   @override
-  String get lyrics_import_too_large => 'Lyrics file is too large';
+  String get lyrics_import_too_large => '歌詞檔案太大';
 
   @override
-  String get lyrics_import_empty => 'No lyrics found in this file';
+  String get lyrics_import_empty => '這個檔案沒有歌詞內容';
 
   @override
-  String get lyrics_empty => 'No lyrics for this track yet';
+  String get lyrics_empty => '尚未匯入這首歌的歌詞';
 
   @override
-  String get lyrics_reimport => 'Re-import';
+  String get lyrics_reimport => '重新匯入';
 
   @override
-  String get lyrics_delete => 'Delete lyrics';
+  String get lyrics_delete => '刪除歌詞';
 
   @override
-  String get lyrics_delete_confirm => 'Delete lyrics for this track?';
+  String get lyrics_delete_confirm => '要刪除這首歌的歌詞嗎?';
 
   @override
-  String get lyrics_show => 'Show lyrics';
+  String get lyrics_show => '顯示歌詞';
 
   @override
-  String get lyrics_hide => 'Show artwork';
+  String get lyrics_hide => '顯示封面';
 
   @override
-  String get lyrics_font_size => 'Font size';
+  String get lyrics_font_size => '字體大小';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).

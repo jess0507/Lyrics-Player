@@ -45,10 +45,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get player_previous => 'السابق';
 
   @override
-  String get player_shuffle => 'Shuffle';
+  String get player_shuffle => 'تشغيل عشوائي';
 
   @override
-  String get player_loop => 'Repeat';
+  String get player_loop => 'تكرار';
 
   @override
   String get player_forward => 'تقديم ٥ ثوانٍ';
@@ -63,7 +63,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get common_reset => 'إعادة تعيين';
 
   @override
-  String get player_nothing_playing => 'Nothing playing';
+  String get player_nothing_playing => 'لا يوجد تشغيل حالي';
 
   @override
   String get music_import => 'استيراد الموسيقى';
@@ -75,10 +75,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get music_empty => 'لم يتم العثور على موسيقى';
 
   @override
-  String get music_remove => 'Remove';
+  String get music_remove => 'إزالة';
 
   @override
-  String get music_rescan => 'Rescan';
+  String get music_rescan => 'إعادة الفحص';
 
   @override
   String get permission_title => 'مطلوب إذن التخزين';
@@ -100,157 +100,156 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settings_language => 'اللغة';
 
   @override
-  String get settings_language_system => 'System default';
+  String get settings_language_system => 'إعداد النظام الافتراضي';
 
   @override
   String get settings_theme => 'السمة';
 
   @override
-  String get settings_theme_system => 'System';
+  String get settings_theme_system => 'النظام';
 
   @override
-  String get settings_theme_light => 'Light';
+  String get settings_theme_light => 'فاتح';
 
   @override
-  String get settings_theme_dark => 'Dark';
+  String get settings_theme_dark => 'داكن';
 
   @override
-  String get statistics_total_time => 'Total listening time';
+  String get statistics_total_time => 'إجمالي وقت الاستماع';
 
   @override
-  String get statistics_play_count => 'Total plays';
+  String get statistics_play_count => 'إجمالي مرات التشغيل';
 
   @override
-  String get statistics_top_tracks => 'Most played';
+  String get statistics_top_tracks => 'الأكثر تشغيلاً';
 
   @override
-  String get statistics_empty => 'No statistics yet';
+  String get statistics_empty => 'لا توجد إحصائيات بعد';
 
   @override
-  String get statistics_reset => 'Reset statistics';
+  String get statistics_reset => 'إعادة تعيين الإحصائيات';
 
   @override
-  String get statistics_reset_title => 'Reset statistics?';
+  String get statistics_reset_title => 'إعادة تعيين الإحصائيات؟';
 
   @override
   String get statistics_reset_message =>
-      'All listening statistics on this device will be deleted. This cannot be undone.';
+      'سيتم حذف جميع إحصائيات الاستماع على هذا الجهاز. لا يمكن التراجع عن هذا الإجراء.';
 
   @override
   String get statistics_reset_message_cloud =>
-      'All listening statistics on this device and your cloud backup will be deleted. This cannot be undone.';
+      'سيتم حذف جميع إحصائيات الاستماع على هذا الجهاز وفي نسختك الاحتياطية السحابية. لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get statistics_reset_confirm => 'Reset';
+  String get statistics_reset_confirm => 'إعادة تعيين';
 
   @override
-  String get statistics_chart_title => 'Listening time';
+  String get statistics_chart_title => 'وقت الاستماع';
 
   @override
-  String get statistics_chart_week => 'Week';
+  String get statistics_chart_week => 'أسبوع';
 
   @override
-  String get statistics_chart_month => 'Month';
+  String get statistics_chart_month => 'شهر';
 
   @override
-  String get statistics_chart_year => 'Year';
+  String get statistics_chart_year => 'سنة';
 
   @override
-  String get about_version => 'Version';
+  String get about_version => 'الإصدار';
 
   @override
-  String get about_developer => 'Developer';
+  String get about_developer => 'المطور';
 
   @override
-  String get about_licenses => 'Open source licenses';
+  String get about_licenses => 'تراخيص المصادر المفتوحة';
 
   @override
-  String get about_privacy => 'Privacy policy';
+  String get about_privacy => 'سياسة الخصوصية';
 
   @override
-  String get about_open_source => 'Open source packages';
+  String get about_open_source => 'حزم المصادر المفتوحة';
 
   @override
-  String get account_guest => 'Guest';
+  String get account_guest => 'ضيف';
 
   @override
   String get account_signed_out_message =>
-      'Sign in to sync your data across devices.';
+      'سجّل الدخول لمزامنة بياناتك عبر الأجهزة.';
 
   @override
-  String get account_email => 'Email';
+  String get account_email => 'البريد الإلكتروني';
 
   @override
-  String get account_password => 'Password';
+  String get account_password => 'كلمة المرور';
 
   @override
-  String get account_sign_in => 'Sign in';
+  String get account_sign_in => 'تسجيل الدخول';
 
   @override
-  String get account_sign_up => 'Sign up';
+  String get account_sign_up => 'إنشاء حساب';
 
   @override
-  String get account_sign_in_google => 'Sign in with Google';
+  String get account_sign_in_google => 'تسجيل الدخول بحساب Google';
 
   @override
-  String get account_sign_in_facebook => 'Sign in with Facebook';
+  String get account_sign_in_facebook => 'تسجيل الدخول بحساب Facebook';
 
   @override
-  String get account_method_email => 'Sign in with email';
+  String get account_method_email => 'تسجيل الدخول بالبريد الإلكتروني';
 
   @override
-  String get account_method_phone => 'Sign in with phone';
+  String get account_method_phone => 'تسجيل الدخول بالهاتف';
 
   @override
-  String get account_phone => 'Phone number';
+  String get account_phone => 'رقم الهاتف';
 
   @override
-  String get account_send_code => 'Send code';
+  String get account_send_code => 'إرسال الرمز';
 
   @override
-  String get account_sms_code => 'Verification code';
+  String get account_sms_code => 'رمز التحقق';
 
   @override
-  String get account_verify_code => 'Verify and sign in';
+  String get account_verify_code => 'تحقق وسجّل الدخول';
 
   @override
-  String get account_code_sent => 'We\'ve texted you a verification code.';
+  String get account_code_sent => 'لقد أرسلنا إليك رمز تحقق عبر رسالة نصية.';
 
   @override
-  String get account_continue_guest => 'Continue as guest';
+  String get account_continue_guest => 'المتابعة كضيف';
 
   @override
-  String get account_sign_out => 'Sign out';
+  String get account_sign_out => 'تسجيل الخروج';
 
   @override
-  String get account_delete => 'Delete account';
+  String get account_delete => 'حذف الحساب';
 
   @override
   String get account_delete_confirm =>
-      'Are you sure you want to delete your account? This cannot be undone.';
+      'هل أنت متأكد أنك تريد حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get account_delete_data => 'Delete account data';
+  String get account_delete_data => 'حذف بيانات الحساب';
 
   @override
   String get account_delete_data_confirm =>
-      'Delete all your cloud data while keeping your account? This cannot be undone.';
+      'حذف جميع بياناتك السحابية مع الاحتفاظ بحسابك؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
-  String get account_delete_data_done => 'Your account data has been deleted.';
+  String get account_delete_data_done => 'تم حذف بيانات حسابك.';
 
   @override
-  String get account_forgot_password => 'Forgot password?';
+  String get account_forgot_password => 'هل نسيت كلمة المرور؟';
 
   @override
-  String get account_reset_sent => 'Password reset email sent';
+  String get account_reset_sent => 'تم إرسال بريد إعادة تعيين كلمة المرور';
 
   @override
-  String get account_anonymous => 'Anonymous account';
+  String get account_anonymous => 'حساب مجهول';
 
   @override
-  String get account_unavailable =>
-      'Account features are temporarily unavailable.';
+  String get account_unavailable => 'ميزات الحساب غير متاحة مؤقتاً.';
 
   @override
   String get common_cancel => 'إلغاء';
@@ -259,50 +258,50 @@ class AppLocalizationsAr extends AppLocalizations {
   String get common_confirm => 'تأكيد';
 
   @override
-  String get common_ok => 'OK';
+  String get common_ok => 'موافق';
 
   @override
-  String get common_delete => 'Delete';
+  String get common_delete => 'حذف';
 
   @override
-  String get common_retry => 'Retry';
+  String get common_retry => 'إعادة المحاولة';
 
   @override
   String get settings_color => 'لون السمة';
 
   @override
-  String get lyrics_import => 'Import lyrics';
+  String get lyrics_import => 'استيراد كلمات الأغنية';
 
   @override
-  String get lyrics_import_success => 'Lyrics imported';
+  String get lyrics_import_success => 'تم استيراد كلمات الأغنية';
 
   @override
-  String get lyrics_import_failed => 'Couldn\'t import lyrics';
+  String get lyrics_import_failed => 'تعذّر استيراد كلمات الأغنية';
 
   @override
-  String get lyrics_import_too_large => 'Lyrics file is too large';
+  String get lyrics_import_too_large => 'ملف كلمات الأغنية كبير جداً';
 
   @override
-  String get lyrics_import_empty => 'No lyrics found in this file';
+  String get lyrics_import_empty => 'لم يتم العثور على كلمات في هذا الملف';
 
   @override
-  String get lyrics_empty => 'No lyrics for this track yet';
+  String get lyrics_empty => 'لا توجد كلمات لهذا المقطع بعد';
 
   @override
-  String get lyrics_reimport => 'Re-import';
+  String get lyrics_reimport => 'إعادة الاستيراد';
 
   @override
-  String get lyrics_delete => 'Delete lyrics';
+  String get lyrics_delete => 'حذف كلمات الأغنية';
 
   @override
-  String get lyrics_delete_confirm => 'Delete lyrics for this track?';
+  String get lyrics_delete_confirm => 'حذف كلمات هذا المقطع؟';
 
   @override
-  String get lyrics_show => 'Show lyrics';
+  String get lyrics_show => 'عرض كلمات الأغنية';
 
   @override
-  String get lyrics_hide => 'Show artwork';
+  String get lyrics_hide => 'عرض صورة الغلاف';
 
   @override
-  String get lyrics_font_size => 'Font size';
+  String get lyrics_font_size => 'حجم الخط';
 }

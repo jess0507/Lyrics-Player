@@ -45,10 +45,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get player_previous => '이전';
 
   @override
-  String get player_shuffle => 'Shuffle';
+  String get player_shuffle => '셔플';
 
   @override
-  String get player_loop => 'Repeat';
+  String get player_loop => '반복';
 
   @override
   String get player_forward => '5초 앞으로';
@@ -63,7 +63,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get common_reset => '초기화';
 
   @override
-  String get player_nothing_playing => 'Nothing playing';
+  String get player_nothing_playing => '재생 중인 곡이 없습니다';
 
   @override
   String get music_import => '음악 가져오기';
@@ -75,10 +75,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get music_empty => '음악을 찾을 수 없습니다';
 
   @override
-  String get music_remove => 'Remove';
+  String get music_remove => '제거';
 
   @override
-  String get music_rescan => 'Rescan';
+  String get music_rescan => '다시 검색';
 
   @override
   String get permission_title => '저장소 권한이 필요합니다';
@@ -99,157 +99,154 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settings_language => '언어';
 
   @override
-  String get settings_language_system => 'System default';
+  String get settings_language_system => '시스템 기본값';
 
   @override
   String get settings_theme => '테마';
 
   @override
-  String get settings_theme_system => 'System';
+  String get settings_theme_system => '시스템';
 
   @override
-  String get settings_theme_light => 'Light';
+  String get settings_theme_light => '라이트';
 
   @override
-  String get settings_theme_dark => 'Dark';
+  String get settings_theme_dark => '다크';
 
   @override
-  String get statistics_total_time => 'Total listening time';
+  String get statistics_total_time => '총 재생 시간';
 
   @override
-  String get statistics_play_count => 'Total plays';
+  String get statistics_play_count => '총 재생 횟수';
 
   @override
-  String get statistics_top_tracks => 'Most played';
+  String get statistics_top_tracks => '가장 많이 재생됨';
 
   @override
-  String get statistics_empty => 'No statistics yet';
+  String get statistics_empty => '아직 통계가 없습니다';
 
   @override
-  String get statistics_reset => 'Reset statistics';
+  String get statistics_reset => '통계 초기화';
 
   @override
-  String get statistics_reset_title => 'Reset statistics?';
+  String get statistics_reset_title => '통계를 초기화할까요?';
 
   @override
   String get statistics_reset_message =>
-      'All listening statistics on this device will be deleted. This cannot be undone.';
+      '이 기기의 모든 재생 통계가 삭제됩니다. 이 작업은 취소할 수 없습니다.';
 
   @override
   String get statistics_reset_message_cloud =>
-      'All listening statistics on this device and your cloud backup will be deleted. This cannot be undone.';
+      '이 기기와 클라우드 백업의 모든 재생 통계가 삭제됩니다. 이 작업은 취소할 수 없습니다.';
 
   @override
-  String get statistics_reset_confirm => 'Reset';
+  String get statistics_reset_confirm => '초기화';
 
   @override
-  String get statistics_chart_title => 'Listening time';
+  String get statistics_chart_title => '재생 시간';
 
   @override
-  String get statistics_chart_week => 'Week';
+  String get statistics_chart_week => '주';
 
   @override
-  String get statistics_chart_month => 'Month';
+  String get statistics_chart_month => '월';
 
   @override
-  String get statistics_chart_year => 'Year';
+  String get statistics_chart_year => '년';
 
   @override
-  String get about_version => 'Version';
+  String get about_version => '버전';
 
   @override
-  String get about_developer => 'Developer';
+  String get about_developer => '개발자';
 
   @override
-  String get about_licenses => 'Open source licenses';
+  String get about_licenses => '오픈 소스 라이선스';
 
   @override
-  String get about_privacy => 'Privacy policy';
+  String get about_privacy => '개인정보 처리방침';
 
   @override
-  String get about_open_source => 'Open source packages';
+  String get about_open_source => '오픈 소스 패키지';
 
   @override
-  String get account_guest => 'Guest';
+  String get account_guest => '게스트';
 
   @override
-  String get account_signed_out_message =>
-      'Sign in to sync your data across devices.';
+  String get account_signed_out_message => '로그인하여 기기 간에 데이터를 동기화하세요.';
 
   @override
-  String get account_email => 'Email';
+  String get account_email => '이메일';
 
   @override
-  String get account_password => 'Password';
+  String get account_password => '비밀번호';
 
   @override
-  String get account_sign_in => 'Sign in';
+  String get account_sign_in => '로그인';
 
   @override
-  String get account_sign_up => 'Sign up';
+  String get account_sign_up => '회원가입';
 
   @override
-  String get account_sign_in_google => 'Sign in with Google';
+  String get account_sign_in_google => 'Google로 로그인';
 
   @override
-  String get account_sign_in_facebook => 'Sign in with Facebook';
+  String get account_sign_in_facebook => 'Facebook으로 로그인';
 
   @override
-  String get account_method_email => 'Sign in with email';
+  String get account_method_email => '이메일로 로그인';
 
   @override
-  String get account_method_phone => 'Sign in with phone';
+  String get account_method_phone => '전화번호로 로그인';
 
   @override
-  String get account_phone => 'Phone number';
+  String get account_phone => '전화번호';
 
   @override
-  String get account_send_code => 'Send code';
+  String get account_send_code => '코드 전송';
 
   @override
-  String get account_sms_code => 'Verification code';
+  String get account_sms_code => '인증 코드';
 
   @override
-  String get account_verify_code => 'Verify and sign in';
+  String get account_verify_code => '인증 후 로그인';
 
   @override
-  String get account_code_sent => 'We\'ve texted you a verification code.';
+  String get account_code_sent => '인증 코드를 SMS로 보냈습니다.';
 
   @override
-  String get account_continue_guest => 'Continue as guest';
+  String get account_continue_guest => '게스트로 계속하기';
 
   @override
-  String get account_sign_out => 'Sign out';
+  String get account_sign_out => '로그아웃';
 
   @override
-  String get account_delete => 'Delete account';
+  String get account_delete => '계정 삭제';
 
   @override
-  String get account_delete_confirm =>
-      'Are you sure you want to delete your account? This cannot be undone.';
+  String get account_delete_confirm => '계정을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.';
 
   @override
-  String get account_delete_data => 'Delete account data';
+  String get account_delete_data => '계정 데이터 삭제';
 
   @override
   String get account_delete_data_confirm =>
-      'Delete all your cloud data while keeping your account? This cannot be undone.';
+      '계정은 유지하면서 모든 클라우드 데이터를 삭제할까요? 이 작업은 취소할 수 없습니다.';
 
   @override
-  String get account_delete_data_done => 'Your account data has been deleted.';
+  String get account_delete_data_done => '계정 데이터가 삭제되었습니다.';
 
   @override
-  String get account_forgot_password => 'Forgot password?';
+  String get account_forgot_password => '비밀번호를 잊으셨나요?';
 
   @override
-  String get account_reset_sent => 'Password reset email sent';
+  String get account_reset_sent => '비밀번호 재설정 이메일을 보냈습니다';
 
   @override
-  String get account_anonymous => 'Anonymous account';
+  String get account_anonymous => '익명 계정';
 
   @override
-  String get account_unavailable =>
-      'Account features are temporarily unavailable.';
+  String get account_unavailable => '계정 기능을 일시적으로 사용할 수 없습니다.';
 
   @override
   String get common_cancel => '취소';
@@ -258,50 +255,50 @@ class AppLocalizationsKo extends AppLocalizations {
   String get common_confirm => '확인';
 
   @override
-  String get common_ok => 'OK';
+  String get common_ok => '확인';
 
   @override
-  String get common_delete => 'Delete';
+  String get common_delete => '삭제';
 
   @override
-  String get common_retry => 'Retry';
+  String get common_retry => '다시 시도';
 
   @override
   String get settings_color => '테마 색상';
 
   @override
-  String get lyrics_import => 'Import lyrics';
+  String get lyrics_import => '가사 가져오기';
 
   @override
-  String get lyrics_import_success => 'Lyrics imported';
+  String get lyrics_import_success => '가사를 가져왔습니다';
 
   @override
-  String get lyrics_import_failed => 'Couldn\'t import lyrics';
+  String get lyrics_import_failed => '가사를 가져올 수 없습니다';
 
   @override
-  String get lyrics_import_too_large => 'Lyrics file is too large';
+  String get lyrics_import_too_large => '가사 파일이 너무 큽니다';
 
   @override
-  String get lyrics_import_empty => 'No lyrics found in this file';
+  String get lyrics_import_empty => '이 파일에서 가사를 찾을 수 없습니다';
 
   @override
-  String get lyrics_empty => 'No lyrics for this track yet';
+  String get lyrics_empty => '이 곡의 가사가 아직 없습니다';
 
   @override
-  String get lyrics_reimport => 'Re-import';
+  String get lyrics_reimport => '다시 가져오기';
 
   @override
-  String get lyrics_delete => 'Delete lyrics';
+  String get lyrics_delete => '가사 삭제';
 
   @override
-  String get lyrics_delete_confirm => 'Delete lyrics for this track?';
+  String get lyrics_delete_confirm => '이 곡의 가사를 삭제할까요?';
 
   @override
-  String get lyrics_show => 'Show lyrics';
+  String get lyrics_show => '가사 표시';
 
   @override
-  String get lyrics_hide => 'Show artwork';
+  String get lyrics_hide => '앨범 아트 표시';
 
   @override
-  String get lyrics_font_size => 'Font size';
+  String get lyrics_font_size => '글자 크기';
 }

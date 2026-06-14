@@ -45,10 +45,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get player_previous => 'Trước đó';
 
   @override
-  String get player_shuffle => 'Shuffle';
+  String get player_shuffle => 'Phát ngẫu nhiên';
 
   @override
-  String get player_loop => 'Repeat';
+  String get player_loop => 'Lặp lại';
 
   @override
   String get player_forward => 'Tua tới 5 giây';
@@ -63,7 +63,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get common_reset => 'Đặt lại';
 
   @override
-  String get player_nothing_playing => 'Nothing playing';
+  String get player_nothing_playing => 'Không có gì đang phát';
 
   @override
   String get music_import => 'Nhập nhạc';
@@ -75,10 +75,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get music_empty => 'Không tìm thấy nhạc';
 
   @override
-  String get music_remove => 'Remove';
+  String get music_remove => 'Xóa';
 
   @override
-  String get music_rescan => 'Rescan';
+  String get music_rescan => 'Quét lại';
 
   @override
   String get permission_title => 'Cần quyền truy cập bộ nhớ';
@@ -100,157 +100,159 @@ class AppLocalizationsVi extends AppLocalizations {
   String get settings_language => 'Ngôn ngữ';
 
   @override
-  String get settings_language_system => 'System default';
+  String get settings_language_system => 'Mặc định hệ thống';
 
   @override
   String get settings_theme => 'Giao diện';
 
   @override
-  String get settings_theme_system => 'System';
+  String get settings_theme_system => 'Hệ thống';
 
   @override
-  String get settings_theme_light => 'Light';
+  String get settings_theme_light => 'Sáng';
 
   @override
-  String get settings_theme_dark => 'Dark';
+  String get settings_theme_dark => 'Tối';
 
   @override
-  String get statistics_total_time => 'Total listening time';
+  String get statistics_total_time => 'Tổng thời gian nghe';
 
   @override
-  String get statistics_play_count => 'Total plays';
+  String get statistics_play_count => 'Tổng lượt phát';
 
   @override
-  String get statistics_top_tracks => 'Most played';
+  String get statistics_top_tracks => 'Nghe nhiều nhất';
 
   @override
-  String get statistics_empty => 'No statistics yet';
+  String get statistics_empty => 'Chưa có thống kê';
 
   @override
-  String get statistics_reset => 'Reset statistics';
+  String get statistics_reset => 'Đặt lại thống kê';
 
   @override
-  String get statistics_reset_title => 'Reset statistics?';
+  String get statistics_reset_title => 'Đặt lại thống kê?';
 
   @override
   String get statistics_reset_message =>
-      'All listening statistics on this device will be deleted. This cannot be undone.';
+      'Tất cả thống kê nghe trên thiết bị này sẽ bị xóa. Không thể hoàn tác.';
 
   @override
   String get statistics_reset_message_cloud =>
-      'All listening statistics on this device and your cloud backup will be deleted. This cannot be undone.';
+      'Tất cả thống kê nghe trên thiết bị này và bản sao lưu đám mây của bạn sẽ bị xóa. Không thể hoàn tác.';
 
   @override
-  String get statistics_reset_confirm => 'Reset';
+  String get statistics_reset_confirm => 'Đặt lại';
 
   @override
-  String get statistics_chart_title => 'Listening time';
+  String get statistics_chart_title => 'Thời gian nghe';
 
   @override
-  String get statistics_chart_week => 'Week';
+  String get statistics_chart_week => 'Tuần';
 
   @override
-  String get statistics_chart_month => 'Month';
+  String get statistics_chart_month => 'Tháng';
 
   @override
-  String get statistics_chart_year => 'Year';
+  String get statistics_chart_year => 'Năm';
 
   @override
-  String get about_version => 'Version';
+  String get about_version => 'Phiên bản';
 
   @override
-  String get about_developer => 'Developer';
+  String get about_developer => 'Nhà phát triển';
 
   @override
-  String get about_licenses => 'Open source licenses';
+  String get about_licenses => 'Giấy phép mã nguồn mở';
 
   @override
-  String get about_privacy => 'Privacy policy';
+  String get about_privacy => 'Chính sách quyền riêng tư';
 
   @override
-  String get about_open_source => 'Open source packages';
+  String get about_open_source => 'Gói mã nguồn mở';
 
   @override
-  String get account_guest => 'Guest';
+  String get account_guest => 'Khách';
 
   @override
   String get account_signed_out_message =>
-      'Sign in to sync your data across devices.';
+      'Đăng nhập để đồng bộ dữ liệu trên các thiết bị.';
 
   @override
   String get account_email => 'Email';
 
   @override
-  String get account_password => 'Password';
+  String get account_password => 'Mật khẩu';
 
   @override
-  String get account_sign_in => 'Sign in';
+  String get account_sign_in => 'Đăng nhập';
 
   @override
-  String get account_sign_up => 'Sign up';
+  String get account_sign_up => 'Đăng ký';
 
   @override
-  String get account_sign_in_google => 'Sign in with Google';
+  String get account_sign_in_google => 'Đăng nhập bằng Google';
 
   @override
-  String get account_sign_in_facebook => 'Sign in with Facebook';
+  String get account_sign_in_facebook => 'Đăng nhập bằng Facebook';
 
   @override
-  String get account_method_email => 'Sign in with email';
+  String get account_method_email => 'Đăng nhập bằng email';
 
   @override
-  String get account_method_phone => 'Sign in with phone';
+  String get account_method_phone => 'Đăng nhập bằng số điện thoại';
 
   @override
-  String get account_phone => 'Phone number';
+  String get account_phone => 'Số điện thoại';
 
   @override
-  String get account_send_code => 'Send code';
+  String get account_send_code => 'Gửi mã';
 
   @override
-  String get account_sms_code => 'Verification code';
+  String get account_sms_code => 'Mã xác minh';
 
   @override
-  String get account_verify_code => 'Verify and sign in';
+  String get account_verify_code => 'Xác minh và đăng nhập';
 
   @override
-  String get account_code_sent => 'We\'ve texted you a verification code.';
+  String get account_code_sent =>
+      'Chúng tôi đã gửi mã xác minh cho bạn qua SMS.';
 
   @override
-  String get account_continue_guest => 'Continue as guest';
+  String get account_continue_guest => 'Tiếp tục với tư cách khách';
 
   @override
-  String get account_sign_out => 'Sign out';
+  String get account_sign_out => 'Đăng xuất';
 
   @override
-  String get account_delete => 'Delete account';
+  String get account_delete => 'Xóa tài khoản';
 
   @override
   String get account_delete_confirm =>
-      'Are you sure you want to delete your account? This cannot be undone.';
+      'Bạn có chắc chắn muốn xóa tài khoản không? Không thể hoàn tác.';
 
   @override
-  String get account_delete_data => 'Delete account data';
+  String get account_delete_data => 'Xóa dữ liệu tài khoản';
 
   @override
   String get account_delete_data_confirm =>
-      'Delete all your cloud data while keeping your account? This cannot be undone.';
+      'Xóa tất cả dữ liệu đám mây nhưng vẫn giữ tài khoản? Không thể hoàn tác.';
 
   @override
-  String get account_delete_data_done => 'Your account data has been deleted.';
+  String get account_delete_data_done =>
+      'Dữ liệu tài khoản của bạn đã được xóa.';
 
   @override
-  String get account_forgot_password => 'Forgot password?';
+  String get account_forgot_password => 'Quên mật khẩu?';
 
   @override
-  String get account_reset_sent => 'Password reset email sent';
+  String get account_reset_sent => 'Đã gửi email đặt lại mật khẩu';
 
   @override
-  String get account_anonymous => 'Anonymous account';
+  String get account_anonymous => 'Tài khoản ẩn danh';
 
   @override
   String get account_unavailable =>
-      'Account features are temporarily unavailable.';
+      'Tính năng tài khoản tạm thời không khả dụng.';
 
   @override
   String get common_cancel => 'Hủy';
@@ -262,47 +264,47 @@ class AppLocalizationsVi extends AppLocalizations {
   String get common_ok => 'OK';
 
   @override
-  String get common_delete => 'Delete';
+  String get common_delete => 'Xóa';
 
   @override
-  String get common_retry => 'Retry';
+  String get common_retry => 'Thử lại';
 
   @override
   String get settings_color => 'Màu giao diện';
 
   @override
-  String get lyrics_import => 'Import lyrics';
+  String get lyrics_import => 'Nhập lời bài hát';
 
   @override
-  String get lyrics_import_success => 'Lyrics imported';
+  String get lyrics_import_success => 'Đã nhập lời bài hát';
 
   @override
-  String get lyrics_import_failed => 'Couldn\'t import lyrics';
+  String get lyrics_import_failed => 'Không thể nhập lời bài hát';
 
   @override
-  String get lyrics_import_too_large => 'Lyrics file is too large';
+  String get lyrics_import_too_large => 'Tệp lời bài hát quá lớn';
 
   @override
-  String get lyrics_import_empty => 'No lyrics found in this file';
+  String get lyrics_import_empty => 'Không tìm thấy lời bài hát trong tệp này';
 
   @override
-  String get lyrics_empty => 'No lyrics for this track yet';
+  String get lyrics_empty => 'Chưa có lời cho bài hát này';
 
   @override
-  String get lyrics_reimport => 'Re-import';
+  String get lyrics_reimport => 'Nhập lại';
 
   @override
-  String get lyrics_delete => 'Delete lyrics';
+  String get lyrics_delete => 'Xóa lời bài hát';
 
   @override
-  String get lyrics_delete_confirm => 'Delete lyrics for this track?';
+  String get lyrics_delete_confirm => 'Xóa lời của bài hát này?';
 
   @override
-  String get lyrics_show => 'Show lyrics';
+  String get lyrics_show => 'Hiện lời bài hát';
 
   @override
-  String get lyrics_hide => 'Show artwork';
+  String get lyrics_hide => 'Hiện ảnh bìa';
 
   @override
-  String get lyrics_font_size => 'Font size';
+  String get lyrics_font_size => 'Cỡ chữ';
 }

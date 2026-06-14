@@ -45,10 +45,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get player_previous => 'Предыдущий';
 
   @override
-  String get player_shuffle => 'Shuffle';
+  String get player_shuffle => 'Случайно';
 
   @override
-  String get player_loop => 'Repeat';
+  String get player_loop => 'Повтор';
 
   @override
   String get player_forward => 'Вперёд 5с';
@@ -63,7 +63,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get common_reset => 'Сброс';
 
   @override
-  String get player_nothing_playing => 'Nothing playing';
+  String get player_nothing_playing => 'Ничего не воспроизводится';
 
   @override
   String get music_import => 'Импорт музыки';
@@ -75,10 +75,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get music_empty => 'Музыка не найдена';
 
   @override
-  String get music_remove => 'Remove';
+  String get music_remove => 'Удалить';
 
   @override
-  String get music_rescan => 'Rescan';
+  String get music_rescan => 'Пересканировать';
 
   @override
   String get permission_title => 'Требуется разрешение на доступ к хранилищу';
@@ -100,157 +100,156 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settings_language => 'Язык';
 
   @override
-  String get settings_language_system => 'System default';
+  String get settings_language_system => 'Системный язык';
 
   @override
   String get settings_theme => 'Тема';
 
   @override
-  String get settings_theme_system => 'System';
+  String get settings_theme_system => 'Системная';
 
   @override
-  String get settings_theme_light => 'Light';
+  String get settings_theme_light => 'Светлая';
 
   @override
-  String get settings_theme_dark => 'Dark';
+  String get settings_theme_dark => 'Тёмная';
 
   @override
-  String get statistics_total_time => 'Total listening time';
+  String get statistics_total_time => 'Общее время прослушивания';
 
   @override
-  String get statistics_play_count => 'Total plays';
+  String get statistics_play_count => 'Всего прослушиваний';
 
   @override
-  String get statistics_top_tracks => 'Most played';
+  String get statistics_top_tracks => 'Самые прослушиваемые';
 
   @override
-  String get statistics_empty => 'No statistics yet';
+  String get statistics_empty => 'Пока нет статистики';
 
   @override
-  String get statistics_reset => 'Reset statistics';
+  String get statistics_reset => 'Сбросить статистику';
 
   @override
-  String get statistics_reset_title => 'Reset statistics?';
+  String get statistics_reset_title => 'Сбросить статистику?';
 
   @override
   String get statistics_reset_message =>
-      'All listening statistics on this device will be deleted. This cannot be undone.';
+      'Вся статистика прослушивания на этом устройстве будет удалена. Это действие нельзя отменить.';
 
   @override
   String get statistics_reset_message_cloud =>
-      'All listening statistics on this device and your cloud backup will be deleted. This cannot be undone.';
+      'Вся статистика прослушивания на этом устройстве и в облачной резервной копии будет удалена. Это действие нельзя отменить.';
 
   @override
-  String get statistics_reset_confirm => 'Reset';
+  String get statistics_reset_confirm => 'Сбросить';
 
   @override
-  String get statistics_chart_title => 'Listening time';
+  String get statistics_chart_title => 'Время прослушивания';
 
   @override
-  String get statistics_chart_week => 'Week';
+  String get statistics_chart_week => 'Неделя';
 
   @override
-  String get statistics_chart_month => 'Month';
+  String get statistics_chart_month => 'Месяц';
 
   @override
-  String get statistics_chart_year => 'Year';
+  String get statistics_chart_year => 'Год';
 
   @override
-  String get about_version => 'Version';
+  String get about_version => 'Версия';
 
   @override
-  String get about_developer => 'Developer';
+  String get about_developer => 'Разработчик';
 
   @override
-  String get about_licenses => 'Open source licenses';
+  String get about_licenses => 'Лицензии открытого ПО';
 
   @override
-  String get about_privacy => 'Privacy policy';
+  String get about_privacy => 'Политика конфиденциальности';
 
   @override
-  String get about_open_source => 'Open source packages';
+  String get about_open_source => 'Пакеты с открытым исходным кодом';
 
   @override
-  String get account_guest => 'Guest';
+  String get account_guest => 'Гость';
 
   @override
   String get account_signed_out_message =>
-      'Sign in to sync your data across devices.';
+      'Войдите, чтобы синхронизировать данные между устройствами.';
 
   @override
-  String get account_email => 'Email';
+  String get account_email => 'Эл. почта';
 
   @override
-  String get account_password => 'Password';
+  String get account_password => 'Пароль';
 
   @override
-  String get account_sign_in => 'Sign in';
+  String get account_sign_in => 'Войти';
 
   @override
-  String get account_sign_up => 'Sign up';
+  String get account_sign_up => 'Зарегистрироваться';
 
   @override
-  String get account_sign_in_google => 'Sign in with Google';
+  String get account_sign_in_google => 'Войти через Google';
 
   @override
-  String get account_sign_in_facebook => 'Sign in with Facebook';
+  String get account_sign_in_facebook => 'Войти через Facebook';
 
   @override
-  String get account_method_email => 'Sign in with email';
+  String get account_method_email => 'Войти по эл. почте';
 
   @override
-  String get account_method_phone => 'Sign in with phone';
+  String get account_method_phone => 'Войти по телефону';
 
   @override
-  String get account_phone => 'Phone number';
+  String get account_phone => 'Номер телефона';
 
   @override
-  String get account_send_code => 'Send code';
+  String get account_send_code => 'Отправить код';
 
   @override
-  String get account_sms_code => 'Verification code';
+  String get account_sms_code => 'Код подтверждения';
 
   @override
-  String get account_verify_code => 'Verify and sign in';
+  String get account_verify_code => 'Подтвердить и войти';
 
   @override
-  String get account_code_sent => 'We\'ve texted you a verification code.';
+  String get account_code_sent => 'Мы отправили вам код подтверждения по SMS.';
 
   @override
-  String get account_continue_guest => 'Continue as guest';
+  String get account_continue_guest => 'Продолжить как гость';
 
   @override
-  String get account_sign_out => 'Sign out';
+  String get account_sign_out => 'Выйти';
 
   @override
-  String get account_delete => 'Delete account';
+  String get account_delete => 'Удалить аккаунт';
 
   @override
   String get account_delete_confirm =>
-      'Are you sure you want to delete your account? This cannot be undone.';
+      'Вы уверены, что хотите удалить аккаунт? Это действие нельзя отменить.';
 
   @override
-  String get account_delete_data => 'Delete account data';
+  String get account_delete_data => 'Удалить данные аккаунта';
 
   @override
   String get account_delete_data_confirm =>
-      'Delete all your cloud data while keeping your account? This cannot be undone.';
+      'Удалить все облачные данные, сохранив аккаунт? Это действие нельзя отменить.';
 
   @override
-  String get account_delete_data_done => 'Your account data has been deleted.';
+  String get account_delete_data_done => 'Данные вашего аккаунта удалены.';
 
   @override
-  String get account_forgot_password => 'Forgot password?';
+  String get account_forgot_password => 'Забыли пароль?';
 
   @override
-  String get account_reset_sent => 'Password reset email sent';
+  String get account_reset_sent => 'Письмо для сброса пароля отправлено';
 
   @override
-  String get account_anonymous => 'Anonymous account';
+  String get account_anonymous => 'Анонимный аккаунт';
 
   @override
-  String get account_unavailable =>
-      'Account features are temporarily unavailable.';
+  String get account_unavailable => 'Функции аккаунта временно недоступны.';
 
   @override
   String get common_cancel => 'Отмена';
@@ -259,50 +258,50 @@ class AppLocalizationsRu extends AppLocalizations {
   String get common_confirm => 'Подтвердить';
 
   @override
-  String get common_ok => 'OK';
+  String get common_ok => 'ОК';
 
   @override
-  String get common_delete => 'Delete';
+  String get common_delete => 'Удалить';
 
   @override
-  String get common_retry => 'Retry';
+  String get common_retry => 'Повторить';
 
   @override
   String get settings_color => 'Цвет темы';
 
   @override
-  String get lyrics_import => 'Import lyrics';
+  String get lyrics_import => 'Импортировать текст';
 
   @override
-  String get lyrics_import_success => 'Lyrics imported';
+  String get lyrics_import_success => 'Текст песни импортирован';
 
   @override
-  String get lyrics_import_failed => 'Couldn\'t import lyrics';
+  String get lyrics_import_failed => 'Не удалось импортировать текст';
 
   @override
-  String get lyrics_import_too_large => 'Lyrics file is too large';
+  String get lyrics_import_too_large => 'Файл с текстом слишком большой';
 
   @override
-  String get lyrics_import_empty => 'No lyrics found in this file';
+  String get lyrics_import_empty => 'В этом файле не найден текст';
 
   @override
-  String get lyrics_empty => 'No lyrics for this track yet';
+  String get lyrics_empty => 'Для этого трека пока нет текста';
 
   @override
-  String get lyrics_reimport => 'Re-import';
+  String get lyrics_reimport => 'Импортировать заново';
 
   @override
-  String get lyrics_delete => 'Delete lyrics';
+  String get lyrics_delete => 'Удалить текст';
 
   @override
-  String get lyrics_delete_confirm => 'Delete lyrics for this track?';
+  String get lyrics_delete_confirm => 'Удалить текст этого трека?';
 
   @override
-  String get lyrics_show => 'Show lyrics';
+  String get lyrics_show => 'Показать текст';
 
   @override
-  String get lyrics_hide => 'Show artwork';
+  String get lyrics_hide => 'Показать обложку';
 
   @override
-  String get lyrics_font_size => 'Font size';
+  String get lyrics_font_size => 'Размер шрифта';
 }
