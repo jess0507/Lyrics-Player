@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/profile/statistics/daily_track_stat_entity.dart';
+import '../../features/profile/statistics/period_stat_entity.dart';
 import '../../features/profile/statistics/statistics_service.dart';
 import '../../shared/providers/settings_controller.dart';
 import '../auth/auth_service.dart';
@@ -24,9 +25,11 @@ class SyncService {
   final Ref ref;
 
   /// Firestore 文件結構版本，欄位結構變動時遞增；還原端據此判斷相容性。
+  /// v3：新增 `monthlyTotals`（月粒度期間總量）——它是未來 `days` 明細
+  /// 截斷後歷史總量的唯一來源，必須備份；day 粒度可由明細導出，不上傳。
   /// v2：`days`（每日 × 每首歌記錄）取代 v1 的 `tracks`（累計）。
   /// v1 從未實際上傳過（上線前即改版），不留 v1 還原路徑。
-  static const _schemaVersion = 2;
+  static const _schemaVersion = 3;
 
   /// 上傳節流：距上次成功上傳超過此間隔才再上傳（登入當下的觸發不受限）。
   static const _minUploadInterval = Duration(days: 1);
@@ -99,9 +102,15 @@ class SyncService {
             seedColor: settings['seedColor'] as String?,
           );
     }
-    ref
-        .read(statisticsControllerProvider.notifier)
-        .restoreFromRemote(_decodeDays(data['days']));
+    // v3 文件帶 monthlyTotals（月粒度以雲端為準、day totals 由明細重建）；
+    // v2 舊文件（或欄位缺漏）傳 null，day / month totals 全由明細重建。
+    final rawTotals = data['monthlyTotals'];
+    ref.read(statisticsControllerProvider.notifier).restoreFromRemote(
+          _decodeDays(data['days']),
+          monthlyTotals: version >= 3 && rawTotals is Map
+              ? _decodeMonthlyTotals(rawTotals)
+              : null,
+        );
 
     // 還原後視同已同步；lastModifiedAt 不動（還原不算本機變更）。
     _store.markSynced();
@@ -157,10 +166,15 @@ class SyncService {
   /// （last-write-wins，不合併、不加總）。
   Future<void> _upload(String uid, StatisticsData stats) async {
     try {
+      // monthlyTotals 與 days 在同一個同步區塊內讀取（中間無 await），
+      // 與本機為同一快照；整份 set() 覆寫，雲端明細與 totals 一致性不破。
+      final monthlyTotals =
+          ref.read(statisticsControllerProvider.notifier).monthlyTotals();
       await _userDoc(uid).set({
         'schemaVersion': _schemaVersion,
         'settings': ref.read(settingsControllerProvider).toRemoteMap(),
         'days': _encodeDays(stats.days),
+        'monthlyTotals': _encodeMonthlyTotals(monthlyTotals),
         'updatedAt': FieldValue.serverTimestamp(),
       });
       _store.markSynced();
@@ -201,6 +215,30 @@ class SyncService {
           ..playCount = (value['playCount'] as num? ?? 0).toInt()
           ..listenMs = (value['listenMs'] as num? ?? 0).toInt());
       });
+    });
+    return entities;
+  }
+
+  /// 攤平月粒度 totals 為 map：`{ <yyyy-MM>: { playCount, listenMs } }`。
+  Map<String, Map<String, Object>> _encodeMonthlyTotals(
+    List<PeriodStatEntity> totals,
+  ) =>
+      {
+        for (final t in totals)
+          t.period: {'playCount': t.playCount, 'listenMs': t.listenMs},
+      };
+
+  /// 解析雲端 monthlyTotals map，容錯規則同 [_decodeDays]。
+  List<PeriodStatEntity> _decodeMonthlyTotals(Object? raw) {
+    if (raw is! Map) return const [];
+    final entities = <PeriodStatEntity>[];
+    raw.forEach((month, value) {
+      if (value is! Map) return;
+      entities.add(PeriodStatEntity()
+        ..kind = PeriodKind.month
+        ..period = '$month'
+        ..playCount = (value['playCount'] as num? ?? 0).toInt()
+        ..listenMs = (value['listenMs'] as num? ?? 0).toInt());
     });
     return entities;
   }

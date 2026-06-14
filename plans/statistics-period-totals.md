@@ -1,6 +1,6 @@
 # 統計圖表(週/月/年視圖):預先聚合期間總量(period totals)+ 同步 v3
 
-狀態:**規劃中**(2026-06-13)。
+狀態:**已實作**(2026-06-13;實機驗證待辦,見文末實作備註)。
 影響範圍:`lib/features/profile/statistics/`、`lib/core/sync/sync_service.dart`、`pubspec.yaml`(fl_chart)
 相關:`plans/statistics-isar-firestore-sync.md`(現行資料層與同步 v2 的由來)
 
@@ -200,3 +200,22 @@ users/{uid}
 1. 統計頁點重設 → 確認 dialog(登入版警告雲端一併刪除)。
 2. 確認後同交易清空明細與 totals 兩個 collection,圖表歸零。
 3. 已登入時立即上傳歸零快照(v3,`days` 與 `monthlyTotals` 皆空 map)覆寫雲端。
+
+## 實作備註(2026-06-13)
+
+- 依計畫實作,無設計偏離。補充細節:
+  - 補零在 `chart_series_provider.dart` 內完成(provider 即圖表的
+    view-model,回傳固定長度、已補零、升冪的 series,widget 不再處理 key 邏輯)。
+  - v3 文件若 `monthlyTotals` 欄位缺漏或格式不符,還原時降級走 v2 路徑
+    (day / month 全由明細重建),不會留下空的月總量。
+  - backfill 偵測在 `build()` 內、`_migrateFromPrefs` 之前執行
+    (順序相反時遷移的定向重算會讓 totals 非空,backfill 永不觸發)。
+  - fl_chart 取 `^0.69.2`;圖表 widget 在 `statistics/widgets/listen_time_chart.dart`,
+    縱軸以分鐘為單位、滿一小時改顯示小時。
+- 測試:`test/period_totals_test.dart` 以真 Isar 跑 controller
+  (測試 binding 擋 HttpClient,故 setUpAll 改用 curl 預抓 IsarCore dylib
+  到 `.dart_tool/isar_test/`,僅 macOS;此 pattern 可供後續 Isar 相關測試沿用)。
+- 待辦:
+  - 實機確認登入還原後圖表資料到位(計畫步驟 7 的最後一項)。
+  - 新增的 4 個 l10n key(`statistics_chart_*`)補進 Google Sheet,
+    其餘語系現以英文 fallback。

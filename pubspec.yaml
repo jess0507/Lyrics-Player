@@ -43,6 +43,9 @@ dependencies:
   # 開啟外部連結（隱私權政策等）
   url_launcher: ^6.3.1
 
+  # 統計頁折線圖
+  fl_chart: ^0.69.2
+
   path_provider: ^2.1.4
 
   # 帳戶（Firebase）

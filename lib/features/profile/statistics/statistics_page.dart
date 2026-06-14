@@ -9,6 +9,7 @@ import '../../../core/sync/sync_service.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/format.dart';
 import 'statistics_service.dart';
+import 'widgets/listen_time_chart.dart';
 
 class StatisticsPage extends ConsumerWidget {
   const StatisticsPage({super.key});
@@ -88,6 +89,8 @@ class StatisticsPage extends ConsumerWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: 24),
+                const ListenTimeChart(),
                 const SizedBox(height: 24),
                 Text(
                   l10n.statistics_top_tracks,

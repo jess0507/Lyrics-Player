@@ -1,0 +1,185 @@
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../l10n/app_localizations.dart';
+import '../../../../shared/format.dart';
+import '../chart_series_provider.dart';
+
+/// 聆聽時長折線圖卡片:標題 + 週/月/年視圖切換 + LineChart。
+///
+/// 資料來自 [chartSeriesProvider](已補零、依時間升冪的期間總量),
+/// 縱軸取 listenMs(分鐘),全程不碰每曲明細。
+class ListenTimeChart extends ConsumerStatefulWidget {
+  const ListenTimeChart({super.key});
+
+  @override
+  ConsumerState<ListenTimeChart> createState() => _ListenTimeChartState();
+}
+
+class _ListenTimeChartState extends ConsumerState<ListenTimeChart> {
+  ChartRange _range = ChartRange.week;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final points = ref.watch(chartSeriesProvider(_range));
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          l10n.statistics_chart_title,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: 8),
+        SegmentedButton<ChartRange>(
+          segments: [
+            ButtonSegment(
+              value: ChartRange.week,
+              label: Text(l10n.statistics_chart_week),
+            ),
+            ButtonSegment(
+              value: ChartRange.month,
+              label: Text(l10n.statistics_chart_month),
+            ),
+            ButtonSegment(
+              value: ChartRange.year,
+              label: Text(l10n.statistics_chart_year),
+            ),
+          ],
+          selected: {_range},
+          onSelectionChanged: (selection) =>
+              setState(() => _range = selection.first),
+          showSelectedIcon: false,
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+          height: 200,
+          child: _LineChart(range: _range, points: points),
+        ),
+      ],
+    );
+  }
+}
+
+class _LineChart extends StatelessWidget {
+  const _LineChart({required this.range, required this.points});
+
+  final ChartRange range;
+  final List<ChartPoint> points;
+
+  /// 橫軸標籤密度:週視圖逐天、月視圖每 7 天、年視圖隔月。
+  double get _bottomInterval => switch (range) {
+        ChartRange.week => 1,
+        ChartRange.month => 7,
+        ChartRange.year => 2,
+      };
+
+  /// 期間 key 轉橫軸標籤:day `yyyy-MM-dd` → `M/d`、month `yyyy-MM` → `M`。
+  String _bottomLabel(String period) {
+    final month = int.parse(period.substring(5, 7));
+    if (range == ChartRange.year) return '$month';
+    return '$month/${int.parse(period.substring(8))}';
+  }
+
+  /// 縱軸標籤:分鐘值,滿一小時改以小時顯示。
+  String _leftLabel(double minutes) {
+    if (minutes >= 60) {
+      final h = minutes / 60;
+      return '${h == h.roundToDouble() ? h.round() : h.toStringAsFixed(1)}h';
+    }
+    return '${minutes.round()}m';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final labelStyle =
+        Theme.of(context).textTheme.bodySmall?.copyWith(color: scheme.outline);
+    final spots = [
+      for (var i = 0; i < points.length; i++)
+        FlSpot(i.toDouble(), points[i].listenTime.inSeconds / 60),
+    ];
+    final maxY = spots.fold(0.0, (max, s) => s.y > max ? s.y : max);
+
+    return LineChart(
+      LineChartData(
+        minY: 0,
+        // 全零時給固定高度,避免折線貼齊上緣;留 10% headroom。
+        maxY: maxY == 0 ? 1 : maxY * 1.1,
+        lineBarsData: [
+          LineChartBarData(
+            spots: spots,
+            color: scheme.primary,
+            barWidth: 2,
+            isCurved: true,
+            curveSmoothness: 0.25,
+            preventCurveOverShooting: true,
+            dotData: FlDotData(show: range == ChartRange.week),
+            belowBarData: BarAreaData(
+              show: true,
+              color: scheme.primary.withValues(alpha: 0.12),
+            ),
+          ),
+        ],
+        titlesData: FlTitlesData(
+          topTitles: const AxisTitles(),
+          rightTitles: const AxisTitles(),
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 44,
+              getTitlesWidget: (value, meta) {
+                // 最頂端是 headroom 補的刻度,不顯示。
+                if (value == meta.max || value == 0) {
+                  return const SizedBox.shrink();
+                }
+                return Text(_leftLabel(value), style: labelStyle);
+              },
+            ),
+          ),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 28,
+              interval: _bottomInterval,
+              getTitlesWidget: (value, meta) {
+                final i = value.toInt();
+                if (value != i.toDouble() || i < 0 || i >= points.length) {
+                  return const SizedBox.shrink();
+                }
+                return SideTitleWidget(
+                  axisSide: meta.axisSide,
+                  child: Text(_bottomLabel(points[i].period),
+                      style: labelStyle),
+                );
+              },
+            ),
+          ),
+        ),
+        gridData: FlGridData(
+          drawVerticalLine: false,
+          getDrawingHorizontalLine: (value) => FlLine(
+            color: scheme.outlineVariant.withValues(alpha: 0.4),
+            strokeWidth: 1,
+          ),
+        ),
+        borderData: FlBorderData(show: false),
+        lineTouchData: LineTouchData(
+          touchTooltipData: LineTouchTooltipData(
+            getTooltipColor: (_) => scheme.inverseSurface,
+            getTooltipItems: (touched) => [
+              for (final spot in touched)
+                LineTooltipItem(
+                  '${points[spot.x.toInt()].period}\n'
+                  '${formatDuration(points[spot.x.toInt()].listenTime)}',
+                  TextStyle(color: scheme.onInverseSurface),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
