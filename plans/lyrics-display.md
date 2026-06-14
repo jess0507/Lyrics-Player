@@ -1,9 +1,34 @@
 # 歌詞功能:顯示(字幕)(backlog 3)
 
-狀態:**規劃中**(2026-06-12 起草,未實作)。
+狀態:**已實作**(2026-06-14;視圖 + 播放頁切換 + l10n,`flutter analyze`
+無誤、既有測試全過)。
 相關:`plans/lyrics-import.md`(匯入,backlog 2;本計畫消費它建立的
 `Lyrics` 模型、`LyricsEntity`、`track_lyrics_provider`,並提供匯入入口)、
 `plans/becklog.md`(歌詞功能群)。
+
+### 實作偏離 / 補記(2026-06-14)
+
+- **歌詞視圖依 CLAUDE.md widget 拆分規則拆成多檔**(非計畫預想的單一
+  `lyrics_view.dart`):`features/player/widgets/` 下新增
+  `lyrics_view.dart`(分派 loading / 空狀態 / synced / unsynced + 重新匯入 /
+  刪除選單 + 匯入回饋 helper)、`lyrics_synced_view.dart`(`LyricsSyncedView`)、
+  `lyrics_unsynced_view.dart`(`LyricsUnsyncedView`)。各檔 < 200 行。
+- **切換入口採「角落按鈕」**(非點 artwork):新增
+  `widgets/player_artwork_panel.dart`(`PlayerArtworkPanel`,StatefulWidget),
+  在 1:1 區內以右上角 IconButton 於封面 ↔ 歌詞間切換;`player_page.dart`
+  改用此 panel 並把目前 `MediaItem` 的 id / title 傳入。切換 local UI 狀態
+  以 widget state 持有(非 provider,屬 ephemeral)。
+- **同步捲動置中用 `Scrollable.ensureVisible(alignment: 0.5)` + 每行 GlobalKey**
+  (未引入 `scrollable_positioned_list`):位置 `positionStream` 以 rxdart
+  `throttleTime(~200ms)` 取樣,二分搜尋目前行;逐行推進故目標恆在視窗附近。
+- **手動捲動暫停**:`UserScrollNotification` 觸發暫停自動置中 4 秒後恢復;
+  點行 seek 立即取消暫停以馬上跟隨。
+- **l10n 新增 6 key**(en + zh_TW + zh_CN,其餘語系 fallback,**待辦:補進
+  Google Sheet**):`lyrics_empty` / `lyrics_reimport` / `lyrics_delete` /
+  `lyrics_delete_confirm` / `lyrics_show` / `lyrics_hide`。匯入回饋沿用匯入計畫
+  既有 `lyrics_import_*`;`unreadable` 錯誤映射到通用 `lyrics_import_failed`。
+- **未改 `playback_controller.dart`**:seek 直接用既有
+  `audioPlayerServiceProvider.seek`,controller 無需暴露新路徑。
 
 ## 修改 / 新增程式碼檔案
 

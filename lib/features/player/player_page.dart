@@ -8,7 +8,7 @@ import '../../core/audio/audio_player_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/widgets/marquee_text.dart';
 import 'playback_controller.dart';
-import 'widgets/player_artwork.dart';
+import 'widgets/player_artwork_panel.dart';
 import 'widgets/player_controls.dart';
 import 'widgets/seek_bar.dart';
 
@@ -70,14 +70,19 @@ class PlayerPage extends ConsumerWidget {
         builder: (context, snapshot) {
           final sequenceState = snapshot.data;
           final currentItem = sequenceState?.currentSource?.tag;
-          final hasTrack = currentItem is MediaItem;
+          final mediaItem = currentItem is MediaItem ? currentItem : null;
+          final hasTrack = mediaItem != null;
 
           return Padding(
             padding: const EdgeInsets.all(24),
             child: Column(
               children: [
                 Spacer(),
-                PlayerArtwork(active: hasTrack),
+                PlayerArtworkPanel(
+                  active: hasTrack,
+                  trackId: mediaItem?.id,
+                  title: mediaItem?.title,
+                ),
                 Spacer(),
                 SecondaryControls(audio: audio, enabled: hasTrack),
                 const SizedBox(height: 16),
