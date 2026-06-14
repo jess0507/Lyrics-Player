@@ -27,6 +27,6 @@
   "player_forward": "5초 앞으로",
   "player_rewind": "5초 뒤로",
   "player_speed": "재생 속도",
-  "player_speed_reset": "초기화",
+  "common_reset": "초기화",
   "settings_color": "테마 색상"
 }

@@ -28,6 +28,6 @@
   "player_forward": "快進5秒",
   "player_rewind": "快退5秒",
   "player_speed": "播放速度",
-  "player_speed_reset": "重設",
+  "common_reset": "重設",
   "settings_color": "主題顏色"
 }

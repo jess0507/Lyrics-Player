@@ -27,6 +27,6 @@
   "player_forward": "5sn ileri",
   "player_rewind": "5sn geri",
   "player_speed": "Oynatma hızı",
-  "player_speed_reset": "Sıfırla",
+  "common_reset": "Sıfırla",
   "settings_color": "Tema rengi"
 }

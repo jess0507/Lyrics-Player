@@ -228,11 +228,11 @@ abstract class AppLocalizations {
   /// **'Playback speed'**
   String get player_speed;
 
-  /// No description provided for @player_speed_reset.
+  /// No description provided for @common_reset.
   ///
   /// In en, this message translates to:
   /// **'Reset'**
-  String get player_speed_reset;
+  String get common_reset;
 
   /// No description provided for @player_nothing_playing.
   ///

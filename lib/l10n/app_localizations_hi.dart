@@ -60,7 +60,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get player_speed => 'प्लेबैक गति';
 
   @override
-  String get player_speed_reset => 'रीसेट';
+  String get common_reset => 'रीसेट';
 
   @override
   String get player_nothing_playing => 'Nothing playing';

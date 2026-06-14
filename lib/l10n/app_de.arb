@@ -27,6 +27,6 @@
   "player_forward": "5s vor",
   "player_rewind": "5s zurück",
   "player_speed": "Wiedergabegeschwindigkeit",
-  "player_speed_reset": "Zurücksetzen",
+  "common_reset": "Zurücksetzen",
   "settings_color": "Designfarbe"
 }

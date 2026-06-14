@@ -60,7 +60,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get player_speed => 'Скорость воспроизведения';
 
   @override
-  String get player_speed_reset => 'Сброс';
+  String get common_reset => 'Сброс';
 
   @override
   String get player_nothing_playing => 'Nothing playing';

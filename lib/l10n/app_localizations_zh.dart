@@ -60,7 +60,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get player_speed => '播放速度';
 
   @override
-  String get player_speed_reset => '重設';
+  String get common_reset => '重設';
 
   @override
   String get player_nothing_playing => 'Nothing playing';
@@ -362,7 +362,7 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get player_speed => '播放速度';
 
   @override
-  String get player_speed_reset => '重置';
+  String get common_reset => '重置';
 
   @override
   String get player_nothing_playing => '当前没有正在播放的曲目';
@@ -658,7 +658,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get player_speed => '播放速度';
 
   @override
-  String get player_speed_reset => '重設';
+  String get common_reset => '重設';
 
   @override
   String get player_nothing_playing => '目前沒有播放中的曲目';

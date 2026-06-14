@@ -27,6 +27,6 @@
   "player_forward": "5秒進む",
   "player_rewind": "5秒戻る",
   "player_speed": "再生速度",
-  "player_speed_reset": "リセット",
+  "common_reset": "リセット",
   "settings_color": "テーマカラー"
 }

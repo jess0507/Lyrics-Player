@@ -60,7 +60,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get player_speed => 'Wiedergabegeschwindigkeit';
 
   @override
-  String get player_speed_reset => 'Zurücksetzen';
+  String get common_reset => 'Zurücksetzen';
 
   @override
   String get player_nothing_playing => 'Nothing playing';

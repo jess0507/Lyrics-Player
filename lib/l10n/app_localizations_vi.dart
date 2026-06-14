@@ -60,7 +60,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get player_speed => 'Tốc độ phát';
 
   @override
-  String get player_speed_reset => 'Đặt lại';
+  String get common_reset => 'Đặt lại';
 
   @override
   String get player_nothing_playing => 'Nothing playing';

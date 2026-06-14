@@ -60,7 +60,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get player_speed => '재생 속도';
 
   @override
-  String get player_speed_reset => '초기화';
+  String get common_reset => '초기화';
 
   @override
   String get player_nothing_playing => 'Nothing playing';

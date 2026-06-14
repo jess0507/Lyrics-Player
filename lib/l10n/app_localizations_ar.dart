@@ -60,7 +60,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get player_speed => 'سرعة التشغيل';
 
   @override
-  String get player_speed_reset => 'إعادة تعيين';
+  String get common_reset => 'إعادة تعيين';
 
   @override
   String get player_nothing_playing => 'Nothing playing';
