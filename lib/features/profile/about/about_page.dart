@@ -9,8 +9,9 @@ class AboutPage extends StatelessWidget {
   // 對應 pubspec.yaml 的 version。
   static const _version = '1.0.0+1';
 
-  static final _privacyPolicyUrl =
-      Uri.parse('https://jess0507.github.io/seek_player/privacy-policy');
+  static final _privacyPolicyUrl = Uri.parse(
+    'https://jess0507.github.io/seek_player/privacy-policy',
+  );
 
   Future<void> _openPrivacyPolicy() async {
     await launchUrl(_privacyPolicyUrl, mode: LaunchMode.externalApplication);
@@ -27,8 +28,7 @@ class AboutPage extends StatelessWidget {
           Center(
             child: CircleAvatar(
               radius: 40,
-              backgroundColor:
-                  Theme.of(context).colorScheme.primaryContainer,
+              backgroundColor: Colors.transparent,
               backgroundImage: const AssetImage('assets/icon/app_logo.png'),
             ),
           ),
