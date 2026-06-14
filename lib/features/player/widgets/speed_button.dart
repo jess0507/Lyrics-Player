@@ -33,7 +33,7 @@ class SpeedButton extends StatelessWidget {
           color: iconColor,
           isSelected: speed != _kDefaultSpeed,
           tooltip: '${speed.toStringAsFixed(1)}x',
-          onPressed: enabled ? () => _showSpeedSheet(context, audio) : null,
+          onPressed: enabled ? () => showSpeedSheet(context, audio) : null,
           icon: const Icon(Icons.speed),
         );
       },
@@ -42,7 +42,7 @@ class SpeedButton extends StatelessWidget {
 }
 
 /// 速度調整面板:0.5x ~ 4.0x,間隔 0.1,調整時即時套用;重置回 1.0x。
-void _showSpeedSheet(BuildContext context, AudioPlayerService audio) {
+void showSpeedSheet(BuildContext context, AudioPlayerService audio) {
   showModalBottomSheet<void>(
     context: context,
     builder: (context) {
