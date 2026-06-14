@@ -29,7 +29,7 @@ class AboutPage extends StatelessWidget {
               radius: 40,
               backgroundColor:
                   Theme.of(context).colorScheme.primaryContainer,
-              child: const Icon(Icons.graphic_eq, size: 40),
+              backgroundImage: const AssetImage('assets/icon/app_logo.png'),
             ),
           ),
           const SizedBox(height: 12),
