@@ -1,16 +1,36 @@
-# 歌詞功能:手動匯入 + 顯示(backlog 2、3)
+# 歌詞功能:手動匯入(backlog 2)
 
 狀態:**規劃中**(2026-06-12 起草,未實作)。
-影響範圍(預計):`lib/features/lyrics/`(新)、`lib/features/player/`、`pubspec.yaml`、l10n。
-相關:`plans/becklog.md`(項目 2–6 為歌詞功能群,本計畫為第一階段;
+相關:`plans/lyrics-display.md`(顯示,backlog 3,消費本計畫建立的資料層與模型)、
+`plans/becklog.md`(項目 2–6 為歌詞功能群,本計畫與顯示同為第一階段地基;
 項目 7 ID3 中繼資料與「嵌入式歌詞」共用讀 tag 能力,見文末分期)。
+
+## 修改 / 新增程式碼檔案
+
+新增(`lib/features/lyrics/`,依 CLAUDE.md 一檔一 provider):
+
+- `lyrics.dart` — 內部統一模型 `Lyrics` / `LyricsLine`(純資料類,顯示也 import)。
+- `lyrics_entity.dart` — `@collection` Isar entity(+ 產生碼 `.g.dart`)。
+- `lyrics_repository.dart` — Isar CRUD + repository provider。
+- `track_lyrics_provider.dart` — 依目前曲目查歌詞的衍生 provider(顯示計畫消費)。
+- `lyrics_parser.dart` — 純函式:偵測格式 → `Lyrics` 模型。
+- `lyrics_import_service.dart` — file_picker 選檔 → 驗證 → 存 Isar。
+- `test/features/lyrics/lyrics_parser_test.dart` — parser 單元測試。
+
+修改:
+
+- `pubspec.yaml` — 加 `file_picker`(僅此一個新依賴)。
+- `lib/core/storage/isar_service.dart` — schema 清單(現為
+  `[DailyTrackStatEntitySchema, PeriodStatEntitySchema]`)加入 `LyricsEntitySchema`。
+- `lib/l10n/app_en.arb` / `app_zh_TW.arb` / `app_zh_CN.arb` — 匯入按鈕 /
+  匯入成功與失敗 key(其餘語系 fallback;**待辦:補進 Google Sheet**)。
 
 ## 背景 / 目標
 
 - 曲目來自 MediaStore 掃描(`music_library.dart`),以 content URI 播放,
   App 不持有音訊檔本體,也未讀任何 tag(標題取自 MediaStore)。
 - v2 backlog 的歌詞功能群共五項(匯入 / 顯示 / 上網搜尋 / 自動產生 / 編輯)。
-  本計畫先做地基:**手動匯入歌詞檔 + 在播放頁顯示(含時間同步捲動)**,
+  本計畫與 `lyrics-display.md` 先做地基:**手動匯入歌詞檔 + 在播放頁顯示**,
   資料模型與儲存設計需讓後續三項(搜尋 / 產生 / 編輯)直接複用。
 
 ## 歌詞檔案格式調查(file types)
@@ -52,48 +72,37 @@
    [lyrics_parser](https://pub.dev/packages/lyrics_parser/versions) 套件):
    LRC / SRT / VTT 規則都很小,自寫才能統一輸出同一個模型、好寫單元測試,
    也避免為三個小格式掛三個依賴。
-5. **顯示 UI 自製**(不用 [flutter_lyric](https://pub.dev/packages/flutter_lyric)):
-   播放頁 artwork 區切換歌詞視圖(無歌詞時顯示匯入入口)。
-   同步歌詞:目前行 highlight + 自動置中捲動 + **點行 seek**;
-   位置來源 `positionStream`(節流到 ~200ms 再算目前行,行數用二分搜尋)。
-   flutter_lyric 功能完整但樣式與互動綁定深,專案慣例是自組 widget。
-6. **trackId 沿用 MediaStore ID**(裝置綁定,同統計的已知限制);
+5. **trackId 沿用 MediaStore ID**(裝置綁定,同統計的已知限制);
    title 一併入庫,留跨機 / 重掃後對齊的線索,但 v1 不做 title fallback 配對。
 
-## 分期(對應 backlog)
+## 步驟
 
-- **M1(本計畫)**:手動匯入(2)+ 顯示(3)。
-- **M2:編輯歌詞(6)**:直接編輯 `LyricsEntity.content` 原文 + 重新解析預覽;
-  順手加「offset 微調」UI(整體 ±0.5s)。
-- **M3:上網搜尋歌詞(4)**:候選來源 LRCLIB(lrclib.net,免費、無 API key,
-  以 title / artist / duration 查詢,提供 plain + synced;實作時再驗證服務現況)。
-  搜尋結果寫入同一個 `LyricsEntity`(source = online)。
-- **M4:自動產生歌詞(5)**:語音辨識(裝置端 whisper 類或雲端 API),
-  成本與品質都未定,最遠期,暫不設計。
-- **嵌入式歌詞**:併入 backlog 7(ID3 中繼資料)任務。
-
-## M1 步驟
-
-1. **依賴**:加 `file_picker`(僅此一個新依賴)。
-2. **資料層**(`lib/features/lyrics/`,依 CLAUDE.md 一檔一 provider):
-   `lyrics_entity.dart`(@collection + 產生碼)、
+1. **依賴**:加 `file_picker`。
+2. **模型 + 資料層**:`lyrics.dart`(`Lyrics` / `LyricsLine`)、
+   `lyrics_entity.dart`(`@collection` + 產生碼)、
    `lyrics_repository.dart`(Isar CRUD + provider)、
-   `track_lyrics_provider.dart`(依目前曲目查歌詞的衍生 provider)。
+   `track_lyrics_provider.dart`(依目前曲目查歌詞的衍生 provider);
+   `isar_service.dart` schema 清單註冊 `LyricsEntitySchema`。
 3. **解析層**:`lyrics_parser.dart`(純函式:偵測格式 → `Lyrics` 模型;
    LRC 多時間戳展開後依時間排序)+ 單元測試
    (LRC 標準 / enhanced 降級 / 多時間戳 / offset、SRT、VTT、TXT、壞檔容錯)。
 4. **匯入流程**:`lyrics_import_service.dart`(file_picker 選檔 → 大小上限
    約 1MB → 解碼(編碼策略見上)→ 試 parse 驗證 → 存 Isar)。
-   入口:播放頁歌詞視圖的空狀態按鈕(主要入口);失敗以 SnackBar 提示。
-5. **顯示**:`features/player/widgets/lyrics_view.dart`
-   (synced:highlight + 自動捲動 + 點行 seek;unsynced:靜態捲動;
-   使用者手動捲動時暫停自動捲動數秒)。
-   播放頁 artwork ↔ 歌詞切換(點擊 artwork 或角落按鈕,擇一,實作時定)。
-   歌詞視圖選單:重新匯入、刪除歌詞。
-6. **l10n**:匯入按鈕 / 無歌詞空狀態 / 匯入成功與失敗 / 刪除確認等 key,
-   照慣例 en + zh_TW + zh_CN,其餘 fallback;**待辦:補進 Google Sheet**。
-7. 驗證:`flutter analyze`、`flutter test`(parser 測試為主)、
+   入口由顯示計畫提供(播放頁歌詞視圖的空狀態按鈕);失敗以 SnackBar 提示。
+5. **l10n**:匯入按鈕 / 匯入成功與失敗 key,照慣例 en + zh_TW + zh_CN。
+6. 驗證:`flutter analyze`、`flutter test`(parser 測試為主)、
    實機匯入各格式檔案走一輪(含非 UTF-8 檔與壞檔)。
+
+## 分期(歌詞功能群,對應 backlog)
+
+- **M1(地基)**:手動匯入(2,本計畫)+ 顯示(3,`lyrics-display.md`)。
+- **M2:編輯歌詞(6)**:直接編輯 `LyricsEntity.content` 原文 + 重新解析預覽;
+  順手加「offset 微調」UI(整體 ±0.5s)。
+- **M3:上網搜尋歌詞(4)**:已拆至 `plans/lyrics-online-search.md`
+  (來源 LRCLIB,搜尋結果寫入同一個 `LyricsEntity`,source = online)。
+- **M4:自動產生歌詞(5)**:已拆至 `plans/lyrics-auto-generate.md`
+  (語音辨識,成本與品質都未定,最遠期)。
+- **嵌入式歌詞**:併入 backlog 7(ID3 中繼資料)任務。
 
 ## 邊界 / 風險
 
@@ -102,5 +111,4 @@
 - **LRC 無時間戳行**(檔頭 metadata、空行):parse 時略過或併入 unsynced 段,
   不得讓整檔判定失敗。
 - **同一曲重複匯入**:唯一索引 replace,直接覆蓋舊歌詞(符合直覺,不另問)。
-- **mini player 不顯示歌詞**,僅完整播放頁。
-- **效能**:歌詞行數通常 < 200,ListView + 二分搜尋足夠,無需虛擬化以外的優化。
+- **檔案大小上限**約 1MB,超過拒收。
