@@ -284,4 +284,22 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get lyrics_import_empty => 'No lyrics found in this file';
+
+  @override
+  String get lyrics_empty => 'No lyrics for this track yet';
+
+  @override
+  String get lyrics_reimport => 'Re-import';
+
+  @override
+  String get lyrics_delete => 'Delete lyrics';
+
+  @override
+  String get lyrics_delete_confirm => 'Delete lyrics for this track?';
+
+  @override
+  String get lyrics_show => 'Show lyrics';
+
+  @override
+  String get lyrics_hide => 'Show artwork';
 }

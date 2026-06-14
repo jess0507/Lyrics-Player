@@ -89,5 +89,11 @@
   "lyrics_import_success": "Lyrics imported",
   "lyrics_import_failed": "Couldn't import lyrics",
   "lyrics_import_too_large": "Lyrics file is too large",
-  "lyrics_import_empty": "No lyrics found in this file"
+  "lyrics_import_empty": "No lyrics found in this file",
+  "lyrics_empty": "No lyrics for this track yet",
+  "lyrics_reimport": "Re-import",
+  "lyrics_delete": "Delete lyrics",
+  "lyrics_delete_confirm": "Delete lyrics for this track?",
+  "lyrics_show": "Show lyrics",
+  "lyrics_hide": "Show artwork"
 }

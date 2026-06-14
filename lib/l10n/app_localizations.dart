@@ -665,6 +665,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No lyrics found in this file'**
   String get lyrics_import_empty;
+
+  /// No description provided for @lyrics_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No lyrics for this track yet'**
+  String get lyrics_empty;
+
+  /// No description provided for @lyrics_reimport.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-import'**
+  String get lyrics_reimport;
+
+  /// No description provided for @lyrics_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete lyrics'**
+  String get lyrics_delete;
+
+  /// No description provided for @lyrics_delete_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete lyrics for this track?'**
+  String get lyrics_delete_confirm;
+
+  /// No description provided for @lyrics_show.
+  ///
+  /// In en, this message translates to:
+  /// **'Show lyrics'**
+  String get lyrics_show;
+
+  /// No description provided for @lyrics_hide.
+  ///
+  /// In en, this message translates to:
+  /// **'Show artwork'**
+  String get lyrics_hide;
 }
 
 class _AppLocalizationsDelegate

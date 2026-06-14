@@ -89,5 +89,11 @@
   "lyrics_import_success": "歌詞已匯入",
   "lyrics_import_failed": "無法匯入歌詞",
   "lyrics_import_too_large": "歌詞檔案太大",
-  "lyrics_import_empty": "這個檔案沒有歌詞內容"
+  "lyrics_import_empty": "這個檔案沒有歌詞內容",
+  "lyrics_empty": "尚未匯入這首歌的歌詞",
+  "lyrics_reimport": "重新匯入",
+  "lyrics_delete": "刪除歌詞",
+  "lyrics_delete_confirm": "要刪除這首歌的歌詞嗎?",
+  "lyrics_show": "顯示歌詞",
+  "lyrics_hide": "顯示封面"
 }

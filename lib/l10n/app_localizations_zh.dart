@@ -283,6 +283,24 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get lyrics_import_empty => 'No lyrics found in this file';
+
+  @override
+  String get lyrics_empty => 'No lyrics for this track yet';
+
+  @override
+  String get lyrics_reimport => 'Re-import';
+
+  @override
+  String get lyrics_delete => 'Delete lyrics';
+
+  @override
+  String get lyrics_delete_confirm => 'Delete lyrics for this track?';
+
+  @override
+  String get lyrics_show => 'Show lyrics';
+
+  @override
+  String get lyrics_hide => 'Show artwork';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -558,6 +576,24 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get lyrics_import_empty => '这个文件没有歌词内容';
+
+  @override
+  String get lyrics_empty => '尚未导入这首歌的歌词';
+
+  @override
+  String get lyrics_reimport => '重新导入';
+
+  @override
+  String get lyrics_delete => '删除歌词';
+
+  @override
+  String get lyrics_delete_confirm => '要删除这首歌的歌词吗?';
+
+  @override
+  String get lyrics_show => '显示歌词';
+
+  @override
+  String get lyrics_hide => '显示封面';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -833,4 +869,22 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get lyrics_import_empty => '這個檔案沒有歌詞內容';
+
+  @override
+  String get lyrics_empty => '尚未匯入這首歌的歌詞';
+
+  @override
+  String get lyrics_reimport => '重新匯入';
+
+  @override
+  String get lyrics_delete => '刪除歌詞';
+
+  @override
+  String get lyrics_delete_confirm => '要刪除這首歌的歌詞嗎?';
+
+  @override
+  String get lyrics_show => '顯示歌詞';
+
+  @override
+  String get lyrics_hide => '顯示封面';
 }
