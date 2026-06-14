@@ -56,7 +56,10 @@ class _ListenTimeChartState extends ConsumerState<ListenTimeChart> {
         const SizedBox(height: 16),
         SizedBox(
           height: 200,
-          child: _LineChart(range: _range, points: points),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 5),
+            child: _LineChart(range: _range, points: points),
+          ),
         ),
       ],
     );
@@ -168,6 +171,9 @@ class _LineChart extends StatelessWidget {
         borderData: FlBorderData(show: false),
         lineTouchData: LineTouchData(
           touchTooltipData: LineTouchTooltipData(
+            // 邊緣節點的 tooltip 自動內縮,最多貼齊圖表邊緣不被截掉。
+            fitInsideHorizontally: true,
+            fitInsideVertically: true,
             getTooltipColor: (_) => scheme.inverseSurface,
             getTooltipItems: (touched) => [
               for (final spot in touched)
