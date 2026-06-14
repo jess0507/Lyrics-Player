@@ -143,6 +143,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get statistics_reset_confirm => 'Reset';
 
   @override
+  String get statistics_chart_title => 'Listening time';
+
+  @override
+  String get statistics_chart_week => 'Week';
+
+  @override
+  String get statistics_chart_month => 'Month';
+
+  @override
+  String get statistics_chart_year => 'Year';
+
+  @override
   String get about_version => 'Version';
 
   @override
@@ -395,6 +407,18 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get statistics_reset_confirm => '重置';
 
   @override
+  String get statistics_chart_title => '收听时长';
+
+  @override
+  String get statistics_chart_week => '周';
+
+  @override
+  String get statistics_chart_month => '月';
+
+  @override
+  String get statistics_chart_year => '年';
+
+  @override
   String get about_version => '版本';
 
   @override
@@ -641,6 +665,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get statistics_reset_confirm => '重設';
+
+  @override
+  String get statistics_chart_title => '聆聽時長';
+
+  @override
+  String get statistics_chart_week => '週';
+
+  @override
+  String get statistics_chart_month => '月';
+
+  @override
+  String get statistics_chart_year => '年';
 
   @override
   String get about_version => '版本';

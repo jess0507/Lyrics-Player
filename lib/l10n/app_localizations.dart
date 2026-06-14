@@ -390,6 +390,30 @@ abstract class AppLocalizations {
   /// **'Reset'**
   String get statistics_reset_confirm;
 
+  /// No description provided for @statistics_chart_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening time'**
+  String get statistics_chart_title;
+
+  /// No description provided for @statistics_chart_week.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get statistics_chart_week;
+
+  /// No description provided for @statistics_chart_month.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get statistics_chart_month;
+
+  /// No description provided for @statistics_chart_year.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get statistics_chart_year;
+
   /// No description provided for @about_version.
   ///
   /// In en, this message translates to:

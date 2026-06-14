@@ -144,6 +144,18 @@ class AppLocalizationsHi extends AppLocalizations {
   String get statistics_reset_confirm => 'Reset';
 
   @override
+  String get statistics_chart_title => 'Listening time';
+
+  @override
+  String get statistics_chart_week => 'Week';
+
+  @override
+  String get statistics_chart_month => 'Month';
+
+  @override
+  String get statistics_chart_year => 'Year';
+
+  @override
   String get about_version => 'Version';
 
   @override
