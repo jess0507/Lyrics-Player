@@ -302,4 +302,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lyrics_hide => 'Show artwork';
+
+  @override
+  String get lyrics_font_size => 'Font size';
 }

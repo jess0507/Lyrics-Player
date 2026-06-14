@@ -95,5 +95,6 @@
   "lyrics_delete": "刪除歌詞",
   "lyrics_delete_confirm": "要刪除這首歌的歌詞嗎?",
   "lyrics_show": "顯示歌詞",
-  "lyrics_hide": "顯示封面"
+  "lyrics_hide": "顯示封面",
+  "lyrics_font_size": "字體大小"
 }

@@ -701,6 +701,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show artwork'**
   String get lyrics_hide;
+
+  /// No description provided for @lyrics_font_size.
+  ///
+  /// In en, this message translates to:
+  /// **'Font size'**
+  String get lyrics_font_size;
 }
 
 class _AppLocalizationsDelegate

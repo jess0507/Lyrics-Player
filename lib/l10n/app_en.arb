@@ -95,5 +95,6 @@
   "lyrics_delete": "Delete lyrics",
   "lyrics_delete_confirm": "Delete lyrics for this track?",
   "lyrics_show": "Show lyrics",
-  "lyrics_hide": "Show artwork"
+  "lyrics_hide": "Show artwork",
+  "lyrics_font_size": "Font size"
 }

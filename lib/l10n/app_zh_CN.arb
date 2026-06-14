@@ -95,5 +95,6 @@
   "lyrics_delete": "删除歌词",
   "lyrics_delete_confirm": "要删除这首歌的歌词吗?",
   "lyrics_show": "显示歌词",
-  "lyrics_hide": "显示封面"
+  "lyrics_hide": "显示封面",
+  "lyrics_font_size": "字体大小"
 }

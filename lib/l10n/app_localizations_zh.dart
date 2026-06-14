@@ -301,6 +301,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get lyrics_hide => 'Show artwork';
+
+  @override
+  String get lyrics_font_size => 'Font size';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -594,6 +597,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get lyrics_hide => '显示封面';
+
+  @override
+  String get lyrics_font_size => '字体大小';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -887,4 +893,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get lyrics_hide => '顯示封面';
+
+  @override
+  String get lyrics_font_size => '字體大小';
 }
