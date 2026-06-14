@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../features/lyrics/lyrics_entity.dart';
 import '../../features/profile/statistics/daily_track_stat_entity.dart';
 import '../../features/profile/statistics/period_stat_entity.dart';
 
@@ -10,7 +11,11 @@ import '../../features/profile/statistics/period_stat_entity.dart';
 Future<Isar> openIsar() async {
   final dir = await getApplicationDocumentsDirectory();
   return Isar.open(
-    [DailyTrackStatEntitySchema, PeriodStatEntitySchema],
+    [
+      DailyTrackStatEntitySchema,
+      PeriodStatEntitySchema,
+      LyricsEntitySchema,
+    ],
     directory: dir.path,
     name: 'seek_player',
   );

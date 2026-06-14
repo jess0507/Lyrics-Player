@@ -1,6 +1,25 @@
 # 歌詞功能:手動匯入(backlog 2)
 
-狀態:**規劃中**(2026-06-12 起草,未實作)。
+狀態:**已實作**(2026-06-14,資料層 + parser + 匯入服務 + l10n;UI 入口待
+`lyrics-display.md`)。
+
+### 實作偏離 / 補記(2026-06-14)
+
+- **`file_picker` 解析到 v11**(非計畫預想的 v8 系列):v11 的選檔 API 為
+  static `FilePicker.pickFiles(...)`,不再有 `.platform` 實例存取。
+- **`trackLyricsProvider` 採 `FutureProvider.family<Lyrics?, String>`(keyed by
+  trackId)**,而非「自動 watch 目前曲目」:目前無 current-track provider
+  (播放頁直接由 `sequenceStateStream` 的 `MediaItem.id` 取曲目),故由顯示端
+  傳入 id;匯入成功後 import service `invalidate` 對應 family 觸發重讀。
+- **LRC `offset` 採 `effective = 標記時間 − offset`**(正 offset 使歌詞提早),
+  夾在 ≥ 0;小數秒位數自適應(1/2/3 位 → 十分/百分/毫秒)。
+- **匯入大小上限以 `PlatformFile.size` 先擋**(不 `withData`,改讀 `File(path)`),
+  避免大檔先載進記憶體。
+- **失敗以 `LyricsImportException(LyricsImportError)` 拋出**(tooLarge / unreadable
+  / empty),取消選檔回 `false`;UI 依 error 映射 l10n(已加
+  `lyrics_import_*` 五個 key,en + zh_TW + zh_CN,其餘語系 fallback,**待辦:
+  補進 Google Sheet**)。
+
 相關:`plans/lyrics-display.md`(顯示,backlog 3,消費本計畫建立的資料層與模型)、
 `plans/becklog.md`(項目 2–6 為歌詞功能群,本計畫與顯示同為第一階段地基;
 項目 7 ID3 中繼資料與「嵌入式歌詞」共用讀 tag 能力,見文末分期)。
