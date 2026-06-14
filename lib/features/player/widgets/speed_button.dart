@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
+import 'adjustment_bottom_sheet.dart';
 
-/// 播放速度按鈕：點擊開啟速度選擇對話框，非 1.0x 時顯示選取狀態。
+/// 預設播放速度;重置時回到此值。
+const double _kDefaultSpeed = 1.0;
+
+/// 播放速度按鈕:點擊開啟速度調整面板,非 1.0x 時顯示選取狀態。
 class SpeedButton extends StatelessWidget {
   const SpeedButton({
     super.key,
@@ -23,15 +27,13 @@ class SpeedButton extends StatelessWidget {
     return StreamBuilder<double>(
       stream: audio.speedStream,
       builder: (context, snapshot) {
-        final speed = snapshot.data ?? 1.0;
+        final speed = snapshot.data ?? _kDefaultSpeed;
         return IconButton(
           iconSize: iconSize,
           color: iconColor,
-          isSelected: speed != 1.0,
+          isSelected: speed != _kDefaultSpeed,
           tooltip: '${speed.toStringAsFixed(1)}x',
-          onPressed: enabled
-              ? () => _showSpeedDialog(context, audio, speed)
-              : null,
+          onPressed: enabled ? () => _showSpeedSheet(context, audio) : null,
           icon: const Icon(Icons.speed),
         );
       },
@@ -39,57 +41,39 @@ class SpeedButton extends StatelessWidget {
   }
 }
 
-/// 速度選擇對話框：0.5x ~ 4.0x，間隔 0.1，調整時即時套用。
-Future<void> _showSpeedDialog(
-  BuildContext context,
-  AudioPlayerService audio,
-  double current,
-) async {
-  var value = current.clamp(0.5, 4.0);
-  await showDialog<void>(
+/// 速度調整面板:0.5x ~ 4.0x,間隔 0.1,調整時即時套用;重置回 1.0x。
+void _showSpeedSheet(BuildContext context, AudioPlayerService audio) {
+  showModalBottomSheet<void>(
     context: context,
     builder: (context) {
       final l10n = AppLocalizations.of(context)!;
-      return StatefulBuilder(
-        builder: (context, setState) {
-          return AlertDialog(
-            title: Text(l10n.player_speed),
-            content: Column(
+      return AdjustmentBottomSheet(
+        title: l10n.player_speed,
+        onReset: () => audio.setSpeed(_kDefaultSpeed),
+        child: StreamBuilder<double>(
+          stream: audio.speedStream,
+          builder: (context, snapshot) {
+            final speed = (snapshot.data ?? _kDefaultSpeed).clamp(0.5, 4.0);
+            return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '${value.toStringAsFixed(1)}x',
+                  '${speed.toStringAsFixed(1)}x',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Slider(
                   min: 0.5,
                   max: 4.0,
                   divisions: 35,
-                  value: value,
-                  label: '${value.toStringAsFixed(1)}x',
-                  onChanged: (v) {
-                    final snapped = double.parse(v.toStringAsFixed(1));
-                    setState(() => value = snapped);
-                    audio.setSpeed(snapped);
-                  },
+                  value: speed,
+                  label: '${speed.toStringAsFixed(1)}x',
+                  onChanged: (v) =>
+                      audio.setSpeed(double.parse(v.toStringAsFixed(1))),
                 ),
               ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  audio.setSpeed(1.0);
-                  Navigator.of(context).pop();
-                },
-                child: Text(l10n.player_speed_reset),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(l10n.common_ok),
-              ),
-            ],
-          );
-        },
+            );
+          },
+        ),
       );
     },
   );

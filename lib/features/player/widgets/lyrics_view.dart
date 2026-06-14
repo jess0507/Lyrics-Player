@@ -6,6 +6,7 @@ import '../../lyrics/lyrics_import_service.dart';
 import '../../lyrics/lyrics_repository.dart';
 import '../../lyrics/track_lyrics_provider.dart';
 import '../lyrics_font_scale_controller.dart';
+import 'lyrics_font_size_sheet.dart';
 import 'lyrics_synced_view.dart';
 import 'lyrics_unsynced_view.dart';
 
@@ -104,7 +105,7 @@ class _LyricsMenu extends ConsumerWidget {
     return PopupMenuButton<_LyricsAction>(
       icon: const Icon(Icons.more_vert),
       onSelected: (action) => switch (action) {
-        _LyricsAction.fontSize => _showFontSizeSheet(context, ref, l10n),
+        _LyricsAction.fontSize => showLyricsFontSizeSheet(context),
         _LyricsAction.reimport => runLyricsImport(
           context,
           ref,
@@ -128,56 +129,6 @@ class _LyricsMenu extends ConsumerWidget {
           child: Text(l10n.lyrics_delete),
         ),
       ],
-    );
-  }
-
-  /// 以底部面板的滑桿調整歌詞字級;面板半遮畫面,上方歌詞可即時預覽。
-  void _showFontSizeSheet(
-    BuildContext context,
-    WidgetRef ref,
-    AppLocalizations l10n,
-  ) {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (context) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l10n.lyrics_font_size,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              Consumer(
-                builder: (context, ref, _) {
-                  final scale = ref.watch(lyricsFontScaleProvider);
-                  final controller = ref.read(
-                    lyricsFontScaleProvider.notifier,
-                  );
-                  return Row(
-                    children: [
-                      const Icon(Icons.text_fields, size: 16),
-                      Expanded(
-                        child: Slider(
-                          value: scale,
-                          min: LyricsFontScaleController.minScale,
-                          max: LyricsFontScaleController.maxScale,
-                          divisions: 10,
-                          label: '${(scale * 100).round()}%',
-                          onChanged: controller.setScale,
-                        ),
-                      ),
-                      const Icon(Icons.text_fields, size: 28),
-                    ],
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 
