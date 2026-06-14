@@ -17,24 +17,18 @@ const PeriodStatEntitySchema = CollectionSchema(
   name: r'PeriodStatEntity',
   id: -3198194132626618972,
   properties: {
-    r'kind': PropertySchema(
-      id: 0,
-      name: r'kind',
-      type: IsarType.byte,
-      enumMap: _PeriodStatEntitykindEnumValueMap,
-    ),
     r'listenMs': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'listenMs',
       type: IsarType.long,
     ),
     r'period': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'period',
       type: IsarType.string,
     ),
     r'playCount': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'playCount',
       type: IsarType.long,
     )
@@ -45,17 +39,12 @@ const PeriodStatEntitySchema = CollectionSchema(
   deserializeProp: _periodStatEntityDeserializeProp,
   idName: r'id',
   indexes: {
-    r'kind_period': IndexSchema(
-      id: -4212738055583308348,
-      name: r'kind_period',
+    r'period': IndexSchema(
+      id: -1253107732758621689,
+      name: r'period',
       unique: true,
       replace: true,
       properties: [
-        IndexPropertySchema(
-          name: r'kind',
-          type: IndexType.value,
-          caseSensitive: false,
-        ),
         IndexPropertySchema(
           name: r'period',
           type: IndexType.hash,
@@ -88,10 +77,9 @@ void _periodStatEntitySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeByte(offsets[0], object.kind.index);
-  writer.writeLong(offsets[1], object.listenMs);
-  writer.writeString(offsets[2], object.period);
-  writer.writeLong(offsets[3], object.playCount);
+  writer.writeLong(offsets[0], object.listenMs);
+  writer.writeString(offsets[1], object.period);
+  writer.writeLong(offsets[2], object.playCount);
 }
 
 PeriodStatEntity _periodStatEntityDeserialize(
@@ -102,12 +90,9 @@ PeriodStatEntity _periodStatEntityDeserialize(
 ) {
   final object = PeriodStatEntity();
   object.id = id;
-  object.kind =
-      _PeriodStatEntitykindValueEnumMap[reader.readByteOrNull(offsets[0])] ??
-          PeriodKind.day;
-  object.listenMs = reader.readLong(offsets[1]);
-  object.period = reader.readString(offsets[2]);
-  object.playCount = reader.readLong(offsets[3]);
+  object.listenMs = reader.readLong(offsets[0]);
+  object.period = reader.readString(offsets[1]);
+  object.playCount = reader.readLong(offsets[2]);
   return object;
 }
 
@@ -119,28 +104,15 @@ P _periodStatEntityDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (_PeriodStatEntitykindValueEnumMap[
-              reader.readByteOrNull(offset)] ??
-          PeriodKind.day) as P;
-    case 1:
       return (reader.readLong(offset)) as P;
-    case 2:
+    case 1:
       return (reader.readString(offset)) as P;
-    case 3:
+    case 2:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
-
-const _PeriodStatEntitykindEnumValueMap = {
-  'day': 0,
-  'month': 1,
-};
-const _PeriodStatEntitykindValueEnumMap = {
-  0: PeriodKind.day,
-  1: PeriodKind.month,
-};
 
 Id _periodStatEntityGetId(PeriodStatEntity object) {
   return object.id;
@@ -156,89 +128,57 @@ void _periodStatEntityAttach(
 }
 
 extension PeriodStatEntityByIndex on IsarCollection<PeriodStatEntity> {
-  Future<PeriodStatEntity?> getByKindPeriod(PeriodKind kind, String period) {
-    return getByIndex(r'kind_period', [kind, period]);
+  Future<PeriodStatEntity?> getByPeriod(String period) {
+    return getByIndex(r'period', [period]);
   }
 
-  PeriodStatEntity? getByKindPeriodSync(PeriodKind kind, String period) {
-    return getByIndexSync(r'kind_period', [kind, period]);
+  PeriodStatEntity? getByPeriodSync(String period) {
+    return getByIndexSync(r'period', [period]);
   }
 
-  Future<bool> deleteByKindPeriod(PeriodKind kind, String period) {
-    return deleteByIndex(r'kind_period', [kind, period]);
+  Future<bool> deleteByPeriod(String period) {
+    return deleteByIndex(r'period', [period]);
   }
 
-  bool deleteByKindPeriodSync(PeriodKind kind, String period) {
-    return deleteByIndexSync(r'kind_period', [kind, period]);
+  bool deleteByPeriodSync(String period) {
+    return deleteByIndexSync(r'period', [period]);
   }
 
-  Future<List<PeriodStatEntity?>> getAllByKindPeriod(
-      List<PeriodKind> kindValues, List<String> periodValues) {
-    final len = kindValues.length;
-    assert(periodValues.length == len,
-        'All index values must have the same length');
-    final values = <List<dynamic>>[];
-    for (var i = 0; i < len; i++) {
-      values.add([kindValues[i], periodValues[i]]);
-    }
-
-    return getAllByIndex(r'kind_period', values);
+  Future<List<PeriodStatEntity?>> getAllByPeriod(List<String> periodValues) {
+    final values = periodValues.map((e) => [e]).toList();
+    return getAllByIndex(r'period', values);
   }
 
-  List<PeriodStatEntity?> getAllByKindPeriodSync(
-      List<PeriodKind> kindValues, List<String> periodValues) {
-    final len = kindValues.length;
-    assert(periodValues.length == len,
-        'All index values must have the same length');
-    final values = <List<dynamic>>[];
-    for (var i = 0; i < len; i++) {
-      values.add([kindValues[i], periodValues[i]]);
-    }
-
-    return getAllByIndexSync(r'kind_period', values);
+  List<PeriodStatEntity?> getAllByPeriodSync(List<String> periodValues) {
+    final values = periodValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'period', values);
   }
 
-  Future<int> deleteAllByKindPeriod(
-      List<PeriodKind> kindValues, List<String> periodValues) {
-    final len = kindValues.length;
-    assert(periodValues.length == len,
-        'All index values must have the same length');
-    final values = <List<dynamic>>[];
-    for (var i = 0; i < len; i++) {
-      values.add([kindValues[i], periodValues[i]]);
-    }
-
-    return deleteAllByIndex(r'kind_period', values);
+  Future<int> deleteAllByPeriod(List<String> periodValues) {
+    final values = periodValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'period', values);
   }
 
-  int deleteAllByKindPeriodSync(
-      List<PeriodKind> kindValues, List<String> periodValues) {
-    final len = kindValues.length;
-    assert(periodValues.length == len,
-        'All index values must have the same length');
-    final values = <List<dynamic>>[];
-    for (var i = 0; i < len; i++) {
-      values.add([kindValues[i], periodValues[i]]);
-    }
-
-    return deleteAllByIndexSync(r'kind_period', values);
+  int deleteAllByPeriodSync(List<String> periodValues) {
+    final values = periodValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'period', values);
   }
 
-  Future<Id> putByKindPeriod(PeriodStatEntity object) {
-    return putByIndex(r'kind_period', object);
+  Future<Id> putByPeriod(PeriodStatEntity object) {
+    return putByIndex(r'period', object);
   }
 
-  Id putByKindPeriodSync(PeriodStatEntity object, {bool saveLinks = true}) {
-    return putByIndexSync(r'kind_period', object, saveLinks: saveLinks);
+  Id putByPeriodSync(PeriodStatEntity object, {bool saveLinks = true}) {
+    return putByIndexSync(r'period', object, saveLinks: saveLinks);
   }
 
-  Future<List<Id>> putAllByKindPeriod(List<PeriodStatEntity> objects) {
-    return putAllByIndex(r'kind_period', objects);
+  Future<List<Id>> putAllByPeriod(List<PeriodStatEntity> objects) {
+    return putAllByIndex(r'period', objects);
   }
 
-  List<Id> putAllByKindPeriodSync(List<PeriodStatEntity> objects,
+  List<Id> putAllByPeriodSync(List<PeriodStatEntity> objects,
       {bool saveLinks = true}) {
-    return putAllByIndexSync(r'kind_period', objects, saveLinks: saveLinks);
+    return putAllByIndexSync(r'period', objects, saveLinks: saveLinks);
   }
 }
 
@@ -321,137 +261,44 @@ extension PeriodStatEntityQueryWhere
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      kindEqualToAnyPeriod(PeriodKind kind) {
+      periodEqualTo(String period) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'kind_period',
-        value: [kind],
+        indexName: r'period',
+        value: [period],
       ));
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      kindNotEqualToAnyPeriod(PeriodKind kind) {
+      periodNotEqualTo(String period) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'kind_period',
+              indexName: r'period',
               lower: [],
-              upper: [kind],
+              upper: [period],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'kind_period',
-              lower: [kind],
+              indexName: r'period',
+              lower: [period],
               includeLower: false,
               upper: [],
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'kind_period',
-              lower: [kind],
+              indexName: r'period',
+              lower: [period],
               includeLower: false,
               upper: [],
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'kind_period',
+              indexName: r'period',
               lower: [],
-              upper: [kind],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      kindGreaterThanAnyPeriod(
-    PeriodKind kind, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'kind_period',
-        lower: [kind],
-        includeLower: include,
-        upper: [],
-      ));
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      kindLessThanAnyPeriod(
-    PeriodKind kind, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'kind_period',
-        lower: [],
-        upper: [kind],
-        includeUpper: include,
-      ));
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      kindBetweenAnyPeriod(
-    PeriodKind lowerKind,
-    PeriodKind upperKind, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'kind_period',
-        lower: [lowerKind],
-        includeLower: includeLower,
-        upper: [upperKind],
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      kindPeriodEqualTo(PeriodKind kind, String period) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'kind_period',
-        value: [kind, period],
-      ));
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      kindEqualToPeriodNotEqualTo(PeriodKind kind, String period) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'kind_period',
-              lower: [kind],
-              upper: [kind, period],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'kind_period',
-              lower: [kind, period],
-              includeLower: false,
-              upper: [kind],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'kind_period',
-              lower: [kind, period],
-              includeLower: false,
-              upper: [kind],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'kind_period',
-              lower: [kind],
-              upper: [kind, period],
+              upper: [period],
               includeUpper: false,
             ));
       }
@@ -509,62 +356,6 @@ extension PeriodStatEntityQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      kindEqualTo(PeriodKind value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'kind',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      kindGreaterThan(
-    PeriodKind value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'kind',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      kindLessThan(
-    PeriodKind value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'kind',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      kindBetween(
-    PeriodKind lower,
-    PeriodKind upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'kind',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -830,19 +621,6 @@ extension PeriodStatEntityQueryLinks
 
 extension PeriodStatEntityQuerySortBy
     on QueryBuilder<PeriodStatEntity, PeriodStatEntity, QSortBy> {
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy> sortByKind() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'kind', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      sortByKindDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'kind', Sort.desc);
-    });
-  }
-
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
       sortByListenMs() {
     return QueryBuilder.apply(this, (query) {
@@ -901,19 +679,6 @@ extension PeriodStatEntityQuerySortThenBy
     });
   }
 
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy> thenByKind() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'kind', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      thenByKindDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'kind', Sort.desc);
-    });
-  }
-
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
       thenByListenMs() {
     return QueryBuilder.apply(this, (query) {
@@ -959,12 +724,6 @@ extension PeriodStatEntityQuerySortThenBy
 
 extension PeriodStatEntityQueryWhereDistinct
     on QueryBuilder<PeriodStatEntity, PeriodStatEntity, QDistinct> {
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QDistinct> distinctByKind() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'kind');
-    });
-  }
-
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QDistinct>
       distinctByListenMs() {
     return QueryBuilder.apply(this, (query) {
@@ -992,12 +751,6 @@ extension PeriodStatEntityQueryProperty
   QueryBuilder<PeriodStatEntity, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodKind, QQueryOperations> kindProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'kind');
     });
   }
 

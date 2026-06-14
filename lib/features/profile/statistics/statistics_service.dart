@@ -1,11 +1,7 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 
 import '../../../core/storage/isar_service.dart';
-import '../../../core/storage/preferences_service.dart';
 import '../../../core/sync/sync_state_store.dart';
 import '../../music_list/track.dart';
 import 'daily_track_stat_entity.dart';
@@ -72,9 +68,10 @@ class StatisticsData {
   }
 
   /// day key 為定長 `yyyy-MM-dd`，prefix 比對即可取日（完整 key）／月／年。
-  StatisticsData _matching(String prefix) => StatisticsData(
-        [for (final d in days) if (d.day.startsWith(prefix)) d],
-      );
+  StatisticsData _matching(String prefix) => StatisticsData([
+    for (final d in days)
+      if (d.day.startsWith(prefix)) d,
+  ]);
 
   static List<TrackRanking> _aggregateByTitle(
     Iterable<DailyTrackStatEntity> records,
@@ -126,17 +123,12 @@ class DailyTotal {
 }
 
 class StatisticsController extends Notifier<StatisticsData> {
-  /// 舊版 SharedPreferences 統計的 key，首次啟動遷移到 Isar 後移除。
-  static const _kLegacyKey = 'statistics.data';
-
   Isar get _isar => ref.read(isarProvider);
-  IsarCollection<DailyTrackStatEntity> get _days =>
-      _isar.dailyTrackStatEntitys;
+  IsarCollection<DailyTrackStatEntity> get _days => _isar.dailyTrackStatEntitys;
   IsarCollection<PeriodStatEntity> get _periods => _isar.periodStatEntitys;
 
   @override
   StatisticsData build() {
-    _migrateFromPrefs();
     return _load();
   }
 
@@ -152,68 +144,51 @@ class StatisticsController extends Notifier<StatisticsData> {
     _record(track, listenMs: duration.inMilliseconds);
   }
 
-  /// 同一個交易內 upsert 三筆：每曲明細（今天, trackId）、
-  /// day total（今天）、month total（本月）——明細與期間總量必成對，
-  /// 不會出現只寫一半的狀態。
+  /// 同一個交易內 upsert 兩筆：每曲明細（今天, trackId）與本月 month total
+  /// ——明細與月總量必成對，不會出現只寫一半的狀態。
+  /// day total 不另存：day 數據就是明細本身，週/月視圖直接由明細聚合。
   void _record(Track track, {int playCount = 0, int listenMs = 0}) {
     final now = DateTime.now();
     final today = dayKey(now);
     late DailyTrackStatEntity entity;
     _isar.writeTxnSync(() {
-      entity = (_days.getByDayTrackIdSync(today, track.id) ??
-          (DailyTrackStatEntity()
-            ..day = today
-            ..trackId = track.id))
-        ..title = track.title
-        ..playCount += playCount
-        ..listenMs += listenMs;
+      entity =
+          (_days.getByDayTrackIdSync(today, track.id) ??
+                (DailyTrackStatEntity()
+                  ..day = today
+                  ..trackId = track.id))
+            ..title = track.title
+            ..playCount += playCount
+            ..listenMs += listenMs;
       _days.putSync(entity);
-      _bumpPeriodSync(PeriodKind.day, today, playCount, listenMs);
-      _bumpPeriodSync(PeriodKind.month, monthKey(now), playCount, listenMs);
+      _bumpMonthSync(monthKey(now), playCount, listenMs);
     });
     _commit(entity);
   }
 
-  /// 累加指定期間 total（須在 writeTxnSync 內呼叫）。
-  void _bumpPeriodSync(
-    PeriodKind kind,
-    String period,
-    int playCount,
-    int listenMs,
-  ) {
-    final entity = _periods.getByKindPeriodSync(kind, period) ??
-        (PeriodStatEntity()
-          ..kind = kind
-          ..period = period);
-    _periods.putSync(entity
-      ..playCount += playCount
-      ..listenMs += listenMs);
+  /// 累加指定月份 total（須在 writeTxnSync 內呼叫）。
+  void _bumpMonthSync(String period, int playCount, int listenMs) {
+    final entity =
+        _periods.getByPeriodSync(period) ??
+        (PeriodStatEntity()..period = period);
+    _periods.putSync(
+      entity
+        ..playCount += playCount
+        ..listenMs += listenMs,
+    );
   }
 
   /// 月粒度 totals（依 period 升冪），供同步上傳（v3 `monthlyTotals` 欄位）。
-  List<PeriodStatEntity> monthlyTotals() => _periods
-      .filter()
-      .kindEqualTo(PeriodKind.month)
-      .sortByPeriod()
-      .findAllSync();
+  List<PeriodStatEntity> monthlyTotals() =>
+      _periods.where().sortByPeriod().findAllSync();
 
-  /// 定向重算：只重算受影響的 day bucket 與其所屬 month bucket
-  /// （明細索引範圍查詢聚合後 upsert 覆寫）。用於 prefs 舊版遷移等
-  /// 「已知哪幾天的明細被批次改動」的場合。
+  /// 定向重算：只重算指定日所屬的 month bucket（明細索引範圍查詢聚合後
+  /// upsert 覆寫）。用於「已知哪幾天的明細被批次改動」的場合。
   void recomputePeriods(Iterable<String> dayKeys) {
-    final days = dayKeys.toSet();
-    final months = {for (final d in days) d.substring(0, 7)};
+    final months = {for (final d in dayKeys) d.substring(0, 7)};
     _isar.writeTxnSync(() {
-      for (final day in days) {
-        _putComputedSync(
-          PeriodKind.day,
-          day,
-          _days.where().dayEqualToAnyTrackId(day).findAllSync(),
-        );
-      }
       for (final month in months) {
-        _putComputedSync(
-          PeriodKind.month,
+        _putComputedMonthSync(
           month,
           _days.filter().dayStartsWith('$month-').findAllSync(),
         );
@@ -221,9 +196,8 @@ class StatisticsController extends Notifier<StatisticsData> {
     });
   }
 
-  /// 以明細聚合結果覆寫單一期間 total（須在 writeTxnSync 內呼叫）。
-  void _putComputedSync(
-    PeriodKind kind,
+  /// 以明細聚合結果覆寫單一月份 total（須在 writeTxnSync 內呼叫）。
+  void _putComputedMonthSync(
     String period,
     List<DailyTrackStatEntity> records,
   ) {
@@ -233,36 +207,14 @@ class StatisticsController extends Notifier<StatisticsData> {
       playCount += r.playCount;
       listenMs += r.listenMs;
     }
-    final entity = _periods.getByKindPeriodSync(kind, period) ??
-        (PeriodStatEntity()
-          ..kind = kind
-          ..period = period);
-    _periods.putSync(entity
-      ..playCount = playCount
-      ..listenMs = listenMs);
-  }
-
-  /// 由明細在記憶體單趟聚合出 day 粒度 totals（還原時重建用；
-  /// month 粒度以雲端 `monthlyTotals` 為準，不由明細導出）。
-  static List<PeriodStatEntity> _aggregateDayTotals(
-    Iterable<DailyTrackStatEntity> records,
-  ) {
-    final byDay = <String, ({int playCount, int listenMs})>{};
-    for (final r in records) {
-      final prev = byDay[r.day] ?? (playCount: 0, listenMs: 0);
-      byDay[r.day] = (
-        playCount: prev.playCount + r.playCount,
-        listenMs: prev.listenMs + r.listenMs,
-      );
-    }
-    return [
-      for (final e in byDay.entries)
-        PeriodStatEntity()
-          ..kind = PeriodKind.day
-          ..period = e.key
-          ..playCount = e.value.playCount
-          ..listenMs = e.value.listenMs,
-    ];
+    final entity =
+        _periods.getByPeriodSync(period) ??
+        (PeriodStatEntity()..period = period);
+    _periods.putSync(
+      entity
+        ..playCount = playCount
+        ..listenMs = listenMs,
+    );
   }
 
   /// 清空本機統計（明細與期間 totals 同交易清空）。
@@ -278,23 +230,46 @@ class StatisticsController extends Notifier<StatisticsData> {
 
   /// 還原雲端備份（整份覆寫本機）。
   ///
-  /// [monthlyTotals] 為雲端文件的月粒度 totals——月粒度以雲端為準
-  /// （將來明細被截斷後，月總量只有雲端是完整的）；
-  /// day totals 不上傳，由明細單趟重建。
+  /// [monthlyTotals] 為雲端文件（v3）的月粒度 totals——月粒度以雲端為準
+  /// （將來明細被截斷後，月總量只有雲端是完整的）；v2 舊文件無此欄位，
+  /// 傳 null，由明細單趟重建月總量。
+  /// day 數據即明細本身，隨 [entities] 一併落地，兩種情形都不需另外重建。
   ///
   /// 還原不算本機變更：不更新 lastModifiedAt，避免還原後馬上又觸發上傳。
   void restoreFromRemote(
     List<DailyTrackStatEntity> entities, {
-    required List<PeriodStatEntity> monthlyTotals,
+    List<PeriodStatEntity>? monthlyTotals,
   }) {
-    final dayTotals = _aggregateDayTotals(entities);
+    final months = monthlyTotals ?? _aggregateMonthTotals(entities);
     _isar.writeTxnSync(() {
       _days.clearSync();
       _days.putAllSync(entities);
       _periods.clearSync();
-      _periods.putAllSync([...dayTotals, ...monthlyTotals]);
+      _periods.putAllSync(months);
     });
     state = _load();
+  }
+
+  /// 由明細在記憶體單趟聚合出月粒度 totals（v2 還原重建用）。
+  static List<PeriodStatEntity> _aggregateMonthTotals(
+    Iterable<DailyTrackStatEntity> records,
+  ) {
+    final byMonth = <String, ({int playCount, int listenMs})>{};
+    for (final r in records) {
+      final month = r.day.substring(0, 7);
+      final prev = byMonth[month] ?? (playCount: 0, listenMs: 0);
+      byMonth[month] = (
+        playCount: prev.playCount + r.playCount,
+        listenMs: prev.listenMs + r.listenMs,
+      );
+    }
+    return [
+      for (final e in byMonth.entries)
+        PeriodStatEntity()
+          ..period = e.key
+          ..playCount = e.value.playCount
+          ..listenMs = e.value.listenMs,
+    ];
   }
 
   /// 本地日期轉 `yyyy-MM-dd` key。
@@ -323,43 +298,9 @@ class StatisticsController extends Notifier<StatisticsData> {
     state = StatisticsData(days);
     ref.read(syncStateStoreProvider).markModified();
   }
-
-  /// 把舊版 prefs 統計（perTrackCount + trackTitles）匯入為「遷移當日」的
-  /// 每日記錄後移除舊 key。
-  ///
-  /// 舊累計攤不進真實日期，整筆掛在遷移當日；
-  /// 舊版的全域 totalListenMs 攤不進 per-track，直接捨棄（皆為已知取捨）。
-  void _migrateFromPrefs() {
-    final prefs = ref.read(preferencesServiceProvider);
-    final raw = prefs.getString(_kLegacyKey);
-    if (raw == null) return;
-    try {
-      final json = jsonDecode(raw) as Map<String, dynamic>;
-      final counts = (json['perTrackCount'] as Map?) ?? const {};
-      final titles = (json['trackTitles'] as Map?) ?? const {};
-      final today = dayKey(DateTime.now());
-      final entities = [
-        for (final entry in counts.entries)
-          DailyTrackStatEntity()
-            ..day = today
-            ..trackId = entry.key as String
-            ..title = (titles[entry.key] as String?) ?? entry.key as String
-            ..playCount = entry.value as int,
-      ];
-      if (entities.isNotEmpty) {
-        _isar.writeTxnSync(() => _days.putAllSync(entities));
-        // 只寫遷移當日 → 定向重算當日 + 當月兩筆 totals 即可。
-        recomputePeriods([today]);
-        ref.read(syncStateStoreProvider).markModified();
-      }
-    } catch (e) {
-      debugPrint('統計遷移失敗，捨棄舊資料：$e');
-    }
-    prefs.remove(_kLegacyKey);
-  }
 }
 
 final statisticsControllerProvider =
     NotifierProvider<StatisticsController, StatisticsData>(
-  StatisticsController.new,
-);
+      StatisticsController.new,
+    );

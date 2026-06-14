@@ -215,6 +215,26 @@ users/{uid}
 - 測試:`test/period_totals_test.dart` 以真 Isar 跑 controller
   (測試 binding 擋 HttpClient,故 setUpAll 改用 curl 預抓 IsarCore dylib
   到 `.dart_tool/isar_test/`,僅 macOS;此 pattern 可供後續 Isar 相關測試沿用)。
+## 設計修訂(2026-06-14):`PeriodStatEntity` 改為只存月粒度
+
+- **動機**:day 粒度的 totals 與 `DailyTrackStatEntity`(每日 × 每曲)重複——
+  day 數據就是明細本身,再存一份 day total 是冗餘。原本「圖表全程不碰明細」的
+  考量在 7/30 天視窗下成本可忽略(一次索引範圍查詢 + 記憶體加總),不值得多維護一份 cache。
+- **變更**:
+  - `PeriodStatEntity` 移除 `PeriodKind` enum 與 `kind` 欄位,`period` 直接是月 key
+    `yyyy-MM`,唯一索引改為單欄 `period`(getter 變 `getByPeriodSync` /
+    `getAllByPeriodSync`)。
+  - 寫入端 `_record` 只 upsert 明細 + 本月 month total(`_bumpMonthSync`);
+    `recomputePeriods` 只重算受影響日所屬月份;移除 day totals 的聚合/落地。
+  - `restoreFromRemote`:v3 直接落地雲端 `monthlyTotals`;v2(`monthlyTotals` 為
+    null)由明細單趟重建月總量(`_aggregateMonthTotals`)。day 數據隨明細落地,
+    兩種情形都不需重建。
+  - 週/月視圖改在 `chart_series_provider` 內對明細 `day` 索引做範圍查詢後按日加總;
+    年視圖維持點查 `PeriodStatEntity` 月總量。
+  - 移除已不存在於 service 的 `rebuildPeriodTotals` / `build()` backfill 對應測試。
+- 上方「day 粒度」相關敘述(決策 1~3、圖表規格的 day 讀取粒度、資料結構的 `kind`
+  欄位)以本節為準。
+
 - 待辦:
   - 實機確認登入還原後圖表資料到位(計畫步驟 7 的最後一項)。
   - 新增的 4 個 l10n key(`statistics_chart_*`)補進 Google Sheet,

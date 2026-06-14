@@ -235,7 +235,6 @@ class SyncService {
     raw.forEach((month, value) {
       if (value is! Map) return;
       entities.add(PeriodStatEntity()
-        ..kind = PeriodKind.month
         ..period = '$month'
         ..playCount = (value['playCount'] as num? ?? 0).toInt()
         ..listenMs = (value['listenMs'] as num? ?? 0).toInt());
