@@ -84,5 +84,10 @@
   "common_ok": "好",
   "common_delete": "刪除",
   "common_retry": "重試",
-  "settings_color": "主題顏色"
+  "settings_color": "主題顏色",
+  "lyrics_import": "匯入歌詞",
+  "lyrics_import_success": "歌詞已匯入",
+  "lyrics_import_failed": "無法匯入歌詞",
+  "lyrics_import_too_large": "歌詞檔案太大",
+  "lyrics_import_empty": "這個檔案沒有歌詞內容"
 }

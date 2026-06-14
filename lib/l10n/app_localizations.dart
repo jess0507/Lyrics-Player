@@ -635,6 +635,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Theme color'**
   String get settings_color;
+
+  /// No description provided for @lyrics_import.
+  ///
+  /// In en, this message translates to:
+  /// **'Import lyrics'**
+  String get lyrics_import;
+
+  /// No description provided for @lyrics_import_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Lyrics imported'**
+  String get lyrics_import_success;
+
+  /// No description provided for @lyrics_import_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t import lyrics'**
+  String get lyrics_import_failed;
+
+  /// No description provided for @lyrics_import_too_large.
+  ///
+  /// In en, this message translates to:
+  /// **'Lyrics file is too large'**
+  String get lyrics_import_too_large;
+
+  /// No description provided for @lyrics_import_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No lyrics found in this file'**
+  String get lyrics_import_empty;
 }
 
 class _AppLocalizationsDelegate

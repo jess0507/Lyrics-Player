@@ -84,5 +84,10 @@
   "common_ok": "OK",
   "common_delete": "Delete",
   "common_retry": "Retry",
-  "settings_color": "Theme color"
+  "settings_color": "Theme color",
+  "lyrics_import": "Import lyrics",
+  "lyrics_import_success": "Lyrics imported",
+  "lyrics_import_failed": "Couldn't import lyrics",
+  "lyrics_import_too_large": "Lyrics file is too large",
+  "lyrics_import_empty": "No lyrics found in this file"
 }

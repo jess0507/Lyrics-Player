@@ -268,6 +268,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get settings_color => '主題顏色';
+
+  @override
+  String get lyrics_import => 'Import lyrics';
+
+  @override
+  String get lyrics_import_success => 'Lyrics imported';
+
+  @override
+  String get lyrics_import_failed => 'Couldn\'t import lyrics';
+
+  @override
+  String get lyrics_import_too_large => 'Lyrics file is too large';
+
+  @override
+  String get lyrics_import_empty => 'No lyrics found in this file';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -528,6 +543,21 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get settings_color => '主题颜色';
+
+  @override
+  String get lyrics_import => '导入歌词';
+
+  @override
+  String get lyrics_import_success => '歌词已导入';
+
+  @override
+  String get lyrics_import_failed => '无法导入歌词';
+
+  @override
+  String get lyrics_import_too_large => '歌词文件太大';
+
+  @override
+  String get lyrics_import_empty => '这个文件没有歌词内容';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -788,4 +818,19 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get settings_color => '主題顏色';
+
+  @override
+  String get lyrics_import => '匯入歌詞';
+
+  @override
+  String get lyrics_import_success => '歌詞已匯入';
+
+  @override
+  String get lyrics_import_failed => '無法匯入歌詞';
+
+  @override
+  String get lyrics_import_too_large => '歌詞檔案太大';
+
+  @override
+  String get lyrics_import_empty => '這個檔案沒有歌詞內容';
 }

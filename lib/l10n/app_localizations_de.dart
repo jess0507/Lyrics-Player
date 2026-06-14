@@ -269,4 +269,19 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settings_color => 'Designfarbe';
+
+  @override
+  String get lyrics_import => 'Import lyrics';
+
+  @override
+  String get lyrics_import_success => 'Lyrics imported';
+
+  @override
+  String get lyrics_import_failed => 'Couldn\'t import lyrics';
+
+  @override
+  String get lyrics_import_too_large => 'Lyrics file is too large';
+
+  @override
+  String get lyrics_import_empty => 'No lyrics found in this file';
 }

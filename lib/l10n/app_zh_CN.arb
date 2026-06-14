@@ -84,5 +84,10 @@
   "common_ok": "好",
   "common_delete": "删除",
   "common_retry": "重试",
-  "settings_color": "主题颜色"
+  "settings_color": "主题颜色",
+  "lyrics_import": "导入歌词",
+  "lyrics_import_success": "歌词已导入",
+  "lyrics_import_failed": "无法导入歌词",
+  "lyrics_import_too_large": "歌词文件太大",
+  "lyrics_import_empty": "这个文件没有歌词内容"
 }
