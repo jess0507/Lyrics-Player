@@ -5,6 +5,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../lyrics/lyrics_import_service.dart';
 import '../../lyrics/lyrics_repository.dart';
 import '../../lyrics/track_lyrics_provider.dart';
+import '../lyrics_font_scale_controller.dart';
 import 'lyrics_synced_view.dart';
 import 'lyrics_unsynced_view.dart';
 
@@ -28,9 +29,16 @@ class LyricsView extends ConsumerWidget {
         if (lyrics == null || lyrics.isEmpty) {
           return _EmptyLyrics(trackId: trackId, title: title);
         }
-        final content = lyrics.synced
-            ? LyricsSyncedView(lyrics: lyrics)
-            : LyricsUnsyncedView(lyrics: lyrics);
+        final scale = ref.watch(lyricsFontScaleProvider);
+        final content = MediaQuery(
+          // 僅縮放歌詞文字,不影響選單與版面間距。
+          data: MediaQuery.of(
+            context,
+          ).copyWith(textScaler: TextScaler.linear(scale)),
+          child: lyrics.synced
+              ? LyricsSyncedView(lyrics: lyrics)
+              : LyricsUnsyncedView(lyrics: lyrics),
+        );
         return Stack(
           children: [
             Positioned.fill(child: content),
@@ -81,9 +89,9 @@ class _EmptyLyrics extends ConsumerWidget {
   }
 }
 
-enum _LyricsAction { reimport, delete }
+enum _LyricsAction { fontSize, reimport, delete }
 
-/// 歌詞操作選單:重新匯入(覆蓋)、刪除歌詞(先確認)。
+/// 歌詞操作選單:字幕字體大小、重新匯入(覆蓋)、刪除歌詞(先確認)。
 class _LyricsMenu extends ConsumerWidget {
   const _LyricsMenu({required this.trackId, required this.title});
 
@@ -96,6 +104,7 @@ class _LyricsMenu extends ConsumerWidget {
     return PopupMenuButton<_LyricsAction>(
       icon: const Icon(Icons.more_vert),
       onSelected: (action) => switch (action) {
+        _LyricsAction.fontSize => _showFontSizeSheet(context, ref, l10n),
         _LyricsAction.reimport => runLyricsImport(
           context,
           ref,
@@ -106,6 +115,11 @@ class _LyricsMenu extends ConsumerWidget {
       },
       itemBuilder: (context) => [
         PopupMenuItem(
+          value: _LyricsAction.fontSize,
+          child: Text(l10n.lyrics_font_size),
+        ),
+        const PopupMenuDivider(),
+        PopupMenuItem(
           value: _LyricsAction.reimport,
           child: Text(l10n.lyrics_reimport),
         ),
@@ -114,6 +128,56 @@ class _LyricsMenu extends ConsumerWidget {
           child: Text(l10n.lyrics_delete),
         ),
       ],
+    );
+  }
+
+  /// 以底部面板的滑桿調整歌詞字級;面板半遮畫面,上方歌詞可即時預覽。
+  void _showFontSizeSheet(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations l10n,
+  ) {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                l10n.lyrics_font_size,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Consumer(
+                builder: (context, ref, _) {
+                  final scale = ref.watch(lyricsFontScaleProvider);
+                  final controller = ref.read(
+                    lyricsFontScaleProvider.notifier,
+                  );
+                  return Row(
+                    children: [
+                      const Icon(Icons.text_fields, size: 16),
+                      Expanded(
+                        child: Slider(
+                          value: scale,
+                          min: LyricsFontScaleController.minScale,
+                          max: LyricsFontScaleController.maxScale,
+                          divisions: 10,
+                          label: '${(scale * 100).round()}%',
+                          onChanged: controller.setScale,
+                        ),
+                      ),
+                      const Icon(Icons.text_fields, size: 28),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
