@@ -8,7 +8,7 @@ import 'speed_button.dart';
 const _kIconSize = 20.0;
 
 /// 次控制列圖示的顏色（深灰色，未選取時）。
-const _kIconColor = Colors.black54;
+const _kIconColor = Colors.grey;
 
 /// 次控制列：隨機、播放速度、循環。
 class SecondaryControls extends StatelessWidget {

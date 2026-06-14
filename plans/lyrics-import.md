@@ -79,7 +79,7 @@
    不涵蓋非媒體檔,讀不到歌詞檔;sidecar 需另要 SAF 資料夾授權,列入後續。
 2. **儲存「原始內文」進 Isar,顯示時解析**:新 `LyricsEntity`
    (trackId 唯一索引 replace / title / format / source / content / addedAt)。
-   - 存原文不存解析結果:編輯(backlog 6)與 parser 演進都不受內部模型綁死;
+   - 存原文不存解析結果:編輯(backlog 7)與 parser 演進都不受內部模型綁死;
      解析很快,讀取時 parse 即可。
    - 不複製歌詞檔到 App 目錄(內容已入庫,檔案本體不再需要)。
    - **不同步 Firestore**:歌詞文字有體積與版權疑慮,純本機資料;
@@ -115,13 +115,15 @@
 ## 分期(歌詞功能群,對應 backlog)
 
 - **M1(地基)**:手動匯入(2,本計畫)+ 顯示(3,`lyrics-display.md`)。
-- **M2:編輯歌詞(6)**:直接編輯 `LyricsEntity.content` 原文 + 重新解析預覽;
+- **M2:編輯歌詞(7)**:直接編輯 `LyricsEntity.content` 原文 + 重新解析預覽;
   順手加「offset 微調」UI(整體 ±0.5s)。
 - **M3:上網搜尋歌詞(4)**:已拆至 `plans/lyrics-online-search.md`
   (來源 LRCLIB,搜尋結果寫入同一個 `LyricsEntity`,source = online)。
-- **M4:自動產生歌詞(5)**:已拆至 `plans/lyrics-auto-generate.md`
-  (語音辨識,成本與品質都未定,最遠期)。
-- **嵌入式歌詞**:併入 backlog 7(ID3 中繼資料)任務。
+- **M4:自動對時歌詞(5)**:已拆至 `plans/lyrics-auto-sync.md`
+  (forced alignment,既有 txt 純文字補每行時間 → 同步)。
+- **M5:自動產生歌詞(6)**:已拆至 `plans/lyrics-auto-generate.md`
+  (語音辨識從零產生,成本與品質都未定,最遠期)。
+- **嵌入式歌詞**:併入 backlog 8(ID3 中繼資料)任務。
 
 ## 邊界 / 風險
 
