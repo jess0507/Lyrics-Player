@@ -96,5 +96,15 @@
   "lyrics_delete_confirm": "Delete lyrics for this track?",
   "lyrics_show": "Show lyrics",
   "lyrics_hide": "Show artwork",
-  "lyrics_font_size": "Font size"
+  "lyrics_font_size": "Font size",
+  "lyrics_auto_sync": "Auto-sync timing",
+  "lyrics_auto_sync_compressing": "Preparing audio…",
+  "lyrics_auto_sync_uploading": "Uploading audio…",
+  "lyrics_auto_sync_aligning": "Aligning lyrics…",
+  "lyrics_auto_sync_success": "Lyrics synced (auto, may be imperfect)",
+  "lyrics_auto_sync_failed": "Couldn't sync lyrics; kept original text",
+  "lyrics_auto_sync_need_login": "Sign in to use auto-sync",
+  "lyrics_auto_sync_rate_limited": "Daily auto-sync limit reached, try tomorrow",
+  "lyrics_auto_sync_no_audio": "Audio file not found",
+  "lyrics_auto_sync_network": "Connection problem, try again later"
 }

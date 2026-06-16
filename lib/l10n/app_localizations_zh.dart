@@ -298,6 +298,39 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get lyrics_font_size => '字體大小';
+
+  @override
+  String get lyrics_auto_sync => 'Auto-sync timing';
+
+  @override
+  String get lyrics_auto_sync_compressing => 'Preparing audio…';
+
+  @override
+  String get lyrics_auto_sync_uploading => 'Uploading audio…';
+
+  @override
+  String get lyrics_auto_sync_aligning => 'Aligning lyrics…';
+
+  @override
+  String get lyrics_auto_sync_success =>
+      'Lyrics synced (auto, may be imperfect)';
+
+  @override
+  String get lyrics_auto_sync_failed =>
+      'Couldn\'t sync lyrics; kept original text';
+
+  @override
+  String get lyrics_auto_sync_need_login => 'Sign in to use auto-sync';
+
+  @override
+  String get lyrics_auto_sync_rate_limited =>
+      'Daily auto-sync limit reached, try tomorrow';
+
+  @override
+  String get lyrics_auto_sync_no_audio => 'Audio file not found';
+
+  @override
+  String get lyrics_auto_sync_network => 'Connection problem, try again later';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -594,6 +627,36 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get lyrics_font_size => '字体大小';
+
+  @override
+  String get lyrics_auto_sync => '自动对时';
+
+  @override
+  String get lyrics_auto_sync_compressing => '处理音频中…';
+
+  @override
+  String get lyrics_auto_sync_uploading => '上传音频中…';
+
+  @override
+  String get lyrics_auto_sync_aligning => '对齐歌词中…';
+
+  @override
+  String get lyrics_auto_sync_success => '已自动对时(可能有误)';
+
+  @override
+  String get lyrics_auto_sync_failed => '对时失败,已保留原歌词';
+
+  @override
+  String get lyrics_auto_sync_need_login => '请先登录才能使用自动对时';
+
+  @override
+  String get lyrics_auto_sync_rate_limited => '今日对时次数已达上限,请明天再试';
+
+  @override
+  String get lyrics_auto_sync_no_audio => '找不到音频文件';
+
+  @override
+  String get lyrics_auto_sync_network => '连接问题,请稍后再试';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -890,4 +953,34 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get lyrics_font_size => '字體大小';
+
+  @override
+  String get lyrics_auto_sync => '自動對時';
+
+  @override
+  String get lyrics_auto_sync_compressing => '處理音訊中…';
+
+  @override
+  String get lyrics_auto_sync_uploading => '上傳音訊中…';
+
+  @override
+  String get lyrics_auto_sync_aligning => '對齊歌詞中…';
+
+  @override
+  String get lyrics_auto_sync_success => '已自動對時(可能有誤)';
+
+  @override
+  String get lyrics_auto_sync_failed => '對時失敗,已保留原歌詞';
+
+  @override
+  String get lyrics_auto_sync_need_login => '請先登入才能使用自動對時';
+
+  @override
+  String get lyrics_auto_sync_rate_limited => '今日對時次數已達上限,請明天再試';
+
+  @override
+  String get lyrics_auto_sync_no_audio => '找不到音訊檔';
+
+  @override
+  String get lyrics_auto_sync_network => '連線問題,請稍後再試';
 }

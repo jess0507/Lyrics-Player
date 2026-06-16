@@ -707,6 +707,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Font size'**
   String get lyrics_font_size;
+
+  /// No description provided for @lyrics_auto_sync.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-sync timing'**
+  String get lyrics_auto_sync;
+
+  /// No description provided for @lyrics_auto_sync_compressing.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing audio…'**
+  String get lyrics_auto_sync_compressing;
+
+  /// No description provided for @lyrics_auto_sync_uploading.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading audio…'**
+  String get lyrics_auto_sync_uploading;
+
+  /// No description provided for @lyrics_auto_sync_aligning.
+  ///
+  /// In en, this message translates to:
+  /// **'Aligning lyrics…'**
+  String get lyrics_auto_sync_aligning;
+
+  /// No description provided for @lyrics_auto_sync_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Lyrics synced (auto, may be imperfect)'**
+  String get lyrics_auto_sync_success;
+
+  /// No description provided for @lyrics_auto_sync_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t sync lyrics; kept original text'**
+  String get lyrics_auto_sync_failed;
+
+  /// No description provided for @lyrics_auto_sync_need_login.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to use auto-sync'**
+  String get lyrics_auto_sync_need_login;
+
+  /// No description provided for @lyrics_auto_sync_rate_limited.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily auto-sync limit reached, try tomorrow'**
+  String get lyrics_auto_sync_rate_limited;
+
+  /// No description provided for @lyrics_auto_sync_no_audio.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio file not found'**
+  String get lyrics_auto_sync_no_audio;
+
+  /// No description provided for @lyrics_auto_sync_network.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection problem, try again later'**
+  String get lyrics_auto_sync_network;
 }
 
 class _AppLocalizationsDelegate

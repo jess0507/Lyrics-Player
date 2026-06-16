@@ -307,4 +307,37 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get lyrics_font_size => 'Ukuran font';
+
+  @override
+  String get lyrics_auto_sync => 'Auto-sync timing';
+
+  @override
+  String get lyrics_auto_sync_compressing => 'Preparing audio…';
+
+  @override
+  String get lyrics_auto_sync_uploading => 'Uploading audio…';
+
+  @override
+  String get lyrics_auto_sync_aligning => 'Aligning lyrics…';
+
+  @override
+  String get lyrics_auto_sync_success =>
+      'Lyrics synced (auto, may be imperfect)';
+
+  @override
+  String get lyrics_auto_sync_failed =>
+      'Couldn\'t sync lyrics; kept original text';
+
+  @override
+  String get lyrics_auto_sync_need_login => 'Sign in to use auto-sync';
+
+  @override
+  String get lyrics_auto_sync_rate_limited =>
+      'Daily auto-sync limit reached, try tomorrow';
+
+  @override
+  String get lyrics_auto_sync_no_audio => 'Audio file not found';
+
+  @override
+  String get lyrics_auto_sync_network => 'Connection problem, try again later';
 }

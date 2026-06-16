@@ -96,5 +96,15 @@
   "lyrics_delete_confirm": "要删除这首歌的歌词吗?",
   "lyrics_show": "显示歌词",
   "lyrics_hide": "显示封面",
-  "lyrics_font_size": "字体大小"
+  "lyrics_font_size": "字体大小",
+  "lyrics_auto_sync": "自动对时",
+  "lyrics_auto_sync_compressing": "处理音频中…",
+  "lyrics_auto_sync_uploading": "上传音频中…",
+  "lyrics_auto_sync_aligning": "对齐歌词中…",
+  "lyrics_auto_sync_success": "已自动对时(可能有误)",
+  "lyrics_auto_sync_failed": "对时失败,已保留原歌词",
+  "lyrics_auto_sync_need_login": "请先登录才能使用自动对时",
+  "lyrics_auto_sync_rate_limited": "今日对时次数已达上限,请明天再试",
+  "lyrics_auto_sync_no_audio": "找不到音频文件",
+  "lyrics_auto_sync_network": "连接问题,请稍后再试"
 }
