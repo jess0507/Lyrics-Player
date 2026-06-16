@@ -1,6 +1,36 @@
 # 歌詞功能:自動對時(txt → 同步)— aeneas 路線(backlog 5)
 
-狀態:**規劃 / 待調查**(2026-06-14)。
+狀態:**後端容器已實作、待部署驗證;Flutter 端未做**(2026-06-16)。
+
+### 實作進度 / 決策(2026-06-16)
+
+- **範圍**:先做後端容器(本輪),Flutter 端待下一輪。後端部署 / 對齊品質
+  驗證需 GCP 權限,於開發環境無法代跑。
+- **後端落在新目錄 `aeneas_service/`**(獨立於 `functions/` 的 Firebase
+  Functions):aeneas 需 espeak / ffmpeg 系統依賴,標準 Functions runtime 裝
+  不下,故走 **Cloud Run 自架容器**(`Dockerfile` + Flask `main.py`)。
+  - `main.py`(`/healthz`、`/align`)、`aligner.py`(aeneas 核心)、
+    `lrc.py`(秒 → `[mm:ss.xx]`,沿用 import 計畫的百分秒慣例)、
+    `test_lrc.py`(純邏輯單元測試,`python -m unittest test_lrc` 9 項全過)。
+  - Dockerfile 釘 **Python 3.8 + numpy 1.23.5 + aeneas 1.7.3.0**:aeneas 為
+    2017 舊套件、含 C 擴充,對新版 Python/numpy 易編譯失敗,先裝 numpy 再裝
+    aeneas。
+- **音訊傳輸採「先壓縮 + GCS 中轉」**:`/align` 的 `audio.gcs={bucket,object}`
+  為正式路線(後端下載、可 `deleteAfter` 或靠 bucket lifecycle 清理);另留
+  `audio.inlineBase64`(≤50MB)供本機 / 小檔測試。App 端應先壓成單聲道低取樣
+  (如 16kHz mono opus)再上傳。
+- **「音訊取得」其實有解**:`on_audio_query` 的 `SongModel.data` 是真實檔案路徑
+  (`music_library.dart:38` 已用),匯入服務也以 `File(path)` 讀檔——Flutter 端
+  可由此讀音訊 bytes、壓縮後上傳,毋須只靠 content URI。
+- **API 合約 / 錯誤碼 / 部署步驟**:見 `aeneas_service/README.md`。失敗一律不回
+  半套時間,對齊失敗(`alignment_failed` 422)時 App 應保留原 unsynced 文字。
+- **待辦(下一輪 Flutter 端)**:讀檔 + 壓縮 + 上傳 GCS、呼叫 `/align`(鑑權:
+  Firebase Function 代呼或帶 ID token)、寫回 `LyricsEntity`、進度 / 失敗 UI、
+  l10n。
+
+---
+
+原始規劃(2026-06-14):
 姊妹計畫:`plans/lyrics-auto-sync-whisperx.md`(同一任務的另一條技術路線,
 字級時間更細、中文品質一般較佳)。
 相關:`plans/lyrics-import.md`(地基:`LyricsEntity` / 統一 `Lyrics` 模型 /
