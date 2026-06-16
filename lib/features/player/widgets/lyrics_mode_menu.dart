@@ -6,6 +6,7 @@ import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../lyrics/lyrics_repository.dart';
 import '../../lyrics/track_lyrics_provider.dart';
+import 'lyrics_auto_sync_action.dart';
 import 'lyrics_font_size_sheet.dart';
 import 'lyrics_view.dart';
 import 'speed_button.dart';
@@ -19,6 +20,7 @@ enum _LyricsMenuAction {
   loop,
   speed,
   fontSize,
+  autoSync,
   reimport,
   delete,
 }
@@ -45,6 +47,8 @@ class LyricsModeMenu extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final lyrics = ref.watch(trackLyricsProvider(trackId)).valueOrNull;
     final hasLyrics = lyrics != null && lyrics.isNotEmpty;
+    // 對時是「補時間」:只在已有純文字、尚未同步時提供。
+    final canAutoSync = hasLyrics && !lyrics.synced;
 
     return PopupMenuButton<_LyricsMenuAction>(
       icon: const Icon(Icons.more_vert),
@@ -54,6 +58,12 @@ class LyricsModeMenu extends ConsumerWidget {
         _LyricsMenuAction.loop => _cycleLoop(),
         _LyricsMenuAction.speed => showSpeedSheet(context, audio),
         _LyricsMenuAction.fontSize => showLyricsFontSizeSheet(context),
+        _LyricsMenuAction.autoSync => runLyricsAutoSync(
+          context,
+          ref,
+          trackId: trackId,
+          title: title,
+        ),
         _LyricsMenuAction.reimport => runLyricsImport(
           context,
           ref,
@@ -110,6 +120,14 @@ class LyricsModeMenu extends ConsumerWidget {
         ),
         if (hasLyrics) ...[
           const PopupMenuDivider(),
+          if (canAutoSync)
+            PopupMenuItem(
+              value: _LyricsMenuAction.autoSync,
+              child: _MenuRow(
+                icon: Icons.auto_fix_high,
+                label: l10n.lyrics_auto_sync,
+              ),
+            ),
           PopupMenuItem(
             value: _LyricsMenuAction.fontSize,
             child: _MenuRow(

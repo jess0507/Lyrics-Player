@@ -36,7 +36,8 @@ android {
         applicationId = "com.js.seek_player"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        // ffmpeg_kit_flutter_new 需 minSdk ≥ 24(歌詞自動對時的音訊壓縮)。
+        minSdk = maxOf(flutter.minSdkVersion, 24)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
