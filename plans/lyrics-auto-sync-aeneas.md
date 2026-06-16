@@ -26,9 +26,100 @@
   半套時間,對齊失敗(`alignment_failed` 422)時 App 應保留原 unsynced 文字。
 - **待辦(下一輪 Flutter 端)**:讀檔 + 壓縮 + 上傳 GCS、呼叫 `/align`(鑑權:
   Firebase Function 代呼或帶 ID token)、寫回 `LyricsEntity`、進度 / 失敗 UI、
-  l10n。
+  l10n。→ **已完成,見下節**。
 
 ---
+
+## Flutter 端 + Firebase Function 實作(2026-06-16)
+
+選定路線(經使用者確認):**需登入**(走 Firebase Function 代理,不讓 App 直連
+Cloud Run)+ **GCS 中轉 + 壓縮**。
+
+### 流程
+
+1. App 由 `trackId` 反查本機音訊真實路徑(`on_audio_query` 的 `SongModel.data`)。
+2. **壓縮**:ffmpeg 轉單聲道 16kHz **AAC/m4a**(`audio_compressor.dart`)。
+   - 原計畫寫 opus,但 opus 需特定 ffmpeg 建置;**改用 AAC**(各平台 ffmpeg
+     內建 aac 編碼器,相容性最高)。目的不變:砍掉立體聲 / 高取樣以降低上傳量。
+   - 用 `ffmpeg_kit_flutter_new`(原 `ffmpeg_kit_flutter` 已停更)。**需
+     Android minSdk ≥ 24**,已在 `android/app/build.gradle.kts` 以
+     `maxOf(flutter.minSdkVersion, 24)` 設定。
+3. **上傳**:Firebase Storage **預設 bucket**,路徑 `align/{uid}/{trackId}-{ts}.m4a`
+   (`firebase_storage`)。上傳後立即刪本機暫存壓縮檔。
+4. **呼叫** callable `align_lyrics`,帶 `{lines, bucket, object, language, format}`。
+   - `lines`:由現存 `LyricsEntity` parse 後取非空白行(與後端再濾空行一一對應)。
+   - `language`:取裝置 locale 的 BCP-47(後端正規化為 aeneas ISO 639-3)。
+5. Function 驗 uid → rate limit → 取 Cloud Run ID token → 轉呼 `/align`
+   (帶 `audio.gcs.deleteAfter=true`)→ 回 `{lrc}`。
+6. App 把 LRC 寫回**同一** `LyricsEntity`(`source=generated`、`format=lrc`)、
+   `invalidate(trackLyricsProvider)`,顯示端自動切同步視圖。**顯示端未改**。
+
+### 失敗降級
+
+後端不回半套時間;對齊失敗(callable `failed-precondition` / 後端 422
+`alignment_failed`)時 **App 保留原 unsynced 文字**,只跳 SnackBar 提示。其餘錯誤
+(rate limit / 未登入 / 找不到音訊 / 連線)各有對應 l10n 提示。
+
+### Rate limit(可設定)
+
+- 在 `align_lyrics`(`functions/main.py`)做**每使用者每日**上限,用 Firestore
+  交易紀錄於 `align_usage/{uid}`(`{day, count}`,跨日自動歸零、免排程清理)。
+- **預設 20 次/日**,以環境變數 `ALIGN_RATE_LIMIT_PER_DAY` 覆寫。超過回
+  `resource-exhausted` → App 顯示「今日次數已達上限」。
+- 調整方式:部署時加 `--set-env-vars ALIGN_RATE_LIMIT_PER_DAY=50`(或寫
+  `functions/.env`)。
+
+### 新增檔案
+
+| 檔案 | 職責 |
+| --- | --- |
+| `functions/main.py` `align_lyrics` | callable:登入 + rate limit + 注入 ID token + 轉呼 `/align` + 錯誤映射。 |
+| `lib/features/lyrics/auto_sync/audio_compressor.dart` | ffmpeg 壓縮(16kHz mono AAC)。 |
+| `lib/features/lyrics/auto_sync/lyrics_auto_sync_service.dart` | 編排:路徑→壓縮→上傳→callable→寫回 entity。 |
+| `lib/features/lyrics/auto_sync/lyrics_auto_sync_controller.dart` | 進度 / 結果狀態(family by trackId)。 |
+| `lib/features/player/widgets/lyrics_auto_sync_action.dart` | 進度對話框 + SnackBar 觸發。 |
+| `LyricsModeMenu` | 「自動對時」選單項(僅 unsynced 歌詞時出現)。 |
+| `app_en/zh_TW/zh_CN.arb` | l10n(其餘語言 fallback,待補 Google Sheet)。 |
+
+### 部署前置(需專案維護者執行,需 GCP 權限)
+
+1. **Function 環境變數**:`ALIGN_SERVICE_URL` = aeneas-align 的 Cloud Run 根 URL
+   (無尾斜線、不含 `/align`);選填 `ALIGN_RATE_LIMIT_PER_DAY`。
+
+   ```bash
+   cd functions
+   # 寫進 .env 或部署時帶旗標
+   firebase deploy --only functions:align_lyrics
+   ```
+
+   `functions/requirements.txt` 已加 `google-auth`、`requests`。
+
+2. **Function SA → Cloud Run invoker**:Function 取 ID token 後要能呼叫受保護的
+   Cloud Run 服務,其執行 SA 需該服務的 `roles/run.invoker`。
+
+   ```bash
+   gcloud run services add-iam-policy-binding aeneas-align \
+     --region asia-east1 \
+     --member "serviceAccount:<FUNCTION_RUNTIME_SA>" \
+     --role roles/run.invoker
+   ```
+
+3. **Cloud Run SA → 讀 / 刪 Storage 物件**:對齊服務以 `audio.gcs` 下載並
+   `deleteAfter` 刪除 App 上傳到 **Firebase 預設 bucket** 的音訊,其執行 SA 需該
+   bucket 的 `roles/storage.objectAdmin`(只讀不刪可用 `objectViewer`,但
+   `deleteAfter` 需刪除權限)。
+
+   ```bash
+   gsutil iam ch \
+     serviceAccount:<RUN_SERVICE_ACCOUNT>:roles/storage.objectAdmin \
+     gs://<DEFAULT_FIREBASE_BUCKET>
+   ```
+
+   > 註:README 範例另建了 `seek-player-align` 純 GCS bucket;本實作改走 Firebase
+   > 預設 bucket(`firebase_storage` 直接支援、免另設 signed URL / 規則)。
+   > `deleteAfter` 已負責清理;另可對 `align/` 前綴設 lifecycle 作保險。
+
+4. **Storage 安全規則**:確保登入使用者可寫 `align/{uid}/**`(僅自己的目錄)。
 
 原始規劃(2026-06-14):
 姊妹計畫:`plans/lyrics-auto-sync-whisperx.md`(同一任務的另一條技術路線,
