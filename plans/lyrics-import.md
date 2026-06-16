@@ -119,7 +119,8 @@
   順手加「offset 微調」UI(整體 ±0.5s)。
 - **M3:上網搜尋歌詞(4)**:已拆至 `plans/lyrics-online-search.md`
   (來源 LRCLIB,搜尋結果寫入同一個 `LyricsEntity`,source = online)。
-- **M4:自動對時歌詞(5)**:已拆至 `plans/lyrics-auto-sync.md`
+- **M4:自動對時歌詞(5)**:已拆至 `plans/lyrics-auto-sync-aeneas.md` /
+  `plans/lyrics-auto-sync-whisperx.md`
   (forced alignment,既有 txt 純文字補每行時間 → 同步)。
 - **M5:自動產生歌詞(6)**:已拆至 `plans/lyrics-auto-generate.md`
   (語音辨識從零產生,成本與品質都未定,最遠期)。

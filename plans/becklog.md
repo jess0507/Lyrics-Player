@@ -6,7 +6,8 @@
 2. ⬜ **手動匯入歌詞**(規劃見 `lyrics-import.md`)
 3. ⬜ **顯示歌詞(字幕)**(規劃見 `lyrics-display.md`)
 4. ⬜ **上網搜尋歌詞**(規劃見 `lyrics-online-search.md`)
-5. ⬜ **自動對時歌詞**(規劃見 `lyrics-auto-sync.md`):已有 txt 純文字歌詞 →
+5. ⬜ **自動對時歌詞**(規劃見 `lyrics-auto-sync-aeneas.md` /
+   `lyrics-auto-sync-whisperx.md`):已有 txt 純文字歌詞 →
    forced alignment 只補每行時間 → 產出同步歌詞
 6. ⬜ **自動產生歌詞**(規劃見 `lyrics-auto-generate.md`):無歌詞 →
    STT 從音訊從零產生
