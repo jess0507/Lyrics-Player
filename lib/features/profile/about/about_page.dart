@@ -10,7 +10,7 @@ class AboutPage extends StatelessWidget {
   static const _version = '1.0.0+1';
 
   static final _privacyPolicyUrl = Uri.parse(
-    'https://jess0507.github.io/seek_player/privacy-policy',
+    'https://jess0507.github.io/seek-player-privacy-policy/',
   );
 
   Future<void> _openPrivacyPolicy() async {
