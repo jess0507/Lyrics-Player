@@ -95,6 +95,8 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
                 : _PlayerLayout(
                     audio: audio,
                     hasTrack: hasTrack,
+                    trackId: mediaItem?.id,
+                    title: mediaItem?.title,
                     onShowLyrics: hasTrack
                         ? () => setState(() => _showLyrics = true)
                         : null,
@@ -111,11 +113,15 @@ class _PlayerLayout extends StatelessWidget {
   const _PlayerLayout({
     required this.audio,
     required this.hasTrack,
+    required this.trackId,
+    required this.title,
     required this.onShowLyrics,
   });
 
   final AudioPlayerService audio;
   final bool hasTrack;
+  final String? trackId;
+  final String? title;
   final VoidCallback? onShowLyrics;
 
   @override
@@ -125,7 +131,12 @@ class _PlayerLayout extends StatelessWidget {
         const Spacer(),
         PlayerArtworkPanel(active: hasTrack, onShowLyrics: onShowLyrics),
         const Spacer(),
-        SecondaryControls(audio: audio, enabled: hasTrack),
+        SecondaryControls(
+          audio: audio,
+          enabled: hasTrack,
+          trackId: trackId,
+          title: title,
+        ),
         const SizedBox(height: 16),
         SeekBar(audio: audio, enabled: hasTrack),
         const SizedBox(height: 12),
