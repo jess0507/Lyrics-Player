@@ -138,7 +138,9 @@ def align_lyrics(req: https_fn.CallableRequest) -> dict:
     auth_req = google.auth.transport.requests.Request()
     token = google.oauth2.id_token.fetch_id_token(auth_req, _ALIGN_SERVICE_URL)
 
-    gcs = {"bucket": bucket, "object": obj, "deleteAfter": True}
+    # 暫存音訊的清理交給 bucket lifecycle(align/ 前綴定期刪),後端不即時刪除,
+    # 故 Cloud Run SA 只需 storage.objectViewer。
+    gcs = {"bucket": bucket, "object": obj}
     audio = {"gcs": gcs}
     if audio_format:
         audio["format"] = audio_format

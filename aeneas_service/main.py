@@ -77,7 +77,8 @@ def align_endpoint():
     finally:
         cleanup()
 
-    _maybe_delete_source(audio)
+    # 上傳到 GCS 的暫存音訊不在此即時刪除;清理交給 bucket lifecycle
+    # (align/ 前綴定期刪),涵蓋成功與失敗路徑,後端只需讀取權限。
     return jsonify(result)
 
 
@@ -129,23 +130,6 @@ def _download_gcs(bucket: str, obj: str, dest_path: str) -> None:
     client = storage.Client()
     blob = client.bucket(bucket).blob(obj)
     blob.download_to_filename(dest_path)
-
-
-def _maybe_delete_source(audio: dict) -> None:
-    """對齊成功後,若要求則刪除 GCS 暫存物件(節省儲存;失敗不影響回應)。
-
-    亦可改用 bucket lifecycle 規則自動清理,見 README。
-    """
-    gcs = audio.get("gcs")
-    if not isinstance(gcs, dict) or not gcs.get("deleteAfter"):
-        return
-    try:
-        from google.cloud import storage
-
-        client = storage.Client()
-        client.bucket(str(gcs["bucket"])).blob(str(gcs["object"])).delete()
-    except Exception:
-        log.warning("刪除 GCS 暫存物件失敗(忽略)", exc_info=True)
 
 
 if __name__ == "__main__":

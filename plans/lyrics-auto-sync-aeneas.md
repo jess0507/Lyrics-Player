@@ -16,7 +16,7 @@
     2017 舊套件、含 C 擴充,對新版 Python/numpy 易編譯失敗,先裝 numpy 再裝
     aeneas。
 - **音訊傳輸採「先壓縮 + GCS 中轉」**:`/align` 的 `audio.gcs={bucket,object}`
-  為正式路線(後端下載、可 `deleteAfter` 或靠 bucket lifecycle 清理);另留
+  為正式路線(後端下載、清理靠 bucket lifecycle);另留
   `audio.inlineBase64`(≤50MB)供本機 / 小檔測試。App 端應先壓成單聲道低取樣
   (如 16kHz mono opus)再上傳。
 - **「音訊取得」其實有解**:`on_audio_query` 的 `SongModel.data` 是真實檔案路徑
@@ -50,7 +50,7 @@ Cloud Run)+ **GCS 中轉 + 壓縮**。
    - `lines`:由現存 `LyricsEntity` parse 後取非空白行(與後端再濾空行一一對應)。
    - `language`:取裝置 locale 的 BCP-47(後端正規化為 aeneas ISO 639-3)。
 5. Function 驗 uid → rate limit → 取 Cloud Run ID token → 轉呼 `/align`
-   (帶 `audio.gcs.deleteAfter=true`)→ 回 `{lrc}`。
+   → 回 `{lrc}`。暫存音訊不即時刪,完全交給 bucket lifecycle 清理(見部署)。
 6. App 把 LRC 寫回**同一** `LyricsEntity`(`source=generated`、`format=lrc`)、
    `invalidate(trackLyricsProvider)`,顯示端自動切同步視圖。**顯示端未改**。
 
@@ -104,20 +104,28 @@ Cloud Run)+ **GCS 中轉 + 壓縮**。
      --role roles/run.invoker
    ```
 
-3. **Cloud Run SA → 讀 / 刪 Storage 物件**:對齊服務以 `audio.gcs` 下載並
-   `deleteAfter` 刪除 App 上傳到 **Firebase 預設 bucket** 的音訊,其執行 SA 需該
-   bucket 的 `roles/storage.objectAdmin`(只讀不刪可用 `objectViewer`,但
-   `deleteAfter` 需刪除權限)。
+3. **Cloud Run SA → 讀 Storage 物件**:對齊服務以 `audio.gcs` 下載 App 上傳到
+   **Firebase 預設 bucket** 的音訊,其執行 SA 只需該 bucket 的
+   `roles/storage.objectViewer`(後端不刪除,清理交給 lifecycle,故毋須刪除權限)。
 
    ```bash
    gsutil iam ch \
-     serviceAccount:<RUN_SERVICE_ACCOUNT>:roles/storage.objectAdmin \
+     serviceAccount:<RUN_SERVICE_ACCOUNT>:roles/storage.objectViewer \
      gs://<DEFAULT_FIREBASE_BUCKET>
    ```
 
+   暫存音訊清理**完全交給 lifecycle**(後端不即時刪,涵蓋成功與失敗路徑)。
+   **務必**對預設 bucket 套用 `align/` 前綴的規則:
+
+   ```bash
+   gcloud storage buckets update gs://<DEFAULT_FIREBASE_BUCKET> \
+     --lifecycle-file=aeneas_service/storage-lifecycle.json
+   ```
+
+   規則檔 `aeneas_service/storage-lifecycle.json`:`align/` 前綴 1 天後自動刪。
+
    > 註:README 範例另建了 `seek-player-align` 純 GCS bucket;本實作改走 Firebase
    > 預設 bucket(`firebase_storage` 直接支援、免另設 signed URL / 規則)。
-   > `deleteAfter` 已負責清理;另可對 `align/` 前綴設 lifecycle 作保險。
 
 4. **Storage 安全規則**:確保登入使用者可寫 `align/{uid}/**`(僅自己的目錄)。
 
