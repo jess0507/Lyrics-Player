@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/app_locales.dart';
@@ -23,7 +24,8 @@ class SettingsPage extends ConsumerWidget {
             leading: const Icon(Icons.language),
             title: Text(l10n.settings_language),
             subtitle: Text(_localeLabel(settings.locale, l10n)),
-            onTap: () => _pickLanguage(context, ref),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.go('/profile/settings/language'),
           ),
           const Divider(height: 1),
           ListTile(
@@ -66,7 +68,7 @@ class SettingsPage extends ConsumerWidget {
               children: [
                 for (final seed in AppColorSeed.values)
                   _ColorSwatch(
-                    color: seed.color,
+                    seed: seed,
                     selected: seed == settings.seedColor,
                     onTap: () => controller.setSeedColor(seed),
                   ),
@@ -90,43 +92,6 @@ class SettingsPage extends ConsumerWidget {
       if (option.locale == locale) return option.nativeName;
     }
     return locale.toLanguageTag();
-  }
-
-  Future<void> _pickLanguage(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context)!;
-    final controller = ref.read(settingsControllerProvider.notifier);
-    final current = ref.read(settingsControllerProvider).locale;
-
-    await showModalBottomSheet<void>(
-      context: context,
-      showDragHandle: true,
-      isScrollControlled: true,
-      builder: (context) {
-        return SafeArea(
-          child: RadioGroup<Locale?>(
-            groupValue: current,
-            onChanged: (locale) {
-              controller.setLocale(locale);
-              Navigator.of(context).pop();
-            },
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                RadioListTile<Locale?>(
-                  value: null,
-                  title: Text(l10n.settings_language_system),
-                ),
-                for (final option in kAppLocales)
-                  RadioListTile<Locale?>(
-                    value: option.locale,
-                    title: Text(option.nativeName),
-                  ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 }
 
@@ -162,7 +127,10 @@ class _ColorSwatch extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onSurface,
                     width: 3,
                   )
-                : null,
+                : Border.all(
+                    color: Theme.of(context).colorScheme.outlineVariant,
+                    width: 1,
+                  ),
           ),
           child: selected
               ? Icon(

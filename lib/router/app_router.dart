@@ -8,6 +8,7 @@ import '../features/playlists/playlists_page.dart';
 import '../features/profile/about/about_page.dart';
 import '../features/profile/account/account_page.dart';
 import '../features/profile/profile_page.dart';
+import '../features/profile/settings/language_page.dart';
 import '../features/profile/settings/settings_page.dart';
 import '../features/profile/statistics/statistics_page.dart';
 import '../shared/widgets/scaffold_with_nav.dart';
@@ -65,6 +66,12 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'settings',
                     builder: (context, state) => const SettingsPage(),
+                    routes: [
+                      GoRoute(
+                        path: 'language',
+                        builder: (context, state) => const LanguagePage(),
+                      ),
+                    ],
                   ),
                   GoRoute(
                     path: 'about',
