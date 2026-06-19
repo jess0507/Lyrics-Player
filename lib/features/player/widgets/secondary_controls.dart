@@ -8,7 +8,6 @@ import '../../lyrics/track_lyrics_provider.dart';
 import '../../music_list/music_library.dart';
 import '../../playlists/widgets/add_to_playlist_sheet.dart';
 import 'lyrics_auto_sync_action.dart';
-import 'lyrics_view.dart';
 import 'speed_button.dart';
 
 /// 次控制列圖示的固定大小。
@@ -63,7 +62,10 @@ class SecondaryControls extends ConsumerWidget {
             final shuffle = snapshot.data ?? false;
             return IconButton(
               iconSize: _kIconSize,
-              color: _kIconColor,
+              // 選取時用 primary 上色,與未選取的灰色明確區分。
+              color: shuffle
+                  ? Theme.of(context).colorScheme.primary
+                  : _kIconColor,
               isSelected: shuffle,
               onPressed: enabled ? () => audio.setShuffle(!shuffle) : null,
               icon: const Icon(Icons.shuffle),
@@ -74,14 +76,18 @@ class SecondaryControls extends ConsumerWidget {
           stream: audio.loopModeStream,
           builder: (context, snapshot) {
             final mode = snapshot.data ?? LoopMode.off;
-            final icon = switch (mode) {
-              LoopMode.one => Icons.repeat_one,
-              _ => Icons.repeat,
-            };
+            // 三種狀態以「顏色 + 圖示」區分:關閉(灰、repeat)、
+            // 全部循環(primary、repeat)、單曲循環(primary、repeat_one)。
+            final selected = mode != LoopMode.off;
+            final icon = mode == LoopMode.one
+                ? Icons.repeat_one
+                : Icons.repeat;
             return IconButton(
               iconSize: _kIconSize,
-              color: _kIconColor,
-              isSelected: mode != LoopMode.off,
+              color: selected
+                  ? Theme.of(context).colorScheme.primary
+                  : _kIconColor,
+              isSelected: selected,
               onPressed: enabled ? () => _cycleLoop(mode) : null,
               icon: Icon(icon),
             );
@@ -111,8 +117,8 @@ class SecondaryControls extends ConsumerWidget {
     );
   }
 
-  /// 歌詞按鈕:有曲目時提供。點擊時若已有歌詞直接切到歌詞頁,否則先匯入
-  /// 再切過去(匯入成功會 invalidate provider,歌詞頁自動顯示)。
+  /// 歌詞按鈕:有曲目時提供。點擊直接切到歌詞頁(無歌詞時由歌詞頁自身
+  /// 顯示匯入提示,此處不觸發匯入)。
   Widget? _buildLyrics(BuildContext context, WidgetRef ref) {
     final id = trackId;
     if (id == null) return null;
@@ -121,22 +127,9 @@ class SecondaryControls extends ConsumerWidget {
       iconSize: _kIconSize,
       color: _kIconColor,
       tooltip: l10n.lyrics_show,
-      onPressed: enabled ? () => _openLyrics(context, ref, id) : null,
+      onPressed: enabled ? () => onShowLyricsPage?.call() : null,
       icon: const Icon(Icons.lyrics_outlined),
     );
-  }
-
-  Future<void> _openLyrics(
-    BuildContext context,
-    WidgetRef ref,
-    String id,
-  ) async {
-    final lyrics = ref.read(trackLyricsProvider(id)).valueOrNull;
-    final hasLyrics = lyrics != null && lyrics.isNotEmpty;
-    if (!hasLyrics) {
-      await runLyricsImport(context, ref, trackId: id, title: title ?? '');
-    }
-    onShowLyricsPage?.call();
   }
 
   /// 加入播放清單:有曲目且能在音樂庫對應到該曲時提供,否則回傳 null 不佔位。

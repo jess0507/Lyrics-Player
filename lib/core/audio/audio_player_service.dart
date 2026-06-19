@@ -17,7 +17,7 @@ class PositionData {
 /// 封裝 just_audio 的 [AudioPlayer]，提供本機播放清單、背景播放與通知列控制。
 class AudioPlayerService {
   AudioPlayerService() {
-    _player.setLoopMode(LoopMode.off);
+    _player.setLoopMode(LoopMode.all);
   }
 
   final AudioPlayer _player = AudioPlayer();
