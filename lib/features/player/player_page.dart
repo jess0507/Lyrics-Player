@@ -102,7 +102,7 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
             body: SafeArea(
               top: false,
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(16),
                 child: showLyrics
                     ? _LyricsLayout(
                         audio: audio,

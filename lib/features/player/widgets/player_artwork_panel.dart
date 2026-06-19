@@ -24,7 +24,7 @@ class PlayerArtworkPanel extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(8),
         child: Stack(
           children: [
             Positioned.fill(

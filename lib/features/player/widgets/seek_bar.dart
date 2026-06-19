@@ -22,25 +22,25 @@ class SeekBar extends StatelessWidget {
         final value = data.position.inMilliseconds
             .clamp(0, total == 0 ? 0 : total.toInt())
             .toDouble();
-        return Column(
+        return Row(
           children: [
-            Slider(
-              min: 0,
-              max: total <= 0 ? 1 : total,
-              value: total <= 0 ? 0 : value,
-              onChanged: enabled && total > 0
-                  ? (v) => audio.seek(Duration(milliseconds: v.round()))
-                  : null,
+            Text(
+              formatDuration(data.position),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(formatDuration(data.position)),
-                  Text(formatDuration(data.duration)),
-                ],
+            Expanded(
+              child: Slider(
+                min: 0,
+                max: total <= 0 ? 1 : total,
+                value: total <= 0 ? 0 : value,
+                onChanged: enabled && total > 0
+                    ? (v) => audio.seek(Duration(milliseconds: v.round()))
+                    : null,
               ),
+            ),
+            Text(
+              formatDuration(data.duration),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
         );
