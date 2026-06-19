@@ -9,7 +9,7 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
-  String get app_title => 'Seek Player';
+  String get app_title => 'Liedtext-Player Lyrics Player';
 
   @override
   String get tab_music_list => 'Musik';

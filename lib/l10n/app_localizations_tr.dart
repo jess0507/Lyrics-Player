@@ -9,7 +9,7 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
-  String get app_title => 'Seek Oynatıcı';
+  String get app_title => 'Şarkı Sözü Oynatıcı Lyrics Player';
 
   @override
   String get tab_music_list => 'Müzik';

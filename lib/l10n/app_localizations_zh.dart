@@ -9,7 +9,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get app_title => '時間位移播放器';
+  String get app_title => '歌詞播放器 Lyrics Player';
 
   @override
   String get tab_music_list => '音樂';
@@ -338,7 +338,7 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   AppLocalizationsZhCn() : super('zh_CN');
 
   @override
-  String get app_title => '时间位移播放器';
+  String get app_title => '歌词播放器 Lyrics Player';
 
   @override
   String get tab_music_list => '音乐';
@@ -664,7 +664,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   AppLocalizationsZhTw() : super('zh_TW');
 
   @override
-  String get app_title => '時間位移播放器';
+  String get app_title => '歌詞播放器 Lyrics Player';
 
   @override
   String get tab_music_list => '音樂';

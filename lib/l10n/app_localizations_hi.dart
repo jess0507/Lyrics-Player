@@ -9,7 +9,7 @@ class AppLocalizationsHi extends AppLocalizations {
   AppLocalizationsHi([String locale = 'hi']) : super(locale);
 
   @override
-  String get app_title => 'सीक प्लेयर';
+  String get app_title => 'लिरिक्स प्लेयर Lyrics Player';
 
   @override
   String get tab_music_list => 'संगीत';

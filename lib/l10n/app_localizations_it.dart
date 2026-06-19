@@ -9,7 +9,7 @@ class AppLocalizationsIt extends AppLocalizations {
   AppLocalizationsIt([String locale = 'it']) : super(locale);
 
   @override
-  String get app_title => 'Lettore Seek';
+  String get app_title => 'Lettore di testi Lyrics Player';
 
   @override
   String get tab_music_list => 'Musica';

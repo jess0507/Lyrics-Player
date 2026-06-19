@@ -9,7 +9,7 @@ class AppLocalizationsKo extends AppLocalizations {
   AppLocalizationsKo([String locale = 'ko']) : super(locale);
 
   @override
-  String get app_title => '시크 플레이어';
+  String get app_title => '가사 플레이어 Lyrics Player';
 
   @override
   String get tab_music_list => '음악';

@@ -15,7 +15,7 @@ Future<void> main() async {
   // 背景播放 / 通知列控制。
   await JustAudioBackground.init(
     androidNotificationChannelId: 'com.example.seek_player.audio',
-    androidNotificationChannelName: 'Seek Player',
+    androidNotificationChannelName: 'Lyrics Player',
     androidNotificationOngoing: true,
   );
 

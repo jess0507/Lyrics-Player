@@ -9,7 +9,7 @@ class AppLocalizationsVi extends AppLocalizations {
   AppLocalizationsVi([String locale = 'vi']) : super(locale);
 
   @override
-  String get app_title => 'Trình phát Seek';
+  String get app_title => 'Trình phát lời bài hát Lyrics Player';
 
   @override
   String get tab_music_list => 'Nhạc';

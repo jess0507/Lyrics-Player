@@ -9,7 +9,7 @@ class AppLocalizationsId extends AppLocalizations {
   AppLocalizationsId([String locale = 'id']) : super(locale);
 
   @override
-  String get app_title => 'Pemutar Seek';
+  String get app_title => 'Pemutar Lirik Lyrics Player';
 
   @override
   String get tab_music_list => 'Musik';

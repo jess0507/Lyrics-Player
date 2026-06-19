@@ -9,7 +9,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get app_title => 'مشغل سيك';
+  String get app_title => 'مشغّل الكلمات Lyrics Player';
 
   @override
   String get tab_music_list => 'الموسيقى';

@@ -129,7 +129,7 @@ abstract class AppLocalizations {
   /// No description provided for @app_title.
   ///
   /// In en, this message translates to:
-  /// **'Seek Player'**
+  /// **'Lyrics Player'**
   String get app_title;
 
   /// No description provided for @tab_music_list.
