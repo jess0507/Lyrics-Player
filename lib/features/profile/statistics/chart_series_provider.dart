@@ -20,12 +20,18 @@ enum ChartRange {
 
 /// 圖表單一資料點(已補零、依時間升冪)。
 class ChartPoint {
-  const ChartPoint({required this.period, required this.listenTime});
+  const ChartPoint({
+    required this.period,
+    required this.listenTime,
+    required this.playCount,
+  });
 
   /// 期間 key:day `yyyy-MM-dd` 或 month `yyyy-MM`。
   final String period;
 
   final Duration listenTime;
+
+  final int playCount;
 }
 
 /// 依視圖範圍提供折線圖 series;缺期間(沒聽歌的天/月)補零。
@@ -55,15 +61,20 @@ List<ChartPoint> _dayPoints(Isar isar, List<String> keys) {
       .filter()
       .dayBetween(keys.first, keys.last)
       .findAllSync();
-  final byDay = <String, int>{};
+  final byDay = <String, ({int playCount, int listenMs})>{};
   for (final r in records) {
-    byDay[r.day] = (byDay[r.day] ?? 0) + r.listenMs;
+    final prev = byDay[r.day] ?? (playCount: 0, listenMs: 0);
+    byDay[r.day] = (
+      playCount: prev.playCount + r.playCount,
+      listenMs: prev.listenMs + r.listenMs,
+    );
   }
   return [
     for (final key in keys)
       ChartPoint(
         period: key,
-        listenTime: Duration(milliseconds: byDay[key] ?? 0),
+        listenTime: Duration(milliseconds: byDay[key]?.listenMs ?? 0),
+        playCount: byDay[key]?.playCount ?? 0,
       ),
   ];
 }
@@ -76,6 +87,7 @@ List<ChartPoint> _monthPoints(Isar isar, List<String> keys) {
       ChartPoint(
         period: keys[i],
         listenTime: Duration(milliseconds: totals[i]?.listenMs ?? 0),
+        playCount: totals[i]?.playCount ?? 0,
       ),
   ];
 }

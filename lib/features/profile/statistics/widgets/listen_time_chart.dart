@@ -4,26 +4,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/format.dart';
+import '../chart_selection_provider.dart';
 import '../chart_series_provider.dart';
 
 /// 聆聽時長折線圖卡片:標題 + 週/月/年視圖切換 + LineChart。
 ///
 /// 資料來自 [chartSeriesProvider](已補零、依時間升冪的期間總量),
 /// 縱軸取 listenMs(分鐘),全程不碰每曲明細。
-class ListenTimeChart extends ConsumerStatefulWidget {
+/// 視圖範圍與觸碰選取存於 [chartSelectionProvider],供 _StatCard 連動。
+class ListenTimeChart extends ConsumerWidget {
   const ListenTimeChart({super.key});
 
   @override
-  ConsumerState<ListenTimeChart> createState() => _ListenTimeChartState();
-}
-
-class _ListenTimeChartState extends ConsumerState<ListenTimeChart> {
-  ChartRange _range = ChartRange.week;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final points = ref.watch(chartSeriesProvider(_range));
+    final range = ref.watch(chartSelectionProvider.select((s) => s.range));
+    final points = ref.watch(chartSeriesProvider(range));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,9 +44,10 @@ class _ListenTimeChartState extends ConsumerState<ListenTimeChart> {
               label: Text(l10n.statistics_chart_year),
             ),
           ],
-          selected: {_range},
-          onSelectionChanged: (selection) =>
-              setState(() => _range = selection.first),
+          selected: {range},
+          onSelectionChanged: (selection) => ref
+              .read(chartSelectionProvider.notifier)
+              .selectRange(selection.first),
           showSelectedIcon: false,
         ),
         const SizedBox(height: 16),
@@ -58,7 +55,13 @@ class _ListenTimeChartState extends ConsumerState<ListenTimeChart> {
           height: 200,
           child: Padding(
             padding: const EdgeInsets.only(right: 5),
-            child: _LineChart(range: _range, points: points),
+            child: _LineChart(
+              range: range,
+              points: points,
+              onTouchPeriod: (period) => ref
+                  .read(chartSelectionProvider.notifier)
+                  .touchPeriod(period),
+            ),
           ),
         ),
       ],
@@ -67,10 +70,17 @@ class _ListenTimeChartState extends ConsumerState<ListenTimeChart> {
 }
 
 class _LineChart extends StatelessWidget {
-  const _LineChart({required this.range, required this.points});
+  const _LineChart({
+    required this.range,
+    required this.points,
+    required this.onTouchPeriod,
+  });
 
   final ChartRange range;
   final List<ChartPoint> points;
+
+  /// 觸碰到某資料點時回報其期間 key;放開觸碰不會觸發(故保留選取)。
+  final ValueChanged<String> onTouchPeriod;
 
   /// 橫軸標籤密度:週視圖逐天、月視圖每 7 天、年視圖隔月。
   double get _bottomInterval => switch (range) {
@@ -170,6 +180,11 @@ class _LineChart extends StatelessWidget {
         ),
         borderData: FlBorderData(show: false),
         lineTouchData: LineTouchData(
+          touchCallback: (event, response) {
+            final spots = response?.lineBarSpots;
+            if (spots == null || spots.isEmpty) return;
+            onTouchPeriod(points[spots.first.x.toInt()].period);
+          },
           touchTooltipData: LineTouchTooltipData(
             // 邊緣節點的 tooltip 自動內縮,最多貼齊圖表邊緣不被截掉。
             fitInsideHorizontally: true,

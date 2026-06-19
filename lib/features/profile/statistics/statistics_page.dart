@@ -8,6 +8,8 @@ import '../../../core/firebase_available_provider.dart';
 import '../../../core/sync/sync_service.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/format.dart';
+import 'selected_stat_provider.dart';
+import 'selected_top_tracks_provider.dart';
 import 'statistics_service.dart';
 import 'widgets/listen_time_chart.dart';
 
@@ -18,7 +20,8 @@ class StatisticsPage extends ConsumerWidget {
   /// 確認後清空本機並立即上傳歸零快照覆寫雲端。
   Future<void> _confirmReset(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
-    final signedIn = ref.read(firebaseAvailableProvider) &&
+    final signedIn =
+        ref.read(firebaseAvailableProvider) &&
         ref.read(authStateProvider).valueOrNull != null;
     final confirmed = await showDialog<bool>(
       context: context,
@@ -51,7 +54,8 @@ class StatisticsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final stats = ref.watch(statisticsControllerProvider);
-    final top = stats.topTracks();
+    final top = ref.watch(selectedTopTracksProvider);
+    final selected = ref.watch(selectedStatProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -70,13 +74,16 @@ class StatisticsPage extends ConsumerWidget {
           : ListView(
               padding: const EdgeInsets.all(16),
               children: [
+                const ListenTimeChart(),
+                const SizedBox(height: 24),
                 Row(
                   children: [
                     Expanded(
                       child: _StatCard(
                         icon: Icons.timer_outlined,
                         label: l10n.statistics_total_time,
-                        value: formatDuration(stats.totalListenTime),
+                        value: formatDuration(selected.listenTime),
+                        caption: selected.periodLabel,
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -84,13 +91,12 @@ class StatisticsPage extends ConsumerWidget {
                       child: _StatCard(
                         icon: Icons.play_arrow_outlined,
                         label: l10n.statistics_play_count,
-                        value: '${stats.totalPlayCount}',
+                        value: '${selected.playCount}',
+                        caption: selected.periodLabel,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
-                const ListenTimeChart(),
                 const SizedBox(height: 24),
                 Text(
                   l10n.statistics_top_tracks,
@@ -119,11 +125,15 @@ class _StatCard extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.value,
+    this.caption,
   });
 
   final IconData icon;
   final String label;
   final String value;
+
+  /// 選到單一期間時的日期標籤(如 `6/15`);null 表示顯示範圍彙總。
+  final String? caption;
 
   @override
   Widget build(BuildContext context) {
@@ -134,17 +144,25 @@ class _StatCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, color: scheme.primary),
+            Row(
+              children: [
+                Icon(icon, color: scheme.primary),
+                if (caption != null) ...[
+                  const Spacer(),
+                  Text(
+                    caption!,
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelSmall
+                        ?.copyWith(color: scheme.primary),
+                  ),
+                ],
+              ],
+            ),
             const SizedBox(height: 12),
-            Text(
-              value,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
+            Text(value, style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(color: scheme.outline),
-            ),
+            Text(label, style: TextStyle(color: scheme.outline)),
           ],
         ),
       ),
