@@ -96,20 +96,23 @@ class SettingsPage extends ConsumerWidget {
 }
 
 /// 設定頁的單一主題色色塊；選中時顯示外圈與勾選圖示。
+///
+/// 單色(灰白)主題以斜分的半灰半白圓呈現,代表其隨亮度翻轉的特性。
 class _ColorSwatch extends StatelessWidget {
   const _ColorSwatch({
-    required this.color,
+    required this.seed,
     required this.selected,
     required this.onTap,
   });
 
-  final Color color;
+  final AppColorSeed seed;
   final bool selected;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     const size = 44.0;
+    final color = seed.color;
     return Semantics(
       selected: selected,
       button: true,
@@ -120,8 +123,21 @@ class _ColorSwatch extends StatelessWidget {
           width: size,
           height: size,
           decoration: BoxDecoration(
-            color: color,
             shape: BoxShape.circle,
+            color: seed.isMono ? null : color,
+            gradient: seed.isMono
+                ? const LinearGradient(
+                    colors: [
+                      Color(0xFFE8EAED),
+                      Color(0xFFE8EAED),
+                      Color(0xFF5F6368),
+                      Color(0xFF5F6368),
+                    ],
+                    stops: [0, 0.5, 0.5, 1],
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                  )
+                : null,
             border: selected
                 ? Border.all(
                     color: Theme.of(context).colorScheme.onSurface,
@@ -135,8 +151,9 @@ class _ColorSwatch extends StatelessWidget {
           child: selected
               ? Icon(
                   Icons.check,
-                  color: ThemeData.estimateBrightnessForColor(color) ==
-                          Brightness.dark
+                  color: seed.isMono ||
+                          ThemeData.estimateBrightnessForColor(color) ==
+                              Brightness.dark
                       ? Colors.white
                       : Colors.black,
                 )
