@@ -11,6 +11,7 @@ import 'playback_controller.dart';
 import 'widgets/lyrics_mode_menu.dart';
 import 'widgets/lyrics_view.dart';
 import 'widgets/player_artwork_panel.dart';
+import 'widgets/player_background.dart';
 import 'widgets/player_controls.dart';
 import 'widgets/seek_bar.dart';
 
@@ -56,68 +57,70 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
           final title = mediaItem?.title ?? l10n.player_nothing_playing;
           final artist = mediaItem?.artist ?? '';
 
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: AppBar(
+          return PlayerBackground(
+            child: Scaffold(
               backgroundColor: Colors.transparent,
-              centerTitle: true,
-              // 左上往下的箭頭：點擊收回成 mini player。
-              leading: IconButton(
-                icon: const Icon(Icons.keyboard_arrow_down),
-                tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              // 標題顯示目前曲名 / 檔名與演出者，過長時跑馬燈滾動。
-              title: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  MarqueeText(
-                    title,
-                    style:
-                        Theme.of(context).appBarTheme.titleTextStyle ??
-                        Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  if (artist.isNotEmpty)
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                centerTitle: true,
+                // 左上往下的箭頭：點擊收回成 mini player。
+                leading: IconButton(
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                // 標題顯示目前曲名 / 檔名與演出者，過長時跑馬燈滾動。
+                title: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
                     MarqueeText(
-                      artist,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.outline,
+                      title,
+                      style:
+                          Theme.of(context).appBarTheme.titleTextStyle ??
+                          Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    if (artist.isNotEmpty)
+                      MarqueeText(
+                        artist,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
                       ),
+                  ],
+                ),
+                // 歌詞模式下,操作選單(含次控制列功能與關閉歌詞)移到右上角。
+                actions: [
+                  if (showLyrics)
+                    LyricsModeMenu(
+                      audio: audio,
+                      trackId: mediaItem.id,
+                      title: mediaItem.title,
+                      onHideLyrics: () => setState(() => _showLyrics = false),
                     ),
                 ],
               ),
-              // 歌詞模式下,操作選單(含次控制列功能與關閉歌詞)移到右上角。
-              actions: [
-                if (showLyrics)
-                  LyricsModeMenu(
-                    audio: audio,
-                    trackId: mediaItem.id,
-                    title: mediaItem.title,
-                    onHideLyrics: () => setState(() => _showLyrics = false),
-                  ),
-              ],
-            ),
-            // 滿版時 sheet 已覆蓋整個螢幕;頂部由 AppBar 處理,
-            // 底部 / 左右系統列留白交給 SafeArea(top: false)。
-            body: SafeArea(
-              top: false,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: showLyrics
-                    ? _LyricsLayout(
-                        audio: audio,
-                        trackId: mediaItem.id,
-                        title: mediaItem.title,
-                      )
-                    : _PlayerLayout(
-                        audio: audio,
-                        hasTrack: hasTrack,
-                        trackId: mediaItem?.id,
-                        title: mediaItem?.title,
-                        onShowLyrics: hasTrack
-                            ? () => setState(() => _showLyrics = true)
-                            : null,
-                      ),
+              // 滿版時 sheet 已覆蓋整個螢幕;頂部由 AppBar 處理,
+              // 底部 / 左右系統列留白交給 SafeArea(top: false)。
+              body: SafeArea(
+                top: false,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: showLyrics
+                      ? _LyricsLayout(
+                          audio: audio,
+                          trackId: mediaItem.id,
+                          title: mediaItem.title,
+                        )
+                      : _PlayerLayout(
+                          audio: audio,
+                          hasTrack: hasTrack,
+                          trackId: mediaItem?.id,
+                          title: mediaItem?.title,
+                          onShowLyrics: hasTrack
+                              ? () => setState(() => _showLyrics = true)
+                              : null,
+                        ),
+                ),
               ),
             ),
           );
