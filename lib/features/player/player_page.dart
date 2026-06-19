@@ -75,7 +75,7 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
                     title,
                     style:
                         Theme.of(context).appBarTheme.titleTextStyle ??
-                        Theme.of(context).textTheme.titleMedium,
+                        Theme.of(context).textTheme.bodyLarge,
                   ),
                   if (artist.isNotEmpty)
                     MarqueeText(
@@ -127,8 +127,9 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
   }
 }
 
-/// 一般播放版面:封面、次控制列、進度條、主控制列。
-class _PlayerLayout extends StatelessWidget {
+/// 一般播放版面:封面 / 歌詞 PageView、次控制列、進度條、主控制列。
+/// 持有封面面板的 [PageController],讓次控制列的歌詞按鈕也能切到歌詞頁。
+class _PlayerLayout extends StatefulWidget {
   const _PlayerLayout({
     required this.audio,
     required this.hasTrack,
@@ -144,21 +145,49 @@ class _PlayerLayout extends StatelessWidget {
   final VoidCallback? onShowLyrics;
 
   @override
+  State<_PlayerLayout> createState() => _PlayerLayoutState();
+}
+
+class _PlayerLayoutState extends State<_PlayerLayout> {
+  final _pageController = PageController();
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _showLyricsPage() {
+    _pageController.animateToPage(
+      1,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         const Spacer(),
-        PlayerArtworkPanel(active: hasTrack, onShowLyrics: onShowLyrics),
+        PlayerArtworkPanel(
+          active: widget.hasTrack,
+          controller: _pageController,
+          trackId: widget.trackId,
+          title: widget.title,
+          onShowLyrics: widget.onShowLyrics,
+        ),
         const Spacer(),
-        SeekBar(audio: audio, enabled: hasTrack),
-        const SizedBox(height: 12),
-        PlayerControls(audio: audio, enabled: hasTrack),
+        SeekBar(audio: widget.audio, enabled: widget.hasTrack),
         const SizedBox(height: 16),
+        PlayerControls(audio: widget.audio, enabled: widget.hasTrack),
+        const SizedBox(height: 20),
         SecondaryControls(
-          audio: audio,
-          enabled: hasTrack,
-          trackId: trackId,
-          title: title,
+          audio: widget.audio,
+          enabled: widget.hasTrack,
+          trackId: widget.trackId,
+          title: widget.title,
+          onShowLyricsPage: _showLyricsPage,
         ),
       ],
     );
