@@ -19,11 +19,11 @@ class PlayerSheetController extends Notifier<bool> {
         context: context,
         isScrollControlled: true,
         useRootNavigator: true,
-        useSafeArea: true,
+        // 滿版:不留 safe area 空隙、不加圓角,覆蓋整個螢幕(含狀態列區)。
+        // 內容的上 / 下系統列留白改由 PlayerPage 自行處理。
+        useSafeArea: false,
         backgroundColor: Theme.of(context).colorScheme.surface,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-        ),
+        shape: const RoundedRectangleBorder(),
         builder: (_) =>
             const FractionallySizedBox(heightFactor: 1, child: PlayerPage()),
       );

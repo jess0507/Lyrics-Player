@@ -35,10 +35,17 @@ class SecondaryControls extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final autoSync = _buildAutoSync(context, ref);
     return Row(
-      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildAutoSync(context, ref),
+        if (autoSync != null) autoSync,
+        SpeedButton(
+          audio: audio,
+          enabled: enabled,
+          iconSize: _kIconSize,
+          iconColor: _kIconColor,
+        ),
         StreamBuilder<bool>(
           stream: audio.shuffleModeEnabledStream,
           builder: (context, snapshot) {
@@ -69,12 +76,6 @@ class SecondaryControls extends ConsumerWidget {
             );
           },
         ),
-        SpeedButton(
-          audio: audio,
-          enabled: enabled,
-          iconSize: _kIconSize,
-          iconColor: _kIconColor,
-        ),
       ],
     );
   }
@@ -92,12 +93,8 @@ class SecondaryControls extends ConsumerWidget {
       color: _kIconColor,
       tooltip: l10n.lyrics_auto_sync,
       onPressed: enabled
-          ? () => runLyricsAutoSync(
-              context,
-              ref,
-              trackId: id,
-              title: title ?? '',
-            )
+          ? () =>
+                runLyricsAutoSync(context, ref, trackId: id, title: title ?? '')
           : null,
       icon: const Icon(Icons.auto_fix_high),
     );
