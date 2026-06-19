@@ -3,6 +3,7 @@ import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../features/lyrics/lyrics_entity.dart';
+import '../../features/playlists/playlist_entity.dart';
 import '../../features/profile/statistics/daily_track_stat_entity.dart';
 import '../../features/profile/statistics/period_stat_entity.dart';
 
@@ -15,6 +16,7 @@ Future<Isar> openIsar() async {
       DailyTrackStatEntitySchema,
       PeriodStatEntitySchema,
       LyricsEntitySchema,
+      PlaylistEntitySchema,
     ],
     directory: dir.path,
     name: 'seek_player',

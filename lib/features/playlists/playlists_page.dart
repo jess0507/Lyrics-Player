@@ -1,0 +1,129 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../l10n/app_localizations.dart';
+import 'playlist_display_name.dart';
+import 'playlist_entity.dart';
+import 'playlist_repository.dart';
+import 'playlists_provider.dart';
+import 'widgets/playlist_name_dialog.dart';
+
+/// 播放清單列表:我的最愛固定在最前,可新增 / 重新命名 / 刪除其他清單。
+class PlaylistsPage extends ConsumerWidget {
+  const PlaylistsPage({super.key});
+
+  Future<void> _create(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
+    final name = await showPlaylistNameDialog(
+      context,
+      title: l10n.playlist_new,
+    );
+    if (name == null) return;
+    await ref.read(playlistRepositoryProvider).create(name);
+  }
+
+  Future<void> _rename(
+    BuildContext context,
+    WidgetRef ref,
+    PlaylistEntity playlist,
+  ) async {
+    final l10n = AppLocalizations.of(context)!;
+    final name = await showPlaylistNameDialog(
+      context,
+      title: l10n.playlist_rename,
+      initialName: playlist.name,
+    );
+    if (name == null) return;
+    await ref.read(playlistRepositoryProvider).rename(playlist.id, name);
+  }
+
+  Future<void> _delete(
+    BuildContext context,
+    WidgetRef ref,
+    PlaylistEntity playlist,
+  ) async {
+    final l10n = AppLocalizations.of(context)!;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.playlist_delete),
+        content: Text(l10n.playlist_delete_confirm(playlist.name)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n.common_cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(l10n.common_delete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    await ref.read(playlistRepositoryProvider).delete(playlist.id);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final playlists = ref.watch(playlistsProvider).valueOrNull ?? const [];
+
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n.tab_playlists)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _create(context, ref),
+        tooltip: l10n.playlist_new,
+        child: const Icon(Icons.add),
+      ),
+      body: playlists.isEmpty
+          ? Center(child: Text(l10n.playlists_empty))
+          : ListView.builder(
+              itemCount: playlists.length,
+              itemBuilder: (context, index) {
+                final playlist = playlists[index];
+                return ListTile(
+                  leading: CircleAvatar(
+                    child: Icon(
+                      playlist.isFavorites
+                          ? Icons.favorite
+                          : Icons.queue_music,
+                    ),
+                  ),
+                  title: Text(
+                    playlistDisplayName(playlist, l10n),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  subtitle: Text(
+                    l10n.playlist_track_count(playlist.trackIds.length),
+                  ),
+                  trailing: playlist.isFavorites
+                      ? null
+                      : PopupMenuButton<String>(
+                          onSelected: (value) {
+                            if (value == 'rename') {
+                              _rename(context, ref, playlist);
+                            } else if (value == 'delete') {
+                              _delete(context, ref, playlist);
+                            }
+                          },
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              value: 'rename',
+                              child: Text(l10n.playlist_rename),
+                            ),
+                            PopupMenuItem(
+                              value: 'delete',
+                              child: Text(l10n.playlist_delete),
+                            ),
+                          ],
+                        ),
+                  onTap: () => context.push('/playlists/${playlist.id}'),
+                );
+              },
+            ),
+    );
+  }
+}

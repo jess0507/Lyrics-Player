@@ -5,6 +5,7 @@ import '../../core/permissions/permission_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/format.dart';
 import '../player/playback_controller.dart';
+import '../playlists/widgets/add_to_playlist_sheet.dart';
 import 'filtered_tracks_provider.dart';
 import 'music_library.dart';
 import 'music_search_query_provider.dart';
@@ -145,9 +146,18 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
           subtitle: track.artist == null
               ? null
               : Text(track.artist!, maxLines: 1),
-          trailing: track.duration == null
-              ? null
-              : Text(formatDuration(track.duration!)),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (track.duration != null)
+                Text(formatDuration(track.duration!)),
+              IconButton(
+                tooltip: l10n.playlist_add_to,
+                icon: const Icon(Icons.playlist_add),
+                onPressed: () => showAddToPlaylistSheet(context, ref, track),
+              ),
+            ],
+          ),
           onTap: () => _play(track),
         );
       },

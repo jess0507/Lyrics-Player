@@ -17,6 +17,10 @@ class PlaybackController {
   final List<StreamSubscription<dynamic>> _subs = [];
   Timer? _listenTimer;
 
+  /// 目前送進播放器的佇列(可能是整個音樂庫,也可能是某個播放清單)。
+  /// 統計以此對齊 currentIndex,而非永遠用音樂庫。
+  List<Track> _queue = const [];
+
   AudioPlayerService get _audio => ref.read(audioPlayerServiceProvider);
 
   /// 目前已掃描完成的曲目清單（掃描中／失敗時為空）。
@@ -27,10 +31,10 @@ class PlaybackController {
     // 切換到某首（含初次載入）時記錄一次播放。
     _subs.add(_audio.currentIndexStream.listen((index) {
       if (index == null) return;
-      final tracks = _tracks;
-      if (index >= 0 && index < tracks.length) {
+      final queue = _queue;
+      if (index >= 0 && index < queue.length) {
         ref.read(statisticsControllerProvider.notifier).recordPlay(
-              tracks[index],
+              queue[index],
             );
       }
     }));
@@ -39,11 +43,11 @@ class PlaybackController {
     _listenTimer = Timer.periodic(const Duration(seconds: 5), (_) {
       if (!_audio.playing) return;
       final index = _audio.currentIndex;
-      final tracks = _tracks;
-      if (index == null || index < 0 || index >= tracks.length) return;
+      final queue = _queue;
+      if (index == null || index < 0 || index >= queue.length) return;
       ref
           .read(statisticsControllerProvider.notifier)
-          .addListenTime(tracks[index], const Duration(seconds: 5));
+          .addListenTime(queue[index], const Duration(seconds: 5));
     });
 
     ref.onDispose(() {
@@ -58,6 +62,7 @@ class PlaybackController {
   Future<void> playLibraryAt(int index) async {
     final tracks = _tracks;
     if (index < 0 || index >= tracks.length) return;
+    _queue = tracks;
     await _audio.setPlaylist(tracks, initialIndex: index);
     await _audio.play();
   }
@@ -66,6 +71,14 @@ class PlaybackController {
     final tracks = _tracks;
     final index = tracks.indexWhere((t) => t.id == track.id);
     if (index >= 0) await playLibraryAt(index);
+  }
+
+  /// 以指定曲目清單(如某個播放清單)為佇列,從 [index] 開始播放。
+  Future<void> playTracksAt(List<Track> tracks, int index) async {
+    if (index < 0 || index >= tracks.length) return;
+    _queue = List.unmodifiable(tracks);
+    await _audio.setPlaylist(tracks, initialIndex: index);
+    await _audio.play();
   }
 }
 
