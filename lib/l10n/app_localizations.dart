@@ -767,6 +767,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Connection problem, try again later'**
   String get lyrics_auto_sync_network;
+
+  /// No description provided for @tab_playlists.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlists'**
+  String get tab_playlists;
+
+  /// No description provided for @playlist_favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get playlist_favorites;
+
+  /// No description provided for @playlist_new.
+  ///
+  /// In en, this message translates to:
+  /// **'New playlist'**
+  String get playlist_new;
+
+  /// No description provided for @playlist_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist name'**
+  String get playlist_name_hint;
+
+  /// No description provided for @playlist_rename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get playlist_rename;
+
+  /// No description provided for @playlist_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete playlist'**
+  String get playlist_delete;
+
+  /// No description provided for @playlist_delete_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete \"{name}\"?'**
+  String playlist_delete_confirm(String name);
+
+  /// No description provided for @playlist_add_to.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to playlist'**
+  String get playlist_add_to;
+
+  /// No description provided for @playlist_added.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to \"{name}\"'**
+  String playlist_added(String name);
+
+  /// No description provided for @playlist_already_added.
+  ///
+  /// In en, this message translates to:
+  /// **'Already in \"{name}\"'**
+  String playlist_already_added(String name);
+
+  /// No description provided for @playlist_remove_track.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from playlist'**
+  String get playlist_remove_track;
+
+  /// No description provided for @playlist_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No songs in this playlist yet'**
+  String get playlist_empty;
+
+  /// No description provided for @playlists_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No playlists yet'**
+  String get playlists_empty;
+
+  /// No description provided for @playlist_play_all.
+  ///
+  /// In en, this message translates to:
+  /// **'Play all'**
+  String get playlist_play_all;
+
+  /// No description provided for @playlist_track_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No songs} =1{1 song} other{{count} songs}}'**
+  String playlist_track_count(int count);
 }
 
 class _AppLocalizationsDelegate

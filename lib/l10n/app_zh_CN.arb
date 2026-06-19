@@ -106,5 +106,20 @@
   "lyrics_auto_sync_need_login": "请先登录才能使用自动对时",
   "lyrics_auto_sync_rate_limited": "今日对时次数已达上限,请明天再试",
   "lyrics_auto_sync_no_audio": "找不到音频文件",
-  "lyrics_auto_sync_network": "连接问题,请稍后再试"
+  "lyrics_auto_sync_network": "连接问题,请稍后再试",
+  "tab_playlists": "播放列表",
+  "playlist_favorites": "我的收藏",
+  "playlist_new": "新建播放列表",
+  "playlist_name_hint": "播放列表名称",
+  "playlist_rename": "重命名",
+  "playlist_delete": "删除播放列表",
+  "playlist_delete_confirm": "确定要删除“{name}”吗?",
+  "playlist_add_to": "加入播放列表",
+  "playlist_added": "已加入“{name}”",
+  "playlist_already_added": "已在“{name}”中",
+  "playlist_remove_track": "从列表移除",
+  "playlist_empty": "这个播放列表还没有歌曲",
+  "playlists_empty": "暂无播放列表",
+  "playlist_play_all": "全部播放",
+  "playlist_track_count": "{count, plural, =0{没有歌曲} other{{count} 首}}"
 }

@@ -106,5 +106,40 @@
   "lyrics_auto_sync_need_login": "Sign in to use auto-sync",
   "lyrics_auto_sync_rate_limited": "Daily auto-sync limit reached, try tomorrow",
   "lyrics_auto_sync_no_audio": "Audio file not found",
-  "lyrics_auto_sync_network": "Connection problem, try again later"
+  "lyrics_auto_sync_network": "Connection problem, try again later",
+  "tab_playlists": "Playlists",
+  "playlist_favorites": "Favorites",
+  "playlist_new": "New playlist",
+  "playlist_name_hint": "Playlist name",
+  "playlist_rename": "Rename",
+  "playlist_delete": "Delete playlist",
+  "playlist_delete_confirm": "Delete \"{name}\"?",
+  "@playlist_delete_confirm": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "playlist_add_to": "Add to playlist",
+  "playlist_added": "Added to \"{name}\"",
+  "@playlist_added": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "playlist_already_added": "Already in \"{name}\"",
+  "@playlist_already_added": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "playlist_remove_track": "Remove from playlist",
+  "playlist_empty": "No songs in this playlist yet",
+  "playlists_empty": "No playlists yet",
+  "playlist_play_all": "Play all",
+  "playlist_track_count": "{count, plural, =0{No songs} =1{1 song} other{{count} songs}}",
+  "@playlist_track_count": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  }
 }

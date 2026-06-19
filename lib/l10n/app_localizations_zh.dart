@@ -331,6 +331,65 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get lyrics_auto_sync_network => 'Connection problem, try again later';
+
+  @override
+  String get tab_playlists => '播放清單';
+
+  @override
+  String get playlist_favorites => '我的最愛';
+
+  @override
+  String get playlist_new => '新增播放清單';
+
+  @override
+  String get playlist_name_hint => '播放清單名稱';
+
+  @override
+  String get playlist_rename => '重新命名';
+
+  @override
+  String get playlist_delete => '刪除播放清單';
+
+  @override
+  String playlist_delete_confirm(String name) {
+    return '確定要刪除「$name」嗎?';
+  }
+
+  @override
+  String get playlist_add_to => '加入播放清單';
+
+  @override
+  String playlist_added(String name) {
+    return '已加入「$name」';
+  }
+
+  @override
+  String playlist_already_added(String name) {
+    return '已在「$name」中';
+  }
+
+  @override
+  String get playlist_remove_track => '從清單移除';
+
+  @override
+  String get playlist_empty => '這個播放清單還沒有歌曲';
+
+  @override
+  String get playlists_empty => '尚無播放清單';
+
+  @override
+  String get playlist_play_all => '全部播放';
+
+  @override
+  String playlist_track_count(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 首',
+      zero: '沒有歌曲',
+    );
+    return '$_temp0';
+  }
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -657,6 +716,65 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get lyrics_auto_sync_network => '连接问题,请稍后再试';
+
+  @override
+  String get tab_playlists => '播放列表';
+
+  @override
+  String get playlist_favorites => '我的收藏';
+
+  @override
+  String get playlist_new => '新建播放列表';
+
+  @override
+  String get playlist_name_hint => '播放列表名称';
+
+  @override
+  String get playlist_rename => '重命名';
+
+  @override
+  String get playlist_delete => '删除播放列表';
+
+  @override
+  String playlist_delete_confirm(String name) {
+    return '确定要删除“$name”吗?';
+  }
+
+  @override
+  String get playlist_add_to => '加入播放列表';
+
+  @override
+  String playlist_added(String name) {
+    return '已加入“$name”';
+  }
+
+  @override
+  String playlist_already_added(String name) {
+    return '已在“$name”中';
+  }
+
+  @override
+  String get playlist_remove_track => '从列表移除';
+
+  @override
+  String get playlist_empty => '这个播放列表还没有歌曲';
+
+  @override
+  String get playlists_empty => '暂无播放列表';
+
+  @override
+  String get playlist_play_all => '全部播放';
+
+  @override
+  String playlist_track_count(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 首',
+      zero: '没有歌曲',
+    );
+    return '$_temp0';
+  }
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -983,4 +1101,63 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get lyrics_auto_sync_network => '連線問題,請稍後再試';
+
+  @override
+  String get tab_playlists => '播放清單';
+
+  @override
+  String get playlist_favorites => '我的最愛';
+
+  @override
+  String get playlist_new => '新增播放清單';
+
+  @override
+  String get playlist_name_hint => '播放清單名稱';
+
+  @override
+  String get playlist_rename => '重新命名';
+
+  @override
+  String get playlist_delete => '刪除播放清單';
+
+  @override
+  String playlist_delete_confirm(String name) {
+    return '確定要刪除「$name」嗎?';
+  }
+
+  @override
+  String get playlist_add_to => '加入播放清單';
+
+  @override
+  String playlist_added(String name) {
+    return '已加入「$name」';
+  }
+
+  @override
+  String playlist_already_added(String name) {
+    return '已在「$name」中';
+  }
+
+  @override
+  String get playlist_remove_track => '從清單移除';
+
+  @override
+  String get playlist_empty => '這個播放清單還沒有歌曲';
+
+  @override
+  String get playlists_empty => '尚無播放清單';
+
+  @override
+  String get playlist_play_all => '全部播放';
+
+  @override
+  String playlist_track_count(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 首',
+      zero: '沒有歌曲',
+    );
+    return '$_temp0';
+  }
 }

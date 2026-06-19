@@ -341,4 +341,64 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get lyrics_auto_sync_network => 'Connection problem, try again later';
+
+  @override
+  String get tab_playlists => 'Playlists';
+
+  @override
+  String get playlist_favorites => 'Favorites';
+
+  @override
+  String get playlist_new => 'New playlist';
+
+  @override
+  String get playlist_name_hint => 'Playlist name';
+
+  @override
+  String get playlist_rename => 'Rename';
+
+  @override
+  String get playlist_delete => 'Delete playlist';
+
+  @override
+  String playlist_delete_confirm(String name) {
+    return 'Delete \"$name\"?';
+  }
+
+  @override
+  String get playlist_add_to => 'Add to playlist';
+
+  @override
+  String playlist_added(String name) {
+    return 'Added to \"$name\"';
+  }
+
+  @override
+  String playlist_already_added(String name) {
+    return 'Already in \"$name\"';
+  }
+
+  @override
+  String get playlist_remove_track => 'Remove from playlist';
+
+  @override
+  String get playlist_empty => 'No songs in this playlist yet';
+
+  @override
+  String get playlists_empty => 'No playlists yet';
+
+  @override
+  String get playlist_play_all => 'Play all';
+
+  @override
+  String playlist_track_count(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count songs',
+      one: '1 song',
+      zero: 'No songs',
+    );
+    return '$_temp0';
+  }
 }
