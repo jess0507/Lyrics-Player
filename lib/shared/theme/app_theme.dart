@@ -32,10 +32,7 @@ enum AppColorSeed {
   static const AppColorSeed defaultSeed = AppColorSeed.indigo;
 
   static AppColorSeed fromName(String? name) {
-    return values.firstWhere(
-      (s) => s.name == name,
-      orElse: () => defaultSeed,
-    );
+    return values.firstWhere((s) => s.name == name, orElse: () => defaultSeed);
   }
 }
 
@@ -79,6 +76,7 @@ class AppTheme {
       tertiary: accent,
       onTertiary: onAccent,
       inversePrimary: onAccent,
+      primaryContainer: isLight ? accent.withAlpha(120) : accent.withAlpha(120),
     );
   }
 }

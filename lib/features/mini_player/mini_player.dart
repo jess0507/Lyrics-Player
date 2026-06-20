@@ -5,6 +5,7 @@ import 'package:just_audio_background/just_audio_background.dart';
 
 import '../../core/audio/audio_player_service.dart';
 import '../../l10n/app_localizations.dart';
+import '../cover/track_cover_provider.dart';
 import '../player/playback_controller.dart';
 import '../player/player_sheet_controller.dart';
 
@@ -31,6 +32,7 @@ class MiniPlayer extends ConsumerWidget {
 
         final title = currentItem.title;
         final artist = currentItem.artist ?? '';
+        final cover = ref.watch(trackCoverProvider(currentItem.id)).valueOrNull;
 
         return Material(
           color: scheme.surfaceContainerHighest,
@@ -45,7 +47,18 @@ class MiniPlayer extends ConsumerWidget {
               child: Row(
                 children: [
                   const SizedBox(width: 16),
-                  Icon(Icons.music_note, color: scheme.primary),
+                  if (cover != null)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: Image.file(
+                        cover,
+                        width: 40,
+                        height: 40,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  else
+                    Icon(Icons.music_note, color: scheme.primary),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../cover/track_cover_provider.dart';
 import '../../lyrics/track_lyrics_provider.dart';
+import 'cover_action_sheet.dart';
 import 'lyrics_view.dart';
 import 'player_artwork.dart';
 
@@ -39,7 +41,7 @@ class PlayerArtworkPanel extends StatelessWidget {
             child: PageView(
               controller: controller,
               children: [
-                _ArtworkPage(active: active),
+                _ArtworkPage(active: active, trackId: trackId),
                 _LyricsPage(
                   trackId: trackId,
                   title: title,
@@ -92,21 +94,47 @@ class _PageIndicator extends StatelessWidget {
   }
 }
 
-/// PageView 第一頁:專輯封面佔位圖。
-class _ArtworkPage extends StatelessWidget {
-  const _ArtworkPage({required this.active});
+/// PageView 第一頁:有自訂封面顯示圖片,否則佔位圖。有曲目時右下角提供
+/// 編輯鈕,開啟新增 / 更換 / 移除封面的動作選單。
+class _ArtworkPage extends ConsumerWidget {
+  const _ArtworkPage({required this.active, required this.trackId});
 
   final bool active;
+  final String? trackId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
+    final id = trackId;
+    final cover = id == null
+        ? null
+        : ref.watch(trackCoverProvider(id)).valueOrNull;
+    final l10n = AppLocalizations.of(context)!;
     return Stack(
       children: [
         Positioned.fill(
           child: ColoredBox(color: scheme.surfaceContainerHighest),
         ),
-        Positioned.fill(child: PlayerArtwork(active: active)),
+        Positioned.fill(
+          child: cover != null
+              ? Image.file(cover, fit: BoxFit.cover)
+              : PlayerArtwork(active: active),
+        ),
+        if (id != null)
+          Positioned(
+            bottom: 4,
+            right: 4,
+            child: IconButton(
+              tooltip: l10n.cover_edit,
+              icon: const Icon(Icons.add_photo_alternate_outlined),
+              onPressed: () => showCoverActionSheet(
+                context,
+                ref,
+                trackId: id,
+                hasCover: cover != null,
+              ),
+            ),
+          ),
       ],
     );
   }
