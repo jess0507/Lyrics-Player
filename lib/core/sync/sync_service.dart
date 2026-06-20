@@ -97,6 +97,7 @@ class SyncService {
             locale: settings['locale'] as String?,
             themeMode: settings['themeMode'] as String?,
             seedColor: settings['seedColor'] as String?,
+            useGradient: settings['useGradient'] as bool?,
           );
     }
     final rawTotals = data['monthlyTotals'] as Object?;

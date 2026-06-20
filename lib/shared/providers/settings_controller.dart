@@ -11,6 +11,7 @@ class SettingsState {
     this.locale,
     this.themeMode = ThemeMode.system,
     this.seedColor = AppColorSeed.defaultSeed,
+    this.useGradient = true,
   });
 
   /// null 代表「跟隨系統語言」。
@@ -18,15 +19,20 @@ class SettingsState {
   final ThemeMode themeMode;
   final AppColorSeed seedColor;
 
+  /// 是否在播放頁等處套用主題色漸層背景。
+  final bool useGradient;
+
   SettingsState copyWith({
     Object? locale = _sentinel,
     ThemeMode? themeMode,
     AppColorSeed? seedColor,
+    bool? useGradient,
   }) {
     return SettingsState(
       locale: identical(locale, _sentinel) ? this.locale : locale as Locale?,
       themeMode: themeMode ?? this.themeMode,
       seedColor: seedColor ?? this.seedColor,
+      useGradient: useGradient ?? this.useGradient,
     );
   }
 
@@ -36,6 +42,7 @@ class SettingsState {
             locale == null ? null : SettingsController._encodeLocale(locale!),
         'themeMode': themeMode.name,
         'seedColor': seedColor.name,
+        'useGradient': useGradient,
       };
 
   static const Object _sentinel = Object();
@@ -45,6 +52,7 @@ class SettingsController extends Notifier<SettingsState> {
   static const _kLocale = 'settings.locale';
   static const _kThemeMode = 'settings.themeMode';
   static const _kSeedColor = 'settings.seedColor';
+  static const _kUseGradient = 'settings.useGradient';
 
   PreferencesService get _prefs => ref.read(preferencesServiceProvider);
 
@@ -54,6 +62,7 @@ class SettingsController extends Notifier<SettingsState> {
       locale: _decodeLocale(_prefs.getString(_kLocale)),
       themeMode: _decodeThemeMode(_prefs.getString(_kThemeMode)),
       seedColor: AppColorSeed.fromName(_prefs.getString(_kSeedColor)),
+      useGradient: _prefs.getBool(_kUseGradient) ?? true,
     );
   }
 
@@ -79,6 +88,12 @@ class SettingsController extends Notifier<SettingsState> {
     _markModified();
   }
 
+  void setUseGradient(bool value) {
+    state = state.copyWith(useGradient: value);
+    _prefs.setBool(_kUseGradient, value);
+    _markModified();
+  }
+
   /// 還原雲端備份的設定（套用並落地 prefs）。
   ///
   /// 讀取容錯：缺欄位 / 未知值 fallback 預設。還原不算本機變更，
@@ -87,11 +102,13 @@ class SettingsController extends Notifier<SettingsState> {
     String? locale,
     String? themeMode,
     String? seedColor,
+    bool? useGradient,
   }) {
     state = SettingsState(
       locale: _decodeLocale(locale),
       themeMode: _decodeThemeMode(themeMode),
       seedColor: AppColorSeed.fromName(seedColor),
+      useGradient: useGradient ?? true,
     );
     final restored = state.locale;
     if (restored == null) {
@@ -101,6 +118,7 @@ class SettingsController extends Notifier<SettingsState> {
     }
     _prefs.setString(_kThemeMode, state.themeMode.name);
     _prefs.setString(_kSeedColor, state.seedColor.name);
+    _prefs.setBool(_kUseGradient, state.useGradient);
   }
 
   void _markModified() => ref.read(syncStateStoreProvider).markModified();

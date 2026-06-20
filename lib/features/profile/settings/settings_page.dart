@@ -75,6 +75,13 @@ class SettingsPage extends ConsumerWidget {
               ],
             ),
           ),
+          SwitchListTile(
+            secondary: const Icon(Icons.gradient_outlined),
+            title: Text(l10n.settings_gradient),
+            subtitle: Text(l10n.settings_gradient_desc),
+            value: settings.useGradient,
+            onChanged: controller.setUseGradient,
+          ),
         ],
       ),
     );

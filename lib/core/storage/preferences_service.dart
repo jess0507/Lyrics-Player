@@ -22,6 +22,9 @@ class PreferencesService {
   Future<void> setDouble(String key, double value) =>
       _prefs.setDouble(key, value);
 
+  bool? getBool(String key) => _prefs.getBool(key);
+  Future<void> setBool(String key, bool value) => _prefs.setBool(key, value);
+
   Future<void> remove(String key) => _prefs.remove(key);
 }
 
