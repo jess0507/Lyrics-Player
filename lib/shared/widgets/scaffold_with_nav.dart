@@ -22,10 +22,9 @@ class ScaffoldWithNav extends StatelessWidget {
           const MiniPlayer(),
           NavigationBar(
             selectedIndex: navigationShell.currentIndex,
-            onDestinationSelected: (index) => navigationShell.goBranch(
-              index,
-              initialLocation: index == navigationShell.currentIndex,
-            ),
+            // 點擊任一 tab 都回到該分支根頁(不還原上次停留的子頁)。
+            onDestinationSelected: (index) =>
+                navigationShell.goBranch(index, initialLocation: true),
             destinations: [
               NavigationDestination(
                 icon: const Icon(Icons.library_music_outlined),
