@@ -714,6 +714,54 @@ abstract class AppLocalizations {
   /// **'Show artwork'**
   String get lyrics_hide;
 
+  /// No description provided for @cover_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit cover'**
+  String get cover_edit;
+
+  /// No description provided for @cover_add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add cover'**
+  String get cover_add;
+
+  /// No description provided for @cover_change.
+  ///
+  /// In en, this message translates to:
+  /// **'Change cover'**
+  String get cover_change;
+
+  /// No description provided for @cover_remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove cover'**
+  String get cover_remove;
+
+  /// No description provided for @cover_updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover updated'**
+  String get cover_updated;
+
+  /// No description provided for @cover_removed.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover removed'**
+  String get cover_removed;
+
+  /// No description provided for @cover_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t set cover'**
+  String get cover_failed;
+
+  /// No description provided for @cover_too_large.
+  ///
+  /// In en, this message translates to:
+  /// **'Image is too large'**
+  String get cover_too_large;
+
   /// No description provided for @lyrics_font_size.
   ///
   /// In en, this message translates to:

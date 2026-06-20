@@ -314,6 +314,30 @@ class AppLocalizationsIt extends AppLocalizations {
   String get lyrics_hide => 'Mostra copertina';
 
   @override
+  String get cover_edit => 'Edit cover';
+
+  @override
+  String get cover_add => 'Add cover';
+
+  @override
+  String get cover_change => 'Change cover';
+
+  @override
+  String get cover_remove => 'Remove cover';
+
+  @override
+  String get cover_updated => 'Cover updated';
+
+  @override
+  String get cover_removed => 'Cover removed';
+
+  @override
+  String get cover_failed => 'Couldn\'t set cover';
+
+  @override
+  String get cover_too_large => 'Image is too large';
+
+  @override
   String get lyrics_font_size => 'Dimensione del carattere';
 
   @override

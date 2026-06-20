@@ -303,6 +303,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lyrics_hide => '顯示封面';
 
   @override
+  String get cover_edit => '編輯封面';
+
+  @override
+  String get cover_add => '新增封面';
+
+  @override
+  String get cover_change => '更換封面';
+
+  @override
+  String get cover_remove => '移除封面';
+
+  @override
+  String get cover_updated => '封面已更新';
+
+  @override
+  String get cover_removed => '封面已移除';
+
+  @override
+  String get cover_failed => '無法設定封面';
+
+  @override
+  String get cover_too_large => '圖片太大';
+
+  @override
   String get lyrics_font_size => '字體大小';
 
   @override
@@ -697,6 +721,30 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get lyrics_hide => '显示封面';
 
   @override
+  String get cover_edit => '编辑封面';
+
+  @override
+  String get cover_add => '添加封面';
+
+  @override
+  String get cover_change => '更换封面';
+
+  @override
+  String get cover_remove => '移除封面';
+
+  @override
+  String get cover_updated => '封面已更新';
+
+  @override
+  String get cover_removed => '封面已移除';
+
+  @override
+  String get cover_failed => '无法设置封面';
+
+  @override
+  String get cover_too_large => '图片太大';
+
+  @override
   String get lyrics_font_size => '字体大小';
 
   @override
@@ -1086,6 +1134,30 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get lyrics_hide => '顯示封面';
+
+  @override
+  String get cover_edit => '編輯封面';
+
+  @override
+  String get cover_add => '新增封面';
+
+  @override
+  String get cover_change => '更換封面';
+
+  @override
+  String get cover_remove => '移除封面';
+
+  @override
+  String get cover_updated => '封面已更新';
+
+  @override
+  String get cover_removed => '封面已移除';
+
+  @override
+  String get cover_failed => '無法設定封面';
+
+  @override
+  String get cover_too_large => '圖片太大';
 
   @override
   String get lyrics_font_size => '字體大小';
