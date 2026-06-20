@@ -20,6 +20,8 @@ subprojects {
 //  1. 未宣告 AGP namespace 者補上（否則建置失敗）。
 //  2. 統一 Java / Kotlin 的 JVM target 為 17，避免如 on_audio_query_android
 //     其 Java(1.8) 與 Kotlin(toolchain) target 不一致而建置失敗。
+//  3. compileSdk 過低者提升至 34，避免如 isar_flutter_libs 因缺少
+//     android:attr/lStar(API 31+)而 resource linking 失敗。
 // 註：必須在下方 evaluationDependsOn(":app") 之前註冊，否則目標專案已被評估。
 subprojects {
     afterEvaluate {
@@ -27,6 +29,11 @@ subprojects {
         if (androidExtension is com.android.build.gradle.BaseExtension) {
             if (androidExtension.namespace == null) {
                 androidExtension.namespace = group.toString()
+            }
+            val currentApi = androidExtension.compileSdkVersion
+                ?.removePrefix("android-")?.toIntOrNull() ?: 0
+            if (currentApi < 34) {
+                androidExtension.compileSdkVersion(34)
             }
             androidExtension.compileOptions {
                 sourceCompatibility = JavaVersion.VERSION_17
