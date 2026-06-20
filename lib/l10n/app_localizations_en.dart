@@ -286,6 +286,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Use the current cover\'s color for the player gradient';
 
   @override
+  String get settings_auto_lyrics => 'Auto full-screen lyrics';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'Show full-screen lyrics automatically for tracks that have lyrics';
+
+  @override
   String get lyrics_import => 'Import lyrics';
 
   @override

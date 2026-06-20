@@ -276,6 +276,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settings_gradient_cover_desc => '在播放页改用当前封面颜色的渐变';
 
   @override
+  String get settings_auto_lyrics => '自动满版歌词';
+
+  @override
+  String get settings_auto_lyrics_desc => '有歌词的曲目进入播放页时自动显示满版歌词';
+
+  @override
   String get lyrics_import => '匯入歌詞';
 
   @override
@@ -697,6 +703,12 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get settings_gradient_cover_desc => '在播放页改用当前封面颜色的渐变';
 
   @override
+  String get settings_auto_lyrics => '自动满版歌词';
+
+  @override
+  String get settings_auto_lyrics_desc => '有歌词的曲目进入播放页时自动显示满版歌词';
+
+  @override
   String get lyrics_import => '导入歌词';
 
   @override
@@ -1116,6 +1128,12 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get settings_gradient_cover_desc => '在播放頁改用目前封面顏色的漸層';
+
+  @override
+  String get settings_auto_lyrics => '自動滿版歌詞';
+
+  @override
+  String get settings_auto_lyrics_desc => '有歌詞的曲目進入播放頁時自動顯示滿版歌詞';
 
   @override
   String get lyrics_import => '匯入歌詞';

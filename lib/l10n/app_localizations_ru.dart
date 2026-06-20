@@ -284,6 +284,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'Использовать цвет текущей обложки для градиента плеера';
 
   @override
+  String get settings_auto_lyrics => 'Авто-полноэкранный текст';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'Автоматически показывать текст на весь экран для треков с текстом';
+
+  @override
   String get lyrics_import => 'Импортировать текст';
 
   @override

@@ -287,6 +287,13 @@ class AppLocalizationsVi extends AppLocalizations {
       'Dùng màu ảnh bìa hiện tại cho nền chuyển sắc của trình phát';
 
   @override
+  String get settings_auto_lyrics => 'Tự động lời bài hát toàn màn hình';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'Tự động hiển thị lời toàn màn hình cho các bài hát có lời';
+
+  @override
   String get lyrics_import => 'Nhập lời bài hát';
 
   @override

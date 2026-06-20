@@ -89,6 +89,8 @@
   "settings_gradient_desc": "Dùng nền chuyển sắc theo màu chủ đề trong trình phát",
   "settings_gradient_cover": "Chuyển sắc theo ảnh bìa",
   "settings_gradient_cover_desc": "Dùng màu ảnh bìa hiện tại cho nền chuyển sắc của trình phát",
+  "settings_auto_lyrics": "Tự động lời bài hát toàn màn hình",
+  "settings_auto_lyrics_desc": "Tự động hiển thị lời toàn màn hình cho các bài hát có lời",
   "lyrics_import": "Nhập lời bài hát",
   "lyrics_import_success": "Đã nhập lời bài hát",
   "lyrics_import_failed": "Không thể nhập lời bài hát",

@@ -286,6 +286,13 @@ class AppLocalizationsHi extends AppLocalizations {
       'प्लेयर ग्रेडिएंट के लिए वर्तमान कवर के रंग का उपयोग करें';
 
   @override
+  String get settings_auto_lyrics => 'स्वतः पूर्ण-स्क्रीन गीत';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'जिन ट्रैक में गीत हैं उनके लिए स्वतः पूर्ण-स्क्रीन गीत दिखाएँ';
+
+  @override
   String get lyrics_import => 'बोल आयात करें';
 
   @override

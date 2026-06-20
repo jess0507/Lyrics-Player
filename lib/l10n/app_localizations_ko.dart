@@ -279,6 +279,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settings_gradient_cover_desc => '플레이어 그라데이션에 현재 커버 색상을 사용합니다';
 
   @override
+  String get settings_auto_lyrics => '가사 자동 전체화면';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      '가사가 있는 곡은 재생 화면에서 자동으로 가사를 전체화면으로 표시합니다';
+
+  @override
   String get lyrics_import => '가사 가져오기';
 
   @override

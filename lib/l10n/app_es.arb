@@ -89,6 +89,8 @@
   "settings_gradient_desc": "Usar un fondo degradado con el color del tema en el reproductor",
   "settings_gradient_cover": "Degradado del color de la portada",
   "settings_gradient_cover_desc": "Usar el color de la portada actual para el degradado del reproductor",
+  "settings_auto_lyrics": "Letras a pantalla completa automática",
+  "settings_auto_lyrics_desc": "Mostrar automáticamente las letras a pantalla completa en las pistas que las tengan",
   "lyrics_import": "Importar letra",
   "lyrics_import_success": "Letra importada",
   "lyrics_import_failed": "No se pudo importar la letra",

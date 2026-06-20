@@ -285,6 +285,13 @@ class AppLocalizationsTr extends AppLocalizations {
       'Oynatıcı gradyanında geçerli kapağın rengini kullan';
 
   @override
+  String get settings_auto_lyrics => 'Otomatik tam ekran şarkı sözü';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'Sözü olan parçalarda şarkı sözünü otomatik olarak tam ekran göster';
+
+  @override
   String get lyrics_import => 'Şarkı sözü içe aktar';
 
   @override

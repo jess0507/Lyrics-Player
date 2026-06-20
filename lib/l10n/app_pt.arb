@@ -89,6 +89,8 @@
   "settings_gradient_desc": "Usar um fundo gradiente com a cor do tema no player",
   "settings_gradient_cover": "Gradiente da cor da capa",
   "settings_gradient_cover_desc": "Usar a cor da capa atual no gradiente do player",
+  "settings_auto_lyrics": "Letras em tela cheia automática",
+  "settings_auto_lyrics_desc": "Mostrar automaticamente as letras em tela cheia nas faixas que as têm",
   "lyrics_import": "Importar letra",
   "lyrics_import_success": "Letra importada",
   "lyrics_import_failed": "Não foi possível importar a letra",

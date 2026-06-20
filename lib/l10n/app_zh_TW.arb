@@ -89,6 +89,8 @@
   "settings_gradient_desc": "在播放頁使用主題色漸層背景",
   "settings_gradient_cover": "封面色漸層",
   "settings_gradient_cover_desc": "在播放頁改用目前封面顏色的漸層",
+  "settings_auto_lyrics": "自動滿版歌詞",
+  "settings_auto_lyrics_desc": "有歌詞的曲目進入播放頁時自動顯示滿版歌詞",
   "lyrics_import": "匯入歌詞",
   "lyrics_import_success": "歌詞已匯入",
   "lyrics_import_failed": "無法匯入歌詞",

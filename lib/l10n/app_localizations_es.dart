@@ -288,6 +288,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Usar el color de la portada actual para el degradado del reproductor';
 
   @override
+  String get settings_auto_lyrics => 'Letras a pantalla completa automática';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'Mostrar automáticamente las letras a pantalla completa en las pistas que las tengan';
+
+  @override
   String get lyrics_import => 'Importar letra';
 
   @override

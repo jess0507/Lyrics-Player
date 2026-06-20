@@ -660,6 +660,18 @@ abstract class AppLocalizations {
   /// **'Use the current cover\'s color for the player gradient'**
   String get settings_gradient_cover_desc;
 
+  /// No description provided for @settings_auto_lyrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto full-screen lyrics'**
+  String get settings_auto_lyrics;
+
+  /// No description provided for @settings_auto_lyrics_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show full-screen lyrics automatically for tracks that have lyrics'**
+  String get settings_auto_lyrics_desc;
+
   /// No description provided for @lyrics_import.
   ///
   /// In en, this message translates to:

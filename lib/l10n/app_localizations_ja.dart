@@ -278,6 +278,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settings_gradient_cover_desc => 'プレーヤーのグラデーションに現在のカバーの色を使用します';
 
   @override
+  String get settings_auto_lyrics => '歌詞を自動で全画面表示';
+
+  @override
+  String get settings_auto_lyrics_desc => '歌詞のある曲は再生画面で自動的に歌詞を全画面表示します';
+
+  @override
   String get lyrics_import => '歌詞をインポート';
 
   @override

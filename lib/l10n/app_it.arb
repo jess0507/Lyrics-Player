@@ -89,6 +89,8 @@
   "settings_gradient_desc": "Usa uno sfondo sfumato con il colore del tema nel lettore",
   "settings_gradient_cover": "Sfumatura colore copertina",
   "settings_gradient_cover_desc": "Usa il colore della copertina attuale per la sfumatura del lettore",
+  "settings_auto_lyrics": "Testi a schermo intero automatici",
+  "settings_auto_lyrics_desc": "Mostra automaticamente i testi a schermo intero per i brani che li hanno",
   "lyrics_import": "Importa testo",
   "lyrics_import_success": "Testo importato",
   "lyrics_import_failed": "Impossibile importare il testo",

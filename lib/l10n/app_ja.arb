@@ -89,6 +89,8 @@
   "settings_gradient_desc": "プレーヤーでテーマカラーのグラデーション背景を使用します",
   "settings_gradient_cover": "カバー色グラデーション",
   "settings_gradient_cover_desc": "プレーヤーのグラデーションに現在のカバーの色を使用します",
+  "settings_auto_lyrics": "歌詞を自動で全画面表示",
+  "settings_auto_lyrics_desc": "歌詞のある曲は再生画面で自動的に歌詞を全画面表示します",
   "lyrics_import": "歌詞をインポート",
   "lyrics_import_success": "歌詞をインポートしました",
   "lyrics_import_failed": "歌詞をインポートできませんでした",

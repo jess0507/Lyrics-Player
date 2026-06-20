@@ -288,6 +288,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Usa il colore della copertina attuale per la sfumatura del lettore';
 
   @override
+  String get settings_auto_lyrics => 'Testi a schermo intero automatici';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'Mostra automaticamente i testi a schermo intero per i brani che li hanno';
+
+  @override
   String get lyrics_import => 'Importa testo';
 
   @override

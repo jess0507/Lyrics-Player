@@ -284,6 +284,13 @@ class AppLocalizationsAr extends AppLocalizations {
       'استخدام لون الغلاف الحالي لتدرج المشغل';
 
   @override
+  String get settings_auto_lyrics => 'كلمات بملء الشاشة تلقائيًا';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'عرض الكلمات بملء الشاشة تلقائيًا للمقاطع التي تحتوي على كلمات';
+
+  @override
   String get lyrics_import => 'استيراد كلمات الأغنية';
 
   @override

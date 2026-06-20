@@ -287,6 +287,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Farbe des aktuellen Covers für den Player-Farbverlauf verwenden';
 
   @override
+  String get settings_auto_lyrics => 'Songtexte automatisch im Vollbild';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'Songtexte für Titel mit Text automatisch im Vollbild anzeigen';
+
+  @override
   String get lyrics_import => 'Liedtext importieren';
 
   @override

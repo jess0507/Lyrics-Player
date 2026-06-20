@@ -288,6 +288,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Utiliser la couleur de la pochette actuelle pour le dégradé du lecteur';
 
   @override
+  String get settings_auto_lyrics => 'Paroles plein écran auto';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'Afficher automatiquement les paroles en plein écran pour les titres qui en ont';
+
+  @override
   String get lyrics_import => 'Importer les paroles';
 
   @override

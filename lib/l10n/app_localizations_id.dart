@@ -287,6 +287,13 @@ class AppLocalizationsId extends AppLocalizations {
       'Gunakan warna sampul saat ini untuk gradien pemutar';
 
   @override
+  String get settings_auto_lyrics => 'Lirik layar penuh otomatis';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'Tampilkan lirik layar penuh otomatis untuk lagu yang memiliki lirik';
+
+  @override
   String get lyrics_import => 'Impor lirik';
 
   @override

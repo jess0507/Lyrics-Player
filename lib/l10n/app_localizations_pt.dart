@@ -286,6 +286,13 @@ class AppLocalizationsPt extends AppLocalizations {
       'Usar a cor da capa atual no gradiente do player';
 
   @override
+  String get settings_auto_lyrics => 'Letras em tela cheia automática';
+
+  @override
+  String get settings_auto_lyrics_desc =>
+      'Mostrar automaticamente as letras em tela cheia nas faixas que as têm';
+
+  @override
   String get lyrics_import => 'Importar letra';
 
   @override

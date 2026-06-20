@@ -89,6 +89,8 @@
   "settings_gradient_desc": "Oynatıcıda tema renkli gradyan arka plan kullan",
   "settings_gradient_cover": "Kapak rengi gradyanı",
   "settings_gradient_cover_desc": "Oynatıcı gradyanında geçerli kapağın rengini kullan",
+  "settings_auto_lyrics": "Otomatik tam ekran şarkı sözü",
+  "settings_auto_lyrics_desc": "Sözü olan parçalarda şarkı sözünü otomatik olarak tam ekran göster",
   "lyrics_import": "Şarkı sözü içe aktar",
   "lyrics_import_success": "Şarkı sözü içe aktarıldı",
   "lyrics_import_failed": "Şarkı sözü içe aktarılamadı",
