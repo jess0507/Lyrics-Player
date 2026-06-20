@@ -13,6 +13,7 @@ class SettingsState {
     this.seedColor = AppColorSeed.defaultSeed,
     this.useGradient = true,
     this.gradientFromCover = false,
+    this.autoFullScreenLyrics = false,
   });
 
   /// null 代表「跟隨系統語言」。
@@ -26,12 +27,16 @@ class SettingsState {
   /// 漸層是否改用目前曲目封面的主色(僅在 [useGradient] 開啟時生效)。
   final bool gradientFromCover;
 
+  /// 進入播放頁時,若曲目有歌詞則自動切到滿版歌詞模式。
+  final bool autoFullScreenLyrics;
+
   SettingsState copyWith({
     Object? locale = _sentinel,
     ThemeMode? themeMode,
     AppColorSeed? seedColor,
     bool? useGradient,
     bool? gradientFromCover,
+    bool? autoFullScreenLyrics,
   }) {
     return SettingsState(
       locale: identical(locale, _sentinel) ? this.locale : locale as Locale?,
@@ -39,6 +44,7 @@ class SettingsState {
       seedColor: seedColor ?? this.seedColor,
       useGradient: useGradient ?? this.useGradient,
       gradientFromCover: gradientFromCover ?? this.gradientFromCover,
+      autoFullScreenLyrics: autoFullScreenLyrics ?? this.autoFullScreenLyrics,
     );
   }
 
@@ -50,6 +56,7 @@ class SettingsState {
         'seedColor': seedColor.name,
         'useGradient': useGradient,
         'gradientFromCover': gradientFromCover,
+        'autoFullScreenLyrics': autoFullScreenLyrics,
       };
 
   static const Object _sentinel = Object();
@@ -61,6 +68,7 @@ class SettingsController extends Notifier<SettingsState> {
   static const _kSeedColor = 'settings.seedColor';
   static const _kUseGradient = 'settings.useGradient';
   static const _kGradientFromCover = 'settings.gradientFromCover';
+  static const _kAutoFullScreenLyrics = 'settings.autoFullScreenLyrics';
 
   PreferencesService get _prefs => ref.read(preferencesServiceProvider);
 
@@ -72,6 +80,7 @@ class SettingsController extends Notifier<SettingsState> {
       seedColor: AppColorSeed.fromName(_prefs.getString(_kSeedColor)),
       useGradient: _prefs.getBool(_kUseGradient) ?? true,
       gradientFromCover: _prefs.getBool(_kGradientFromCover) ?? false,
+      autoFullScreenLyrics: _prefs.getBool(_kAutoFullScreenLyrics) ?? false,
     );
   }
 
@@ -109,6 +118,12 @@ class SettingsController extends Notifier<SettingsState> {
     _markModified();
   }
 
+  void setAutoFullScreenLyrics(bool value) {
+    state = state.copyWith(autoFullScreenLyrics: value);
+    _prefs.setBool(_kAutoFullScreenLyrics, value);
+    _markModified();
+  }
+
   /// 還原雲端備份的設定（套用並落地 prefs）。
   ///
   /// 讀取容錯：缺欄位 / 未知值 fallback 預設。還原不算本機變更，
@@ -119,6 +134,7 @@ class SettingsController extends Notifier<SettingsState> {
     String? seedColor,
     bool? useGradient,
     bool? gradientFromCover,
+    bool? autoFullScreenLyrics,
   }) {
     state = SettingsState(
       locale: _decodeLocale(locale),
@@ -126,6 +142,7 @@ class SettingsController extends Notifier<SettingsState> {
       seedColor: AppColorSeed.fromName(seedColor),
       useGradient: useGradient ?? true,
       gradientFromCover: gradientFromCover ?? false,
+      autoFullScreenLyrics: autoFullScreenLyrics ?? false,
     );
     final restored = state.locale;
     if (restored == null) {
@@ -137,6 +154,7 @@ class SettingsController extends Notifier<SettingsState> {
     _prefs.setString(_kSeedColor, state.seedColor.name);
     _prefs.setBool(_kUseGradient, state.useGradient);
     _prefs.setBool(_kGradientFromCover, state.gradientFromCover);
+    _prefs.setBool(_kAutoFullScreenLyrics, state.autoFullScreenLyrics);
   }
 
   void _markModified() => ref.read(syncStateStoreProvider).markModified();

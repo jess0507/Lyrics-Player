@@ -99,6 +99,7 @@ class SyncService {
             seedColor: settings['seedColor'] as String?,
             useGradient: settings['useGradient'] as bool?,
             gradientFromCover: settings['gradientFromCover'] as bool?,
+            autoFullScreenLyrics: settings['autoFullScreenLyrics'] as bool?,
           );
     }
     final rawTotals = data['monthlyTotals'] as Object?;

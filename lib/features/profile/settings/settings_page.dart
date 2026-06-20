@@ -91,6 +91,14 @@ class SettingsPage extends ConsumerWidget {
             onChanged:
                 settings.useGradient ? controller.setGradientFromCover : null,
           ),
+          const Divider(height: 1),
+          SwitchListTile(
+            secondary: const Icon(Icons.lyrics_outlined),
+            title: Text(l10n.settings_auto_lyrics),
+            subtitle: Text(l10n.settings_auto_lyrics_desc),
+            value: settings.autoFullScreenLyrics,
+            onChanged: controller.setAutoFullScreenLyrics,
+          ),
         ],
       ),
     );

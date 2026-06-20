@@ -6,7 +6,9 @@ import 'package:seek_player/features/player/widgets/secondary_controls.dart';
 
 import '../../core/audio/audio_player_service.dart';
 import '../../l10n/app_localizations.dart';
+import '../../shared/providers/settings_controller.dart';
 import '../../shared/widgets/marquee_text.dart';
+import '../lyrics/track_lyrics_provider.dart';
 import 'playback_controller.dart';
 import 'widgets/lyrics_mode_menu.dart';
 import 'widgets/lyrics_view.dart';
@@ -23,8 +25,13 @@ class PlayerPage extends ConsumerStatefulWidget {
 }
 
 class _PlayerPageState extends ConsumerState<PlayerPage> {
-  /// 是否進入歌詞滿版模式;無曲目時自動回退為封面。
-  bool _showLyrics = false;
+  /// 使用者對目前曲目的手動選擇:true=滿版歌詞、false=封面。
+  /// null 表示尚未手動切換,沿用「自動滿版歌詞」設定的預設值。
+  /// 切換曲目時重設為 null,讓新曲目重新套用自動規則。
+  bool? _lyricsOverride;
+
+  /// 上一次處理過的曲目 id,用來偵測換曲以重設 [_lyricsOverride]。
+  String? _lastTrackId;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +59,25 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
           final currentItem = snapshot.data?.currentSource?.tag;
           final mediaItem = currentItem is MediaItem ? currentItem : null;
           final hasTrack = mediaItem != null;
-          final showLyrics = _showLyrics && hasTrack;
+
+          // 換曲時清掉上一首的手動選擇,讓新曲目重新套用自動規則。
+          final trackId = mediaItem?.id;
+          if (trackId != _lastTrackId) {
+            _lastTrackId = trackId;
+            _lyricsOverride = null;
+          }
+
+          // 自動滿版:設定開啟且目前曲目有歌詞時,預設進入滿版歌詞;
+          // 使用者一旦手動切換(_lyricsOverride 非 null)即以其選擇為準。
+          final autoLyrics = ref.watch(
+            settingsControllerProvider.select((s) => s.autoFullScreenLyrics),
+          );
+          final hasLyrics = hasTrack &&
+              (ref.watch(trackLyricsProvider(mediaItem.id)).valueOrNull
+                      ?.isNotEmpty ??
+                  false);
+          final showLyrics =
+              hasTrack && (_lyricsOverride ?? (autoLyrics && hasLyrics));
 
           final title = mediaItem?.title ?? l10n.player_nothing_playing;
           final artist = mediaItem?.artist ?? '';
@@ -96,7 +121,8 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
                       audio: audio,
                       trackId: mediaItem.id,
                       title: mediaItem.title,
-                      onHideLyrics: () => setState(() => _showLyrics = false),
+                      onHideLyrics: () =>
+                          setState(() => _lyricsOverride = false),
                     ),
                 ],
               ),
@@ -117,8 +143,15 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
                           hasTrack: hasTrack,
                           trackId: mediaItem?.id,
                           title: mediaItem?.title,
+                          // 點擊進入滿版歌詞時,同步開啟「自動滿版歌詞」設定,
+                          // 讓之後有歌詞的曲目預設直接進滿版。
                           onShowLyrics: hasTrack
-                              ? () => setState(() => _showLyrics = true)
+                              ? () {
+                                  setState(() => _lyricsOverride = true);
+                                  ref
+                                      .read(settingsControllerProvider.notifier)
+                                      .setAutoFullScreenLyrics(true);
+                                }
                               : null,
                         ),
                 ),

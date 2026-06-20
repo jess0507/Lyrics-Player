@@ -166,8 +166,12 @@ class _LyricsPage extends ConsumerWidget {
     return Stack(
       children: [
         Positioned.fill(
-          child: ColoredBox(
-            color: scheme.surfaceContainerHighest,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: scheme.surfaceContainerHighest.withValues(alpha: 0.3),
+              border: Border.all(color: scheme.outlineVariant),
+              borderRadius: BorderRadius.circular(8),
+            ),
             child: LyricsView(trackId: id, title: title ?? ''),
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:just_audio/just_audio.dart';
 
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../shared/providers/settings_controller.dart';
 import '../../lyrics/lyrics_repository.dart';
 import '../../lyrics/track_lyrics_provider.dart';
 import 'lyrics_auto_sync_action.dart';
@@ -53,7 +54,7 @@ class LyricsModeMenu extends ConsumerWidget {
     return PopupMenuButton<_LyricsMenuAction>(
       icon: const Icon(Icons.more_vert),
       onSelected: (action) => switch (action) {
-        _LyricsMenuAction.hideLyrics => onHideLyrics(),
+        _LyricsMenuAction.hideLyrics => _hideLyrics(ref),
         _LyricsMenuAction.shuffle => _toggleShuffle(),
         _LyricsMenuAction.loop => _cycleLoop(),
         _LyricsMenuAction.speed => showSpeedSheet(context, audio),
@@ -152,6 +153,13 @@ class LyricsModeMenu extends ConsumerWidget {
         ],
       ],
     );
+  }
+
+  /// 手動關閉歌詞:同時關閉「自動滿版歌詞」設定,
+  /// 避免切歌後又自動跳回滿版。
+  void _hideLyrics(WidgetRef ref) {
+    ref.read(settingsControllerProvider.notifier).setAutoFullScreenLyrics(false);
+    onHideLyrics();
   }
 
   void _toggleShuffle() =>
