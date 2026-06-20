@@ -50,7 +50,14 @@ class AppTheme {
     return ThemeData(
       colorScheme: scheme,
       useMaterial3: true,
-      appBarTheme: const AppBarTheme(centerTitle: true),
+      // 捲動時不讓 AppBar 疊上 surfaceTint 色調:elevation 歸零、tint 透明。
+      // 否則內容捲到 AppBar 下方時頂部會出現變色帶,與 body 的純色 / 漸層
+      // 背景產生分界(尤其播放頁的透明 AppBar 疊在漸層上會被切斷)。
+      appBarTheme: const AppBarTheme(
+        centerTitle: true,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+      ),
     );
   }
 
