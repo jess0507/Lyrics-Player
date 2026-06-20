@@ -319,121 +319,122 @@ class AppLocalizationsHi extends AppLocalizations {
   String get lyrics_hide => 'आर्टवर्क दिखाएँ';
 
   @override
-  String get cover_edit => 'Edit cover';
+  String get cover_edit => 'कवर संपादित करें';
 
   @override
-  String get cover_add => 'Add cover';
+  String get cover_add => 'कवर जोड़ें';
 
   @override
-  String get cover_change => 'Change cover';
+  String get cover_change => 'कवर बदलें';
 
   @override
-  String get cover_remove => 'Remove cover';
+  String get cover_remove => 'कवर हटाएं';
 
   @override
-  String get cover_updated => 'Cover updated';
+  String get cover_updated => 'कवर अपडेट किया गया';
 
   @override
-  String get cover_removed => 'Cover removed';
+  String get cover_removed => 'कवर हटाया गया';
 
   @override
-  String get cover_failed => 'Couldn\'t set cover';
+  String get cover_failed => 'कवर सेट नहीं हो सका';
 
   @override
-  String get cover_too_large => 'Image is too large';
+  String get cover_too_large => 'छवि बहुत बड़ी है';
 
   @override
   String get lyrics_font_size => 'फ़ॉन्ट आकार';
 
   @override
-  String get lyrics_auto_sync => 'Auto-sync timing';
+  String get lyrics_auto_sync => 'स्वतः समय-संयोजन';
 
   @override
-  String get lyrics_auto_sync_compressing => 'Preparing audio…';
+  String get lyrics_auto_sync_compressing => 'ऑडियो तैयार किया जा रहा है…';
 
   @override
-  String get lyrics_auto_sync_uploading => 'Uploading audio…';
+  String get lyrics_auto_sync_uploading => 'ऑडियो अपलोड हो रहा है…';
 
   @override
-  String get lyrics_auto_sync_aligning => 'Aligning lyrics…';
+  String get lyrics_auto_sync_aligning => 'बोल संरेखित किए जा रहे हैं…';
 
   @override
-  String get lyrics_auto_sync_success =>
-      'Lyrics synced (auto, may be imperfect)';
+  String get lyrics_auto_sync_success => 'बोल सिंक हो गए (स्वतः, त्रुटि संभव)';
 
   @override
   String get lyrics_auto_sync_failed =>
-      'Couldn\'t sync lyrics; kept original text';
+      'बोल सिंक नहीं हो सके; मूल टेक्स्ट रखा गया';
 
   @override
-  String get lyrics_auto_sync_need_login => 'Sign in to use auto-sync';
+  String get lyrics_auto_sync_need_login =>
+      'स्वतः सिंक उपयोग करने के लिए साइन इन करें';
 
   @override
   String get lyrics_auto_sync_rate_limited =>
-      'Daily auto-sync limit reached, try tomorrow';
+      'आज की सिंक सीमा पूरी हो गई, कल पुनः प्रयास करें';
 
   @override
-  String get lyrics_auto_sync_no_audio => 'Audio file not found';
+  String get lyrics_auto_sync_no_audio => 'ऑडियो फ़ाइल नहीं मिली';
 
   @override
-  String get lyrics_auto_sync_network => 'Connection problem, try again later';
+  String get lyrics_auto_sync_network =>
+      'कनेक्शन समस्या, बाद में पुनः प्रयास करें';
 
   @override
-  String get tab_playlists => 'Playlists';
+  String get tab_playlists => 'प्लेलिस्ट';
 
   @override
-  String get playlist_favorites => 'Favorites';
+  String get playlist_favorites => 'पसंदीदा';
 
   @override
-  String get playlist_new => 'New playlist';
+  String get playlist_new => 'नई प्लेलिस्ट';
 
   @override
-  String get playlist_name_hint => 'Playlist name';
+  String get playlist_name_hint => 'प्लेलिस्ट का नाम';
 
   @override
-  String get playlist_rename => 'Rename';
+  String get playlist_rename => 'नाम बदलें';
 
   @override
-  String get playlist_delete => 'Delete playlist';
+  String get playlist_delete => 'प्लेलिस्ट हटाएं';
 
   @override
   String playlist_delete_confirm(String name) {
-    return 'Delete \"$name\"?';
+    return '\"$name\" हटाएं?';
   }
 
   @override
-  String get playlist_add_to => 'Add to playlist';
+  String get playlist_add_to => 'प्लेलिस्ट में जोड़ें';
 
   @override
   String playlist_added(String name) {
-    return 'Added to \"$name\"';
+    return '\"$name\" में जोड़ा गया';
   }
 
   @override
   String playlist_already_added(String name) {
-    return 'Already in \"$name\"';
+    return 'पहले से \"$name\" में है';
   }
 
   @override
-  String get playlist_remove_track => 'Remove from playlist';
+  String get playlist_remove_track => 'प्लेलिस्ट से हटाएं';
 
   @override
-  String get playlist_empty => 'No songs in this playlist yet';
+  String get playlist_empty => 'इस प्लेलिस्ट में अभी कोई गाना नहीं है';
 
   @override
-  String get playlists_empty => 'No playlists yet';
+  String get playlists_empty => 'अभी कोई प्लेलिस्ट नहीं है';
 
   @override
-  String get playlist_play_all => 'Play all';
+  String get playlist_play_all => 'सभी चलाएं';
 
   @override
   String playlist_track_count(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count songs',
-      one: '1 song',
-      zero: 'No songs',
+      other: '$count गाने',
+      one: '1 गाना',
+      zero: 'कोई गाना नहीं',
     );
     return '$_temp0';
   }

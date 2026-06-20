@@ -320,121 +320,123 @@ class AppLocalizationsDe extends AppLocalizations {
   String get lyrics_hide => 'Cover anzeigen';
 
   @override
-  String get cover_edit => 'Edit cover';
+  String get cover_edit => 'Cover bearbeiten';
 
   @override
-  String get cover_add => 'Add cover';
+  String get cover_add => 'Cover hinzufügen';
 
   @override
-  String get cover_change => 'Change cover';
+  String get cover_change => 'Cover ändern';
 
   @override
-  String get cover_remove => 'Remove cover';
+  String get cover_remove => 'Cover entfernen';
 
   @override
-  String get cover_updated => 'Cover updated';
+  String get cover_updated => 'Cover aktualisiert';
 
   @override
-  String get cover_removed => 'Cover removed';
+  String get cover_removed => 'Cover entfernt';
 
   @override
-  String get cover_failed => 'Couldn\'t set cover';
+  String get cover_failed => 'Cover konnte nicht festgelegt werden';
 
   @override
-  String get cover_too_large => 'Image is too large';
+  String get cover_too_large => 'Bild ist zu groß';
 
   @override
   String get lyrics_font_size => 'Schriftgröße';
 
   @override
-  String get lyrics_auto_sync => 'Auto-sync timing';
+  String get lyrics_auto_sync => 'Automatische Zeitsynchronisierung';
 
   @override
-  String get lyrics_auto_sync_compressing => 'Preparing audio…';
+  String get lyrics_auto_sync_compressing => 'Audio wird vorbereitet…';
 
   @override
-  String get lyrics_auto_sync_uploading => 'Uploading audio…';
+  String get lyrics_auto_sync_uploading => 'Audio wird hochgeladen…';
 
   @override
-  String get lyrics_auto_sync_aligning => 'Aligning lyrics…';
+  String get lyrics_auto_sync_aligning => 'Songtext wird ausgerichtet…';
 
   @override
   String get lyrics_auto_sync_success =>
-      'Lyrics synced (auto, may be imperfect)';
+      'Songtext synchronisiert (automatisch, evtl. ungenau)';
 
   @override
   String get lyrics_auto_sync_failed =>
-      'Couldn\'t sync lyrics; kept original text';
+      'Songtext konnte nicht synchronisiert werden; Originaltext beibehalten';
 
   @override
-  String get lyrics_auto_sync_need_login => 'Sign in to use auto-sync';
+  String get lyrics_auto_sync_need_login =>
+      'Melde dich an, um die automatische Synchronisierung zu nutzen';
 
   @override
   String get lyrics_auto_sync_rate_limited =>
-      'Daily auto-sync limit reached, try tomorrow';
+      'Tageslimit für automatische Synchronisierung erreicht, versuche es morgen';
 
   @override
-  String get lyrics_auto_sync_no_audio => 'Audio file not found';
+  String get lyrics_auto_sync_no_audio => 'Audiodatei nicht gefunden';
 
   @override
-  String get lyrics_auto_sync_network => 'Connection problem, try again later';
+  String get lyrics_auto_sync_network =>
+      'Verbindungsproblem, versuche es später erneut';
 
   @override
   String get tab_playlists => 'Playlists';
 
   @override
-  String get playlist_favorites => 'Favorites';
+  String get playlist_favorites => 'Favoriten';
 
   @override
-  String get playlist_new => 'New playlist';
+  String get playlist_new => 'Neue Playlist';
 
   @override
-  String get playlist_name_hint => 'Playlist name';
+  String get playlist_name_hint => 'Playlist-Name';
 
   @override
-  String get playlist_rename => 'Rename';
+  String get playlist_rename => 'Umbenennen';
 
   @override
-  String get playlist_delete => 'Delete playlist';
+  String get playlist_delete => 'Playlist löschen';
 
   @override
   String playlist_delete_confirm(String name) {
-    return 'Delete \"$name\"?';
+    return '„$name\" löschen?';
   }
 
   @override
-  String get playlist_add_to => 'Add to playlist';
+  String get playlist_add_to => 'Zur Playlist hinzufügen';
 
   @override
   String playlist_added(String name) {
-    return 'Added to \"$name\"';
+    return 'Zu „$name\" hinzugefügt';
   }
 
   @override
   String playlist_already_added(String name) {
-    return 'Already in \"$name\"';
+    return 'Bereits in „$name\"';
   }
 
   @override
-  String get playlist_remove_track => 'Remove from playlist';
+  String get playlist_remove_track => 'Aus Playlist entfernen';
 
   @override
-  String get playlist_empty => 'No songs in this playlist yet';
+  String get playlist_empty => 'Noch keine Songs in dieser Playlist';
 
   @override
-  String get playlists_empty => 'No playlists yet';
+  String get playlists_empty => 'Noch keine Playlists';
 
   @override
-  String get playlist_play_all => 'Play all';
+  String get playlist_play_all => 'Alle abspielen';
 
   @override
   String playlist_track_count(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count songs',
-      one: '1 song',
-      zero: 'No songs',
+      other: '$count Songs',
+      one: '1 Song',
+      zero: 'Keine Songs',
     );
     return '$_temp0';
   }

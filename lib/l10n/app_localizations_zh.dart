@@ -336,37 +336,34 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lyrics_font_size => '字體大小';
 
   @override
-  String get lyrics_auto_sync => 'Auto-sync timing';
+  String get lyrics_auto_sync => '自動對時';
 
   @override
-  String get lyrics_auto_sync_compressing => 'Preparing audio…';
+  String get lyrics_auto_sync_compressing => '處理音訊中…';
 
   @override
-  String get lyrics_auto_sync_uploading => 'Uploading audio…';
+  String get lyrics_auto_sync_uploading => '上傳音訊中…';
 
   @override
-  String get lyrics_auto_sync_aligning => 'Aligning lyrics…';
+  String get lyrics_auto_sync_aligning => '對齊歌詞中…';
 
   @override
-  String get lyrics_auto_sync_success =>
-      'Lyrics synced (auto, may be imperfect)';
+  String get lyrics_auto_sync_success => '已自動對時(可能有誤)';
 
   @override
-  String get lyrics_auto_sync_failed =>
-      'Couldn\'t sync lyrics; kept original text';
+  String get lyrics_auto_sync_failed => '對時失敗,已保留原歌詞';
 
   @override
-  String get lyrics_auto_sync_need_login => 'Sign in to use auto-sync';
+  String get lyrics_auto_sync_need_login => '請先登入才能使用自動對時';
 
   @override
-  String get lyrics_auto_sync_rate_limited =>
-      'Daily auto-sync limit reached, try tomorrow';
+  String get lyrics_auto_sync_rate_limited => '今日對時次數已達上限,請明天再試';
 
   @override
-  String get lyrics_auto_sync_no_audio => 'Audio file not found';
+  String get lyrics_auto_sync_no_audio => '找不到音訊檔';
 
   @override
-  String get lyrics_auto_sync_network => 'Connection problem, try again later';
+  String get lyrics_auto_sync_network => '連線問題,請稍後再試';
 
   @override
   String get tab_playlists => '播放清單';

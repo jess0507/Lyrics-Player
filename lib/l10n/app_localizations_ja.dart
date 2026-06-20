@@ -311,121 +311,117 @@ class AppLocalizationsJa extends AppLocalizations {
   String get lyrics_hide => 'アートワークを表示';
 
   @override
-  String get cover_edit => 'Edit cover';
+  String get cover_edit => 'カバーを編集';
 
   @override
-  String get cover_add => 'Add cover';
+  String get cover_add => 'カバーを追加';
 
   @override
-  String get cover_change => 'Change cover';
+  String get cover_change => 'カバーを変更';
 
   @override
-  String get cover_remove => 'Remove cover';
+  String get cover_remove => 'カバーを削除';
 
   @override
-  String get cover_updated => 'Cover updated';
+  String get cover_updated => 'カバーを更新しました';
 
   @override
-  String get cover_removed => 'Cover removed';
+  String get cover_removed => 'カバーを削除しました';
 
   @override
-  String get cover_failed => 'Couldn\'t set cover';
+  String get cover_failed => 'カバーを設定できませんでした';
 
   @override
-  String get cover_too_large => 'Image is too large';
+  String get cover_too_large => '画像が大きすぎます';
 
   @override
   String get lyrics_font_size => '文字サイズ';
 
   @override
-  String get lyrics_auto_sync => 'Auto-sync timing';
+  String get lyrics_auto_sync => '自動同期';
 
   @override
-  String get lyrics_auto_sync_compressing => 'Preparing audio…';
+  String get lyrics_auto_sync_compressing => '音声を準備中…';
 
   @override
-  String get lyrics_auto_sync_uploading => 'Uploading audio…';
+  String get lyrics_auto_sync_uploading => '音声をアップロード中…';
 
   @override
-  String get lyrics_auto_sync_aligning => 'Aligning lyrics…';
+  String get lyrics_auto_sync_aligning => '歌詞を同期中…';
 
   @override
-  String get lyrics_auto_sync_success =>
-      'Lyrics synced (auto, may be imperfect)';
+  String get lyrics_auto_sync_success => '歌詞を同期しました(自動、誤差の可能性あり)';
 
   @override
-  String get lyrics_auto_sync_failed =>
-      'Couldn\'t sync lyrics; kept original text';
+  String get lyrics_auto_sync_failed => '歌詞を同期できませんでした。元の歌詞を保持します';
 
   @override
-  String get lyrics_auto_sync_need_login => 'Sign in to use auto-sync';
+  String get lyrics_auto_sync_need_login => '自動同期を使うにはログインしてください';
 
   @override
-  String get lyrics_auto_sync_rate_limited =>
-      'Daily auto-sync limit reached, try tomorrow';
+  String get lyrics_auto_sync_rate_limited => '本日の同期回数の上限に達しました。明日お試しください';
 
   @override
-  String get lyrics_auto_sync_no_audio => 'Audio file not found';
+  String get lyrics_auto_sync_no_audio => '音声ファイルが見つかりません';
 
   @override
-  String get lyrics_auto_sync_network => 'Connection problem, try again later';
+  String get lyrics_auto_sync_network => '接続に問題があります。後でもう一度お試しください';
 
   @override
-  String get tab_playlists => 'Playlists';
+  String get tab_playlists => 'プレイリスト';
 
   @override
-  String get playlist_favorites => 'Favorites';
+  String get playlist_favorites => 'お気に入り';
 
   @override
-  String get playlist_new => 'New playlist';
+  String get playlist_new => '新しいプレイリスト';
 
   @override
-  String get playlist_name_hint => 'Playlist name';
+  String get playlist_name_hint => 'プレイリスト名';
 
   @override
-  String get playlist_rename => 'Rename';
+  String get playlist_rename => '名前を変更';
 
   @override
-  String get playlist_delete => 'Delete playlist';
+  String get playlist_delete => 'プレイリストを削除';
 
   @override
   String playlist_delete_confirm(String name) {
-    return 'Delete \"$name\"?';
+    return '「$name」を削除しますか?';
   }
 
   @override
-  String get playlist_add_to => 'Add to playlist';
+  String get playlist_add_to => 'プレイリストに追加';
 
   @override
   String playlist_added(String name) {
-    return 'Added to \"$name\"';
+    return '「$name」に追加しました';
   }
 
   @override
   String playlist_already_added(String name) {
-    return 'Already in \"$name\"';
+    return 'すでに「$name」にあります';
   }
 
   @override
-  String get playlist_remove_track => 'Remove from playlist';
+  String get playlist_remove_track => 'プレイリストから削除';
 
   @override
-  String get playlist_empty => 'No songs in this playlist yet';
+  String get playlist_empty => 'このプレイリストにはまだ曲がありません';
 
   @override
-  String get playlists_empty => 'No playlists yet';
+  String get playlists_empty => 'プレイリストがまだありません';
 
   @override
-  String get playlist_play_all => 'Play all';
+  String get playlist_play_all => 'すべて再生';
 
   @override
   String playlist_track_count(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count songs',
-      one: '1 song',
-      zero: 'No songs',
+      other: '$count 曲',
+      zero: '曲なし',
     );
     return '$_temp0';
   }

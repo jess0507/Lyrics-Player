@@ -320,121 +320,119 @@ class AppLocalizationsVi extends AppLocalizations {
   String get lyrics_hide => 'Hiện ảnh bìa';
 
   @override
-  String get cover_edit => 'Edit cover';
+  String get cover_edit => 'Chỉnh sửa ảnh bìa';
 
   @override
-  String get cover_add => 'Add cover';
+  String get cover_add => 'Thêm ảnh bìa';
 
   @override
-  String get cover_change => 'Change cover';
+  String get cover_change => 'Đổi ảnh bìa';
 
   @override
-  String get cover_remove => 'Remove cover';
+  String get cover_remove => 'Xóa ảnh bìa';
 
   @override
-  String get cover_updated => 'Cover updated';
+  String get cover_updated => 'Đã cập nhật ảnh bìa';
 
   @override
-  String get cover_removed => 'Cover removed';
+  String get cover_removed => 'Đã xóa ảnh bìa';
 
   @override
-  String get cover_failed => 'Couldn\'t set cover';
+  String get cover_failed => 'Không thể đặt ảnh bìa';
 
   @override
-  String get cover_too_large => 'Image is too large';
+  String get cover_too_large => 'Ảnh quá lớn';
 
   @override
   String get lyrics_font_size => 'Cỡ chữ';
 
   @override
-  String get lyrics_auto_sync => 'Auto-sync timing';
+  String get lyrics_auto_sync => 'Tự động đồng bộ';
 
   @override
-  String get lyrics_auto_sync_compressing => 'Preparing audio…';
+  String get lyrics_auto_sync_compressing => 'Đang chuẩn bị âm thanh…';
 
   @override
-  String get lyrics_auto_sync_uploading => 'Uploading audio…';
+  String get lyrics_auto_sync_uploading => 'Đang tải âm thanh lên…';
 
   @override
-  String get lyrics_auto_sync_aligning => 'Aligning lyrics…';
+  String get lyrics_auto_sync_aligning => 'Đang căn chỉnh lời…';
 
   @override
   String get lyrics_auto_sync_success =>
-      'Lyrics synced (auto, may be imperfect)';
+      'Đã đồng bộ lời (tự động, có thể chưa chính xác)';
 
   @override
-  String get lyrics_auto_sync_failed =>
-      'Couldn\'t sync lyrics; kept original text';
+  String get lyrics_auto_sync_failed => 'Không thể đồng bộ lời; đã giữ lời gốc';
 
   @override
-  String get lyrics_auto_sync_need_login => 'Sign in to use auto-sync';
+  String get lyrics_auto_sync_need_login => 'Đăng nhập để dùng tự động đồng bộ';
 
   @override
   String get lyrics_auto_sync_rate_limited =>
-      'Daily auto-sync limit reached, try tomorrow';
+      'Đã đạt giới hạn đồng bộ trong ngày, thử lại vào ngày mai';
 
   @override
-  String get lyrics_auto_sync_no_audio => 'Audio file not found';
+  String get lyrics_auto_sync_no_audio => 'Không tìm thấy tệp âm thanh';
 
   @override
-  String get lyrics_auto_sync_network => 'Connection problem, try again later';
+  String get lyrics_auto_sync_network => 'Sự cố kết nối, thử lại sau';
 
   @override
-  String get tab_playlists => 'Playlists';
+  String get tab_playlists => 'Danh sách phát';
 
   @override
-  String get playlist_favorites => 'Favorites';
+  String get playlist_favorites => 'Yêu thích';
 
   @override
-  String get playlist_new => 'New playlist';
+  String get playlist_new => 'Danh sách phát mới';
 
   @override
-  String get playlist_name_hint => 'Playlist name';
+  String get playlist_name_hint => 'Tên danh sách phát';
 
   @override
-  String get playlist_rename => 'Rename';
+  String get playlist_rename => 'Đổi tên';
 
   @override
-  String get playlist_delete => 'Delete playlist';
+  String get playlist_delete => 'Xóa danh sách phát';
 
   @override
   String playlist_delete_confirm(String name) {
-    return 'Delete \"$name\"?';
+    return 'Xóa \"$name\"?';
   }
 
   @override
-  String get playlist_add_to => 'Add to playlist';
+  String get playlist_add_to => 'Thêm vào danh sách phát';
 
   @override
   String playlist_added(String name) {
-    return 'Added to \"$name\"';
+    return 'Đã thêm vào \"$name\"';
   }
 
   @override
   String playlist_already_added(String name) {
-    return 'Already in \"$name\"';
+    return 'Đã có trong \"$name\"';
   }
 
   @override
-  String get playlist_remove_track => 'Remove from playlist';
+  String get playlist_remove_track => 'Xóa khỏi danh sách phát';
 
   @override
-  String get playlist_empty => 'No songs in this playlist yet';
+  String get playlist_empty => 'Danh sách phát này chưa có bài hát nào';
 
   @override
-  String get playlists_empty => 'No playlists yet';
+  String get playlists_empty => 'Chưa có danh sách phát nào';
 
   @override
-  String get playlist_play_all => 'Play all';
+  String get playlist_play_all => 'Phát tất cả';
 
   @override
   String playlist_track_count(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count songs',
-      one: '1 song',
-      zero: 'No songs',
+      other: '$count bài hát',
+      zero: 'Không có bài hát',
     );
     return '$_temp0';
   }
