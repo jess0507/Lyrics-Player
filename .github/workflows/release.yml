@@ -1,11 +1,11 @@
 name: Release to Play Store
 
-# 當 master 上推送版號 tag（例如 v1.2.0 或 1.2.0）時，自動建置已簽章 AAB 並上架 Play Store。
+# 當 master 有新 push 時，自動建置已簽章 AAB 並上架 Play Store。
+# 版號取最新 tag 的 major.minor，最後一位放「自最新 tag 起算的 commit 數」。
 on:
   push:
-    tags:
-      - 'v*'
-      - '[0-9]+.[0-9]+.[0-9]+'
+    branches:
+      - master
 
 jobs:
   release:
@@ -14,17 +14,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 需完整歷史以取得 tag 並計算 commit 數
 
-      # 確認此 tag 指向 master（「當 master 有新的 TAG 才上架」）。
-      - name: Verify tag is on master
+      # 版號規則：versionName = <tag major.minor>.<自最新 tag 起算的 commit 數>；
+      # versionCode 用總 commit 數（單調遞增，換 tag 後不會倒退，符合 Play Store 要求）。
+      - name: Compute version
+        id: version
         run: |
-          git fetch origin master --depth=1
-          if git merge-base --is-ancestor "${GITHUB_SHA}" origin/master; then
-            echo "Tag commit is on master — proceeding."
+          RAW_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -n "$RAW_TAG" ]; then
+            TAG=${RAW_TAG#v}
+            MAJOR_MINOR=$(echo "$TAG" | cut -d. -f1-2)
+            COUNT=$(git rev-list "$RAW_TAG"..HEAD --count)
           else
-            echo "::error::Tag ${GITHUB_REF_NAME} 不在 master 上，略過上架。"
-            exit 1
+            MAJOR_MINOR="0.0"
+            COUNT=$(git rev-list HEAD --count)
           fi
+          VERSION_NAME="${MAJOR_MINOR}.${COUNT}"
+          BUILD_NUMBER=$(git rev-list HEAD --count)
+          echo "name=$VERSION_NAME" >> "$GITHUB_OUTPUT"
+          echo "build=$BUILD_NUMBER" >> "$GITHUB_OUTPUT"
+          echo "版本: $VERSION_NAME (build $BUILD_NUMBER)，最新 tag: ${RAW_TAG:-無}"
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -76,7 +87,7 @@ jobs:
           EOF
 
       - name: Build App Bundle
-        run: flutter build appbundle --release
+        run: flutter build appbundle --release --build-name=${{ steps.version.outputs.name }} --build-number=${{ steps.version.outputs.build }}
 
       - name: Upload to Play Store (internal track)
         uses: r0adkll/upload-google-play@v1
