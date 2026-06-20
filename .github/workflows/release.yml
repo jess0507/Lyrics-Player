@@ -54,7 +54,13 @@ jobs:
       - name: Decode keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        run: echo "$KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
+        run: echo "$KEYSTORE_BASE64" | base64 -d > android/app/upload-keystore.jks
+
+      # 提早驗證 keystore 可正常讀取，避免拖到簽章階段才爆難懂的 ASN.1 錯誤。
+      - name: Verify keystore
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: keytool -list -keystore android/app/upload-keystore.jks -storepass "$KEYSTORE_PASSWORD" >/dev/null
 
       - name: Create key.properties
         env:
