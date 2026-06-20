@@ -1,15 +1,18 @@
 name: Release to Play Store
 
-# 當 master 有新 push 時，自動建置已簽章 AAB 並上架 Play Store。
+# 當 master 有新 push 時，先建置已簽章 AAB 並上傳為可下載 artifact，
+# 再由獨立的 deploy job 上架 Play Store。
+# 拆兩段的好處：build 一定能產出可下載的 AAB；deploy 失敗時可單獨 re-run，不必重 build。
 # 版號取最新 tag 的 major.minor，最後一位放「自最新 tag 起算的 commit 數」。
 on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
-  release:
-    name: Build & upload AAB
+  build:
+    name: Build AAB
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -89,15 +92,35 @@ jobs:
       - name: Build App Bundle
         run: flutter build appbundle --release --build-name=${{ steps.version.outputs.name }} --build-number=${{ steps.version.outputs.build }}
 
+      - name: Cleanup secrets
+        if: always()
+        run: rm -f android/key.properties android/app/upload-keystore.jks
+
+      # 上傳為 artifact，run 頁面即可下載；也供 deploy job 取用。
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+          retention-days: 30
+
+  deploy:
+    name: Deploy to Play Store
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download AAB artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-release-aab
+          path: release
+
       - name: Upload to Play Store (internal track)
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.js.seek_player
-          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          releaseFiles: release/app-release.aab
           track: internal
           status: completed
-
-      - name: Cleanup secrets
-        if: always()
-        run: rm -f android/key.properties android/app/upload-keystore.jks
