@@ -174,9 +174,3 @@ class _LyricsSyncedViewState extends ConsumerState<LyricsSyncedView> {
     );
   }
 }
-
-/// 將顏色降低亮度 [amount](0~1),用於 light theme 加深強調色。
-Color _darken(Color color, double amount) {
-  final hsl = HSLColor.fromColor(color);
-  return hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0)).toColor();
-}
