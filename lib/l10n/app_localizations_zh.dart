@@ -264,6 +264,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settings_color => '主題顏色';
 
   @override
+  String get settings_gradient => '渐变主题';
+
+  @override
+  String get settings_gradient_desc => '在播放页使用主题色渐变背景';
+
+  @override
   String get lyrics_import => '匯入歌詞';
 
   @override
@@ -652,6 +658,12 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get settings_color => '主题颜色';
 
   @override
+  String get settings_gradient => '渐变主题';
+
+  @override
+  String get settings_gradient_desc => '在播放页使用主题色渐变背景';
+
+  @override
   String get lyrics_import => '导入歌词';
 
   @override
@@ -1035,6 +1047,12 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get settings_color => '主題顏色';
+
+  @override
+  String get settings_gradient => '漸層主題';
+
+  @override
+  String get settings_gradient_desc => '在播放頁使用主題色漸層背景';
 
   @override
   String get lyrics_import => '匯入歌詞';

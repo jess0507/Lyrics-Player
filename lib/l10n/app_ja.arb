@@ -85,6 +85,8 @@
   "common_delete": "削除",
   "common_retry": "再試行",
   "settings_color": "テーマカラー",
+  "settings_gradient": "グラデーションテーマ",
+  "settings_gradient_desc": "プレーヤーでテーマカラーのグラデーション背景を使用します",
   "lyrics_import": "歌詞をインポート",
   "lyrics_import_success": "歌詞をインポートしました",
   "lyrics_import_failed": "歌詞をインポートできませんでした",

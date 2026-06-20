@@ -85,6 +85,8 @@
   "common_delete": "Supprimer",
   "common_retry": "Réessayer",
   "settings_color": "Couleur du thème",
+  "settings_gradient": "Thème dégradé",
+  "settings_gradient_desc": "Utiliser un fond dégradé aux couleurs du thème dans le lecteur",
   "lyrics_import": "Importer les paroles",
   "lyrics_import_success": "Paroles importées",
   "lyrics_import_failed": "Impossible d'importer les paroles",

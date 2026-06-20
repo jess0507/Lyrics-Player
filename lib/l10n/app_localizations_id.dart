@@ -273,6 +273,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get settings_color => 'Warna tema';
 
   @override
+  String get settings_gradient => 'Tema gradien';
+
+  @override
+  String get settings_gradient_desc =>
+      'Gunakan latar gradien warna tema di pemutar';
+
+  @override
   String get lyrics_import => 'Impor lirik';
 
   @override

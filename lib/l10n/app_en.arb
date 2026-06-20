@@ -85,6 +85,8 @@
   "common_delete": "Delete",
   "common_retry": "Retry",
   "settings_color": "Theme color",
+  "settings_gradient": "Gradient theme",
+  "settings_gradient_desc": "Use a theme-colored gradient background on the player",
   "lyrics_import": "Import lyrics",
   "lyrics_import_success": "Lyrics imported",
   "lyrics_import_failed": "Couldn't import lyrics",

@@ -272,6 +272,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_color => 'Theme color';
 
   @override
+  String get settings_gradient => 'Gradient theme';
+
+  @override
+  String get settings_gradient_desc =>
+      'Use a theme-colored gradient background on the player';
+
+  @override
   String get lyrics_import => 'Import lyrics';
 
   @override

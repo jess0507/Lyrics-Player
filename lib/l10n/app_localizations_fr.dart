@@ -274,6 +274,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settings_color => 'Couleur du thème';
 
   @override
+  String get settings_gradient => 'Thème dégradé';
+
+  @override
+  String get settings_gradient_desc =>
+      'Utiliser un fond dégradé aux couleurs du thème dans le lecteur';
+
+  @override
   String get lyrics_import => 'Importer les paroles';
 
   @override

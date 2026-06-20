@@ -272,6 +272,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get settings_color => 'Cor do tema';
 
   @override
+  String get settings_gradient => 'Tema gradiente';
+
+  @override
+  String get settings_gradient_desc =>
+      'Usar um fundo gradiente com a cor do tema no player';
+
+  @override
   String get lyrics_import => 'Importar letra';
 
   @override

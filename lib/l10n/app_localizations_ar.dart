@@ -270,6 +270,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settings_color => 'لون السمة';
 
   @override
+  String get settings_gradient => 'سمة متدرجة';
+
+  @override
+  String get settings_gradient_desc =>
+      'استخدام خلفية متدرجة بلون السمة في المشغل';
+
+  @override
   String get lyrics_import => 'استيراد كلمات الأغنية';
 
   @override

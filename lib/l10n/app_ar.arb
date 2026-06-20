@@ -85,6 +85,8 @@
   "common_delete": "حذف",
   "common_retry": "إعادة المحاولة",
   "settings_color": "لون السمة",
+  "settings_gradient": "سمة متدرجة",
+  "settings_gradient_desc": "استخدام خلفية متدرجة بلون السمة في المشغل",
   "lyrics_import": "استيراد كلمات الأغنية",
   "lyrics_import_success": "تم استيراد كلمات الأغنية",
   "lyrics_import_failed": "تعذّر استيراد كلمات الأغنية",

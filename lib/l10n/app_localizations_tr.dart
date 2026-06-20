@@ -271,6 +271,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settings_color => 'Tema rengi';
 
   @override
+  String get settings_gradient => 'Gradyan tema';
+
+  @override
+  String get settings_gradient_desc =>
+      'Oynatıcıda tema renkli gradyan arka plan kullan';
+
+  @override
   String get lyrics_import => 'Şarkı sözü içe aktar';
 
   @override

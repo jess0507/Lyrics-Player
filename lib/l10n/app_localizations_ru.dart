@@ -270,6 +270,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settings_color => 'Цвет темы';
 
   @override
+  String get settings_gradient => 'Градиентная тема';
+
+  @override
+  String get settings_gradient_desc =>
+      'Использовать градиентный фон цвета темы в плеере';
+
+  @override
   String get lyrics_import => 'Импортировать текст';
 
   @override

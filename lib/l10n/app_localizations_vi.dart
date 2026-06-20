@@ -273,6 +273,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get settings_color => 'Màu giao diện';
 
   @override
+  String get settings_gradient => 'Chủ đề chuyển sắc';
+
+  @override
+  String get settings_gradient_desc =>
+      'Dùng nền chuyển sắc theo màu chủ đề trong trình phát';
+
+  @override
   String get lyrics_import => 'Nhập lời bài hát';
 
   @override

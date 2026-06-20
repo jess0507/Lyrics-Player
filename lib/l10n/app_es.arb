@@ -85,6 +85,8 @@
   "common_delete": "Eliminar",
   "common_retry": "Reintentar",
   "settings_color": "Color del tema",
+  "settings_gradient": "Tema degradado",
+  "settings_gradient_desc": "Usar un fondo degradado con el color del tema en el reproductor",
   "lyrics_import": "Importar letra",
   "lyrics_import_success": "Letra importada",
   "lyrics_import_failed": "No se pudo importar la letra",

@@ -85,6 +85,8 @@
   "common_delete": "Elimina",
   "common_retry": "Riprova",
   "settings_color": "Colore del tema",
+  "settings_gradient": "Tema sfumato",
+  "settings_gradient_desc": "Usa uno sfondo sfumato con il colore del tema nel lettore",
   "lyrics_import": "Importa testo",
   "lyrics_import_success": "Testo importato",
   "lyrics_import_failed": "Impossibile importare il testo",

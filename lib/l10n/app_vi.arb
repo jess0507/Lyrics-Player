@@ -85,6 +85,8 @@
   "common_delete": "Xóa",
   "common_retry": "Thử lại",
   "settings_color": "Màu giao diện",
+  "settings_gradient": "Chủ đề chuyển sắc",
+  "settings_gradient_desc": "Dùng nền chuyển sắc theo màu chủ đề trong trình phát",
   "lyrics_import": "Nhập lời bài hát",
   "lyrics_import_success": "Đã nhập lời bài hát",
   "lyrics_import_failed": "Không thể nhập lời bài hát",

@@ -85,6 +85,8 @@
   "common_delete": "Excluir",
   "common_retry": "Tentar novamente",
   "settings_color": "Cor do tema",
+  "settings_gradient": "Tema gradiente",
+  "settings_gradient_desc": "Usar um fundo gradiente com a cor do tema no player",
   "lyrics_import": "Importar letra",
   "lyrics_import_success": "Letra importada",
   "lyrics_import_failed": "Não foi possível importar a letra",

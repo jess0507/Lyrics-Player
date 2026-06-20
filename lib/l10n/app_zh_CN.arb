@@ -85,6 +85,8 @@
   "common_delete": "删除",
   "common_retry": "重试",
   "settings_color": "主题颜色",
+  "settings_gradient": "渐变主题",
+  "settings_gradient_desc": "在播放页使用主题色渐变背景",
   "lyrics_import": "导入歌词",
   "lyrics_import_success": "歌词已导入",
   "lyrics_import_failed": "无法导入歌词",
