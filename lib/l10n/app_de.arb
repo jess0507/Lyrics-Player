@@ -87,6 +87,8 @@
   "settings_color": "Designfarbe",
   "settings_gradient": "Verlaufsdesign",
   "settings_gradient_desc": "Farbverlauf in Designfarbe im Player verwenden",
+  "settings_gradient_cover": "Cover-Farbverlauf",
+  "settings_gradient_cover_desc": "Farbe des aktuellen Covers für den Player-Farbverlauf verwenden",
   "lyrics_import": "Liedtext importieren",
   "lyrics_import_success": "Liedtext importiert",
   "lyrics_import_failed": "Liedtext konnte nicht importiert werden",

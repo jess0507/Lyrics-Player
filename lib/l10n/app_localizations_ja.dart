@@ -272,6 +272,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settings_gradient_desc => 'プレーヤーでテーマカラーのグラデーション背景を使用します';
 
   @override
+  String get settings_gradient_cover => 'カバー色グラデーション';
+
+  @override
+  String get settings_gradient_cover_desc => 'プレーヤーのグラデーションに現在のカバーの色を使用します';
+
+  @override
   String get lyrics_import => '歌詞をインポート';
 
   @override

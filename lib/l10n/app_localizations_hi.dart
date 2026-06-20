@@ -279,6 +279,13 @@ class AppLocalizationsHi extends AppLocalizations {
       'प्लेयर में थीम-रंग वाली ग्रेडिएंट पृष्ठभूमि का उपयोग करें';
 
   @override
+  String get settings_gradient_cover => 'कवर रंग ग्रेडिएंट';
+
+  @override
+  String get settings_gradient_cover_desc =>
+      'प्लेयर ग्रेडिएंट के लिए वर्तमान कवर के रंग का उपयोग करें';
+
+  @override
   String get lyrics_import => 'बोल आयात करें';
 
   @override

@@ -273,6 +273,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settings_gradient_desc => '플레이어에 테마 색상 그라데이션 배경을 사용합니다';
 
   @override
+  String get settings_gradient_cover => '커버 색상 그라데이션';
+
+  @override
+  String get settings_gradient_cover_desc => '플레이어 그라데이션에 현재 커버 색상을 사용합니다';
+
+  @override
   String get lyrics_import => '가사 가져오기';
 
   @override

@@ -277,6 +277,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'Использовать градиентный фон цвета темы в плеере';
 
   @override
+  String get settings_gradient_cover => 'Градиент по цвету обложки';
+
+  @override
+  String get settings_gradient_cover_desc =>
+      'Использовать цвет текущей обложки для градиента плеера';
+
+  @override
   String get lyrics_import => 'Импортировать текст';
 
   @override

@@ -87,6 +87,8 @@
   "settings_color": "Warna tema",
   "settings_gradient": "Tema gradien",
   "settings_gradient_desc": "Gunakan latar gradien warna tema di pemutar",
+  "settings_gradient_cover": "Gradien warna sampul",
+  "settings_gradient_cover_desc": "Gunakan warna sampul saat ini untuk gradien pemutar",
   "lyrics_import": "Impor lirik",
   "lyrics_import_success": "Lirik diimpor",
   "lyrics_import_failed": "Tidak dapat mengimpor lirik",

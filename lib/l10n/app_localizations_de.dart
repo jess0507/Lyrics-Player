@@ -280,6 +280,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Farbverlauf in Designfarbe im Player verwenden';
 
   @override
+  String get settings_gradient_cover => 'Cover-Farbverlauf';
+
+  @override
+  String get settings_gradient_cover_desc =>
+      'Farbe des aktuellen Covers für den Player-Farbverlauf verwenden';
+
+  @override
   String get lyrics_import => 'Liedtext importieren';
 
   @override

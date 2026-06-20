@@ -648,6 +648,18 @@ abstract class AppLocalizations {
   /// **'Use a theme-colored gradient background on the player'**
   String get settings_gradient_desc;
 
+  /// No description provided for @settings_gradient_cover.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover color gradient'**
+  String get settings_gradient_cover;
+
+  /// No description provided for @settings_gradient_cover_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the current cover\'s color for the player gradient'**
+  String get settings_gradient_cover_desc;
+
   /// No description provided for @lyrics_import.
   ///
   /// In en, this message translates to:

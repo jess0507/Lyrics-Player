@@ -87,6 +87,8 @@
   "settings_color": "لون السمة",
   "settings_gradient": "سمة متدرجة",
   "settings_gradient_desc": "استخدام خلفية متدرجة بلون السمة في المشغل",
+  "settings_gradient_cover": "تدرج لون الغلاف",
+  "settings_gradient_cover_desc": "استخدام لون الغلاف الحالي لتدرج المشغل",
   "lyrics_import": "استيراد كلمات الأغنية",
   "lyrics_import_success": "تم استيراد كلمات الأغنية",
   "lyrics_import_failed": "تعذّر استيراد كلمات الأغنية",

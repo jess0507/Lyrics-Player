@@ -87,6 +87,8 @@
   "settings_color": "主题颜色",
   "settings_gradient": "渐变主题",
   "settings_gradient_desc": "在播放页使用主题色渐变背景",
+  "settings_gradient_cover": "封面色渐变",
+  "settings_gradient_cover_desc": "在播放页改用当前封面颜色的渐变",
   "lyrics_import": "导入歌词",
   "lyrics_import_success": "歌词已导入",
   "lyrics_import_failed": "无法导入歌词",

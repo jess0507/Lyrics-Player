@@ -281,6 +281,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Usa uno sfondo sfumato con il colore del tema nel lettore';
 
   @override
+  String get settings_gradient_cover => 'Sfumatura colore copertina';
+
+  @override
+  String get settings_gradient_cover_desc =>
+      'Usa il colore della copertina attuale per la sfumatura del lettore';
+
+  @override
   String get lyrics_import => 'Importa testo';
 
   @override

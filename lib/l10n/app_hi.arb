@@ -87,6 +87,8 @@
   "settings_color": "थीम रंग",
   "settings_gradient": "ग्रेडिएंट थीम",
   "settings_gradient_desc": "प्लेयर में थीम-रंग वाली ग्रेडिएंट पृष्ठभूमि का उपयोग करें",
+  "settings_gradient_cover": "कवर रंग ग्रेडिएंट",
+  "settings_gradient_cover_desc": "प्लेयर ग्रेडिएंट के लिए वर्तमान कवर के रंग का उपयोग करें",
   "lyrics_import": "बोल आयात करें",
   "lyrics_import_success": "बोल आयात किए गए",
   "lyrics_import_failed": "बोल आयात नहीं किए जा सके",

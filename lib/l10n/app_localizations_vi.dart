@@ -280,6 +280,13 @@ class AppLocalizationsVi extends AppLocalizations {
       'Dùng nền chuyển sắc theo màu chủ đề trong trình phát';
 
   @override
+  String get settings_gradient_cover => 'Chuyển sắc theo ảnh bìa';
+
+  @override
+  String get settings_gradient_cover_desc =>
+      'Dùng màu ảnh bìa hiện tại cho nền chuyển sắc của trình phát';
+
+  @override
   String get lyrics_import => 'Nhập lời bài hát';
 
   @override

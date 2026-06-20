@@ -87,6 +87,8 @@
   "settings_color": "Cor do tema",
   "settings_gradient": "Tema gradiente",
   "settings_gradient_desc": "Usar um fundo gradiente com a cor do tema no player",
+  "settings_gradient_cover": "Gradiente da cor da capa",
+  "settings_gradient_cover_desc": "Usar a cor da capa atual no gradiente do player",
   "lyrics_import": "Importar letra",
   "lyrics_import_success": "Letra importada",
   "lyrics_import_failed": "Não foi possível importar a letra",

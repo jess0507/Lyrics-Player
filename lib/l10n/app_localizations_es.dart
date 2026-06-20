@@ -281,6 +281,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Usar un fondo degradado con el color del tema en el reproductor';
 
   @override
+  String get settings_gradient_cover => 'Degradado del color de la portada';
+
+  @override
+  String get settings_gradient_cover_desc =>
+      'Usar el color de la portada actual para el degradado del reproductor';
+
+  @override
   String get lyrics_import => 'Importar letra';
 
   @override
