@@ -17,5 +17,10 @@ class TrackCoverEntity {
   /// 複製到 app 文件夾後的封面圖檔絕對路徑。
   late String imagePath;
 
+  /// 預先算好的封面主色(ARGB int,[Color.toARGB32]);供播放頁的封面色漸層
+  /// 即時取用,避免切歌時才解析圖片造成卡頓。舊資料 / 尚未解析時為 null,
+  /// 由 [trackCoverColorProvider] 首次取用時補算並寫回。
+  int? colorValue;
+
   late DateTime addedAt;
 }

@@ -16,6 +16,11 @@ class TrackCoverRepository {
   TrackCoverEntity? findByTrackId(String trackId) =>
       _col.getByTrackIdSync(trackId);
 
+  /// 取所有尚未快取主色([TrackCoverEntity.colorValue] 為 null)的封面,
+  /// 供載入音樂後背景補算。
+  List<TrackCoverEntity> findMissingColor() =>
+      _col.filter().colorValueIsNull().findAllSync();
+
   /// upsert(唯一索引 replace:同曲覆蓋)。
   Future<void> save(TrackCoverEntity entity) =>
       _isar.writeTxn(() => _col.put(entity));

@@ -12,6 +12,7 @@ class SettingsState {
     this.themeMode = ThemeMode.system,
     this.seedColor = AppColorSeed.defaultSeed,
     this.useGradient = true,
+    this.gradientFromCover = false,
   });
 
   /// null 代表「跟隨系統語言」。
@@ -22,17 +23,22 @@ class SettingsState {
   /// 是否在播放頁等處套用主題色漸層背景。
   final bool useGradient;
 
+  /// 漸層是否改用目前曲目封面的主色(僅在 [useGradient] 開啟時生效)。
+  final bool gradientFromCover;
+
   SettingsState copyWith({
     Object? locale = _sentinel,
     ThemeMode? themeMode,
     AppColorSeed? seedColor,
     bool? useGradient,
+    bool? gradientFromCover,
   }) {
     return SettingsState(
       locale: identical(locale, _sentinel) ? this.locale : locale as Locale?,
       themeMode: themeMode ?? this.themeMode,
       seedColor: seedColor ?? this.seedColor,
       useGradient: useGradient ?? this.useGradient,
+      gradientFromCover: gradientFromCover ?? this.gradientFromCover,
     );
   }
 
@@ -43,6 +49,7 @@ class SettingsState {
         'themeMode': themeMode.name,
         'seedColor': seedColor.name,
         'useGradient': useGradient,
+        'gradientFromCover': gradientFromCover,
       };
 
   static const Object _sentinel = Object();
@@ -53,6 +60,7 @@ class SettingsController extends Notifier<SettingsState> {
   static const _kThemeMode = 'settings.themeMode';
   static const _kSeedColor = 'settings.seedColor';
   static const _kUseGradient = 'settings.useGradient';
+  static const _kGradientFromCover = 'settings.gradientFromCover';
 
   PreferencesService get _prefs => ref.read(preferencesServiceProvider);
 
@@ -63,6 +71,7 @@ class SettingsController extends Notifier<SettingsState> {
       themeMode: _decodeThemeMode(_prefs.getString(_kThemeMode)),
       seedColor: AppColorSeed.fromName(_prefs.getString(_kSeedColor)),
       useGradient: _prefs.getBool(_kUseGradient) ?? true,
+      gradientFromCover: _prefs.getBool(_kGradientFromCover) ?? false,
     );
   }
 
@@ -94,6 +103,12 @@ class SettingsController extends Notifier<SettingsState> {
     _markModified();
   }
 
+  void setGradientFromCover(bool value) {
+    state = state.copyWith(gradientFromCover: value);
+    _prefs.setBool(_kGradientFromCover, value);
+    _markModified();
+  }
+
   /// 還原雲端備份的設定（套用並落地 prefs）。
   ///
   /// 讀取容錯：缺欄位 / 未知值 fallback 預設。還原不算本機變更，
@@ -103,12 +118,14 @@ class SettingsController extends Notifier<SettingsState> {
     String? themeMode,
     String? seedColor,
     bool? useGradient,
+    bool? gradientFromCover,
   }) {
     state = SettingsState(
       locale: _decodeLocale(locale),
       themeMode: _decodeThemeMode(themeMode),
       seedColor: AppColorSeed.fromName(seedColor),
       useGradient: useGradient ?? true,
+      gradientFromCover: gradientFromCover ?? false,
     );
     final restored = state.locale;
     if (restored == null) {
@@ -119,6 +136,7 @@ class SettingsController extends Notifier<SettingsState> {
     _prefs.setString(_kThemeMode, state.themeMode.name);
     _prefs.setString(_kSeedColor, state.seedColor.name);
     _prefs.setBool(_kUseGradient, state.useGradient);
+    _prefs.setBool(_kGradientFromCover, state.gradientFromCover);
   }
 
   void _markModified() => ref.read(syncStateStoreProvider).markModified();

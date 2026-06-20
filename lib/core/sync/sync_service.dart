@@ -98,6 +98,7 @@ class SyncService {
             themeMode: settings['themeMode'] as String?,
             seedColor: settings['seedColor'] as String?,
             useGradient: settings['useGradient'] as bool?,
+            gradientFromCover: settings['gradientFromCover'] as bool?,
           );
     }
     final rawTotals = data['monthlyTotals'] as Object?;

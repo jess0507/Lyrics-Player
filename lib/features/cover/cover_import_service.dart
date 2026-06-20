@@ -4,6 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'cover_color.dart';
+import 'track_cover_color_provider.dart';
 import 'track_cover_entity.dart';
 import 'track_cover_provider.dart';
 import 'track_cover_repository.dart';
@@ -53,12 +55,16 @@ class CoverImportService {
     final repo = _ref.read(trackCoverRepositoryProvider);
     await _deleteOldFile(repo.findByTrackId(trackId)?.imagePath);
 
+    // 設定當下即算好主色並一併存入,讓播放頁切到本曲時可直接取用。
+    final color = await extractCoverColor(dest);
     final entity = TrackCoverEntity()
       ..trackId = trackId
       ..imagePath = dest.path
+      ..colorValue = color?.toARGB32()
       ..addedAt = DateTime.now();
     await repo.save(entity);
     _ref.invalidate(trackCoverProvider(trackId));
+    _ref.invalidate(trackCoverColorProvider(trackId));
     return true;
   }
 
@@ -68,6 +74,22 @@ class CoverImportService {
     await _deleteOldFile(repo.findByTrackId(trackId)?.imagePath);
     await repo.deleteByTrackId(trackId);
     _ref.invalidate(trackCoverProvider(trackId));
+    _ref.invalidate(trackCoverColorProvider(trackId));
+  }
+
+  /// 為既有封面中尚未快取主色者背景補算並寫回,避免之後切歌時才即時解析
+  /// 造成卡頓。載入音樂後 fire-and-forget 呼叫;best-effort,單張失敗略過。
+  Future<void> backfillMissingColors() async {
+    final repo = _ref.read(trackCoverRepositoryProvider);
+    for (final entity in repo.findMissingColor()) {
+      final file = File(entity.imagePath);
+      if (!file.existsSync()) continue;
+      final color = await extractCoverColor(file);
+      if (color == null) continue;
+      entity.colorValue = color.toARGB32();
+      await repo.save(entity);
+      _ref.invalidate(trackCoverColorProvider(entity.trackId));
+    }
   }
 
   Future<List<int>> _read(File source) async {

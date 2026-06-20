@@ -22,13 +22,18 @@ const TrackCoverEntitySchema = CollectionSchema(
       name: r'addedAt',
       type: IsarType.dateTime,
     ),
-    r'imagePath': PropertySchema(
+    r'colorValue': PropertySchema(
       id: 1,
+      name: r'colorValue',
+      type: IsarType.long,
+    ),
+    r'imagePath': PropertySchema(
+      id: 2,
       name: r'imagePath',
       type: IsarType.string,
     ),
     r'trackId': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'trackId',
       type: IsarType.string,
     )
@@ -79,8 +84,9 @@ void _trackCoverEntitySerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeDateTime(offsets[0], object.addedAt);
-  writer.writeString(offsets[1], object.imagePath);
-  writer.writeString(offsets[2], object.trackId);
+  writer.writeLong(offsets[1], object.colorValue);
+  writer.writeString(offsets[2], object.imagePath);
+  writer.writeString(offsets[3], object.trackId);
 }
 
 TrackCoverEntity _trackCoverEntityDeserialize(
@@ -91,9 +97,10 @@ TrackCoverEntity _trackCoverEntityDeserialize(
 ) {
   final object = TrackCoverEntity();
   object.addedAt = reader.readDateTime(offsets[0]);
+  object.colorValue = reader.readLongOrNull(offsets[1]);
   object.id = id;
-  object.imagePath = reader.readString(offsets[1]);
-  object.trackId = reader.readString(offsets[2]);
+  object.imagePath = reader.readString(offsets[2]);
+  object.trackId = reader.readString(offsets[3]);
   return object;
 }
 
@@ -107,8 +114,10 @@ P _trackCoverEntityDeserializeProp<P>(
     case 0:
       return (reader.readDateTime(offset)) as P;
     case 1:
-      return (reader.readString(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
+      return (reader.readString(offset)) as P;
+    case 3:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -357,6 +366,80 @@ extension TrackCoverEntityQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'addedAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
+      colorValueIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'colorValue',
+      ));
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
+      colorValueIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'colorValue',
+      ));
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
+      colorValueEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'colorValue',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
+      colorValueGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'colorValue',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
+      colorValueLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'colorValue',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
+      colorValueBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'colorValue',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -717,6 +800,20 @@ extension TrackCoverEntityQuerySortBy
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
+      sortByColorValue() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'colorValue', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
+      sortByColorValueDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'colorValue', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
       sortByImagePath() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'imagePath', Sort.asc);
@@ -758,6 +855,20 @@ extension TrackCoverEntityQuerySortThenBy
       thenByAddedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'addedAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
+      thenByColorValue() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'colorValue', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
+      thenByColorValueDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'colorValue', Sort.desc);
     });
   }
 
@@ -813,6 +924,13 @@ extension TrackCoverEntityQueryWhereDistinct
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QDistinct>
+      distinctByColorValue() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'colorValue');
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QDistinct>
       distinctByImagePath({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'imagePath', caseSensitive: caseSensitive);
@@ -838,6 +956,12 @@ extension TrackCoverEntityQueryProperty
   QueryBuilder<TrackCoverEntity, DateTime, QQueryOperations> addedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'addedAt');
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, int?, QQueryOperations> colorValueProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'colorValue');
     });
   }
 

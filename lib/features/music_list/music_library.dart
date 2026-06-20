@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../cover/cover_import_service.dart';
 import 'track.dart';
 
 /// 本機音樂庫：直接掃描裝置 MediaStore（不複製檔案、不另存資料庫）。
@@ -16,7 +19,9 @@ class MusicLibrary extends AsyncNotifier<List<Track>> {
     // build 不主動彈權限對話框；已授權才掃描，否則回空清單，
     // 待使用者於列表頁透過 refresh() 觸發授權流程。
     if (await Permission.audio.isGranted) {
-      return _scan();
+      final tracks = await _scan();
+      _backfillCoverColors();
+      return tracks;
     }
     return const [];
   }
@@ -48,6 +53,13 @@ class MusicLibrary extends AsyncNotifier<List<Track>> {
   Future<void> refresh() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(_scan);
+    if (state.hasValue) _backfillCoverColors();
+  }
+
+  /// 載入音樂後,背景補算既有封面尚未快取的主色(fire-and-forget,
+  /// 不阻塞清單)。避免播放頁切歌時才即時解析封面圖造成卡頓。
+  void _backfillCoverColors() {
+    unawaited(ref.read(coverImportServiceProvider).backfillMissingColors());
   }
 }
 

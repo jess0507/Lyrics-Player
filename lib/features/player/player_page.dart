@@ -58,6 +58,7 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
           final artist = mediaItem?.artist ?? '';
 
           return PlayerBackground(
+            trackId: mediaItem?.id,
             child: Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(

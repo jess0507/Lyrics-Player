@@ -82,6 +82,15 @@ class SettingsPage extends ConsumerWidget {
             value: settings.useGradient,
             onChanged: controller.setUseGradient,
           ),
+          SwitchListTile(
+            secondary: const Icon(Icons.image_outlined),
+            title: Text(l10n.settings_gradient_cover),
+            subtitle: Text(l10n.settings_gradient_cover_desc),
+            value: settings.gradientFromCover,
+            // 僅在漸層開啟時可調整;關閉漸層時整列灰階停用。
+            onChanged:
+                settings.useGradient ? controller.setGradientFromCover : null,
+          ),
         ],
       ),
     );
