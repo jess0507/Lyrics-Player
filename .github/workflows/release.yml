@@ -14,6 +14,9 @@ jobs:
   build:
     name: Build AAB
     runs-on: ubuntu-latest
+    outputs:
+      name: ${{ steps.version.outputs.name }}
+      build: ${{ steps.version.outputs.build }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,6 +42,15 @@ jobs:
           echo "name=$VERSION_NAME" >> "$GITHUB_OUTPUT"
           echo "build=$BUILD_NUMBER" >> "$GITHUB_OUTPUT"
           echo "版本: $VERSION_NAME (build $BUILD_NUMBER)，最新 tag: ${RAW_TAG:-無}"
+          {
+            echo "## 📦 Build AAB"
+            echo ""
+            echo "| 項目 | 值 |"
+            echo "| --- | --- |"
+            echo "| versionName | \`$VERSION_NAME\` |"
+            echo "| versionCode | \`$BUILD_NUMBER\` |"
+            echo "| 最新 tag | \`${RAW_TAG:-無}\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -100,10 +112,22 @@ jobs:
       - name: Upload AAB artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-aab
+          name: app-release-aab-${{ steps.version.outputs.name }}
           path: build/app/outputs/bundle/release/app-release.aab
           if-no-files-found: error
           retention-days: 30
+
+      - name: Write summary
+        run: |
+          {
+            echo "## 🚀 Deploy to Play Store"
+            echo ""
+            echo "| 項目 | 值 |"
+            echo "| --- | --- |"
+            echo "| versionName | \`${{ needs.build.outputs.name }}\` |"
+            echo "| versionCode | \`${{ needs.build.outputs.build }}\` |"
+            echo "| track | \`internal\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
 
   deploy:
     name: Deploy to Play Store
@@ -113,7 +137,7 @@ jobs:
       - name: Download AAB artifact
         uses: actions/download-artifact@v4
         with:
-          name: app-release-aab
+          name: app-release-aab-${{ needs.build.outputs.name }}
           path: release
 
       - name: Upload to Play Store (internal track)
