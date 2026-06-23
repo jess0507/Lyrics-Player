@@ -42,12 +42,10 @@ class AudioPlayerService {
         (pos, buf, dur) => PositionData(pos, buf, dur ?? Duration.zero),
       );
 
-  /// 以整個音樂庫建立播放清單，從 [initialIndex] 開始，
-  /// 並可選擇定位到 [initialPosition]（用於接續上次播放）。
+  /// 以整個音樂庫建立播放清單，並從 [initialIndex] 開始播放。
   Future<void> setPlaylist(
     List<Track> tracks, {
     int initialIndex = 0,
-    Duration initialPosition = Duration.zero,
   }) async {
     if (tracks.isEmpty) return;
     final source = ConcatenatingAudioSource(
@@ -63,11 +61,7 @@ class AudioPlayerService {
           ),
       ],
     );
-    await _player.setAudioSource(
-      source,
-      initialIndex: initialIndex,
-      initialPosition: initialPosition,
-    );
+    await _player.setAudioSource(source, initialIndex: initialIndex);
   }
 
   Future<void> play() => _player.play();
