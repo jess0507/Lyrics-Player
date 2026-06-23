@@ -74,11 +74,15 @@ dev_dependencies:
   # App 圖示產生（Android / iOS 各尺寸）
   flutter_launcher_icons: ^0.14.1
 
+  # 啟動畫面（splash screen）產生
+  flutter_native_splash: ^2.4.4
+
 flutter:
   uses-material-design: true
   generate: true
   assets:
     - assets/icon/app_logo.png
+    - assets/icon/app_logo_android12.png
 
 # App 圖示設定：來源圖 assets/icon/app_logo.png
 # 產生指令：dart run flutter_launcher_icons
@@ -90,3 +94,15 @@ flutter_launcher_icons:
   # Android 8.0+ 自適應圖示
   adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/icon/app_logo.png"
+
+# App 啟動畫面設定：白底 + logo 置中
+# 產生指令：dart run flutter_native_splash:create
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: "assets/icon/app_logo.png"
+  # Android 12+ 啟動畫面 API（圖示會被圓形遮罩，使用留白較多的版本）
+  android_12:
+    color: "#FFFFFF"
+    image: "assets/icon/app_logo_android12.png"
+  android: true
+  ios: true
