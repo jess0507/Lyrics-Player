@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 
+import '../../core/audio/audio_player_service.dart';
 import '../../core/permissions/permission_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/format.dart';
+import '../../shared/widgets/playing_indicator.dart';
 import '../player/playback_controller.dart';
 import '../playlists/widgets/add_to_playlist_sheet.dart';
 import 'filtered_tracks_provider.dart';
@@ -132,39 +136,58 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
         onAction: _scanning ? null : _rescan,
       );
     }
-    return ListView.separated(
-      itemCount: tracks.length,
-      separatorBuilder: (context, index) => Divider(
-        height: 1,
-        thickness: 1,
-        indent: 16,
-        endIndent: 16,
-        color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.5),
-      ),
-      itemBuilder: (context, index) {
-        final track = tracks[index];
-        return ListTile(
-          // leading: const CircleAvatar(child: Icon(Icons.music_note)),
-          title: Text(
-            track.title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+    final audio = ref.watch(audioPlayerServiceProvider);
+    final scheme = Theme.of(context).colorScheme;
+    return StreamBuilder<SequenceState?>(
+      stream: audio.player.sequenceStateStream,
+      builder: (context, snapshot) {
+        final tag = snapshot.data?.currentSource?.tag;
+        final currentId = tag is MediaItem ? tag.id : null;
+        return ListView.separated(
+          itemCount: tracks.length,
+          separatorBuilder: (context, index) => Divider(
+            height: 1,
+            thickness: 1,
+            indent: 16,
+            endIndent: 16,
+            color: scheme.outlineVariant.withValues(alpha: 0.5),
           ),
-          subtitle: track.artist == null
-              ? null
-              : Text(track.artist!, maxLines: 1),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (track.duration != null) Text(formatDuration(track.duration!)),
-              IconButton(
-                tooltip: l10n.playlist_add_to,
-                icon: const Icon(Icons.playlist_add),
-                onPressed: () => showAddToPlaylistSheet(context, ref, track),
+          itemBuilder: (context, index) {
+            final track = tracks[index];
+            final isCurrent = track.id == currentId;
+            return ListTile(
+              leading: isCurrent
+                  ? PlayingTrackLeading(audio: audio, color: scheme.primary)
+                  : null,
+              title: Text(
+                track.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: isCurrent
+                    ? TextStyle(
+                        color: scheme.primary,
+                        fontWeight: FontWeight.bold,
+                      )
+                    : null,
               ),
-            ],
-          ),
-          onTap: () => _play(track),
+              subtitle: track.artist == null
+                  ? null
+                  : Text(track.artist!, maxLines: 1),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (track.duration != null)
+                    Text(formatDuration(track.duration!)),
+                  IconButton(
+                    tooltip: l10n.playlist_add_to,
+                    icon: const Icon(Icons.playlist_add),
+                    onPressed: () => showAddToPlaylistSheet(context, ref, track),
+                  ),
+                ],
+              ),
+              onTap: () => _play(track),
+            );
+          },
         );
       },
     );
