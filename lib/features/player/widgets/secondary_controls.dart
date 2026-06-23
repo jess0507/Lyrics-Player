@@ -4,11 +4,7 @@ import 'package:just_audio/just_audio.dart';
 
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../lyrics/track_lyrics_provider.dart';
-import '../../music_list/music_library.dart';
-import '../../playlists/widgets/add_to_playlist_sheet.dart';
-import 'lyrics_auto_sync_action.dart';
-import 'speed_button.dart';
+import 'secondary_controls_menu.dart';
 
 /// 次控制列圖示的固定大小。
 const _kIconSize = 20.0;
@@ -16,7 +12,8 @@ const _kIconSize = 20.0;
 /// 次控制列圖示的顏色（深灰色，未選取時）。
 const _kIconColor = Colors.grey;
 
-/// 次控制列：自動對時、歌詞、加入播放清單、播放速度、隨機、循環。
+/// 次控制列：歌詞、隨機、循環,其餘動作(加入播放清單、播放速度、自動對時、
+/// 字體大小、重新匯入、刪除歌詞)收進「更多」選單。
 class SecondaryControls extends ConsumerWidget {
   const SecondaryControls({
     super.key,
@@ -41,21 +38,11 @@ class SecondaryControls extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final autoSync = _buildAutoSync(context, ref);
     final lyrics = _buildLyrics(context, ref);
-    final addToPlaylist = _buildAddToPlaylist(context, ref);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ?autoSync,
         ?lyrics,
-        ?addToPlaylist,
-        SpeedButton(
-          audio: audio,
-          enabled: enabled,
-          iconSize: _kIconSize,
-          iconColor: _kIconColor,
-        ),
         StreamBuilder<bool>(
           stream: audio.shuffleModeEnabledStream,
           builder: (context, snapshot) {
@@ -93,27 +80,22 @@ class SecondaryControls extends ConsumerWidget {
             );
           },
         ),
+        IconButton(
+          iconSize: _kIconSize,
+          color: _kIconColor,
+          tooltip: MaterialLocalizations.of(context).showMenuTooltip,
+          onPressed: enabled
+              ? () => showSecondaryControlsMenuSheet(
+                  context,
+                  ref,
+                  audio: audio,
+                  trackId: trackId,
+                  title: title,
+                )
+              : null,
+          icon: const Icon(Icons.more_vert),
+        ),
       ],
-    );
-  }
-
-  /// 自動對時是「補時間」：只在已有純文字、尚未同步時提供，否則不佔位。
-  Widget? _buildAutoSync(BuildContext context, WidgetRef ref) {
-    final id = trackId;
-    if (id == null) return null;
-    final lyrics = ref.watch(trackLyricsProvider(id)).valueOrNull;
-    final canAutoSync = lyrics != null && lyrics.isNotEmpty && !lyrics.synced;
-    if (!canAutoSync) return null;
-    final l10n = AppLocalizations.of(context)!;
-    return IconButton(
-      iconSize: _kIconSize,
-      color: _kIconColor,
-      tooltip: l10n.lyrics_auto_sync,
-      onPressed: enabled
-          ? () =>
-                runLyricsAutoSync(context, ref, trackId: id, title: title ?? '')
-          : null,
-      icon: const Icon(Icons.auto_fix_high),
     );
   }
 
@@ -129,26 +111,6 @@ class SecondaryControls extends ConsumerWidget {
       tooltip: l10n.lyrics_show,
       onPressed: enabled ? () => onShowLyricsPage?.call() : null,
       icon: const Icon(Icons.lyrics_outlined),
-    );
-  }
-
-  /// 加入播放清單:有曲目且能在音樂庫對應到該曲時提供,否則回傳 null 不佔位。
-  Widget? _buildAddToPlaylist(BuildContext context, WidgetRef ref) {
-    final id = trackId;
-    if (id == null) return null;
-    final tracks = ref.watch(musicLibraryProvider).valueOrNull ?? const [];
-    final index = tracks.indexWhere((t) => t.id == id);
-    if (index < 0) return null;
-    final track = tracks[index];
-    final l10n = AppLocalizations.of(context)!;
-    return IconButton(
-      iconSize: _kIconSize,
-      color: _kIconColor,
-      tooltip: l10n.playlist_add_to,
-      onPressed: enabled
-          ? () => showAddToPlaylistSheet(context, ref, track)
-          : null,
-      icon: const Icon(Icons.playlist_add),
     );
   }
 
