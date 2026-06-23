@@ -136,11 +136,6 @@ class _LyricsSyncedViewState extends ConsumerState<LyricsSyncedView> {
     final inactiveColor = theme.brightness == Brightness.light
         ? theme.colorScheme.onSurface.withValues(alpha: 0.8)
         : theme.colorScheme.onSurfaceVariant;
-    // 當前行底色:用不受封面動態配色影響的中性色襯底,確保文字
-    // 在任何封面色背景上都有足夠對比。light 用近白、dark 用近黑半透明。
-    final activeBackground = theme.brightness == Brightness.light
-        ? Colors.white.withValues(alpha: 0.35)
-        : Colors.black.withValues(alpha: 0.35);
     // 當前行文字色:light mode 用深色(onSurface),避免封面色偏淺時看不清;
     // dark mode 維持 primary 作為高亮色。
     final activeColor = theme.brightness == Brightness.light
@@ -170,7 +165,6 @@ class _LyricsSyncedViewState extends ConsumerState<LyricsSyncedView> {
                             : theme.textTheme.bodyMedium)
                         ?.copyWith(
                           color: active ? activeColor : inactiveColor,
-                          backgroundColor: active ? activeBackground : null,
                           fontWeight: active
                               ? FontWeight.w600
                               : FontWeight.w400,

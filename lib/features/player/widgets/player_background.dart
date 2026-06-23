@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../shared/providers/settings_controller.dart';
+import '../../cover/cover_color.dart';
 import '../../cover/track_cover_color_provider.dart';
 
 /// 播放頁的漸層背景:由主題的 [ColorScheme] 推導,
@@ -39,7 +40,12 @@ class PlayerBackground extends ConsumerWidget {
     Color? coverColor;
     final id = trackId;
     if (fromCover && id != null) {
-      coverColor = ref.watch(trackCoverColorProvider(id)).valueOrNull;
+      final raw = ref.watch(trackCoverColorProvider(id)).valueOrNull;
+      // 只取封面色的色相 / 飽和度,明度依當前主題固定,避免不同封面造成
+      // 漸層忽明忽暗。
+      if (raw != null) {
+        coverColor = normalizeCoverColor(raw, Theme.of(context).brightness);
+      }
     }
     final accent = coverColor ?? scheme.primary;
 
