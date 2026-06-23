@@ -79,18 +79,23 @@ class PlaylistsPage extends ConsumerWidget {
       ),
       body: playlists.isEmpty
           ? Center(child: Text(l10n.playlists_empty))
-          : ListView.builder(
+          : ListView.separated(
               itemCount: playlists.length,
+              separatorBuilder: (context, index) => Divider(
+                height: 1,
+                thickness: 1,
+                indent: 16,
+                endIndent: 16,
+                color: Theme.of(
+                  context,
+                ).colorScheme.outlineVariant.withValues(alpha: 0.5),
+              ),
               itemBuilder: (context, index) {
                 final playlist = playlists[index];
                 return ListTile(
-                  leading: CircleAvatar(
-                    child: Icon(
-                      playlist.isFavorites
-                          ? Icons.favorite
-                          : Icons.queue_music,
-                    ),
-                  ),
+                  leading: playlist.isFavorites
+                      ? CircleAvatar(child: Icon(Icons.favorite))
+                      : null,
                   title: Text(
                     playlistDisplayName(playlist, l10n),
                     maxLines: 1,

@@ -132,12 +132,19 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
         onAction: _scanning ? null : _rescan,
       );
     }
-    return ListView.builder(
+    return ListView.separated(
       itemCount: tracks.length,
+      separatorBuilder: (context, index) => Divider(
+        height: 1,
+        thickness: 1,
+        indent: 16,
+        endIndent: 16,
+        color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.5),
+      ),
       itemBuilder: (context, index) {
         final track = tracks[index];
         return ListTile(
-          leading: const CircleAvatar(child: Icon(Icons.music_note)),
+          // leading: const CircleAvatar(child: Icon(Icons.music_note)),
           title: Text(
             track.title,
             maxLines: 1,
@@ -149,8 +156,7 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (track.duration != null)
-                Text(formatDuration(track.duration!)),
+              if (track.duration != null) Text(formatDuration(track.duration!)),
               IconButton(
                 tooltip: l10n.playlist_add_to,
                 icon: const Icon(Icons.playlist_add),
