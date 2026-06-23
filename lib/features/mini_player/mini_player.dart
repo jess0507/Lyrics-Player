@@ -39,67 +39,102 @@ class MiniPlayer extends ConsumerWidget {
           // 整個 mini player 點擊都展開全螢幕播放器；
           // IconButton 會自行攔截點擊，只觸發各自的播放控制事件。
           child: InkWell(
-            onTap: () => ref
-                .read(playerSheetControllerProvider.notifier)
-                .open(context),
-            child: SizedBox(
-              height: 60,
-              child: Row(
-                children: [
-                  const SizedBox(width: 16),
-                  if (cover != null)
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      child: Image.file(
-                        cover,
-                        width: 40,
-                        height: 40,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  else
-                    Icon(Icons.music_note, color: scheme.primary),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        if (artist.isNotEmpty)
-                          Text(
-                            artist,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(color: scheme.outline),
+            onTap: () =>
+                ref.read(playerSheetControllerProvider.notifier).open(context),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _MiniProgressBar(audio: audio),
+                SizedBox(
+                  height: 60,
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 16),
+                      if (cover != null)
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Image.file(
+                            cover,
+                            width: 40,
+                            height: 40,
+                            fit: BoxFit.cover,
                           ),
-                      ],
-                    ),
+                        )
+                      else
+                        Icon(Icons.music_note, color: scheme.primary),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            if (artist.isNotEmpty)
+                              Text(
+                                artist,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(color: scheme.outline),
+                              ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        tooltip: l10n.player_previous,
+                        onPressed: audio.seekToPrevious,
+                        icon: const Icon(Icons.skip_previous),
+                      ),
+                      _MiniPlayPauseButton(audio: audio),
+                      IconButton(
+                        tooltip: l10n.player_next,
+                        onPressed: audio.seekToNext,
+                        icon: const Icon(Icons.skip_next),
+                      ),
+                      const SizedBox(width: 4),
+                    ],
                   ),
-                  IconButton(
-                    tooltip: l10n.player_previous,
-                    onPressed: audio.seekToPrevious,
-                    icon: const Icon(Icons.skip_previous),
-                  ),
-                  _MiniPlayPauseButton(audio: audio),
-                  IconButton(
-                    tooltip: l10n.player_next,
-                    onPressed: audio.seekToNext,
-                    icon: const Icon(Icons.skip_next),
-                  ),
-                  const SizedBox(width: 4),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
+        );
+      },
+    );
+  }
+}
+
+/// Mini player 頂端的細進度條，反映目前播放位置。
+class _MiniProgressBar extends StatelessWidget {
+  const _MiniProgressBar({required this.audio});
+
+  final AudioPlayerService audio;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return StreamBuilder<PositionData>(
+      stream: audio.positionDataStream,
+      builder: (context, snapshot) {
+        final data = snapshot.data;
+        final duration = data?.duration ?? Duration.zero;
+        final position = data?.position ?? Duration.zero;
+        final value = duration.inMilliseconds > 0
+            ? (position.inMilliseconds / duration.inMilliseconds).clamp(
+                0.0,
+                1.0,
+              )
+            : 0.0;
+        return LinearProgressIndicator(
+          value: value,
+          minHeight: 2,
+          backgroundColor: scheme.surfaceContainerHighest,
+          color: scheme.primary,
         );
       },
     );
