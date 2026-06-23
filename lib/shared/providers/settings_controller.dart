@@ -12,7 +12,7 @@ class SettingsState {
     this.themeMode = ThemeMode.system,
     this.seedColor = AppColorSeed.defaultSeed,
     this.useGradient = true,
-    this.gradientFromCover = false,
+    this.gradientFromCover = true,
     this.autoFullScreenLyrics = false,
   });
 
@@ -79,7 +79,7 @@ class SettingsController extends Notifier<SettingsState> {
       themeMode: _decodeThemeMode(_prefs.getString(_kThemeMode)),
       seedColor: AppColorSeed.fromName(_prefs.getString(_kSeedColor)),
       useGradient: _prefs.getBool(_kUseGradient) ?? true,
-      gradientFromCover: _prefs.getBool(_kGradientFromCover) ?? false,
+      gradientFromCover: _prefs.getBool(_kGradientFromCover) ?? true,
       autoFullScreenLyrics: _prefs.getBool(_kAutoFullScreenLyrics) ?? false,
     );
   }
@@ -141,7 +141,7 @@ class SettingsController extends Notifier<SettingsState> {
       themeMode: _decodeThemeMode(themeMode),
       seedColor: AppColorSeed.fromName(seedColor),
       useGradient: useGradient ?? true,
-      gradientFromCover: gradientFromCover ?? false,
+      gradientFromCover: gradientFromCover ?? true,
       autoFullScreenLyrics: autoFullScreenLyrics ?? false,
     );
     final restored = state.locale;
