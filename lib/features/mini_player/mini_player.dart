@@ -61,7 +61,7 @@ class MiniPlayer extends ConsumerWidget {
                           ),
                         )
                       else
-                        Icon(Icons.music_note, color: scheme.primary),
+                        SizedBox.shrink(),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(

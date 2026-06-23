@@ -94,7 +94,7 @@ class PlaylistsPage extends ConsumerWidget {
                 final playlist = playlists[index];
                 return ListTile(
                   leading: playlist.isFavorites
-                      ? CircleAvatar(child: Icon(Icons.favorite))
+                      ? const CircleAvatar(child: Icon(Icons.favorite))
                       : null,
                   title: Text(
                     playlistDisplayName(playlist, l10n),

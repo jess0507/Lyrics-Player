@@ -181,7 +181,8 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
                   IconButton(
                     tooltip: l10n.playlist_add_to,
                     icon: const Icon(Icons.playlist_add),
-                    onPressed: () => showAddToPlaylistSheet(context, ref, track),
+                    onPressed: () =>
+                        showAddToPlaylistSheet(context, ref, track),
                   ),
                 ],
               ),
