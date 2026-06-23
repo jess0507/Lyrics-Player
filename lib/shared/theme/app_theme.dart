@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 /// 參考 Flutter 官方 material_3_demo 的 `ColorSeed`：每個種子色經
 /// [ColorScheme.fromSeed] 推導出完整的 Material 3 配色。
 enum AppColorSeed {
-  indigo('Indigo', Color(0xFF3D5AFE)),
-  blue('Blue', Colors.blue),
-  teal('Teal', Colors.teal),
   green('Green', Colors.green),
-  yellow('Yellow', Colors.yellow),
-  orange('Orange', Colors.orange),
-  deepOrange('Deep Orange', Colors.deepOrange),
-  pink('Pink', Colors.pink),
+  teal('Teal', Colors.teal),
+  blue('Blue', Colors.blue),
+  indigo('Indigo', Color(0xFF3D5AFE)),
   purple('Purple', Colors.purple),
+  pink('Pink', Colors.pink),
   red('Red', Colors.red),
+  deepOrange('Deep Orange', Colors.deepOrange),
   brown('Brown', Colors.brown),
+  orange('Orange', Colors.orange),
+  yellow('Yellow', Colors.yellow),
 
   /// 單色主題:淺色模式主色為灰、深色模式主色為近白,隨亮度翻轉。
   mono('Grey', Color(0xFF5F6368), isMono: true);
@@ -29,7 +29,7 @@ enum AppColorSeed {
   final bool isMono;
 
   /// 預設種子色（沿用改版前的藍色）。
-  static const AppColorSeed defaultSeed = AppColorSeed.indigo;
+  static const AppColorSeed defaultSeed = AppColorSeed.green;
 
   static AppColorSeed fromName(String? name) {
     return values.firstWhere((s) => s.name == name, orElse: () => defaultSeed);
