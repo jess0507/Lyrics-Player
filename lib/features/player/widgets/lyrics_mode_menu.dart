@@ -5,26 +5,16 @@ import 'package:just_audio/just_audio.dart';
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/providers/settings_controller.dart';
-import '../../lyrics/lyrics_repository.dart';
 import '../../lyrics/track_lyrics_provider.dart';
-import 'lyrics_auto_sync_action.dart';
-import 'lyrics_font_size_sheet.dart';
-import 'lyrics_view.dart';
+import 'lyrics_menu_action.dart';
 import 'speed_button.dart';
 
 /// 預設播放速度,用來判斷是否顯示選取狀態。
 const double _kDefaultSpeed = 1.0;
 
-enum _LyricsMenuAction {
-  hideLyrics,
-  shuffle,
-  loop,
-  speed,
-  fontSize,
-  autoSync,
-  reimport,
-  delete,
-}
+/// 歌詞滿版模式專有的選單動作(隨機、循環、播放速度與「顯示封面」)。
+/// 歌詞相關動作另以共用的 [LyricsMenuAction] 表示。
+enum _LyricsModeAction { hideLyrics, shuffle, loop, speed }
 
 /// 歌詞滿版模式下的 AppBar 選單:整合「顯示封面(關閉歌詞)」、次控制列功能
 /// (隨機、循環、播放速度),以及歌詞操作(字體大小、重新匯入、刪除)。
@@ -50,37 +40,22 @@ class LyricsModeMenu extends ConsumerWidget {
     final hasLyrics = lyrics != null && lyrics.isNotEmpty;
     // 對時是「補時間」:只在已有純文字、尚未同步時提供。
     final canAutoSync = hasLyrics && !lyrics.synced;
+    final lyricsActions = lyricsMenuActions(
+      canAutoSync: canAutoSync,
+      hasLyrics: hasLyrics,
+    );
 
-    return PopupMenuButton<_LyricsMenuAction>(
+    return PopupMenuButton<Object>(
       icon: const Icon(Icons.more_vert),
-      onSelected: (action) => switch (action) {
-        _LyricsMenuAction.hideLyrics => _hideLyrics(ref),
-        _LyricsMenuAction.shuffle => _toggleShuffle(),
-        _LyricsMenuAction.loop => _cycleLoop(),
-        _LyricsMenuAction.speed => showSpeedSheet(context, audio),
-        _LyricsMenuAction.fontSize => showLyricsFontSizeSheet(context),
-        _LyricsMenuAction.autoSync => runLyricsAutoSync(
-          context,
-          ref,
-          trackId: trackId,
-          title: title,
-        ),
-        _LyricsMenuAction.reimport => runLyricsImport(
-          context,
-          ref,
-          trackId: trackId,
-          title: title,
-        ),
-        _LyricsMenuAction.delete => _confirmDelete(context, ref, l10n),
-      },
+      onSelected: (value) => _onSelected(context, ref, value),
       itemBuilder: (context) => [
         PopupMenuItem(
-          value: _LyricsMenuAction.hideLyrics,
+          value: _LyricsModeAction.hideLyrics,
           child: _MenuRow(icon: Icons.image_outlined, label: l10n.lyrics_hide),
         ),
         const PopupMenuDivider(),
         PopupMenuItem(
-          value: _LyricsMenuAction.shuffle,
+          value: _LyricsModeAction.shuffle,
           child: StreamBuilder<bool>(
             stream: audio.shuffleModeEnabledStream,
             builder: (context, snapshot) => _MenuRow(
@@ -91,7 +66,7 @@ class LyricsModeMenu extends ConsumerWidget {
           ),
         ),
         PopupMenuItem(
-          value: _LyricsMenuAction.loop,
+          value: _LyricsModeAction.loop,
           child: StreamBuilder<LoopMode>(
             stream: audio.loopModeStream,
             builder: (context, snapshot) {
@@ -105,7 +80,7 @@ class LyricsModeMenu extends ConsumerWidget {
           ),
         ),
         PopupMenuItem(
-          value: _LyricsMenuAction.speed,
+          value: _LyricsModeAction.speed,
           child: StreamBuilder<double>(
             stream: audio.speedStream,
             builder: (context, snapshot) {
@@ -119,40 +94,41 @@ class LyricsModeMenu extends ConsumerWidget {
             },
           ),
         ),
-        if (hasLyrics) ...[
+        if (lyricsActions.isNotEmpty) ...[
           const PopupMenuDivider(),
-          if (canAutoSync)
+          for (final action in lyricsActions)
             PopupMenuItem(
-              value: _LyricsMenuAction.autoSync,
-              child: _MenuRow(
-                icon: Icons.auto_fix_high,
-                label: l10n.lyrics_auto_sync,
-              ),
+              value: action,
+              child: _MenuRow(icon: action.icon, label: action.label(l10n)),
             ),
-          PopupMenuItem(
-            value: _LyricsMenuAction.fontSize,
-            child: _MenuRow(
-              icon: Icons.text_fields,
-              label: l10n.lyrics_font_size,
-            ),
-          ),
-          PopupMenuItem(
-            value: _LyricsMenuAction.reimport,
-            child: _MenuRow(
-              icon: Icons.file_open_outlined,
-              label: l10n.lyrics_reimport,
-            ),
-          ),
-          PopupMenuItem(
-            value: _LyricsMenuAction.delete,
-            child: _MenuRow(
-              icon: Icons.delete_outline,
-              label: l10n.lyrics_delete,
-            ),
-          ),
         ],
       ],
     );
+  }
+
+  void _onSelected(BuildContext context, WidgetRef ref, Object value) {
+    if (value is LyricsMenuAction) {
+      runLyricsMenuAction(
+        context,
+        ref,
+        value,
+        trackId: trackId,
+        title: title,
+        // 刪除歌詞後自動退回封面。
+        onDeleted: onHideLyrics,
+      );
+      return;
+    }
+    switch (value as _LyricsModeAction) {
+      case _LyricsModeAction.hideLyrics:
+        _hideLyrics(ref);
+      case _LyricsModeAction.shuffle:
+        _toggleShuffle();
+      case _LyricsModeAction.loop:
+        _cycleLoop();
+      case _LyricsModeAction.speed:
+        showSpeedSheet(context, audio);
+    }
   }
 
   /// 手動關閉歌詞:同時關閉「自動滿版歌詞」設定,
@@ -162,8 +138,7 @@ class LyricsModeMenu extends ConsumerWidget {
     onHideLyrics();
   }
 
-  void _toggleShuffle() =>
-      audio.setShuffle(!audio.player.shuffleModeEnabled);
+  void _toggleShuffle() => audio.setShuffle(!audio.player.shuffleModeEnabled);
 
   void _cycleLoop() {
     final next = switch (audio.player.loopMode) {
@@ -172,34 +147,6 @@ class LyricsModeMenu extends ConsumerWidget {
       LoopMode.one => LoopMode.off,
     };
     audio.setLoopMode(next);
-  }
-
-  Future<void> _confirmDelete(
-    BuildContext context,
-    WidgetRef ref,
-    AppLocalizations l10n,
-  ) async {
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: Text(l10n.lyrics_delete_confirm),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n.common_cancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: Text(l10n.common_delete),
-          ),
-        ],
-      ),
-    );
-    if (ok != true) return;
-    await ref.read(lyricsRepositoryProvider).deleteByTrackId(trackId);
-    ref.invalidate(trackLyricsProvider(trackId));
-    // 刪除歌詞後自動退回封面。
-    onHideLyrics();
   }
 }
 
