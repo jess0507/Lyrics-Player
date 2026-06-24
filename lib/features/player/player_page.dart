@@ -133,31 +133,28 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
               // 底部 / 左右系統列留白交給 SafeArea(top: false)。
               body: SafeArea(
                 top: false,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: showLyrics
-                      ? _LyricsLayout(
-                          audio: audio,
-                          trackId: mediaItem.id,
-                          title: mediaItem.title,
-                        )
-                      : _PlayerLayout(
-                          audio: audio,
-                          hasTrack: hasTrack,
-                          trackId: mediaItem?.id,
-                          title: mediaItem?.title,
-                          // 點擊進入滿版歌詞時,同步開啟「自動滿版歌詞」設定,
-                          // 讓之後有歌詞的曲目預設直接進滿版。
-                          onShowLyrics: hasTrack
-                              ? () {
-                                  setState(() => _lyricsOverride = true);
-                                  ref
-                                      .read(settingsControllerProvider.notifier)
-                                      .setAutoFullScreenLyrics(true);
-                                }
-                              : null,
-                        ),
-                ),
+                child: showLyrics
+                    ? _LyricsLayout(
+                        audio: audio,
+                        trackId: mediaItem.id,
+                        title: mediaItem.title,
+                      )
+                    : _PlayerLayout(
+                        audio: audio,
+                        hasTrack: hasTrack,
+                        trackId: mediaItem?.id,
+                        title: mediaItem?.title,
+                        // 點擊進入滿版歌詞時,同步開啟「自動滿版歌詞」設定,
+                        // 讓之後有歌詞的曲目預設直接進滿版。
+                        onShowLyrics: hasTrack
+                            ? () {
+                                setState(() => _lyricsOverride = true);
+                                ref
+                                    .read(settingsControllerProvider.notifier)
+                                    .setAutoFullScreenLyrics(true);
+                              }
+                            : null,
+                      ),
               ),
             ),
           );
@@ -210,18 +207,19 @@ class _PlayerLayoutState extends State<_PlayerLayout> {
     return Column(
       children: [
         const Spacer(),
-        PlayerArtworkPanel(
-          active: widget.hasTrack,
-          controller: _pageController,
-          trackId: widget.trackId,
-          title: widget.title,
-          onShowLyrics: widget.onShowLyrics,
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: PlayerArtworkPanel(
+            active: widget.hasTrack,
+            controller: _pageController,
+            trackId: widget.trackId,
+            title: widget.title,
+            onShowLyrics: widget.onShowLyrics,
+          ),
         ),
         const Spacer(),
         SeekBar(audio: widget.audio, enabled: widget.hasTrack),
-        const SizedBox(height: 16),
         PlayerControls(audio: widget.audio, enabled: widget.hasTrack),
-        const SizedBox(height: 20),
         SecondaryControls(
           audio: widget.audio,
           enabled: widget.hasTrack,
@@ -257,7 +255,7 @@ class _LyricsLayout extends StatelessWidget {
         SeekBar(audio: audio, enabled: true),
         const SizedBox(height: 4),
         PlayerControls(audio: audio, enabled: true),
-        const SizedBox(height: 4),
+        const SizedBox(height: 12),
       ],
     );
   }

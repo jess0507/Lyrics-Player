@@ -87,7 +87,8 @@ class _SecondaryControlsMenuSheet extends ConsumerWidget {
         ? null
         : ref.watch(trackLyricsProvider(id)).valueOrNull;
     final hasLyrics = lyrics != null && lyrics.isNotEmpty;
-    final canAutoGenerate = hasLyrics;
+    // 產生是「從音訊辨識歌詞」:只在完全沒有歌詞時提供(與對時互補)。
+    final canAutoGenerate = !hasLyrics;
     final canAutoSync = hasLyrics && !lyrics.synced;
     final lyricsActions = lyricsMenuActions(
       canAutoGenerate: canAutoGenerate,

@@ -5,6 +5,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../lyrics/auto_sync/lyrics_auto_sync_service.dart';
 import '../../lyrics/providers/track_lyrics_provider.dart';
 import '../../lyrics/services/lyrics_repository.dart';
+import 'lyrics_auto_generate_action.dart';
 import 'lyrics_auto_sync_action.dart';
 import 'lyrics_font_size_sheet.dart';
 import 'lyrics_view.dart';
@@ -104,8 +105,12 @@ Future<void> runLyricsMenuAction(
     case LyricsMenuAction.delete:
       await _confirmDelete(context, ref, trackId, onDeleted);
     case LyricsMenuAction.autoGenerate:
-      // TODO: Handle this case.
-      throw UnimplementedError();
+      await runLyricsAutoGenerate(
+        context,
+        ref,
+        trackId: trackId,
+        title: title,
+      );
   }
 }
 

@@ -39,63 +39,66 @@ class SecondaryControls extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lyrics = _buildLyrics(context, ref);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ?lyrics,
-        StreamBuilder<bool>(
-          stream: audio.shuffleModeEnabledStream,
-          builder: (context, snapshot) {
-            final shuffle = snapshot.data ?? false;
-            return IconButton(
-              iconSize: _kIconSize,
-              // 選取時用 primary 上色,與未選取的灰色明確區分。
-              color: shuffle
-                  ? Theme.of(context).colorScheme.primary
-                  : _kIconColor,
-              isSelected: shuffle,
-              onPressed: enabled ? () => audio.setShuffle(!shuffle) : null,
-              icon: const Icon(Icons.shuffle),
-            );
-          },
-        ),
-        StreamBuilder<LoopMode>(
-          stream: audio.loopModeStream,
-          builder: (context, snapshot) {
-            final mode = snapshot.data ?? LoopMode.off;
-            // 三種狀態以「顏色 + 圖示」區分:關閉(灰、repeat)、
-            // 全部循環(primary、repeat)、單曲循環(primary、repeat_one)。
-            final selected = mode != LoopMode.off;
-            final icon = mode == LoopMode.one
-                ? Icons.repeat_one
-                : Icons.repeat;
-            return IconButton(
-              iconSize: _kIconSize,
-              color: selected
-                  ? Theme.of(context).colorScheme.primary
-                  : _kIconColor,
-              isSelected: selected,
-              onPressed: enabled ? () => _cycleLoop(mode) : null,
-              icon: Icon(icon),
-            );
-          },
-        ),
-        IconButton(
-          iconSize: _kIconSize,
-          color: _kIconColor,
-          tooltip: MaterialLocalizations.of(context).showMenuTooltip,
-          onPressed: enabled
-              ? () => showSecondaryControlsMenuSheet(
-                  context,
-                  ref,
-                  audio: audio,
-                  trackId: trackId,
-                  title: title,
-                )
-              : null,
-          icon: const Icon(Icons.more_vert),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ?lyrics,
+          StreamBuilder<bool>(
+            stream: audio.shuffleModeEnabledStream,
+            builder: (context, snapshot) {
+              final shuffle = snapshot.data ?? false;
+              return IconButton(
+                iconSize: _kIconSize,
+                // 選取時用 primary 上色,與未選取的灰色明確區分。
+                color: shuffle
+                    ? Theme.of(context).colorScheme.primary
+                    : _kIconColor,
+                isSelected: shuffle,
+                onPressed: enabled ? () => audio.setShuffle(!shuffle) : null,
+                icon: const Icon(Icons.shuffle),
+              );
+            },
+          ),
+          StreamBuilder<LoopMode>(
+            stream: audio.loopModeStream,
+            builder: (context, snapshot) {
+              final mode = snapshot.data ?? LoopMode.off;
+              // 三種狀態以「顏色 + 圖示」區分:關閉(灰、repeat)、
+              // 全部循環(primary、repeat)、單曲循環(primary、repeat_one)。
+              final selected = mode != LoopMode.off;
+              final icon = mode == LoopMode.one
+                  ? Icons.repeat_one
+                  : Icons.repeat;
+              return IconButton(
+                iconSize: _kIconSize,
+                color: selected
+                    ? Theme.of(context).colorScheme.primary
+                    : _kIconColor,
+                isSelected: selected,
+                onPressed: enabled ? () => _cycleLoop(mode) : null,
+                icon: Icon(icon),
+              );
+            },
+          ),
+          IconButton(
+            iconSize: _kIconSize,
+            color: _kIconColor,
+            tooltip: MaterialLocalizations.of(context).showMenuTooltip,
+            onPressed: enabled
+                ? () => showSecondaryControlsMenuSheet(
+                    context,
+                    ref,
+                    audio: audio,
+                    trackId: trackId,
+                    title: title,
+                  )
+                : null,
+            icon: const Icon(Icons.more_vert),
+          ),
+        ],
+      ),
     );
   }
 
