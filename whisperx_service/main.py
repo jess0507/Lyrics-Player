@@ -31,6 +31,7 @@ from typing import Callable, Tuple
 from flask import Flask, jsonify, request
 
 from aligner import AlignmentError, align
+from transcriber import TranscriptionError, transcribe
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
@@ -86,6 +87,45 @@ def align_endpoint():
 
     # 上傳到 GCS 的暫存音訊不在此即時刪除;清理交給 bucket lifecycle
     # (align/ 前綴定期刪),涵蓋成功與失敗路徑,後端只需讀取權限。
+    return jsonify(result)
+
+
+@app.post("/transcribe")
+def transcribe_endpoint():
+    """自動產生歌詞:從音訊直接 ASR 轉寫 + 對齊,回傳同步 LRC。
+
+    與 ``/align`` 的差別:**不需 ``lines``**(無既有文字)。``language`` 選填,
+    省略則自動偵測。音訊來源同 ``/align``(``audio.gcs`` 或 ``audio.inlineBase64``)。
+    """
+    payload = request.get_json(silent=True)
+    if not isinstance(payload, dict):
+        return _error("invalid_request", "需要 JSON body", 400)
+
+    # 語言為選填提示;省略 → whisper 自動偵測。
+    language = payload.get("language")
+    audio = payload.get("audio")
+    if not isinstance(audio, dict):
+        return _error("invalid_request", "需提供 audio 物件", 400)
+
+    try:
+        audio_path, cleanup = _resolve_audio(audio)
+    except ValueError as exc:
+        return _error("invalid_request", str(exc), 400)
+    except Exception as exc:  # GCS 下載等外部失敗
+        log.exception("取得音訊失敗")
+        return _error("audio_fetch_failed", f"取得音訊失敗:{exc}", 502)
+
+    try:
+        result = transcribe(audio_path, str(language) if language else None)
+    except TranscriptionError as exc:
+        return _error("transcription_failed", str(exc), 422)
+    except Exception as exc:  # 非預期失敗
+        log.exception("轉寫時發生未預期錯誤")
+        return _error("internal", f"內部錯誤:{exc}", 500)
+    finally:
+        cleanup()
+
+    # 暫存音訊清理同 /align:交給 bucket lifecycle(generate/ 前綴定期刪)。
     return jsonify(result)
 
 

@@ -101,16 +101,56 @@ App 端通常只需 `lrc`,直接寫入 `LyricsEntity.content`(`format = lrc`、
 > 失敗一律不回半套時間。對齊覆蓋率(取得起始時間的行數佔比)低於
 > `WHISPERX_MIN_COVERAGE`(預設 0.6)時回 `alignment_failed`,App 保留原文字。
 
+### `POST /transcribe`
+
+**自動產生歌詞**(`audio → 文字 + 時間`,ASR 轉寫 + 對齊):對應計畫
+`../plans/15-lyrics-auto-generate.md`(backlog 6)。與 `/align` 的差別是**沒有既有
+文字**,後端用 faster-whisper 直接辨識歌詞再對齊。
+
+**Request**(`Content-Type: application/json`):
+
+```json
+{
+  "language": "zh-TW",
+  "audio": {
+    "gcs": { "bucket": "<DEFAULT_FIREBASE_BUCKET>", "object": "generate/uid123/abc.m4a" },
+    "format": "m4a"
+  }
+}
+```
+
+| 欄位 | 必填 | 說明 |
+| --- | --- | --- |
+| `language` | | 語言**提示**;省略 → whisper **自動偵測**(歌聲場景預設不鎖定)。給值則正規化為二字母碼鎖定。 |
+| `audio` | ✓ | 音訊來源,同 `/align`(`gcs` 或 `inlineBase64`)。物件慣例前綴 `generate/`。 |
+
+**Response 200**:與 `/align` 同形(`{ "lrc", "fragments", "language" }`);
+`language` 為偵測 / 鎖定的結果。
+
+**錯誤**:`invalid_request`(400)、`audio_fetch_failed`(502)、
+`transcription_failed`(422,辨識不出可用歌詞 → App 提示失敗、不寫入)、
+`internal`(500)。
+
+模型大小由 `WHISPER_MODEL_SIZE`(預設 `small`)、量化 `WHISPER_COMPUTE_TYPE`
+(預設 `int8`)控制;CPU 上 large 對長曲易逼近逾時,實測後再調。
+
 ## 本機驗證
 
 純邏輯(LRC 格式化、字級→逐行映射),不需任何重依賴:
 
 ```bash
 cd whisperx_service
-python -m unittest test_lrc test_align
+python -m unittest test_lrc test_align test_transcribe
 ```
 
-完整對齊需 whisperx + torch + ffmpeg,建議直接在容器內測:
+帶重依賴的本機品質測試(免容器 / GCS,直接跑對齊或自動產生):
+
+```bash
+python align_local.py song.mp3 lyrics.txt -l zh-TW   # 對齊:文字 + 音訊 → LRC
+python transcribe_local.py song.mp3                  # 自動產生:音訊 → LRC(自動偵測語言)
+```
+
+完整服務需 whisperx + torch + ffmpeg,建議直接在容器內測:
 
 ```bash
 cd whisperx_service
