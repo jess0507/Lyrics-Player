@@ -4,11 +4,24 @@
 # 用 Python 3.11。本容器與 functions/(python312)、aeneas_service/ 互相獨立。
 FROM python:3.11-slim-bookworm
 
-# 系統依賴:ffmpeg(whisperx.load_audio 以 ffmpeg 解碼)、git(部分 pip 套件需);
+# 系統依賴:
+# - ffmpeg:whisperx.load_audio 以 ffmpeg 解碼(執行期)。
+# - git:部分 pip 套件需。
+# - pkg-config + libav*-dev:whisperx 連帶的 PyAV(av)在無對應預編譯 wheel 時需
+#   從原始碼對系統 ffmpeg 編譯,缺這些會在 build wheel 階段報「pkg-config is
+#   required for building PyAV」。
 # 模型權重在執行期由 HuggingFace 下載,故 HF 快取目錄需可寫。
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ffmpeg \
         git \
+        pkg-config \
+        libavformat-dev \
+        libavcodec-dev \
+        libavdevice-dev \
+        libavutil-dev \
+        libavfilter-dev \
+        libswscale-dev \
+        libswresample-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
