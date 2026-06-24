@@ -795,7 +795,7 @@ abstract class AppLocalizations {
   /// No description provided for @lyrics_auto_sync.
   ///
   /// In en, this message translates to:
-  /// **'Auto-sync timing'**
+  /// **'Sync lyrics'**
   String get lyrics_auto_sync;
 
   /// No description provided for @lyrics_auto_sync_compressing.

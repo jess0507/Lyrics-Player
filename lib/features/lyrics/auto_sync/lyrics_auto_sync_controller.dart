@@ -28,7 +28,12 @@ class LyricsAutoSyncController
   LyricsAutoSyncState build(String arg) => const LyricsAutoSyncState();
 
   /// 執行對時;成功回 true。已在執行中則忽略並回 false。
-  Future<bool> run({required String title, required String language}) async {
+  /// [engine] 指定後端對齊引擎(aeneas / WhisperX)。
+  Future<bool> run({
+    required String title,
+    required String language,
+    required LyricsAlignEngine engine,
+  }) async {
     if (state.isRunning) return false;
     state = const LyricsAutoSyncState(
       status: LyricsAutoSyncStatus.running,
@@ -41,6 +46,7 @@ class LyricsAutoSyncController
             trackId: arg,
             title: title,
             language: language,
+            engine: engine,
             onStep: (step) => state = LyricsAutoSyncState(
               status: LyricsAutoSyncStatus.running,
               step: step,

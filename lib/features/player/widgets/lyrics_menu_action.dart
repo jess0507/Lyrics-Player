@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../lyrics/auto_sync/lyrics_auto_sync_service.dart';
 import '../../lyrics/lyrics_repository.dart';
 import '../../lyrics/track_lyrics_provider.dart';
 import 'lyrics_auto_sync_action.dart';
@@ -11,8 +12,11 @@ import 'lyrics_view.dart';
 /// 歌詞相關的選單動作,供「次控制列更多選單」與「歌詞滿版選單」共用。
 /// 顯示與否由 [lyricsMenuActions] 依狀態決定,動作分派由 [runLyricsMenuAction] 處理。
 enum LyricsMenuAction {
-  /// 自動對時;已有純文字、尚未同步時顯示。
-  autoSync,
+  /// 自動對時(aeneas 引擎);已有純文字、尚未同步時顯示。
+  autoSyncAeneas,
+
+  /// 自動對時(WhisperX 引擎);已有純文字、尚未同步時顯示。
+  autoSyncWhisperX,
 
   /// 字體大小;已有歌詞時顯示。
   fontSize,
@@ -24,14 +28,16 @@ enum LyricsMenuAction {
   delete;
 
   IconData get icon => switch (this) {
-    autoSync => Icons.auto_fix_high,
+    autoSyncAeneas => Icons.auto_fix_high,
+    autoSyncWhisperX => Icons.auto_awesome,
     fontSize => Icons.text_fields,
     reimport => Icons.file_open_outlined,
     delete => Icons.delete_outline,
   };
 
   String label(AppLocalizations l10n) => switch (this) {
-    autoSync => l10n.lyrics_auto_sync,
+    autoSyncAeneas => '${l10n.lyrics_auto_sync} · aeneas',
+    autoSyncWhisperX => '${l10n.lyrics_auto_sync} · WhisperX',
     fontSize => l10n.lyrics_font_size,
     reimport => l10n.lyrics_reimport,
     delete => l10n.lyrics_delete,
@@ -45,7 +51,10 @@ List<LyricsMenuAction> lyricsMenuActions({
   required bool hasLyrics,
 }) {
   return [
-    if (canAutoSync) LyricsMenuAction.autoSync,
+    if (canAutoSync) ...[
+      LyricsMenuAction.autoSyncAeneas,
+      LyricsMenuAction.autoSyncWhisperX,
+    ],
     if (hasLyrics) ...[
       LyricsMenuAction.fontSize,
       LyricsMenuAction.reimport,
@@ -64,8 +73,22 @@ Future<void> runLyricsMenuAction(
   VoidCallback? onDeleted,
 }) async {
   switch (action) {
-    case LyricsMenuAction.autoSync:
-      await runLyricsAutoSync(context, ref, trackId: trackId, title: title);
+    case LyricsMenuAction.autoSyncAeneas:
+      await runLyricsAutoSync(
+        context,
+        ref,
+        trackId: trackId,
+        title: title,
+        engine: LyricsAlignEngine.aeneas,
+      );
+    case LyricsMenuAction.autoSyncWhisperX:
+      await runLyricsAutoSync(
+        context,
+        ref,
+        trackId: trackId,
+        title: title,
+        engine: LyricsAlignEngine.whisperx,
+      );
     case LyricsMenuAction.fontSize:
       showLyricsFontSizeSheet(context);
     case LyricsMenuAction.reimport:

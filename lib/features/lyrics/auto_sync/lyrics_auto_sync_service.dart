@@ -19,6 +19,17 @@ const _functionsRegion = 'asia-east1';
 /// 對時流程的階段,供進度 UI 顯示。
 enum LyricsAutoSyncStep { compressing, uploading, aligning }
 
+/// 對齊引擎:對應後端不同的 Cloud Run 服務(`align_lyrics` 依此路由)。
+/// - [aeneas]:`aeneas_service`,輕量、句級對齊。
+/// - [whisperx]:`whisperx_service`,wav2vec2 字級對齊,中文 / 歌聲一般較佳。
+enum LyricsAlignEngine {
+  aeneas,
+  whisperx;
+
+  /// 送給後端 callable 的引擎識別碼。
+  String get wireName => name;
+}
+
 /// 對時失敗原因,UI 據此映射 l10n 訊息並決定提示語氣。
 enum LyricsAutoSyncError {
   /// 未登入(callable 需身分)。
@@ -67,11 +78,13 @@ class LyricsAutoSyncService {
   final OnAudioQuery _audioQuery = OnAudioQuery();
 
   /// 為 [trackId] 執行對時。[language] 為語言提示(BCP-47,後端正規化)。
+  /// [engine] 指定後端對齊引擎(aeneas / WhisperX)。
   /// 各階段以 [onStep] 回報進度。失敗拋 [LyricsAutoSyncException]。
   Future<void> autoSync({
     required String trackId,
     required String title,
     required String language,
+    required LyricsAlignEngine engine,
     void Function(LyricsAutoSyncStep step)? onStep,
   }) async {
     final user = FirebaseAuth.instance.currentUser;
@@ -138,6 +151,7 @@ class LyricsAutoSyncService {
         'object': storageRef.fullPath,
         'language': language,
         'format': 'm4a',
+        'engine': engine.wireName,
       });
       // 不同平台回傳 Map 的鍵型別不一,故動態取值。
       final data = result.data;

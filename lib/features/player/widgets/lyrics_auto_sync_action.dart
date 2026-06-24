@@ -13,6 +13,7 @@ Future<void> runLyricsAutoSync(
   WidgetRef ref, {
   required String trackId,
   required String title,
+  required LyricsAlignEngine engine,
 }) async {
   final l10n = AppLocalizations.of(context)!;
   final messenger = ScaffoldMessenger.of(context);
@@ -29,7 +30,11 @@ Future<void> runLyricsAutoSync(
     builder: (_) => _AutoSyncProgressDialog(trackId: trackId),
   );
 
-  final ok = await controller.run(title: title, language: language);
+  final ok = await controller.run(
+    title: title,
+    language: language,
+    engine: engine,
+  );
 
   navigator.pop(); // 關閉進度框
   if (ok) {
