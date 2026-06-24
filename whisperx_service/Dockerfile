@@ -7,6 +7,8 @@ FROM python:3.11-slim-bookworm
 # 系統依賴:
 # - ffmpeg:whisperx.load_audio 以 ffmpeg 解碼(執行期)。
 # - git:部分 pip 套件需。
+# - build-essential:PyAV 從源碼編譯需要 gcc,slim 映像不含,缺則報
+#   「command 'gcc' failed: No such file or directory」。
 # - pkg-config + libav*-dev:whisperx 連帶的 PyAV(av)在無對應預編譯 wheel 時需
 #   從原始碼對系統 ffmpeg 編譯,缺這些會在 build wheel 階段報「pkg-config is
 #   required for building PyAV」。
@@ -14,6 +16,7 @@ FROM python:3.11-slim-bookworm
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ffmpeg \
         git \
+        build-essential \
         pkg-config \
         libavformat-dev \
         libavcodec-dev \
