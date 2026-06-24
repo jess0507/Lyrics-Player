@@ -41,6 +41,7 @@ class LyricsModeMenu extends ConsumerWidget {
     // 對時是「補時間」:只在已有純文字、尚未同步時提供。
     final canAutoSync = hasLyrics && !lyrics.synced;
     final lyricsActions = lyricsMenuActions(
+      canAutoGenerate: !hasLyrics,
       canAutoSync: canAutoSync,
       hasLyrics: hasLyrics,
     );
@@ -134,7 +135,9 @@ class LyricsModeMenu extends ConsumerWidget {
   /// 手動關閉歌詞:同時關閉「自動滿版歌詞」設定,
   /// 避免切歌後又自動跳回滿版。
   void _hideLyrics(WidgetRef ref) {
-    ref.read(settingsControllerProvider.notifier).setAutoFullScreenLyrics(false);
+    ref
+        .read(settingsControllerProvider.notifier)
+        .setAutoFullScreenLyrics(false);
     onHideLyrics();
   }
 
@@ -172,7 +175,9 @@ class _MenuRow extends StatelessWidget {
       children: [
         Icon(icon, size: 20, color: color),
         const SizedBox(width: 12),
-        Expanded(child: Text(label, style: TextStyle(color: color))),
+        Expanded(
+          child: Text(label, style: TextStyle(color: color)),
+        ),
         if (trailing != null)
           Padding(
             padding: const EdgeInsets.only(left: 12),

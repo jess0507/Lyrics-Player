@@ -1,11 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-
-import '../../../../core/storage/isar_service.dart';
-import '../../../../core/sync/sync_state_store.dart';
-import '../../../music_list/models/track.dart';
-import 'daily_track_stat_entity.dart';
-import 'period_stat_entity.dart';
+import 'package:seek_player/core/storage/isar_service.dart';
+import 'package:seek_player/core/sync/sync_state_store.dart';
+import 'package:seek_player/features/music_list/models/track.dart';
+import 'package:seek_player/features/profile/statistics/models/daily_track_stat_entity.dart';
+import 'package:seek_player/features/profile/statistics/models/period_stat_entity.dart';
 
 /// 聆聽統計：由 Isar 的每日 × 每首歌記錄導出的 view。
 ///

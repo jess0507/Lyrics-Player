@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-
-import '../../core/audio/audio_player_service.dart';
-import '../../l10n/app_localizations.dart';
-import '../../shared/format.dart';
-import '../../shared/widgets/playing_indicator.dart';
-import '../player/providers/playback_controller.dart';
-import 'playlist_display_name.dart';
-import 'playlist_repository.dart';
-import 'playlist_tracks_provider.dart';
-import 'playlists_provider.dart';
+import 'package:seek_player/core/audio/audio_player_service.dart';
+import 'package:seek_player/features/player/providers/playback_controller.dart';
+import 'package:seek_player/features/playlists/models/playlist_display_name.dart';
+import 'package:seek_player/features/playlists/providers/playlist_tracks_provider.dart';
+import 'package:seek_player/features/playlists/providers/playlists_provider.dart';
+import 'package:seek_player/features/playlists/services/playlist_repository.dart';
+import 'package:seek_player/l10n/app_localizations.dart';
+import 'package:seek_player/shared/format.dart';
+import 'package:seek_player/shared/widgets/playing_indicator.dart';
 
 /// 單一播放清單內容:播放全部、逐首播放、移除、拖曳排序。
 class PlaylistDetailPage extends ConsumerWidget {
@@ -119,8 +118,7 @@ class PlaylistDetailPage extends ConsumerWidget {
                             thickness: 1,
                             indent: 16,
                             endIndent: 16,
-                            color: scheme.outlineVariant
-                                .withValues(alpha: 0.5),
+                            color: scheme.outlineVariant.withValues(alpha: 0.5),
                           ),
                       ],
                     );

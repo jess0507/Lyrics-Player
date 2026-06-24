@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../l10n/app_localizations.dart';
-import '../../lyrics/auto_generate/lyrics_auto_generate_controller.dart';
-import '../../lyrics/auto_generate/lyrics_auto_generate_service.dart';
-import 'lyrics_auto_sync_action.dart' show unawaitedShowDialog;
+import 'package:seek_player/features/lyrics/auto_generate/lyrics_auto_generate_controller.dart';
+import 'package:seek_player/features/lyrics/auto_generate/lyrics_auto_generate_service.dart';
+import 'package:seek_player/features/player/widgets/lyrics_auto_sync_action.dart';
+import 'package:seek_player/l10n/app_localizations.dart';
 
 /// 觸發自動產生歌詞:顯示不可關閉的進度對話框,完成後關閉並以 SnackBar 回報。
 /// 成功時 service 已 invalidate `trackLyricsProvider`,歌詞視圖自動顯示產物。
@@ -37,9 +36,7 @@ Future<void> runLyricsAutoGenerate(
       SnackBar(content: Text(l10n.lyrics_auto_generate_success)),
     );
   } else {
-    final error = ref
-        .read(lyricsAutoGenerateControllerProvider(trackId))
-        .error;
+    final error = ref.read(lyricsAutoGenerateControllerProvider(trackId)).error;
     messenger.showSnackBar(
       SnackBar(content: Text(_autoGenerateErrorText(l10n, error))),
     );
@@ -66,9 +63,7 @@ class _AutoGenerateProgressDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final step = ref
-        .watch(lyricsAutoGenerateControllerProvider(trackId))
-        .step;
+    final step = ref.watch(lyricsAutoGenerateControllerProvider(trackId)).step;
     final label = switch (step) {
       LyricsAutoGenerateStep.compressing =>
         l10n.lyrics_auto_generate_compressing,

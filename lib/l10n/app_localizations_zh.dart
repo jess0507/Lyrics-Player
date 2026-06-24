@@ -372,6 +372,39 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lyrics_auto_sync_network => '連線問題,請稍後再試';
 
   @override
+  String get lyrics_auto_generate => 'Auto-generate lyrics';
+
+  @override
+  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+
+  @override
+  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+
+  @override
+  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+
+  @override
+  String get lyrics_auto_generate_success =>
+      'Lyrics generated (auto, may be imperfect)';
+
+  @override
+  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+
+  @override
+  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+
+  @override
+  String get lyrics_auto_generate_rate_limited =>
+      'Daily auto-generate limit reached, try tomorrow';
+
+  @override
+  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+
+  @override
+  String get lyrics_auto_generate_network =>
+      'Connection problem, try again later';
+
+  @override
   String get tab_playlists => '播放清單';
 
   @override
@@ -1224,6 +1257,36 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get lyrics_auto_sync_network => '連線問題,請稍後再試';
+
+  @override
+  String get lyrics_auto_generate => '自動產生歌詞';
+
+  @override
+  String get lyrics_auto_generate_compressing => '處理音訊中…';
+
+  @override
+  String get lyrics_auto_generate_uploading => '上傳音訊中…';
+
+  @override
+  String get lyrics_auto_generate_transcribing => '產生歌詞中…';
+
+  @override
+  String get lyrics_auto_generate_success => '已產生歌詞(可能有誤)';
+
+  @override
+  String get lyrics_auto_generate_failed => '產生歌詞失敗';
+
+  @override
+  String get lyrics_auto_generate_need_login => '請先登入才能使用自動產生歌詞';
+
+  @override
+  String get lyrics_auto_generate_rate_limited => '今日產生次數已達上限,請明天再試';
+
+  @override
+  String get lyrics_auto_generate_no_audio => '找不到音訊檔';
+
+  @override
+  String get lyrics_auto_generate_network => '連線問題,請稍後再試';
 
   @override
   String get tab_playlists => '播放清單';

@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../lyrics/providers/track_lyrics_provider.dart';
-import '../../music_list/providers/music_library.dart';
 import '../../music_list/models/track.dart';
+import '../../music_list/providers/music_library.dart';
 import '../../playlists/widgets/add_to_playlist_sheet.dart';
 import 'lyrics_menu_action.dart';
 import 'speed_button.dart';
@@ -87,9 +87,10 @@ class _SecondaryControlsMenuSheet extends ConsumerWidget {
         ? null
         : ref.watch(trackLyricsProvider(id)).valueOrNull;
     final hasLyrics = lyrics != null && lyrics.isNotEmpty;
-    // 對時是「補時間」:只在已有純文字、尚未同步時提供。
+    final canAutoGenerate = hasLyrics;
     final canAutoSync = hasLyrics && !lyrics.synced;
     final lyricsActions = lyricsMenuActions(
+      canAutoGenerate: canAutoGenerate,
       canAutoSync: canAutoSync,
       hasLyrics: hasLyrics,
     );

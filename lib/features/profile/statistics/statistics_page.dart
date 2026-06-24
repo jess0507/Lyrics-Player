@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:seek_player/features/profile/statistics/providers/selected_stat_provider.dart';
+import 'package:seek_player/features/profile/statistics/providers/selected_top_tracks_provider.dart';
+import 'package:seek_player/features/profile/statistics/services/statistics_service.dart';
 
 import '../../../core/auth/auth_state_provider.dart';
 import '../../../core/firebase_available_provider.dart';
 import '../../../core/sync/sync_service.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/format.dart';
-import 'selected_stat_provider.dart';
-import 'selected_top_tracks_provider.dart';
-import 'statistics_service.dart';
 import 'widgets/listen_time_chart.dart';
 
 class StatisticsPage extends ConsumerWidget {
@@ -151,10 +151,9 @@ class _StatCard extends StatelessWidget {
                   const Spacer(),
                   Text(
                     caption!,
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelSmall
-                        ?.copyWith(color: scheme.primary),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.labelSmall?.copyWith(color: scheme.primary),
                   ),
                 ],
               ],

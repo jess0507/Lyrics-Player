@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'cover_color.dart';
-import 'track_cover_color_provider.dart';
-import 'track_cover_entity.dart';
-import 'track_cover_provider.dart';
-import 'track_cover_repository.dart';
+import 'package:seek_player/features/cover/models/track_cover_entity.dart';
+import 'package:seek_player/features/cover/providers/track_cover_color_provider.dart';
+import 'package:seek_player/features/cover/providers/track_cover_provider.dart';
+import 'package:seek_player/features/cover/services/cover_color.dart';
+import 'package:seek_player/features/cover/services/track_cover_repository.dart';
 
 /// 設定封面失敗原因,供 UI 映射到對應的 l10n 失敗訊息。
 enum CoverImportError { tooLarge, unreadable }

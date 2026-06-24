@@ -852,6 +852,66 @@ abstract class AppLocalizations {
   /// **'Connection problem, try again later'**
   String get lyrics_auto_sync_network;
 
+  /// No description provided for @lyrics_auto_generate.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-generate lyrics'**
+  String get lyrics_auto_generate;
+
+  /// No description provided for @lyrics_auto_generate_compressing.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing audio…'**
+  String get lyrics_auto_generate_compressing;
+
+  /// No description provided for @lyrics_auto_generate_uploading.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading audio…'**
+  String get lyrics_auto_generate_uploading;
+
+  /// No description provided for @lyrics_auto_generate_transcribing.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating lyrics…'**
+  String get lyrics_auto_generate_transcribing;
+
+  /// No description provided for @lyrics_auto_generate_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Lyrics generated (auto, may be imperfect)'**
+  String get lyrics_auto_generate_success;
+
+  /// No description provided for @lyrics_auto_generate_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t generate lyrics'**
+  String get lyrics_auto_generate_failed;
+
+  /// No description provided for @lyrics_auto_generate_need_login.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to use auto-generate'**
+  String get lyrics_auto_generate_need_login;
+
+  /// No description provided for @lyrics_auto_generate_rate_limited.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily auto-generate limit reached, try tomorrow'**
+  String get lyrics_auto_generate_rate_limited;
+
+  /// No description provided for @lyrics_auto_generate_no_audio.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio file not found'**
+  String get lyrics_auto_generate_no_audio;
+
+  /// No description provided for @lyrics_auto_generate_network.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection problem, try again later'**
+  String get lyrics_auto_generate_network;
+
   /// No description provided for @tab_playlists.
   ///
   /// In en, this message translates to:

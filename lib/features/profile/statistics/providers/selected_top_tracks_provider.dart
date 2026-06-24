@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'chart_selection_provider.dart';
-import 'chart_series_provider.dart';
-import 'statistics_service.dart';
+import 'package:seek_player/features/profile/statistics/providers/chart_selection_provider.dart';
+import 'package:seek_player/features/profile/statistics/providers/chart_series_provider.dart';
+import 'package:seek_player/features/profile/statistics/services/statistics_service.dart';
 
 /// 「最常播放」排行,依圖表選取(範圍 + 觸碰節點)導出:
 /// 未觸碰節點時為整個範圍視窗的排行,觸碰某期間則只算該期間。

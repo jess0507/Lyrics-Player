@@ -3,9 +3,8 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../../cover/services/cover_import_service.dart';
-import 'track.dart';
+import 'package:seek_player/features/cover/services/cover_import_service.dart';
+import 'package:seek_player/features/music_list/models/track.dart';
 
 /// 本機音樂庫：直接掃描裝置 MediaStore（不複製檔案、不另存資料庫）。
 ///
@@ -63,5 +62,6 @@ class MusicLibrary extends AsyncNotifier<List<Track>> {
   }
 }
 
-final musicLibraryProvider =
-    AsyncNotifierProvider<MusicLibrary, List<Track>>(MusicLibrary.new);
+final musicLibraryProvider = AsyncNotifierProvider<MusicLibrary, List<Track>>(
+  MusicLibrary.new,
+);

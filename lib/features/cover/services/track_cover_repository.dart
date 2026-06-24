@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-
-import '../../../core/storage/isar_service.dart';
-import 'track_cover_entity.dart';
+import 'package:seek_player/core/storage/isar_service.dart';
+import 'package:seek_player/features/cover/models/track_cover_entity.dart';
 
 /// 自訂封面的 Isar CRUD。只存圖檔路徑,圖檔本體由 service 管理。
 class TrackCoverRepository {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'player_page.dart';
+import 'package:seek_player/features/player/player_page.dart';
 
 /// 播放器 sheet 的開關狀態與展開邏輯（viewmodel）。
 ///

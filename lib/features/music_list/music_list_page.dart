@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:seek_player/features/music_list/models/track.dart';
+import 'package:seek_player/features/music_list/providers/filtered_tracks_provider.dart';
+import 'package:seek_player/features/music_list/providers/music_library.dart';
+import 'package:seek_player/features/music_list/providers/music_search_query_provider.dart';
 
 import '../../core/audio/audio_player_service.dart';
 import '../../core/permissions/permission_service.dart';
@@ -10,10 +14,6 @@ import '../../shared/format.dart';
 import '../../shared/widgets/playing_indicator.dart';
 import '../player/providers/playback_controller.dart';
 import '../playlists/widgets/add_to_playlist_sheet.dart';
-import 'filtered_tracks_provider.dart';
-import 'music_library.dart';
-import 'music_search_query_provider.dart';
-import 'track.dart';
 
 class MusicListPage extends ConsumerStatefulWidget {
   const MusicListPage({super.key});

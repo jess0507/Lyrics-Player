@@ -1,10 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-
-import '../../../../core/storage/isar_service.dart';
-import 'daily_track_stat_entity.dart';
-import 'period_stat_entity.dart';
-import 'statistics_service.dart';
+import 'package:seek_player/core/storage/isar_service.dart';
+import 'package:seek_player/features/profile/statistics/models/daily_track_stat_entity.dart';
+import 'package:seek_player/features/profile/statistics/models/period_stat_entity.dart';
+import 'package:seek_player/features/profile/statistics/services/statistics_service.dart';
 
 /// 統計圖表的視圖範圍(rolling window)。
 enum ChartRange {
@@ -43,8 +42,10 @@ class ChartPoint {
 /// watch [statisticsControllerProvider] 作為失效時機——addListenTime
 /// 每 5 秒 commit 一次會觸發重查,但只撈最近 7~30 天明細 / 12 筆月總量,
 /// 成本可忽略。
-final chartSeriesProvider =
-    Provider.family<List<ChartPoint>, ChartRange>((ref, range) {
+final chartSeriesProvider = Provider.family<List<ChartPoint>, ChartRange>((
+  ref,
+  range,
+) {
   ref.watch(statisticsControllerProvider);
   final isar = ref.watch(isarProvider);
   final now = DateTime.now();
@@ -94,14 +95,12 @@ List<ChartPoint> _monthPoints(Isar isar, List<String> keys) {
 
 /// 最近 [n] 天(含今天)的 day key,依時間升冪。
 List<String> _dayKeys(DateTime now, int n) => [
-      for (var i = n - 1; i >= 0; i--)
-        StatisticsController.dayKey(
-          DateTime(now.year, now.month, now.day - i),
-        ),
-    ];
+  for (var i = n - 1; i >= 0; i--)
+    StatisticsController.dayKey(DateTime(now.year, now.month, now.day - i)),
+];
 
 /// 最近 [n] 個月(含本月)的 month key,依時間升冪。
 List<String> _monthKeys(DateTime now, int n) => [
-      for (var i = n - 1; i >= 0; i--)
-        StatisticsController.monthKey(DateTime(now.year, now.month - i)),
-    ];
+  for (var i = n - 1; i >= 0; i--)
+    StatisticsController.monthKey(DateTime(now.year, now.month - i)),
+];

@@ -3,11 +3,10 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'lyrics_entity.dart';
-import 'lyrics_parser.dart';
-import 'lyrics_repository.dart';
-import 'track_lyrics_provider.dart';
+import 'package:seek_player/features/lyrics/models/lyrics_entity.dart';
+import 'package:seek_player/features/lyrics/providers/track_lyrics_provider.dart';
+import 'package:seek_player/features/lyrics/services/lyrics_parser.dart';
+import 'package:seek_player/features/lyrics/services/lyrics_repository.dart';
 
 /// 匯入失敗原因,供 UI 映射到對應的 l10n 失敗訊息。
 enum LyricsImportError { tooLarge, unreadable, empty }

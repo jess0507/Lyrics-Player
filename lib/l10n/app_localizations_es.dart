@@ -392,6 +392,39 @@ class AppLocalizationsEs extends AppLocalizations {
       'Problema de conexión, inténtalo más tarde';
 
   @override
+  String get lyrics_auto_generate => 'Auto-generate lyrics';
+
+  @override
+  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+
+  @override
+  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+
+  @override
+  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+
+  @override
+  String get lyrics_auto_generate_success =>
+      'Lyrics generated (auto, may be imperfect)';
+
+  @override
+  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+
+  @override
+  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+
+  @override
+  String get lyrics_auto_generate_rate_limited =>
+      'Daily auto-generate limit reached, try tomorrow';
+
+  @override
+  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+
+  @override
+  String get lyrics_auto_generate_network =>
+      'Connection problem, try again later';
+
+  @override
   String get tab_playlists => 'Listas';
 
   @override

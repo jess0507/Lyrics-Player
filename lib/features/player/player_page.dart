@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:seek_player/features/player/providers/playback_controller.dart';
 import 'package:seek_player/features/player/widgets/secondary_controls.dart';
 
 import '../../core/audio/audio_player_service.dart';
@@ -9,7 +10,6 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/providers/settings_controller.dart';
 import '../../shared/widgets/marquee_text.dart';
 import '../lyrics/providers/track_lyrics_provider.dart';
-import 'playback_controller.dart';
 import 'widgets/lyrics_mode_menu.dart';
 import 'widgets/lyrics_view.dart';
 import 'widgets/player_artwork_panel.dart';
@@ -72,8 +72,11 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
           final autoLyrics = ref.watch(
             settingsControllerProvider.select((s) => s.autoFullScreenLyrics),
           );
-          final hasLyrics = hasTrack &&
-              (ref.watch(trackLyricsProvider(mediaItem.id)).valueOrNull
+          final hasLyrics =
+              hasTrack &&
+              (ref
+                      .watch(trackLyricsProvider(mediaItem.id))
+                      .valueOrNull
                       ?.isNotEmpty ??
                   false);
           final showLyrics =

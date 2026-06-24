@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'lyrics.dart';
-import 'lyrics_entity.dart';
+import 'package:seek_player/features/lyrics/models/lyrics.dart';
+import 'package:seek_player/features/lyrics/models/lyrics_entity.dart';
 
 /// 歌詞解析(純函式,可單元測試)。四種檔案格式各有小規則,自寫以統一輸出
 /// 同一個 [Lyrics] 模型;壞檔以容錯為原則:略過無法解析的行,絕不整檔失敗。
@@ -53,7 +53,10 @@ Lyrics _parseLrc(String content) {
     final matches = _lrcTime.allMatches(raw).toList();
     if (matches.isEmpty) continue; // 檔頭 metadata / 空行:略過
     // 文字為最後一個時間戳之後的部分;剝除 enhanced 逐字標記。
-    final text = raw.substring(matches.last.end).replaceAll(_lrcWord, '').trim();
+    final text = raw
+        .substring(matches.last.end)
+        .replaceAll(_lrcWord, '')
+        .trim();
     for (final m in matches) {
       // 一行多時間戳(副歌共用句)展開為多行,各帶自己的時間。
       lines.add(LyricsLine(time: _lrcTimeToDuration(m, offset), text: text));
@@ -87,7 +90,8 @@ final _cueTime = RegExp(
 Lyrics _parseCues(String content) {
   final lines = <LyricsLine>[];
   // 以空行分塊;每塊找含 `-->` 的時間行,其後各行為字幕文字。
-  for (final block in content.replaceAll('\r\n', '\n').split(RegExp(r'\n\s*\n'))) {
+  for (final block
+      in content.replaceAll('\r\n', '\n').split(RegExp(r'\n\s*\n'))) {
     final blockLines = block.split('\n');
     Duration? start;
     final text = <String>[];
@@ -115,7 +119,8 @@ Duration _cueStartToDuration(RegExpMatch m) {
   final minutes = int.parse(m.group(2)!);
   final seconds = int.parse(m.group(3)!);
   return Duration(
-    milliseconds: hours * 3600000 +
+    milliseconds:
+        hours * 3600000 +
         minutes * 60000 +
         seconds * 1000 +
         _fractionToMs(m.group(4)),

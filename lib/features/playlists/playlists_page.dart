@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../l10n/app_localizations.dart';
-import 'playlist_display_name.dart';
-import 'playlist_entity.dart';
-import 'playlist_repository.dart';
-import 'playlists_provider.dart';
-import 'widgets/playlist_name_dialog.dart';
+import 'package:seek_player/features/playlists/models/playlist_display_name.dart';
+import 'package:seek_player/features/playlists/models/playlist_entity.dart';
+import 'package:seek_player/features/playlists/providers/playlists_provider.dart';
+import 'package:seek_player/features/playlists/services/playlist_repository.dart';
+import 'package:seek_player/features/playlists/widgets/playlist_name_dialog.dart';
+import 'package:seek_player/l10n/app_localizations.dart';
 
 /// 播放清單列表:我的最愛固定在最前,可新增 / 重新命名 / 刪除其他清單。
 class PlaylistsPage extends ConsumerWidget {
