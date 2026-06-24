@@ -177,7 +177,7 @@ curl -s localhost:8080/healthz
 gcloud run deploy whisperx-align \
   --source . \
   --region asia-east1 \
-  --memory 4Gi --cpu 4 --timeout 600 \
+  --memory 8Gi --cpu 4 --timeout 600 \
   --no-allow-unauthenticated
 
 # 2. 暫存音訊清理:App 上傳到 Firebase 預設 bucket 的 align/{uid}/**。

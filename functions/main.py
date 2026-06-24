@@ -50,6 +50,14 @@ _GENERATE_RATE_LIMIT_PER_DAY = int(
     os.environ.get("GENERATE_RATE_LIMIT_PER_DAY", "5")
 )
 
+# 不受每日上限限制的測試 / 內部帳號 uid(逗號分隔),供 QA 反覆測試。
+# 名單內的 uid 在 align_lyrics / generate_lyrics 皆跳過配額(不計數)。
+_RATE_LIMIT_EXEMPT_UIDS = {
+    u.strip()
+    for u in os.environ.get("RATE_LIMIT_EXEMPT_UIDS", "").split(",")
+    if u.strip()
+}
+
 
 def _require_uid(req: https_fn.CallableRequest) -> str:
     """取出已驗證的 uid;未登入則丟出 UNAUTHENTICATED。"""
@@ -90,6 +98,10 @@ def _consume_daily_quota(collection: str, uid: str, limit: int) -> bool:
     紀錄於 ``{collection}/{uid}``(`{day: 'YYYY-MM-DD', count: n}`),每日自動歸零
     (以 ``day`` 變更判定,無需排程清理)。對時 / 自動產生各用獨立 collection。
     """
+    # 豁免帳號(測試 / 內部)不受上限限制,也不累加用量。
+    if uid in _RATE_LIMIT_EXEMPT_UIDS:
+        return True
+
     db = firestore.client()
     ref = db.collection(collection).document(uid)
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")

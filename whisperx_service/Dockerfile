@@ -35,6 +35,19 @@ RUN pip install --no-cache-dir \
         --extra-index-url https://download.pytorch.org/whl/cpu \
         -r requirements.txt
 
+# 預烤 WhisperX 的 VAD 權重:whisperx 3.1.5 以 urllib 抓寫死的 S3 VAD URL,該 URL
+# 現會回 301 轉址、urllib 不跟,導致 runtime 載模型時拋「HTTP Error 301」→ 整批
+# 轉寫 422。改在 build 時用 requests(會跟轉址)抓好,放到 whisperx 預期的路徑
+# ($TORCH_HOME),runtime 直接命中本機檔、不再下載。URL 與檔名皆取自 whisperx 自身
+# 常數,與版本無關;放在 COPY 應用碼之前,讓本層隨 requirements 一起被 layer 快取。
+ENV TORCH_HOME=/app/.cache/torch
+RUN python -c "import whisperx.vad as v, torch, os, requests; \
+d=torch.hub._get_torch_home(); os.makedirs(d, exist_ok=True); \
+fp=os.path.join(d, 'whisperx-vad-segmentation.bin'); \
+r=requests.get(v.VAD_SEGMENTATION_URL, allow_redirects=True, timeout=120); r.raise_for_status(); \
+open(fp, 'wb').write(r.content); \
+print('VAD cached:', fp, len(r.content), 'bytes')"
+
 COPY . .
 
 # HuggingFace 快取:首呼會下載對齊模型;指到容器內可寫路徑(冷啟動較慢,屬已知

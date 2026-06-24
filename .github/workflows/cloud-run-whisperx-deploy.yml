@@ -41,7 +41,7 @@ jobs:
             --source whisperx_service \
             --project seek-player-f724e \
             --region asia-east1 \
-            --memory 4Gi \
+            --memory 8Gi \
             --cpu 4 \
             --timeout 600 \
             --no-allow-unauthenticated \
