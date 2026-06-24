@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../lyrics/track_lyrics_provider.dart';
-import '../../music_list/music_library.dart';
-import '../../music_list/track.dart';
+import '../../lyrics/providers/track_lyrics_provider.dart';
+import '../../music_list/providers/music_library.dart';
+import '../../music_list/models/track.dart';
 import '../../playlists/widgets/add_to_playlist_sheet.dart';
 import 'lyrics_menu_action.dart';
 import 'speed_button.dart';

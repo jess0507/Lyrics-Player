@@ -8,10 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:seek_player/core/storage/isar_service.dart';
 import 'package:seek_player/core/storage/preferences_service.dart';
-import 'package:seek_player/features/music_list/track.dart';
-import 'package:seek_player/features/profile/statistics/daily_track_stat_entity.dart';
-import 'package:seek_player/features/profile/statistics/period_stat_entity.dart';
-import 'package:seek_player/features/profile/statistics/statistics_service.dart';
+import 'package:seek_player/features/music_list/models/track.dart';
+import 'package:seek_player/features/profile/statistics/models/daily_track_stat_entity.dart';
+import 'package:seek_player/features/profile/statistics/models/period_stat_entity.dart';
+import 'package:seek_player/features/profile/statistics/services/statistics_service.dart';
 
 DailyTrackStatEntity _stat(
   String day,

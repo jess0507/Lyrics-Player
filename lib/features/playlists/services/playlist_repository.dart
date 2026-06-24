@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 
-import '../../core/storage/isar_service.dart';
+import '../../../core/storage/isar_service.dart';
 import 'playlist_entity.dart';
 
 /// 播放清單的 Isar CRUD。曲目以有序 trackId 清單保存,解析交給讀取端。

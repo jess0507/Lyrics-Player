@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/audio/audio_player_service.dart';
-import '../music_list/music_library.dart';
-import '../music_list/track.dart';
-import '../profile/statistics/statistics_service.dart';
+import '../../../core/audio/audio_player_service.dart';
+import '../../music_list/providers/music_library.dart';
+import '../../music_list/models/track.dart';
+import '../../profile/statistics/services/statistics_service.dart';
 
 /// 串接音樂庫、音訊服務與統計：負責「從某首開始播放」與背景統計收集。
 class PlaybackController {

@@ -7,10 +7,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-import '../lyrics_entity.dart';
-import '../lyrics_parser.dart';
-import '../lyrics_repository.dart';
-import '../track_lyrics_provider.dart';
+import '../models/lyrics_entity.dart';
+import '../services/lyrics_parser.dart';
+import '../services/lyrics_repository.dart';
+import '../providers/track_lyrics_provider.dart';
 import 'audio_compressor.dart';
 
 /// 必須與 Cloud Functions 部署的 region(`functions/main.py` 的 `_REGION`)一致。

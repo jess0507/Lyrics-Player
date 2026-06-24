@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 
-import '../../../core/storage/isar_service.dart';
-import '../../../core/sync/sync_state_store.dart';
-import '../../music_list/track.dart';
+import '../../../../core/storage/isar_service.dart';
+import '../../../../core/sync/sync_state_store.dart';
+import '../../../music_list/models/track.dart';
 import 'daily_track_stat_entity.dart';
 import 'period_stat_entity.dart';
 

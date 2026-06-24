@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/format.dart';
-import '../chart_selection_provider.dart';
-import '../chart_series_provider.dart';
+import '../providers/chart_selection_provider.dart';
+import '../providers/chart_series_provider.dart';
 
 /// 聆聽時長折線圖卡片:標題 + 週/月/年視圖切換 + LineChart。
 ///

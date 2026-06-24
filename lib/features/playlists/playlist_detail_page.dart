@@ -7,7 +7,7 @@ import '../../core/audio/audio_player_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/format.dart';
 import '../../shared/widgets/playing_indicator.dart';
-import '../player/playback_controller.dart';
+import '../player/providers/playback_controller.dart';
 import 'playlist_display_name.dart';
 import 'playlist_repository.dart';
 import 'playlist_tracks_provider.dart';

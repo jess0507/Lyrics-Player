@@ -4,8 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:seek_player/app.dart';
 import 'package:seek_player/core/storage/preferences_service.dart';
-import 'package:seek_player/features/music_list/music_library.dart';
-import 'package:seek_player/features/music_list/track.dart';
+import 'package:seek_player/features/music_list/providers/music_library.dart';
+import 'package:seek_player/features/music_list/models/track.dart';
 
 /// 測試用音樂庫：不觸碰裝置 MediaStore，回傳空清單。
 class _FakeMusicLibrary extends MusicLibrary {

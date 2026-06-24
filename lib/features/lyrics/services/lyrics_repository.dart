@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 
-import '../../core/storage/isar_service.dart';
+import '../../../core/storage/isar_service.dart';
 import 'lyrics_entity.dart';
 
 /// 歌詞的 Isar CRUD。儲存原文,解析交給讀取端(parser)。

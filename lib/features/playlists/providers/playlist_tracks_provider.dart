@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../music_list/music_library.dart';
-import '../music_list/track.dart';
+import '../../music_list/providers/music_library.dart';
+import '../../music_list/models/track.dart';
 import 'playlists_provider.dart';
 
 /// 依 playlist id 把有序 trackId 解析成 [Track](回 music library 對齊)。

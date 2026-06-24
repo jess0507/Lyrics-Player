@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
-import '../../cover/cover_import_service.dart';
+import '../../cover/services/cover_import_service.dart';
 
 /// 封面動作:`set` 新增 / 更換,`remove` 移除。
 enum _CoverAction { set, remove }

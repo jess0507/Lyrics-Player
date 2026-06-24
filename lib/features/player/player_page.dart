@@ -8,7 +8,7 @@ import '../../core/audio/audio_player_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/providers/settings_controller.dart';
 import '../../shared/widgets/marquee_text.dart';
-import '../lyrics/track_lyrics_provider.dart';
+import '../lyrics/providers/track_lyrics_provider.dart';
 import 'playback_controller.dart';
 import 'widgets/lyrics_mode_menu.dart';
 import 'widgets/lyrics_view.dart';

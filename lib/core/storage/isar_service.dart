@@ -2,11 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../features/cover/track_cover_entity.dart';
-import '../../features/lyrics/lyrics_entity.dart';
-import '../../features/playlists/playlist_entity.dart';
-import '../../features/profile/statistics/daily_track_stat_entity.dart';
-import '../../features/profile/statistics/period_stat_entity.dart';
+import '../../features/cover/models/track_cover_entity.dart';
+import '../../features/lyrics/models/lyrics_entity.dart';
+import '../../features/playlists/models/playlist_entity.dart';
+import '../../features/profile/statistics/models/daily_track_stat_entity.dart';
+import '../../features/profile/statistics/models/period_stat_entity.dart';
 
 /// 開啟 Isar 資料庫（資料儲存層：目前存放聆聽統計，使用者設定仍用
 /// SharedPreferences）。

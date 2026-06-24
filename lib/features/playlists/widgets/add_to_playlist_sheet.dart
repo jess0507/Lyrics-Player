@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
-import '../../music_list/track.dart';
-import '../playlist_display_name.dart';
-import '../playlist_repository.dart';
-import '../playlists_provider.dart';
+import '../../music_list/models/track.dart';
+import '../models/playlist_display_name.dart';
+import '../services/playlist_repository.dart';
+import '../providers/playlists_provider.dart';
 import 'playlist_name_dialog.dart';
 
 /// 顯示「加入播放清單」底部表單:列出所有清單,點選即把 [track] 加入,

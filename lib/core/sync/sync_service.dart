@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../features/profile/statistics/daily_track_stat_entity.dart';
-import '../../features/profile/statistics/period_stat_entity.dart';
-import '../../features/profile/statistics/statistics_service.dart';
+import '../../features/profile/statistics/models/daily_track_stat_entity.dart';
+import '../../features/profile/statistics/models/period_stat_entity.dart';
+import '../../features/profile/statistics/services/statistics_service.dart';
 import '../../shared/providers/settings_controller.dart';
 import '../auth/auth_service.dart';
 import '../firebase_available_provider.dart';

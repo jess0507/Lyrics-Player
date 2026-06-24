@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
-import '../../cover/track_cover_provider.dart';
-import '../../lyrics/track_lyrics_provider.dart';
+import '../../cover/providers/track_cover_provider.dart';
+import '../../lyrics/providers/track_lyrics_provider.dart';
 import 'cover_action_sheet.dart';
 import 'lyrics_view.dart';
 import 'player_artwork.dart';

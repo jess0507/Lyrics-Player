@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../shared/providers/settings_controller.dart';
-import '../../cover/cover_color.dart';
-import '../../cover/track_cover_color_provider.dart';
+import '../../cover/services/cover_color.dart';
+import '../../cover/providers/track_cover_color_provider.dart';
 
 /// 播放頁的漸層背景:由主題的 [ColorScheme] 推導,
 /// 上方漸濃染上強調色、向下淡出為 [ColorScheme.surface]。

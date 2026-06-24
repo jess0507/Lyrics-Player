@@ -5,7 +5,7 @@ import 'package:just_audio/just_audio.dart';
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/providers/settings_controller.dart';
-import '../../lyrics/track_lyrics_provider.dart';
+import '../../lyrics/providers/track_lyrics_provider.dart';
 import 'lyrics_menu_action.dart';
 import 'speed_button.dart';
 

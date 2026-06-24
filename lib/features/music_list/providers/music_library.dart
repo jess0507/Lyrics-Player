@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../cover/cover_import_service.dart';
+import '../../cover/services/cover_import_service.dart';
 import 'track.dart';
 
 /// 本機音樂庫：直接掃描裝置 MediaStore（不複製檔案、不另存資料庫）。

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:seek_player/features/lyrics/lyrics_entity.dart';
-import 'package:seek_player/features/lyrics/lyrics_parser.dart';
+import 'package:seek_player/features/lyrics/models/lyrics_entity.dart';
+import 'package:seek_player/features/lyrics/services/lyrics_parser.dart';
 
 void main() {
   group('detectLyricsFormat', () {

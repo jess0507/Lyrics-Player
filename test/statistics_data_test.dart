@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:seek_player/features/profile/statistics/daily_track_stat_entity.dart';
-import 'package:seek_player/features/profile/statistics/statistics_service.dart';
+import 'package:seek_player/features/profile/statistics/models/daily_track_stat_entity.dart';
+import 'package:seek_player/features/profile/statistics/services/statistics_service.dart';
 
 DailyTrackStatEntity _stat(
   String day,

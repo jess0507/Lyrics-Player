@@ -5,9 +5,9 @@ import 'package:just_audio_background/just_audio_background.dart';
 
 import '../../core/audio/audio_player_service.dart';
 import '../../l10n/app_localizations.dart';
-import '../cover/track_cover_provider.dart';
-import '../player/playback_controller.dart';
-import '../player/player_sheet_controller.dart';
+import '../cover/providers/track_cover_provider.dart';
+import '../player/providers/playback_controller.dart';
+import '../player/providers/player_sheet_controller.dart';
 
 /// 顯示於底部導覽列上方的迷你播放器。
 ///

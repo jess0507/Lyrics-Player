@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
-import '../../lyrics/lyrics_import_service.dart';
-import '../../lyrics/track_lyrics_provider.dart';
-import '../lyrics_font_scale_controller.dart';
+import '../../lyrics/services/lyrics_import_service.dart';
+import '../../lyrics/providers/track_lyrics_provider.dart';
+import '../providers/lyrics_font_scale_controller.dart';
 import 'lyrics_synced_view.dart';
 import 'lyrics_unsynced_view.dart';
 

@@ -8,7 +8,7 @@ import '../../core/permissions/permission_service.dart';
 import '../../l10n/app_localizations.dart';
 import '../../shared/format.dart';
 import '../../shared/widgets/playing_indicator.dart';
-import '../player/playback_controller.dart';
+import '../player/providers/playback_controller.dart';
 import '../playlists/widgets/add_to_playlist_sheet.dart';
 import 'filtered_tracks_provider.dart';
 import 'music_library.dart';

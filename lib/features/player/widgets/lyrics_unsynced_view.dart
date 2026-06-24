@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../lyrics/lyrics.dart';
+import '../../lyrics/models/lyrics.dart';
 
 /// 非同步歌詞(純文字或無法取得時間戳):整篇可捲動的靜態文字,無高亮。
 class LyricsUnsyncedView extends StatelessWidget {

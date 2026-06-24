@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
-import '../lyrics_font_scale_controller.dart';
+import '../providers/lyrics_font_scale_controller.dart';
 import 'adjustment_bottom_sheet.dart';
 
 /// 以底部面板的滑桿調整歌詞字級;面板半遮畫面,上方歌詞可即時預覽,

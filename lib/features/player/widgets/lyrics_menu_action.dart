@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../lyrics/auto_sync/lyrics_auto_sync_service.dart';
-import '../../lyrics/lyrics_repository.dart';
-import '../../lyrics/track_lyrics_provider.dart';
+import '../../lyrics/services/lyrics_repository.dart';
+import '../../lyrics/providers/track_lyrics_provider.dart';
+import 'lyrics_auto_generate_action.dart';
 import 'lyrics_auto_sync_action.dart';
 import 'lyrics_font_size_sheet.dart';
 import 'lyrics_view.dart';
@@ -12,6 +13,9 @@ import 'lyrics_view.dart';
 /// 歌詞相關的選單動作,供「次控制列更多選單」與「歌詞滿版選單」共用。
 /// 顯示與否由 [lyricsMenuActions] 依狀態決定,動作分派由 [runLyricsMenuAction] 處理。
 enum LyricsMenuAction {
+  /// 自動產生歌詞(WhisperX ASR);完全沒有歌詞時顯示。
+  autoGenerate,
+
   /// 自動對時(aeneas 引擎);已有純文字、尚未同步時顯示。
   autoSyncAeneas,
 
@@ -28,6 +32,7 @@ enum LyricsMenuAction {
   delete;
 
   IconData get icon => switch (this) {
+    autoGenerate => Icons.lyrics_outlined,
     autoSyncAeneas => Icons.auto_fix_high,
     autoSyncWhisperX => Icons.auto_awesome,
     fontSize => Icons.text_fields,
@@ -36,6 +41,7 @@ enum LyricsMenuAction {
   };
 
   String label(AppLocalizations l10n) => switch (this) {
+    autoGenerate => l10n.lyrics_auto_generate,
     autoSyncAeneas => '${l10n.lyrics_auto_sync} · aeneas',
     autoSyncWhisperX => '${l10n.lyrics_auto_sync} · WhisperX',
     fontSize => l10n.lyrics_font_size,
@@ -45,12 +51,15 @@ enum LyricsMenuAction {
 }
 
 /// 依目前歌詞狀態挑出要顯示的歌詞動作與順序。
+/// [canAutoGenerate] 為「完全沒有歌詞」(可從音訊直接產生);
 /// [canAutoSync] 為「已有純文字、尚未同步」;[hasLyrics] 為「已有歌詞」。
 List<LyricsMenuAction> lyricsMenuActions({
+  required bool canAutoGenerate,
   required bool canAutoSync,
   required bool hasLyrics,
 }) {
   return [
+    if (canAutoGenerate) LyricsMenuAction.autoGenerate,
     if (canAutoSync) ...[
       LyricsMenuAction.autoSyncAeneas,
       LyricsMenuAction.autoSyncWhisperX,
