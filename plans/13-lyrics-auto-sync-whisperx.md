@@ -1,6 +1,8 @@
 # 歌詞功能:自動對時(txt → 同步)— WhisperX 路線(backlog 5)
 
 狀態:**規劃 / 待調查**(2026-06-14)。
+第三條路線見 `plans/13b-lyrics-auto-sync-whispercpp-ondevice.md`(whisper.cpp
+**手機端本機執行、不需後端**;惟為 ASR 回貼非 forced alignment)。
 姊妹計畫:`plans/lyrics-auto-sync-aeneas.md`(同一任務的起步路線,依賴單純、
 容器化容易、行級對齊)。本路線為**升級選項**:字級時間更細、中文對齊一般較佳。
 相關:`plans/lyrics-import.md`(地基:`LyricsEntity` / 統一 `Lyrics` 模型 /
