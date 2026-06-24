@@ -78,6 +78,7 @@ def align_endpoint():
     try:
         result = align([str(x) for x in lines], audio_path, language)
     except AlignmentError as exc:
+        log.warning("對齊失敗(422):%s", exc)
         return _error("alignment_failed", str(exc), 422)
     except Exception as exc:  # 非預期失敗
         log.exception("對齊時發生未預期錯誤")
@@ -118,6 +119,9 @@ def transcribe_endpoint():
     try:
         result = transcribe(audio_path, str(language) if language else None)
     except TranscriptionError as exc:
+        # 記下「可預期失敗」的原因(辨識不出歌詞 / 音訊不可用),否則 422
+        # 在 log 無痕,難以判斷是音訊問題還是模型沒抓到歌聲。
+        log.warning("轉寫失敗(422):%s", exc)
         return _error("transcription_failed", str(exc), 422)
     except Exception as exc:  # 非預期失敗
         log.exception("轉寫時發生未預期錯誤")
