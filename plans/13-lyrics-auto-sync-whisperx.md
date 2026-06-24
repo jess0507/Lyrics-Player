@@ -1,6 +1,42 @@
 # 歌詞功能:自動對時(txt → 同步)— WhisperX 路線(backlog 5)
 
-狀態:**規劃 / 待調查**(2026-06-14)。
+狀態:**後端容器已實作、待部署驗證;Flutter 端 / Function 無需改動**(2026-06-24)。
+
+## 實作進度 / 決策(2026-06-24)
+
+- **關鍵發現:本路線與 aeneas 路線(plan 12)是同一個 HTTP 合約。** aeneas 路線已
+  完整落地(`aeneas_service/` 容器 + `functions/main.py` 的 `align_lyrics` callable
+  + Flutter `lib/features/lyrics/auto_sync/`)。WhisperX 只是**換掉 Cloud Run 容器
+  內部的對齊引擎**,`POST /align` / `GET /healthz` 的 request / response / 錯誤碼
+  完全不變 → **Flutter 端與 Function 程式碼皆不需改動**。
+- **新增獨立容器 `whisperx_service/`**(鏡像 `aeneas_service/` 的結構與風格):
+  - `main.py`(`/healthz`、`/align`,與 aeneas 版幾乎相同)、`aligner.py`
+    (WhisperX 對齊核心)、`lrc.py`(秒 → `[mm:ss.xx]`,與 aeneas 共用慣例)、
+    `test_lrc.py` + `test_align.py`(純邏輯單元測試,**19 項全過**,免 whisperx /
+    torch / ffmpeg)。
+  - `Dockerfile` 用 **Python 3.11 + torch CPU wheel + whisperx 3.1.5**;模型權重
+    執行期由 HuggingFace 下載(冷啟動較慢,屬已知取捨)。
+- **對齊策略(純 forced alignment、不做 ASR)**:把所有歌詞行串接成「一個涵蓋整段
+  音訊的 segment」交給 `whisperx.align(..., return_char_alignments=True)` 取**字級**
+  時間;因 segment 文字即各行串接,char 串流逐字對應 → 依各行字元範圍切回逐行
+  begin/end。中 / 日不插空格分隔,其餘語言用單一空格(`separator_for`)。char 串流
+  長度與串接文字不符時退用比例分配(`build_fragments` 內含 fallback)。
+- **失敗降級**:對齊覆蓋率(取得起始時間的行數佔比)低於 `WHISPERX_MIN_COVERAGE`
+  (預設 0.6)→ 回 `alignment_failed`(422 / callable `failed-precondition`),
+  App 既有邏輯會保留原 unsynced 文字。字級時間保留於 `fragments`,供未來逐字
+  highlight。
+- **語言碼**:`normalize_language` 轉 whisperx 二字母碼(`zh*`→`zh`、`eng`→`en`、
+  `jpn`→`ja`…),與 aeneas 的 ISO 639-3 不同,故各自成檔。
+- **CI**:新增 `.github/workflows/cloud-run-whisperx-deploy.yml`(部署 `whisperx-align`
+  服務),沿用 `GCP_RUN_DEPLOY_SA` / 同 bucket / lifecycle / IAM。
+- **切換路線**:把 Function 的 `ALIGN_SERVICE_URL` 指向 whisperx-align 的 Cloud Run
+  URL 即可(兩容器可並存),其餘不動。詳見 `whisperx_service/README.md`。
+- **待辦(需專案維護者、需 GCP 權限)**:部署容器、設 `run.invoker`、改
+  `ALIGN_SERVICE_URL` 重新部署 Function、實測中文 / 歌聲對齊品質與冷啟動 / 成本。
+
+---
+
+原始規劃(2026-06-14):
 第三條路線見 `plans/13b-lyrics-auto-sync-whispercpp-ondevice.md`(whisper.cpp
 **手機端本機執行、不需後端**;惟為 ASR 回貼非 forced alignment)。
 姊妹計畫:`plans/lyrics-auto-sync-aeneas.md`(同一任務的起步路線,依賴單純、
