@@ -351,7 +351,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get lyrics_font_size => 'Размер шрифта';
 
   @override
-  String get lyrics_auto_sync => 'Автосинхронизация';
+  String get lyrics_auto_sync => 'Синхронизация текста';
 
   @override
   String get lyrics_auto_sync_compressing => 'Подготовка аудио…';

@@ -111,7 +111,7 @@
   "cover_removed": "Capa removida",
   "cover_failed": "Não foi possível definir a capa",
   "cover_too_large": "A imagem é muito grande",
-  "lyrics_auto_sync": "Sincronização automática",
+  "lyrics_auto_sync": "Sincronizar letra",
   "lyrics_auto_sync_compressing": "Preparando áudio…",
   "lyrics_auto_sync_uploading": "Enviando áudio…",
   "lyrics_auto_sync_aligning": "Alinhando a letra…",

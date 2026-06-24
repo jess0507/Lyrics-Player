@@ -351,7 +351,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lyrics_font_size => 'حجم الخط';
 
   @override
-  String get lyrics_auto_sync => 'مزامنة تلقائية للتوقيت';
+  String get lyrics_auto_sync => 'مزامنة الكلمات';
 
   @override
   String get lyrics_auto_sync_compressing => 'جارٍ تجهيز الصوت…';

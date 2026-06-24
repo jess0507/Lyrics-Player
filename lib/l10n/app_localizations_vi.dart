@@ -354,7 +354,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get lyrics_font_size => 'Cỡ chữ';
 
   @override
-  String get lyrics_auto_sync => 'Tự động đồng bộ';
+  String get lyrics_auto_sync => 'Đồng bộ lời bài hát';
 
   @override
   String get lyrics_auto_sync_compressing => 'Đang chuẩn bị âm thanh…';

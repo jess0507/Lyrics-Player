@@ -111,7 +111,7 @@
   "cover_removed": "Pochette supprimée",
   "cover_failed": "Impossible de définir la pochette",
   "cover_too_large": "L’image est trop grande",
-  "lyrics_auto_sync": "Synchronisation automatique",
+  "lyrics_auto_sync": "Synchroniser les paroles",
   "lyrics_auto_sync_compressing": "Préparation de l’audio…",
   "lyrics_auto_sync_uploading": "Envoi de l’audio…",
   "lyrics_auto_sync_aligning": "Alignement des paroles…",

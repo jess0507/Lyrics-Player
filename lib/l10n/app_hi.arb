@@ -111,7 +111,7 @@
   "cover_removed": "कवर हटाया गया",
   "cover_failed": "कवर सेट नहीं हो सका",
   "cover_too_large": "छवि बहुत बड़ी है",
-  "lyrics_auto_sync": "स्वतः समय-संयोजन",
+  "lyrics_auto_sync": "बोल सिंक करें",
   "lyrics_auto_sync_compressing": "ऑडियो तैयार किया जा रहा है…",
   "lyrics_auto_sync_uploading": "ऑडियो अपलोड हो रहा है…",
   "lyrics_auto_sync_aligning": "बोल संरेखित किए जा रहे हैं…",

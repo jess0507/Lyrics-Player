@@ -342,7 +342,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lyrics_font_size => '字體大小';
 
   @override
-  String get lyrics_auto_sync => '自動對時';
+  String get lyrics_auto_sync => '同步歌詞';
 
   @override
   String get lyrics_auto_sync_compressing => '處理音訊中…';
@@ -354,16 +354,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lyrics_auto_sync_aligning => '對齊歌詞中…';
 
   @override
-  String get lyrics_auto_sync_success => '已自動對時(可能有誤)';
+  String get lyrics_auto_sync_success => '已同步歌詞(可能有誤)';
 
   @override
-  String get lyrics_auto_sync_failed => '對時失敗,已保留原歌詞';
+  String get lyrics_auto_sync_failed => '同步失敗,已保留原歌詞';
 
   @override
-  String get lyrics_auto_sync_need_login => '請先登入才能使用自動對時';
+  String get lyrics_auto_sync_need_login => '請先登入才能使用歌詞同步';
 
   @override
-  String get lyrics_auto_sync_rate_limited => '今日對時次數已達上限,請明天再試';
+  String get lyrics_auto_sync_rate_limited => '今日同步次數已達上限,請明天再試';
 
   @override
   String get lyrics_auto_sync_no_audio => '找不到音訊檔';
@@ -769,7 +769,7 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get lyrics_font_size => '字体大小';
 
   @override
-  String get lyrics_auto_sync => '自动对时';
+  String get lyrics_auto_sync => '同步歌词';
 
   @override
   String get lyrics_auto_sync_compressing => '处理音频中…';
@@ -781,16 +781,16 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get lyrics_auto_sync_aligning => '对齐歌词中…';
 
   @override
-  String get lyrics_auto_sync_success => '已自动对时(可能有误)';
+  String get lyrics_auto_sync_success => '已同步歌词(可能有误)';
 
   @override
-  String get lyrics_auto_sync_failed => '对时失败,已保留原歌词';
+  String get lyrics_auto_sync_failed => '同步失败,已保留原歌词';
 
   @override
-  String get lyrics_auto_sync_need_login => '请先登录才能使用自动对时';
+  String get lyrics_auto_sync_need_login => '请先登录才能使用歌词同步';
 
   @override
-  String get lyrics_auto_sync_rate_limited => '今日对时次数已达上限,请明天再试';
+  String get lyrics_auto_sync_rate_limited => '今日同步次数已达上限,请明天再试';
 
   @override
   String get lyrics_auto_sync_no_audio => '找不到音频文件';
@@ -1196,7 +1196,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get lyrics_font_size => '字體大小';
 
   @override
-  String get lyrics_auto_sync => '自動對時';
+  String get lyrics_auto_sync => '同步歌詞';
 
   @override
   String get lyrics_auto_sync_compressing => '處理音訊中…';
@@ -1208,16 +1208,16 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get lyrics_auto_sync_aligning => '對齊歌詞中…';
 
   @override
-  String get lyrics_auto_sync_success => '已自動對時(可能有誤)';
+  String get lyrics_auto_sync_success => '已同步歌詞(可能有誤)';
 
   @override
-  String get lyrics_auto_sync_failed => '對時失敗,已保留原歌詞';
+  String get lyrics_auto_sync_failed => '同步失敗,已保留原歌詞';
 
   @override
-  String get lyrics_auto_sync_need_login => '請先登入才能使用自動對時';
+  String get lyrics_auto_sync_need_login => '請先登入才能使用歌詞同步';
 
   @override
-  String get lyrics_auto_sync_rate_limited => '今日對時次數已達上限,請明天再試';
+  String get lyrics_auto_sync_rate_limited => '今日同步次數已達上限,請明天再試';
 
   @override
   String get lyrics_auto_sync_no_audio => '找不到音訊檔';

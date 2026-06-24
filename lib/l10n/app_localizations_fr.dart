@@ -356,7 +356,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get lyrics_font_size => 'Taille de police';
 
   @override
-  String get lyrics_auto_sync => 'Synchronisation automatique';
+  String get lyrics_auto_sync => 'Synchroniser les paroles';
 
   @override
   String get lyrics_auto_sync_compressing => 'Préparation de l’audio…';

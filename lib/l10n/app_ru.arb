@@ -111,7 +111,7 @@
   "cover_removed": "Обложка удалена",
   "cover_failed": "Не удалось установить обложку",
   "cover_too_large": "Изображение слишком большое",
-  "lyrics_auto_sync": "Автосинхронизация",
+  "lyrics_auto_sync": "Синхронизация текста",
   "lyrics_auto_sync_compressing": "Подготовка аудио…",
   "lyrics_auto_sync_uploading": "Загрузка аудио…",
   "lyrics_auto_sync_aligning": "Выравнивание текста…",

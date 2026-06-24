@@ -353,7 +353,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lyrics_font_size => 'Tamanho da fonte';
 
   @override
-  String get lyrics_auto_sync => 'Sincronização automática';
+  String get lyrics_auto_sync => 'Sincronizar letra';
 
   @override
   String get lyrics_auto_sync_compressing => 'Preparando áudio…';

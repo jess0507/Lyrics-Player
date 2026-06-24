@@ -111,7 +111,7 @@
   "cover_removed": "Đã xóa ảnh bìa",
   "cover_failed": "Không thể đặt ảnh bìa",
   "cover_too_large": "Ảnh quá lớn",
-  "lyrics_auto_sync": "Tự động đồng bộ",
+  "lyrics_auto_sync": "Đồng bộ lời bài hát",
   "lyrics_auto_sync_compressing": "Đang chuẩn bị âm thanh…",
   "lyrics_auto_sync_uploading": "Đang tải âm thanh lên…",
   "lyrics_auto_sync_aligning": "Đang căn chỉnh lời…",

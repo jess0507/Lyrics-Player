@@ -111,7 +111,7 @@
   "cover_failed": "Couldn't set cover",
   "cover_too_large": "Image is too large",
   "lyrics_font_size": "Font size",
-  "lyrics_auto_sync": "Auto-sync timing",
+  "lyrics_auto_sync": "Sync lyrics",
   "lyrics_auto_sync_compressing": "Preparing audio…",
   "lyrics_auto_sync_uploading": "Uploading audio…",
   "lyrics_auto_sync_aligning": "Aligning lyrics…",

@@ -111,7 +111,7 @@
   "cover_removed": "Sampul dihapus",
   "cover_failed": "Tidak dapat menyetel sampul",
   "cover_too_large": "Gambar terlalu besar",
-  "lyrics_auto_sync": "Sinkronisasi otomatis",
+  "lyrics_auto_sync": "Sinkronkan lirik",
   "lyrics_auto_sync_compressing": "Menyiapkan audio…",
   "lyrics_auto_sync_uploading": "Mengunggah audio…",
   "lyrics_auto_sync_aligning": "Menyelaraskan lirik…",

@@ -354,7 +354,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get lyrics_font_size => 'Schriftgröße';
 
   @override
-  String get lyrics_auto_sync => 'Automatische Zeitsynchronisierung';
+  String get lyrics_auto_sync => 'Liedtext synchronisieren';
 
   @override
   String get lyrics_auto_sync_compressing => 'Audio wird vorbereitet…';

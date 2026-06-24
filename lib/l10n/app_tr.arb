@@ -111,7 +111,7 @@
   "cover_removed": "Kapak kaldırıldı",
   "cover_failed": "Kapak ayarlanamadı",
   "cover_too_large": "Görsel çok büyük",
-  "lyrics_auto_sync": "Otomatik zamanlama",
+  "lyrics_auto_sync": "Şarkı sözlerini eşitle",
   "lyrics_auto_sync_compressing": "Ses hazırlanıyor…",
   "lyrics_auto_sync_uploading": "Ses yükleniyor…",
   "lyrics_auto_sync_aligning": "Sözler hizalanıyor…",

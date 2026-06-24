@@ -354,7 +354,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get lyrics_font_size => 'Ukuran font';
 
   @override
-  String get lyrics_auto_sync => 'Sinkronisasi otomatis';
+  String get lyrics_auto_sync => 'Sinkronkan lirik';
 
   @override
   String get lyrics_auto_sync_compressing => 'Menyiapkan audio…';

@@ -346,7 +346,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get lyrics_font_size => '글자 크기';
 
   @override
-  String get lyrics_auto_sync => '자동 동기화';
+  String get lyrics_auto_sync => '가사 동기화';
 
   @override
   String get lyrics_auto_sync_compressing => '오디오 준비 중…';

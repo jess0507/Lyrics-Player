@@ -353,7 +353,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get lyrics_font_size => 'फ़ॉन्ट आकार';
 
   @override
-  String get lyrics_auto_sync => 'स्वतः समय-संयोजन';
+  String get lyrics_auto_sync => 'बोल सिंक करें';
 
   @override
   String get lyrics_auto_sync_compressing => 'ऑडियो तैयार किया जा रहा है…';

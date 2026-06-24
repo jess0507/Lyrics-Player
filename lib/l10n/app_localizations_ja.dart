@@ -344,7 +344,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get lyrics_font_size => '文字サイズ';
 
   @override
-  String get lyrics_auto_sync => '自動同期';
+  String get lyrics_auto_sync => '歌詞を同期';
 
   @override
   String get lyrics_auto_sync_compressing => '音声を準備中…';

@@ -111,7 +111,7 @@
   "cover_removed": "カバーを削除しました",
   "cover_failed": "カバーを設定できませんでした",
   "cover_too_large": "画像が大きすぎます",
-  "lyrics_auto_sync": "自動同期",
+  "lyrics_auto_sync": "歌詞を同期",
   "lyrics_auto_sync_compressing": "音声を準備中…",
   "lyrics_auto_sync_uploading": "音声をアップロード中…",
   "lyrics_auto_sync_aligning": "歌詞を同期中…",

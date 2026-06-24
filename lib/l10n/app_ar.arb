@@ -111,7 +111,7 @@
   "cover_removed": "تمت إزالة الغلاف",
   "cover_failed": "تعذّر تعيين الغلاف",
   "cover_too_large": "الصورة كبيرة جدًا",
-  "lyrics_auto_sync": "مزامنة تلقائية للتوقيت",
+  "lyrics_auto_sync": "مزامنة الكلمات",
   "lyrics_auto_sync_compressing": "جارٍ تجهيز الصوت…",
   "lyrics_auto_sync_uploading": "جارٍ رفع الصوت…",
   "lyrics_auto_sync_aligning": "جارٍ محاذاة الكلمات…",

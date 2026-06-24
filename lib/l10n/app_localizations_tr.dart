@@ -352,7 +352,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get lyrics_font_size => 'Yazı tipi boyutu';
 
   @override
-  String get lyrics_auto_sync => 'Otomatik zamanlama';
+  String get lyrics_auto_sync => 'Şarkı sözlerini eşitle';
 
   @override
   String get lyrics_auto_sync_compressing => 'Ses hazırlanıyor…';

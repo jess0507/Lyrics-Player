@@ -111,7 +111,7 @@
   "cover_removed": "Portada eliminada",
   "cover_failed": "No se pudo establecer la portada",
   "cover_too_large": "La imagen es demasiado grande",
-  "lyrics_auto_sync": "Sincronización automática",
+  "lyrics_auto_sync": "Sincronizar letra",
   "lyrics_auto_sync_compressing": "Preparando audio…",
   "lyrics_auto_sync_uploading": "Subiendo audio…",
   "lyrics_auto_sync_aligning": "Alineando la letra…",
