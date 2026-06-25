@@ -121,7 +121,13 @@ class LyricsAutoGenerateService {
     try {
       final callable = FirebaseFunctions.instanceFor(
         region: _functionsRegion,
-      ).httpsCallable('generate_lyrics');
+      ).httpsCallable(
+        'generate_lyrics',
+        // client 預設逾時僅 70s,但 CPU 轉寫整首歌常破 1–2 分鐘(後端
+        // timeout_sec=600)。不放寬會在後端跑完前就 deadline-exceeded →
+        // 被映成 network「連線錯誤」。對齊後端逾時設為 10 分鐘。
+        options: HttpsCallableOptions(timeout: const Duration(minutes: 10)),
+      );
       // 不送 language:交由後端自動偵測歌曲語言。
       final result = await callable.call<Object?>({
         'bucket': storageRef.bucket,
