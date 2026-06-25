@@ -160,6 +160,9 @@ docker run --rm -p 8080:8080 whisperx-service
 curl -s localhost:8080/healthz
 ```
 
+完整的「容器跑起服務 + `api_smoke.py` 打 `localhost` 端點」流程(含掛主機原始碼
+即時改 `main.py`、實測耗時參考),見 [`LOCAL_TESTING.md`](LOCAL_TESTING.md)。
+
 ## 部署(Cloud Run)
 
 > 後端部署 / 驗證由專案維護者執行(需 GCP 權限,無法於開發環境代跑)。
@@ -177,7 +180,7 @@ curl -s localhost:8080/healthz
 gcloud run deploy whisperx-align \
   --source . \
   --region asia-east1 \
-  --memory 8Gi --cpu 4 --timeout 600 \
+  --memory 8Gi --cpu 4 --concurrency 1 --timeout 600 \
   --no-allow-unauthenticated
 
 # 2. 暫存音訊清理:App 上傳到 Firebase 預設 bucket 的 align/{uid}/**。

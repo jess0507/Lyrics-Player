@@ -35,24 +35,35 @@ RUN pip install --no-cache-dir \
         --extra-index-url https://download.pytorch.org/whl/cpu \
         -r requirements.txt
 
-# 預烤 WhisperX 的 VAD 權重:whisperx 3.1.5 以 urllib 抓寫死的 S3 VAD URL,該 URL
-# 現會回 301 轉址、urllib 不跟,導致 runtime 載模型時拋「HTTP Error 301」→ 整批
-# 轉寫 422。改在 build 時用 requests(會跟轉址)抓好,放到 whisperx 預期的路徑
-# ($TORCH_HOME),runtime 直接命中本機檔、不再下載。URL 與檔名皆取自 whisperx 自身
-# 常數,與版本無關;放在 COPY 應用碼之前,讓本層隨 requirements 一起被 layer 快取。
+# 預烤 WhisperX 的 VAD 權重。whisperx 3.1.5 寫死的 S3 URL
+# (whisperx.s3.eu-west-2…)已失效:bucket 實在 us-west-2 且已關閉公開存取,
+# 直連回 301/403、跟轉址也只拿到數百 byte 的 XML 錯誤頁 → runtime 載模型時
+# SHA256 checksum 不符而整批轉寫 422。改從 whisperX repo 打包的 assets 取「同一份」
+# 權重(sha256 與 whisperx 期望值 0b5b3216… 一致),驗證後放到 whisperx 預期路徑
+# ($TORCH_HOME),runtime 直接命中、不下載、不再 checksum 失敗。
+# 放在 COPY 應用碼之前,讓本層隨 requirements 一起被 layer 快取。
+# HF_HOME / TORCH_HOME 在預烤前就設好,讓下載的權重落在 image 內、runtime 直接命中。
 ENV TORCH_HOME=/app/.cache/torch
-RUN python -c "import whisperx.vad as v, torch, os, requests; \
+ENV HF_HOME=/app/.cache/huggingface
+RUN python -c "import torch, os, hashlib, requests; \
+url='https://raw.githubusercontent.com/m-bain/whisperX/main/whisperx/assets/pytorch_model.bin'; \
+expect='0b5b3216d60a2d32fc086b47ea8c67589aaeb26b7e07fcbe620d6d0b83e209ea'; \
 d=torch.hub._get_torch_home(); os.makedirs(d, exist_ok=True); \
 fp=os.path.join(d, 'whisperx-vad-segmentation.bin'); \
-r=requests.get(v.VAD_SEGMENTATION_URL, allow_redirects=True, timeout=120); r.raise_for_status(); \
+r=requests.get(url, allow_redirects=True, timeout=120); r.raise_for_status(); \
 open(fp, 'wb').write(r.content); \
-print('VAD cached:', fp, len(r.content), 'bytes')"
+h=hashlib.sha256(r.content).hexdigest(); \
+assert h == expect, 'VAD sha256 mismatch: ' + h; \
+print('VAD cached:', fp, len(r.content), 'bytes, sha256 OK')"
+
+# 預烤 faster-whisper ASR 模型(small):否則 runtime 首呼才下載,且 gunicorn 多
+# 執行緒 / 高並發時會同時下載到同一 HF 快取 → 互相寫壞 → 「SHA256 checksum does
+# not match」422。build 時抓好放進 image,runtime 不下載、無 race(亦大幅縮短冷啟動)。
+# 模型大小 / 量化須與 transcriber.py 的 WHISPER_MODEL_SIZE / WHISPER_COMPUTE_TYPE 一致。
+RUN python -c "import whisperx; whisperx.load_model('small', device='cpu', compute_type='int8'); print('ASR model cached')"
 
 COPY . .
 
-# HuggingFace 快取:首呼會下載對齊模型;指到容器內可寫路徑(冷啟動較慢,屬已知
-# 取捨,見 README「冷啟動 / 成本」)。
-ENV HF_HOME=/app/.cache/huggingface
 ENV PORT=8080
 # 對齊為 CPU 密集且單檔耗時可達數十秒~分鐘:單 worker 多 thread,逾時放寬到 600s
 # (與 functions/ 的 align_lyrics callable timeout_sec=600 一致)。
