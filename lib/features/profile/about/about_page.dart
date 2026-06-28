@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../gen/assets.gen.dart';
 import '../../../l10n/app_localizations.dart';
 
 class AboutPage extends StatelessWidget {
@@ -29,7 +30,7 @@ class AboutPage extends StatelessWidget {
             child: CircleAvatar(
               radius: 40,
               backgroundColor: Colors.transparent,
-              backgroundImage: const AssetImage('assets/icon/app_logo.png'),
+              backgroundImage: Assets.icon.appLogoPng.provider(),
             ),
           ),
           const SizedBox(height: 12),

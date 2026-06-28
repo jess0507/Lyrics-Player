@@ -55,6 +55,7 @@ dependencies:
   cloud_functions: ^6.3.2
   cloud_firestore: ^6.1.0
   marquee: ^2.3.0
+  flutter_svg: ^2.0.10+1
   file_picker: ^11.0.2
   firebase_storage: ^13.4.2
   ffmpeg_kit_flutter_new: ^4.2.1
@@ -67,6 +68,15 @@ dev_dependencies:
   flutter_lints: ^6.0.0
 
   build_runner: ^2.4.13
+
+  # Asset type-safe 引用產生(Assets.xxx)
+  flutter_gen_runner: 5.8.0
+
+# 此專案因 Isar 3.x 鎖住舊版 dart_style(2.3.2),
+# flutter_gen_core 5.9.0 使用新版 DartFormatter API 會編譯失敗,
+# 故鎖定 5.8.0 以相容舊工具鏈。
+dependency_overrides:
+  flutter_gen_core: 5.8.0
 
   # Isar 程式碼產生
   isar_generator: ^3.1.0+1
@@ -81,8 +91,14 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-    - assets/icon/app_logo.png
-    - assets/icon/app_logo_android12.png
+    - assets/icon/
+
+# Asset type-safe 引用產生設定(flutter_gen)
+# 產生指令：dart run build_runner build
+flutter_gen:
+  output: lib/gen/
+  integrations:
+    flutter_svg: true
 
 # App 圖示設定：來源圖 assets/icon/app_logo.png
 # 產生指令：dart run flutter_launcher_icons
