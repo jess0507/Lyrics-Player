@@ -440,6 +440,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Connection problem, try again later';
 
   @override
+  String get lyrics_job_busy =>
+      'Please wait for the current lyrics task to finish';
+
+  @override
   String get tab_playlists => 'Listas';
 
   @override

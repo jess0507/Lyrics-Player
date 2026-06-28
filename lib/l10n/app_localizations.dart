@@ -942,6 +942,12 @@ abstract class AppLocalizations {
   /// **'Connection problem, try again later'**
   String get lyrics_auto_generate_network;
 
+  /// No description provided for @lyrics_job_busy.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait for the current lyrics task to finish'**
+  String get lyrics_job_busy;
+
   /// No description provided for @tab_playlists.
   ///
   /// In en, this message translates to:

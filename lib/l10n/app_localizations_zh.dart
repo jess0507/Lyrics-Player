@@ -420,6 +420,10 @@ class AppLocalizationsZh extends AppLocalizations {
       'Connection problem, try again later';
 
   @override
+  String get lyrics_job_busy =>
+      'Please wait for the current lyrics task to finish';
+
+  @override
   String get tab_playlists => '播放清單';
 
   @override
@@ -1332,6 +1336,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get lyrics_auto_generate_network => '連線問題,請稍後再試';
+
+  @override
+  String get lyrics_job_busy => '請等待目前的歌詞任務完成';
 
   @override
   String get tab_playlists => '播放清單';
