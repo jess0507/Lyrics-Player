@@ -4,6 +4,7 @@ import 'package:just_audio/just_audio.dart';
 
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
+import 'lyrics_actions_sheet.dart';
 import 'secondary_controls_menu.dart';
 
 /// 次控制列圖示的固定大小。
@@ -21,7 +22,6 @@ class SecondaryControls extends ConsumerWidget {
     required this.enabled,
     this.trackId,
     this.title,
-    this.onShowLyricsPage,
   });
 
   final AudioPlayerService audio;
@@ -32,9 +32,6 @@ class SecondaryControls extends ConsumerWidget {
 
   /// 目前曲名，傳給對齊服務。
   final String? title;
-
-  /// 切換封面面板到歌詞那一頁;由父層持有 PageController 後注入。
-  final VoidCallback? onShowLyricsPage;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -102,8 +99,8 @@ class SecondaryControls extends ConsumerWidget {
     );
   }
 
-  /// 歌詞按鈕:有曲目時提供。點擊直接切到歌詞頁(無歌詞時由歌詞頁自身
-  /// 顯示匯入提示,此處不觸發匯入)。
+  /// 歌詞按鈕:有曲目時提供。點擊彈出歌詞動作表單([lyricsMenuActions]),
+  /// 依目前歌詞狀態提供自動產生 / 自動對時 / 字體大小 / 重新匯入 / 刪除。
   Widget? _buildLyrics(BuildContext context, WidgetRef ref) {
     final id = trackId;
     if (id == null) return null;
@@ -112,7 +109,14 @@ class SecondaryControls extends ConsumerWidget {
       iconSize: _kIconSize,
       color: _kIconColor,
       tooltip: l10n.lyrics_show,
-      onPressed: enabled ? () => onShowLyricsPage?.call() : null,
+      onPressed: enabled
+          ? () => showLyricsActionsSheet(
+              context,
+              ref,
+              trackId: id,
+              title: title ?? '',
+            )
+          : null,
       icon: const Icon(Icons.lyrics_outlined),
     );
   }

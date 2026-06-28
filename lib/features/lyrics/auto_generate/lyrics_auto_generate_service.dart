@@ -4,13 +4,14 @@ import 'dart:io';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 import '../auto_sync/audio_compressor.dart';
 import '../models/lyrics_entity.dart';
-import '../services/lyrics_repository.dart';
 import '../providers/track_lyrics_provider.dart';
+import '../services/lyrics_repository.dart';
 
 /// 必須與 Cloud Functions 部署的 region(`functions/main.py` 的 `_REGION`)一致。
 const _functionsRegion = 'asia-east1';
@@ -119,15 +120,14 @@ class LyricsAutoGenerateService {
     onStep?.call(LyricsAutoGenerateStep.transcribing);
     final String lrc;
     try {
-      final callable = FirebaseFunctions.instanceFor(
-        region: _functionsRegion,
-      ).httpsCallable(
-        'generate_lyrics',
-        // client 預設逾時僅 70s,但 CPU 轉寫整首歌常破 1–2 分鐘(後端
-        // timeout_sec=600)。不放寬會在後端跑完前就 deadline-exceeded →
-        // 被映成 network「連線錯誤」。對齊後端逾時設為 10 分鐘。
-        options: HttpsCallableOptions(timeout: const Duration(minutes: 10)),
-      );
+      final callable = FirebaseFunctions.instanceFor(region: _functionsRegion)
+          .httpsCallable(
+            'generate_lyrics',
+            // client 預設逾時僅 70s,但 CPU 轉寫整首歌常破 1–2 分鐘(後端
+            // timeout_sec=600)。不放寬會在後端跑完前就 deadline-exceeded →
+            // 被映成 network「連線錯誤」。對齊後端逾時設為 10 分鐘。
+            options: HttpsCallableOptions(timeout: const Duration(minutes: 10)),
+          );
       // 不送 language:交由後端自動偵測歌曲語言。
       final result = await callable.call<Object?>({
         'bucket': storageRef.bucket,
@@ -144,6 +144,7 @@ class LyricsAutoGenerateService {
       }
       lrc = value;
     } on FirebaseFunctionsException catch (e) {
+      debugPrint('Firebase Funcion generate_lyrics: $e');
       throw LyricsAutoGenerateException(_mapFunctionsError(e));
     }
 

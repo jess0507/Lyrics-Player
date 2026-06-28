@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../lyrics/providers/track_lyrics_provider.dart';
 import '../../music_list/models/track.dart';
 import '../../music_list/providers/music_library.dart';
 import '../../playlists/widgets/add_to_playlist_sheet.dart';
@@ -83,19 +82,6 @@ class _SecondaryControlsMenuSheet extends ConsumerWidget {
     final trackIndex = id == null ? -1 : tracks.indexWhere((t) => t.id == id);
     final track = trackIndex < 0 ? null : tracks[trackIndex];
 
-    final lyrics = id == null
-        ? null
-        : ref.watch(trackLyricsProvider(id)).valueOrNull;
-    final hasLyrics = lyrics != null && lyrics.isNotEmpty;
-    // 產生是「從音訊辨識歌詞」:只在完全沒有歌詞時提供(與對時互補)。
-    final canAutoGenerate = !hasLyrics;
-    final canAutoSync = hasLyrics && !lyrics.synced;
-    final lyricsActions = lyricsMenuActions(
-      canAutoGenerate: canAutoGenerate,
-      canAutoSync: canAutoSync,
-      hasLyrics: hasLyrics,
-    );
-
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -103,22 +89,6 @@ class _SecondaryControlsMenuSheet extends ConsumerWidget {
           if (track != null)
             _playerTile(context, _PlayerMenuAction.addToPlaylist, l10n, track),
           _playerTile(context, _PlayerMenuAction.speed, l10n),
-          if (id != null)
-            for (final action in lyricsActions)
-              ListTile(
-                leading: Icon(action.icon),
-                title: Text(action.label(l10n)),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  runLyricsMenuAction(
-                    parentContext,
-                    parentRef,
-                    action,
-                    trackId: id,
-                    title: title,
-                  );
-                },
-              ),
         ],
       ),
     );

@@ -194,14 +194,6 @@ class _PlayerLayoutState extends State<_PlayerLayout> {
     super.dispose();
   }
 
-  void _showLyricsPage() {
-    _pageController.animateToPage(
-      1,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -225,7 +217,6 @@ class _PlayerLayoutState extends State<_PlayerLayout> {
           enabled: widget.hasTrack,
           trackId: widget.trackId,
           title: widget.title,
-          onShowLyricsPage: _showLyricsPage,
         ),
       ],
     );
