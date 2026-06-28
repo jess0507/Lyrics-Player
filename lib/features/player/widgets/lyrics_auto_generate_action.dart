@@ -17,10 +17,15 @@ Future<void> runLyricsAutoGenerate(
   final l10n = AppLocalizations.of(context)!;
   final messenger = ScaffoldMessenger.of(context);
   final navigator = Navigator.of(context, rootNavigator: true);
-  if (ref.read(lyricsAutoGenerateControllerProvider(trackId)).isRunning) return;
+  if (ref.read(lyricsAutoGenerateControllerProvider(trackId)).isRunning) {
+    debugPrint('[LyricsAutoGen] 已在執行中,略過 trackId=$trackId');
+    return;
+  }
   final controller = ref.read(
     lyricsAutoGenerateControllerProvider(trackId).notifier,
   );
+
+  debugPrint('[LyricsAutoGen] 開始 trackId=$trackId title="$title"');
 
   // 產生需時較久(壓縮 + 上傳 + Cloud Run ASR);進度框不可手動關閉。
   unawaitedShowDialog(
@@ -32,11 +37,13 @@ Future<void> runLyricsAutoGenerate(
 
   navigator.pop(); // 關閉進度框
   if (ok) {
+    debugPrint('[LyricsAutoGen] 成功 trackId=$trackId');
     messenger.showSnackBar(
       SnackBar(content: Text(l10n.lyrics_auto_generate_success)),
     );
   } else {
     final error = ref.read(lyricsAutoGenerateControllerProvider(trackId)).error;
+    debugPrint('[LyricsAutoGen] 失敗 trackId=$trackId error=$error');
     messenger.showSnackBar(
       SnackBar(content: Text(_autoGenerateErrorText(l10n, error))),
     );
