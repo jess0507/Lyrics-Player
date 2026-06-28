@@ -10,7 +10,6 @@ import 'package:seek_player/features/music_list/providers/music_search_query_pro
 import '../../core/audio/audio_player_service.dart';
 import '../../core/permissions/permission_service.dart';
 import '../../l10n/app_localizations.dart';
-import '../../shared/format.dart';
 import '../../shared/widgets/playing_indicator.dart';
 import '../player/providers/playback_controller.dart';
 import 'widgets/track_actions_sheet.dart';
@@ -173,17 +172,9 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
               subtitle: track.artist == null
                   ? null
                   : Text(track.artist!, maxLines: 1),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (track.duration != null)
-                    Text(formatDuration(track.duration!)),
-                  IconButton(
-                    icon: const Icon(Icons.more_vert),
-                    onPressed: () =>
-                        showTrackActionsSheet(context, ref, track),
-                  ),
-                ],
+              trailing: IconButton(
+                icon: const Icon(Icons.more_vert),
+                onPressed: () => showTrackActionsSheet(context, ref, track),
               ),
               onTap: () => _play(track),
             );
