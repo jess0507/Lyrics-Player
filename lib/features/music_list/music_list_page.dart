@@ -13,7 +13,7 @@ import '../../l10n/app_localizations.dart';
 import '../../shared/format.dart';
 import '../../shared/widgets/playing_indicator.dart';
 import '../player/providers/playback_controller.dart';
-import '../playlists/widgets/add_to_playlist_sheet.dart';
+import 'widgets/track_actions_sheet.dart';
 
 class MusicListPage extends ConsumerStatefulWidget {
   const MusicListPage({super.key});
@@ -179,10 +179,9 @@ class _MusicListPageState extends ConsumerState<MusicListPage> {
                   if (track.duration != null)
                     Text(formatDuration(track.duration!)),
                   IconButton(
-                    tooltip: l10n.playlist_add_to,
-                    icon: const Icon(Icons.playlist_add),
+                    icon: const Icon(Icons.more_vert),
                     onPressed: () =>
-                        showAddToPlaylistSheet(context, ref, track),
+                        showTrackActionsSheet(context, ref, track),
                   ),
                 ],
               ),
