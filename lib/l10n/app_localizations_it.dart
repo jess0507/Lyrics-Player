@@ -81,6 +81,21 @@ class AppLocalizationsIt extends AppLocalizations {
   String get music_rescan => 'Ripeti scansione';
 
   @override
+  String get music_track_info => 'Informazioni brano';
+
+  @override
+  String get track_info_artist => 'Artista';
+
+  @override
+  String get track_info_duration => 'Durata';
+
+  @override
+  String get track_info_location => 'Posizione';
+
+  @override
+  String get common_unknown => 'Sconosciuto';
+
+  @override
   String get permission_title => 'Autorizzazione di archiviazione richiesta';
 
   @override

@@ -81,6 +81,21 @@ class AppLocalizationsRu extends AppLocalizations {
   String get music_rescan => 'Пересканировать';
 
   @override
+  String get music_track_info => 'О треке';
+
+  @override
+  String get track_info_artist => 'Исполнитель';
+
+  @override
+  String get track_info_duration => 'Длительность';
+
+  @override
+  String get track_info_location => 'Расположение';
+
+  @override
+  String get common_unknown => 'Неизвестно';
+
+  @override
   String get permission_title => 'Требуется разрешение на доступ к хранилищу';
 
   @override

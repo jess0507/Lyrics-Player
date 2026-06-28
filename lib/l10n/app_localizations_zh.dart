@@ -81,6 +81,21 @@ class AppLocalizationsZh extends AppLocalizations {
   String get music_rescan => '重新掃描';
 
   @override
+  String get music_track_info => '曲目信息';
+
+  @override
+  String get track_info_artist => '艺术家';
+
+  @override
+  String get track_info_duration => '时长';
+
+  @override
+  String get track_info_location => '位置';
+
+  @override
+  String get common_unknown => '未知';
+
+  @override
   String get permission_title => '需要儲存權限';
 
   @override
@@ -541,6 +556,21 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get music_rescan => '重新扫描';
 
   @override
+  String get music_track_info => '曲目信息';
+
+  @override
+  String get track_info_artist => '艺术家';
+
+  @override
+  String get track_info_duration => '时长';
+
+  @override
+  String get track_info_location => '位置';
+
+  @override
+  String get common_unknown => '未知';
+
+  @override
   String get permission_title => '需要存储权限';
 
   @override
@@ -966,6 +996,21 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get music_rescan => '重新掃描';
+
+  @override
+  String get music_track_info => '曲目資訊';
+
+  @override
+  String get track_info_artist => '演出者';
+
+  @override
+  String get track_info_duration => '時長';
+
+  @override
+  String get track_info_location => '位置';
+
+  @override
+  String get common_unknown => '未知';
 
   @override
   String get permission_title => '需要儲存權限';

@@ -81,6 +81,21 @@ class AppLocalizationsHi extends AppLocalizations {
   String get music_rescan => 'फिर से स्कैन करें';
 
   @override
+  String get music_track_info => 'ट्रैक जानकारी';
+
+  @override
+  String get track_info_artist => 'कलाकार';
+
+  @override
+  String get track_info_duration => 'अवधि';
+
+  @override
+  String get track_info_location => 'स्थान';
+
+  @override
+  String get common_unknown => 'अज्ञात';
+
+  @override
   String get permission_title => 'स्टोरेज अनुमति आवश्यक है';
 
   @override

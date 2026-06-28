@@ -270,6 +270,36 @@ abstract class AppLocalizations {
   /// **'Rescan'**
   String get music_rescan;
 
+  /// No description provided for @music_track_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Track info'**
+  String get music_track_info;
+
+  /// No description provided for @track_info_artist.
+  ///
+  /// In en, this message translates to:
+  /// **'Artist'**
+  String get track_info_artist;
+
+  /// No description provided for @track_info_duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get track_info_duration;
+
+  /// No description provided for @track_info_location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get track_info_location;
+
+  /// No description provided for @common_unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get common_unknown;
+
   /// No description provided for @permission_title.
   ///
   /// In en, this message translates to:

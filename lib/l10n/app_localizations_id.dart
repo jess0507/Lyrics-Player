@@ -81,6 +81,21 @@ class AppLocalizationsId extends AppLocalizations {
   String get music_rescan => 'Pindai ulang';
 
   @override
+  String get music_track_info => 'Info trek';
+
+  @override
+  String get track_info_artist => 'Artis';
+
+  @override
+  String get track_info_duration => 'Durasi';
+
+  @override
+  String get track_info_location => 'Lokasi';
+
+  @override
+  String get common_unknown => 'Tidak diketahui';
+
+  @override
   String get permission_title => 'Izin penyimpanan diperlukan';
 
   @override

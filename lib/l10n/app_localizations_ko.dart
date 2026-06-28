@@ -81,6 +81,21 @@ class AppLocalizationsKo extends AppLocalizations {
   String get music_rescan => '다시 검색';
 
   @override
+  String get music_track_info => '트랙 정보';
+
+  @override
+  String get track_info_artist => '아티스트';
+
+  @override
+  String get track_info_duration => '길이';
+
+  @override
+  String get track_info_location => '위치';
+
+  @override
+  String get common_unknown => '알 수 없음';
+
+  @override
   String get permission_title => '저장소 권한이 필요합니다';
 
   @override

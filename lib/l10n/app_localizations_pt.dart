@@ -81,6 +81,21 @@ class AppLocalizationsPt extends AppLocalizations {
   String get music_rescan => 'Verificar novamente';
 
   @override
+  String get music_track_info => 'Informações da faixa';
+
+  @override
+  String get track_info_artist => 'Artista';
+
+  @override
+  String get track_info_duration => 'Duração';
+
+  @override
+  String get track_info_location => 'Localização';
+
+  @override
+  String get common_unknown => 'Desconhecido';
+
+  @override
   String get permission_title => 'Permissão de armazenamento necessária';
 
   @override

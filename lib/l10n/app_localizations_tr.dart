@@ -81,6 +81,21 @@ class AppLocalizationsTr extends AppLocalizations {
   String get music_rescan => 'Yeniden tara';
 
   @override
+  String get music_track_info => 'Parça bilgisi';
+
+  @override
+  String get track_info_artist => 'Sanatçı';
+
+  @override
+  String get track_info_duration => 'Süre';
+
+  @override
+  String get track_info_location => 'Konum';
+
+  @override
+  String get common_unknown => 'Bilinmiyor';
+
+  @override
   String get permission_title => 'Depolama izni gerekli';
 
   @override

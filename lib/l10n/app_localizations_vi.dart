@@ -81,6 +81,21 @@ class AppLocalizationsVi extends AppLocalizations {
   String get music_rescan => 'Quét lại';
 
   @override
+  String get music_track_info => 'Thông tin bản nhạc';
+
+  @override
+  String get track_info_artist => 'Nghệ sĩ';
+
+  @override
+  String get track_info_duration => 'Thời lượng';
+
+  @override
+  String get track_info_location => 'Vị trí';
+
+  @override
+  String get common_unknown => 'Không rõ';
+
+  @override
   String get permission_title => 'Cần quyền truy cập bộ nhớ';
 
   @override

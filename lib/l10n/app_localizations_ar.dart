@@ -81,6 +81,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get music_rescan => 'إعادة الفحص';
 
   @override
+  String get music_track_info => 'معلومات المقطع';
+
+  @override
+  String get track_info_artist => 'الفنان';
+
+  @override
+  String get track_info_duration => 'المدة';
+
+  @override
+  String get track_info_location => 'الموقع';
+
+  @override
+  String get common_unknown => 'غير معروف';
+
+  @override
   String get permission_title => 'مطلوب إذن التخزين';
 
   @override
