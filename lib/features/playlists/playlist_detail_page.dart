@@ -8,9 +8,10 @@ import 'package:seek_player/features/playlists/models/playlist_display_name.dart
 import 'package:seek_player/features/playlists/providers/playlist_tracks_provider.dart';
 import 'package:seek_player/features/playlists/providers/playlists_provider.dart';
 import 'package:seek_player/features/playlists/services/playlist_repository.dart';
+import 'package:seek_player/features/playlists/widgets/playlist_track_actions_sheet.dart';
 import 'package:seek_player/l10n/app_localizations.dart';
-import 'package:seek_player/shared/format.dart';
 import 'package:seek_player/shared/widgets/playing_indicator.dart';
+import 'package:seek_player/shared/widgets/track_leading.dart';
 
 /// 單一播放清單內容:播放全部、逐首播放、移除、拖曳排序。
 class PlaylistDetailPage extends ConsumerWidget {
@@ -74,39 +75,49 @@ class PlaylistDetailPage extends ConsumerWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ListTile(
-                          leading: isCurrent
-                              ? PlayingTrackLeading(
+                          contentPadding: const EdgeInsets.only(left: 16.0),
+                          leading: TrackLeading(
+                            trackId: track.id,
+                            isCurrent: isCurrent,
+                            audio: audio,
+                            color: scheme.primary,
+                          ),
+                          title: Row(
+                            children: [
+                              if (isCurrent) ...[
+                                PlayingTrackLeading(
                                   audio: audio,
                                   color: scheme.primary,
-                                )
-                              : null,
-                          title: Text(
-                            track.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: isCurrent
-                                ? TextStyle(
-                                    color: scheme.primary,
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                : null,
+                                ),
+                                const SizedBox(width: 8),
+                              ],
+                              Flexible(
+                                fit: FlexFit.loose,
+                                child: Text(
+                                  track.title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: isCurrent
+                                      ? TextStyle(
+                                          color: scheme.primary,
+                                          fontWeight: FontWeight.bold,
+                                        )
+                                      : null,
+                                ),
+                              ),
+                            ],
                           ),
                           subtitle: track.artist == null
                               ? null
                               : Text(track.artist!, maxLines: 1),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (track.duration != null)
-                                Text(formatDuration(track.duration!)),
-                              IconButton(
-                                tooltip: l10n.playlist_remove_track,
-                                icon: const Icon(Icons.remove_circle_outline),
-                                onPressed: () => ref
-                                    .read(playlistRepositoryProvider)
-                                    .removeTrack(playlistId, track.id),
-                              ),
-                            ],
+                          trailing: IconButton(
+                            icon: const Icon(Icons.more_vert),
+                            onPressed: () => showPlaylistTrackActionsSheet(
+                              context,
+                              ref,
+                              playlistId,
+                              track,
+                            ),
                           ),
                           onTap: () => ref
                               .read(playbackControllerProvider)
