@@ -30,14 +30,16 @@ class AccountPage extends ConsumerWidget {
                 ),
               ),
             )
-          : ref.watch(authStateProvider).when(
-                loading: () =>
-                    const Center(child: CircularProgressIndicator()),
-                error: (e, _) => Center(child: Text('$e')),
-                data: (user) => user == null
-                    ? const SignedOutView()
-                    : SignedInView(user: user),
-              ),
+          : ref
+                .watch(authStateProvider)
+                .when(
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (e, _) => Center(child: Text('$e')),
+                  data: (user) => user == null
+                      ? const SignInView()
+                      : UserInfoView(user: user),
+                ),
     );
   }
 }

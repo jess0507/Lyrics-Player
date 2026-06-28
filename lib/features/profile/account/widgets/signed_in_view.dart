@@ -7,8 +7,8 @@ import '../../../../core/auth/auth_service.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// 已登入:顯示頭像、Email、登出與刪除帳號。
-class SignedInView extends ConsumerWidget {
-  const SignedInView({super.key, required this.user});
+class UserInfoView extends ConsumerWidget {
+  const UserInfoView({super.key, required this.user});
 
   final User user;
 
@@ -18,8 +18,7 @@ class SignedInView extends ConsumerWidget {
     final auth = ref.read(authServiceProvider);
     final photo = user.photoURL;
 
-    return ListView(
-      padding: const EdgeInsets.all(24),
+    return Column(
       children: [
         const SizedBox(height: 16),
         Center(
@@ -32,7 +31,10 @@ class SignedInView extends ConsumerWidget {
         const SizedBox(height: 16),
         Center(
           child: Text(
-            user.displayName ?? user.email ?? user.phoneNumber ?? l10n.account_guest,
+            user.displayName ??
+                user.email ??
+                user.phoneNumber ??
+                l10n.account_guest,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
@@ -46,14 +48,14 @@ class SignedInView extends ConsumerWidget {
           icon: const Icon(Icons.logout),
           label: Text(l10n.account_sign_out),
         ),
-        const SizedBox(height: 12),
-        OutlinedButton.icon(
+        Spacer(),
+        TextButton.icon(
           onPressed: () => _confirmDeleteData(context, auth),
           icon: const Icon(Icons.cleaning_services_outlined),
           label: Text(l10n.account_delete_data),
         ),
         const SizedBox(height: 12),
-        OutlinedButton.icon(
+        TextButton.icon(
           style: OutlinedButton.styleFrom(
             foregroundColor: Theme.of(context).colorScheme.error,
           ),

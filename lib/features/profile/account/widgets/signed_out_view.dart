@@ -8,17 +8,17 @@ import 'country_code_dropdown.dart';
 
 /// 未登入:選擇 Google、手機簡訊 OTP 或 Email/密碼登入。
 /// 選擇手機或 Email 後,於登入選項上方顯示對應的輸入表單。
-class SignedOutView extends ConsumerStatefulWidget {
-  const SignedOutView({super.key});
+class SignInView extends ConsumerStatefulWidget {
+  const SignInView({super.key});
 
   @override
-  ConsumerState<SignedOutView> createState() => _SignedOutViewState();
+  ConsumerState<SignInView> createState() => _SignedOutViewState();
 }
 
 /// 目前展開的登入方式(none 表示尚未選擇,只顯示選項清單)。
 enum _Method { none, phone, email }
 
-class _SignedOutViewState extends ConsumerState<SignedOutView> {
+class _SignedOutViewState extends ConsumerState<SignInView> {
   final _email = TextEditingController();
   final _password = TextEditingController();
   final _phone = TextEditingController();
@@ -50,8 +50,10 @@ class _SignedOutViewState extends ConsumerState<SignedOutView> {
       await action();
       return true;
     } on FirebaseAuthException catch (e, s) {
-      debugPrint('[Account] FirebaseAuthException code=${e.code} '
-          'message=${e.message}\n$s');
+      debugPrint(
+        '[Account] FirebaseAuthException code=${e.code} '
+        'message=${e.message}\n$s',
+      );
       _showMessage(e.message ?? e.code);
       return false;
     } catch (e, s) {
@@ -65,8 +67,9 @@ class _SignedOutViewState extends ConsumerState<SignedOutView> {
 
   void _showMessage(String message) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   /// 選擇登入方式(展開對應表單);重新選擇手機時重置驗證碼狀態。
