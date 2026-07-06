@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:seek_player/features/player/widgets/lyrics_actions_sheet.dart';
 
 import '../../../l10n/app_localizations.dart';
-import '../../lyrics/services/lyrics_import_service.dart';
 import '../../lyrics/providers/track_lyrics_provider.dart';
+import '../../lyrics/services/lyrics_import_service.dart';
 import '../providers/lyrics_font_scale_controller.dart';
 import 'lyrics_synced_view.dart';
 import 'lyrics_unsynced_view.dart';
@@ -68,8 +69,12 @@ class _EmptyLyrics extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           FilledButton.icon(
-            onPressed: () =>
-                runLyricsImport(context, ref, trackId: trackId, title: title),
+            onPressed: () => showLyricsActionsSheet(
+              context,
+              ref,
+              trackId: trackId,
+              title: title,
+            ),
             icon: const Icon(Icons.file_open_outlined),
             label: Text(l10n.lyrics_import),
           ),
@@ -94,9 +99,7 @@ Future<void> runLyricsImport(
         .read(lyricsImportServiceProvider)
         .importForTrack(trackId: trackId, title: title);
     if (!imported) return; // 使用者取消
-    messenger.showSnackBar(
-      SnackBar(content: Text(l10n.lyrics_import_success)),
-    );
+    messenger.showSnackBar(SnackBar(content: Text(l10n.lyrics_import_success)));
   } on LyricsImportException catch (e) {
     messenger.showSnackBar(
       SnackBar(content: Text(_importErrorText(l10n, e.error))),

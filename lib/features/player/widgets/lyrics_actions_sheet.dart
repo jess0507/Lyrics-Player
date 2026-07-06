@@ -4,10 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../lyrics/providers/track_lyrics_provider.dart';
 import 'lyrics_menu_action.dart';
-import 'lyrics_view.dart';
 
 /// 歌詞按鈕點擊後的底部表單:依目前歌詞狀態列出 [lyricsMenuActions]
-/// (自動產生 / 自動對時 / 字體大小 / 重新匯入 / 刪除)。
+/// (自動產生 / 匯入 / 自動對時 / 字體大小 / 重新匯入 / 刪除)。
 ///
 /// 後續動作以呼叫端的 [context]/[ref] 執行,避免本表單關閉後沿用已失效的 context。
 void showLyricsActionsSheet(
@@ -63,22 +62,6 @@ class _LyricsActionsSheet extends ConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 無歌詞時提供手動匯入入口(與自動產生互補);有歌詞時改由
-          // [LyricsMenuAction.reimport] 提供「重新匯入」。
-          if (!hasLyrics)
-            ListTile(
-              leading: const Icon(Icons.file_open_outlined),
-              title: Text(l10n.lyrics_import),
-              onTap: () {
-                Navigator.of(context).pop();
-                runLyricsImport(
-                  parentContext,
-                  parentRef,
-                  trackId: trackId,
-                  title: title,
-                );
-              },
-            ),
           for (final action in actions)
             ListTile(
               leading: Icon(action.icon),

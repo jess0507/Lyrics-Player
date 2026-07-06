@@ -16,6 +16,9 @@ enum LyricsMenuAction {
   /// 自動產生歌詞(WhisperX ASR);完全沒有歌詞時顯示。
   autoGenerate,
 
+  /// 手動匯入歌詞;完全沒有歌詞時顯示(排在 [autoGenerate] 之後)。
+  import,
+
   /// 自動對時(aeneas 引擎);已有純文字、尚未同步時顯示。
   autoSyncAeneas,
 
@@ -33,6 +36,7 @@ enum LyricsMenuAction {
 
   IconData get icon => switch (this) {
     autoGenerate => Icons.lyrics_outlined,
+    import => Icons.file_open_outlined,
     autoSyncAeneas => Icons.auto_fix_high,
     autoSyncWhisperX => Icons.auto_awesome,
     fontSize => Icons.text_fields,
@@ -42,6 +46,7 @@ enum LyricsMenuAction {
 
   String label(AppLocalizations l10n) => switch (this) {
     autoGenerate => l10n.lyrics_auto_generate,
+    import => l10n.lyrics_import,
     autoSyncAeneas => '${l10n.lyrics_auto_sync} · aeneas',
     autoSyncWhisperX => '${l10n.lyrics_auto_sync} · WhisperX',
     fontSize => l10n.lyrics_font_size,
@@ -59,7 +64,9 @@ List<LyricsMenuAction> lyricsMenuActions({
   required bool hasLyrics,
 }) {
   return [
+    // 無歌詞時提供兩種取得方式:自動產生(排前)與手動匯入。
     if (canAutoGenerate) LyricsMenuAction.autoGenerate,
+    if (!hasLyrics) LyricsMenuAction.import,
     if (canAutoSync) ...[
       LyricsMenuAction.autoSyncAeneas,
       LyricsMenuAction.autoSyncWhisperX,
@@ -100,6 +107,7 @@ Future<void> runLyricsMenuAction(
       );
     case LyricsMenuAction.fontSize:
       showLyricsFontSizeSheet(context);
+    case LyricsMenuAction.import:
     case LyricsMenuAction.reimport:
       await runLyricsImport(context, ref, trackId: trackId, title: title);
     case LyricsMenuAction.delete:
