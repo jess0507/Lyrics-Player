@@ -100,14 +100,18 @@ flutter_gen:
   integrations:
     flutter_svg: true
 
-# App 圖示設定：來源圖 assets/icon/app_logo.png
+# App 圖示設定
 # 產生指令：dart run flutter_launcher_icons
+# image_path 使用「不透明白底方形」來源圖(app_logo_icon.png)：
+#   圓角交給 iOS / Android launcher 遮罩處理(標準做法);若把圓角烤進圖裡,
+#   iOS 的 remove_alpha_ios 會把透明角填回白色方角。白底方形也確保
+#   舊版 Android(<8.0) legacy icon 有白色背景而非透明浮空 logo。
 flutter_launcher_icons:
-  image_path: "assets/icon/app_logo.png"
+  image_path: "assets/icon/app_logo_icon.png"
   android: true
   ios: true
   remove_alpha_ios: true
-  # Android 8.0+ 自適應圖示
+  # Android 8.0+ 自適應圖示:背景白色圖層 + 透明 logo 前景
   adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/icon/app_logo.png"
 
