@@ -110,6 +110,7 @@ jobs:
 
       # 上傳為 artifact，run 頁面即可下載；也供 deploy job 取用。
       - name: Upload AAB artifact
+        id: upload
         uses: actions/upload-artifact@v4
         with:
           name: app-release-aab-${{ steps.version.outputs.name }}
@@ -124,9 +125,10 @@ jobs:
             echo ""
             echo "| 項目 | 值 |"
             echo "| --- | --- |"
-            echo "| versionName | \`${{ needs.build.outputs.name }}\` |"
-            echo "| versionCode | \`${{ needs.build.outputs.build }}\` |"
+            echo "| versionName | \`${{ steps.version.outputs.name }}\` |"
+            echo "| versionCode | \`${{ steps.version.outputs.build }}\` |"
             echo "| track | \`internal\` |"
+            echo "| Artifact download URL | ${{ steps.upload.outputs.artifact-url }} |"
           } >> "$GITHUB_STEP_SUMMARY"
 
   deploy:
