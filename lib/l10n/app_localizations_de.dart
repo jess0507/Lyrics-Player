@@ -404,41 +404,43 @@ class AppLocalizationsDe extends AppLocalizations {
       'Verbindungsproblem, versuche es später erneut';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => 'Songtext automatisch erstellen';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => 'Audio wird vorbereitet…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => 'Audio wird hochgeladen…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => 'Songtext wird erstellt…';
 
   @override
   String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+      'Songtext erstellt (automatisch, evtl. ungenau)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed =>
+      'Songtext konnte nicht erstellt werden';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login =>
+      'Melde dich an, um die automatische Erstellung zu nutzen';
 
   @override
   String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+      'Tageslimit für automatische Erstellung erreicht, versuche es morgen';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => 'Audiodatei nicht gefunden';
 
   @override
   String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+      'Verbindungsproblem, versuche es später erneut';
 
   @override
   String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+      'Bitte warte, bis die aktuelle Songtext-Aufgabe abgeschlossen ist';
 
   @override
   String get tab_playlists => 'Playlists';

@@ -403,41 +403,41 @@ class AppLocalizationsId extends AppLocalizations {
   String get lyrics_auto_sync_network => 'Masalah koneksi, coba lagi nanti';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => 'Buat lirik otomatis';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => 'Menyiapkan audio…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => 'Mengunggah audio…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => 'Membuat lirik…';
 
   @override
   String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+      'Lirik dibuat (otomatis, mungkin kurang tepat)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => 'Tidak dapat membuat lirik';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login =>
+      'Masuk untuk menggunakan pembuatan otomatis';
 
   @override
   String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+      'Batas pembuatan harian tercapai, coba lagi besok';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => 'File audio tidak ditemukan';
 
   @override
-  String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+  String get lyrics_auto_generate_network => 'Masalah koneksi, coba lagi nanti';
 
   @override
   String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+      'Harap tunggu hingga tugas lirik saat ini selesai';
 
   @override
   String get tab_playlists => 'Playlist';

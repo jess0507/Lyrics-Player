@@ -406,41 +406,42 @@ class AppLocalizationsFr extends AppLocalizations {
       'Problème de connexion, réessayez plus tard';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => 'Générer les paroles automatiquement';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => 'Préparation de l’audio…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => 'Téléversement de l’audio…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => 'Génération des paroles…';
 
   @override
   String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+      'Paroles générées (auto, peut être imprécis)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => 'Impossible de générer les paroles';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login =>
+      'Connectez-vous pour utiliser la génération automatique';
 
   @override
   String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+      'Limite quotidienne de génération atteinte, réessayez demain';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => 'Fichier audio introuvable';
 
   @override
   String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+      'Problème de connexion, réessayez plus tard';
 
   @override
   String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+      'Veuillez attendre la fin de la tâche de paroles en cours';
 
   @override
   String get tab_playlists => 'Playlists';

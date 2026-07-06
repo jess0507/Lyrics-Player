@@ -402,41 +402,42 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bağlantı sorunu, daha sonra tekrar deneyin';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => 'Sözleri otomatik oluştur';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => 'Ses hazırlanıyor…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => 'Ses yükleniyor…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => 'Sözler oluşturuluyor…';
 
   @override
   String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+      'Sözler oluşturuldu (otomatik, hatalı olabilir)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => 'Sözler oluşturulamadı';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login =>
+      'Otomatik oluşturmayı kullanmak için giriş yapın';
 
   @override
   String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+      'Günlük oluşturma sınırına ulaşıldı, yarın tekrar deneyin';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => 'Ses dosyası bulunamadı';
 
   @override
   String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+      'Bağlantı sorunu, daha sonra tekrar deneyin';
 
   @override
   String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+      'Lütfen mevcut sözler görevinin bitmesini bekleyin';
 
   @override
   String get tab_playlists => 'Çalma listeleri';

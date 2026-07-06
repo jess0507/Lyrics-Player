@@ -389,41 +389,37 @@ class AppLocalizationsJa extends AppLocalizations {
   String get lyrics_auto_sync_network => '接続に問題があります。後でもう一度お試しください';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => '歌詞を自動生成';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => '音声を準備中…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => '音声をアップロード中…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => '歌詞を生成中…';
 
   @override
-  String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+  String get lyrics_auto_generate_success => '歌詞を生成しました(自動、誤差の可能性あり)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => '歌詞を生成できませんでした';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login => '自動生成を使うにはログインしてください';
 
   @override
-  String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+  String get lyrics_auto_generate_rate_limited => '本日の生成回数の上限に達しました。明日お試しください';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => '音声ファイルが見つかりません';
 
   @override
-  String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+  String get lyrics_auto_generate_network => '接続に問題があります。後でもう一度お試しください';
 
   @override
-  String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+  String get lyrics_job_busy => '現在の歌詞処理が完了するまでお待ちください';
 
   @override
   String get tab_playlists => 'プレイリスト';

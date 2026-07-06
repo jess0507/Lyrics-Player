@@ -391,41 +391,38 @@ class AppLocalizationsKo extends AppLocalizations {
   String get lyrics_auto_sync_network => '연결 문제가 발생했습니다. 나중에 다시 시도하세요';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => '가사 자동 생성';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => '오디오 준비 중…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => '오디오 업로드 중…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => '가사 생성 중…';
 
   @override
-  String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+  String get lyrics_auto_generate_success => '가사 생성됨 (자동, 오차가 있을 수 있음)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => '가사를 생성할 수 없습니다';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login => '자동 생성을 사용하려면 로그인하세요';
 
   @override
   String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+      '오늘 생성 한도에 도달했습니다. 내일 다시 시도하세요';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => '오디오 파일을 찾을 수 없습니다';
 
   @override
-  String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+  String get lyrics_auto_generate_network => '연결 문제가 발생했습니다. 나중에 다시 시도하세요';
 
   @override
-  String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+  String get lyrics_job_busy => '현재 가사 작업이 끝날 때까지 기다려 주세요';
 
   @override
   String get tab_playlists => '재생목록';

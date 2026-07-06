@@ -402,41 +402,41 @@ class AppLocalizationsHi extends AppLocalizations {
       'कनेक्शन समस्या, बाद में पुनः प्रयास करें';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => 'बोल स्वतः बनाएं';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => 'ऑडियो तैयार हो रहा है…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => 'ऑडियो अपलोड हो रहा है…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => 'बोल बन रहे हैं…';
 
   @override
-  String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+  String get lyrics_auto_generate_success => 'बोल बन गए (स्वतः, त्रुटि संभव)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => 'बोल नहीं बन सके';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login =>
+      'स्वतः निर्माण उपयोग करने के लिए साइन इन करें';
 
   @override
   String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+      'आज की निर्माण सीमा पूरी हो गई, कल पुनः प्रयास करें';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => 'ऑडियो फ़ाइल नहीं मिली';
 
   @override
   String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+      'कनेक्शन समस्या, बाद में पुनः प्रयास करें';
 
   @override
   String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+      'कृपया वर्तमान बोल कार्य पूरा होने तक प्रतीक्षा करें';
 
   @override
   String get tab_playlists => 'प्लेलिस्ट';

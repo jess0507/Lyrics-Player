@@ -401,41 +401,41 @@ class AppLocalizationsRu extends AppLocalizations {
       'Проблема с подключением, повторите позже';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => 'Автоматически создать текст';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => 'Подготовка аудио…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => 'Загрузка аудио…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => 'Создание текста…';
 
   @override
   String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+      'Текст создан (автоматически, возможны неточности)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => 'Не удалось создать текст';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login =>
+      'Войдите, чтобы использовать автосоздание';
 
   @override
   String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+      'Достигнут дневной лимит создания, попробуйте завтра';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => 'Аудиофайл не найден';
 
   @override
   String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+      'Проблема с подключением, повторите позже';
 
   @override
-  String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+  String get lyrics_job_busy => 'Дождитесь завершения текущей задачи с текстом';
 
   @override
   String get tab_playlists => 'Плейлисты';

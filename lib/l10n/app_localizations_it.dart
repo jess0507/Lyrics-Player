@@ -405,41 +405,42 @@ class AppLocalizationsIt extends AppLocalizations {
       'Problema di connessione, riprova più tardi';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => 'Genera testo automaticamente';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => 'Preparazione audio…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => 'Caricamento audio…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => 'Generazione testo…';
 
   @override
   String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+      'Testo generato (automatico, possibili imprecisioni)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => 'Impossibile generare il testo';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login =>
+      'Accedi per usare la generazione automatica';
 
   @override
   String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+      'Limite giornaliero di generazione raggiunto, riprova domani';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => 'File audio non trovato';
 
   @override
   String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+      'Problema di connessione, riprova più tardi';
 
   @override
   String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+      'Attendi il completamento dell’attività sul testo in corso';
 
   @override
   String get tab_playlists => 'Playlist';

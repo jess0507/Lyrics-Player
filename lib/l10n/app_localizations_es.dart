@@ -407,41 +407,42 @@ class AppLocalizationsEs extends AppLocalizations {
       'Problema de conexión, inténtalo más tarde';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => 'Generar letra automáticamente';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => 'Preparando audio…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => 'Subiendo audio…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => 'Generando letra…';
 
   @override
   String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+      'Letra generada (automática, puede tener errores)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => 'No se pudo generar la letra';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login =>
+      'Inicia sesión para usar la generación automática';
 
   @override
   String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+      'Has alcanzado el límite diario de generación, inténtalo mañana';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio =>
+      'No se encontró el archivo de audio';
 
   @override
   String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+      'Problema de conexión, inténtalo más tarde';
 
   @override
-  String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+  String get lyrics_job_busy => 'Espera a que termine la tarea de letra actual';
 
   @override
   String get tab_playlists => 'Listas';

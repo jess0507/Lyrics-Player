@@ -401,41 +401,40 @@ class AppLocalizationsVi extends AppLocalizations {
   String get lyrics_auto_sync_network => 'Sự cố kết nối, thử lại sau';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => 'Tự động tạo lời';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => 'Đang chuẩn bị âm thanh…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => 'Đang tải âm thanh lên…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => 'Đang tạo lời…';
 
   @override
   String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+      'Đã tạo lời (tự động, có thể chưa chính xác)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => 'Không thể tạo lời';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login =>
+      'Đăng nhập để dùng tự động tạo lời';
 
   @override
   String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+      'Đã đạt giới hạn tạo lời trong ngày, thử lại vào ngày mai';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => 'Không tìm thấy tệp âm thanh';
 
   @override
-  String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+  String get lyrics_auto_generate_network => 'Sự cố kết nối, thử lại sau';
 
   @override
-  String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+  String get lyrics_job_busy => 'Vui lòng đợi tác vụ lời hiện tại hoàn tất';
 
   @override
   String get tab_playlists => 'Danh sách phát';

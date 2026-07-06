@@ -400,41 +400,40 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lyrics_auto_sync_network => 'مشكلة في الاتصال، حاول لاحقًا';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => 'إنشاء الكلمات تلقائيًا';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => 'تجهيز الصوت…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => 'جارٍ رفع الصوت…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => 'جارٍ إنشاء الكلمات…';
 
   @override
   String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+      'تم إنشاء الكلمات (تلقائيًا، قد تكون غير دقيقة)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => 'تعذّر إنشاء الكلمات';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login =>
+      'سجّل الدخول لاستخدام الإنشاء التلقائي';
 
   @override
   String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+      'تم بلوغ الحد اليومي للإنشاء التلقائي، حاول غدًا';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => 'لم يتم العثور على ملف الصوت';
 
   @override
-  String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+  String get lyrics_auto_generate_network => 'مشكلة في الاتصال، حاول لاحقًا';
 
   @override
-  String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+  String get lyrics_job_busy => 'يرجى الانتظار حتى تنتهي مهمة الكلمات الحالية';
 
   @override
   String get tab_playlists => 'قوائم التشغيل';

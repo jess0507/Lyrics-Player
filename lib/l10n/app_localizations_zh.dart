@@ -387,41 +387,37 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lyrics_auto_sync_network => '連線問題,請稍後再試';
 
   @override
-  String get lyrics_auto_generate => 'Auto-generate lyrics';
+  String get lyrics_auto_generate => '自動產生歌詞';
 
   @override
-  String get lyrics_auto_generate_compressing => 'Preparing audio…';
+  String get lyrics_auto_generate_compressing => '處理音訊中…';
 
   @override
-  String get lyrics_auto_generate_uploading => 'Uploading audio…';
+  String get lyrics_auto_generate_uploading => '上傳音訊中…';
 
   @override
-  String get lyrics_auto_generate_transcribing => 'Generating lyrics…';
+  String get lyrics_auto_generate_transcribing => '產生歌詞中…';
 
   @override
-  String get lyrics_auto_generate_success =>
-      'Lyrics generated (auto, may be imperfect)';
+  String get lyrics_auto_generate_success => '已產生歌詞(可能有誤)';
 
   @override
-  String get lyrics_auto_generate_failed => 'Couldn\'t generate lyrics';
+  String get lyrics_auto_generate_failed => '產生歌詞失敗';
 
   @override
-  String get lyrics_auto_generate_need_login => 'Sign in to use auto-generate';
+  String get lyrics_auto_generate_need_login => '請先登入才能使用自動產生歌詞';
 
   @override
-  String get lyrics_auto_generate_rate_limited =>
-      'Daily auto-generate limit reached, try tomorrow';
+  String get lyrics_auto_generate_rate_limited => '今日產生次數已達上限,請明天再試';
 
   @override
-  String get lyrics_auto_generate_no_audio => 'Audio file not found';
+  String get lyrics_auto_generate_no_audio => '找不到音訊檔';
 
   @override
-  String get lyrics_auto_generate_network =>
-      'Connection problem, try again later';
+  String get lyrics_auto_generate_network => '連線問題,請稍後再試';
 
   @override
-  String get lyrics_job_busy =>
-      'Please wait for the current lyrics task to finish';
+  String get lyrics_job_busy => '請等待目前的歌詞任務完成';
 
   @override
   String get tab_playlists => '播放清單';
@@ -864,6 +860,39 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get lyrics_auto_sync_network => '连接问题,请稍后再试';
+
+  @override
+  String get lyrics_auto_generate => '自动生成歌词';
+
+  @override
+  String get lyrics_auto_generate_compressing => '处理音频中…';
+
+  @override
+  String get lyrics_auto_generate_uploading => '上传音频中…';
+
+  @override
+  String get lyrics_auto_generate_transcribing => '生成歌词中…';
+
+  @override
+  String get lyrics_auto_generate_success => '已生成歌词(可能有误)';
+
+  @override
+  String get lyrics_auto_generate_failed => '生成歌词失败';
+
+  @override
+  String get lyrics_auto_generate_need_login => '请先登录才能使用自动生成歌词';
+
+  @override
+  String get lyrics_auto_generate_rate_limited => '今日生成次数已达上限,请明天再试';
+
+  @override
+  String get lyrics_auto_generate_no_audio => '找不到音频文件';
+
+  @override
+  String get lyrics_auto_generate_network => '连接问题,请稍后再试';
+
+  @override
+  String get lyrics_job_busy => '请等待当前的歌词任务完成';
 
   @override
   String get tab_playlists => '播放列表';
