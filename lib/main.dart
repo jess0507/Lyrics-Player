@@ -1,4 +1,9 @@
+import 'dart:ui';
+
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart' show FlutterError, kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -26,6 +31,30 @@ Future<void> main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    // App Check:後端 callable(generate_lyrics / align_lyrics)有開
+    // enforcement,未送有效 token 會被映成 UNAVAILABLE。release 走平台
+    // attestation,debug build 走 debug provider(需在 Firebase Console
+    // 註冊裝置印出的 debug token 才能通過)。
+    await FirebaseAppCheck.instance.activate(
+      providerAndroid: kReleaseMode
+          ? const AndroidPlayIntegrityProvider()
+          : const AndroidDebugProvider(),
+      providerApple: kReleaseMode
+          ? const AppleAppAttestProvider()
+          : const AppleDebugProvider(),
+    );
+
+    // Crashlytics:debug build 不上報以免污染資料,release 才收集。
+    // Flutter 框架同步錯誤與非同步(PlatformDispatcher)錯誤都轉送。
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+      kReleaseMode,
+    );
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+
     firebaseAvailable = true;
   } catch (e) {
     debugPrint('Firebase 初始化失敗，帳戶功能停用：$e');
