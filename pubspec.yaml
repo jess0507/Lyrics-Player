@@ -58,7 +58,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   file_picker: ^11.0.2
   firebase_storage: ^13.4.2
-  ffmpeg_kit_flutter_new: ^4.2.1
+  ffmpeg_kit_flutter_new: ^4.3.2
   palette_generator: ^0.3.3+7
   firebase_app_check: ^0.4.5
   firebase_crashlytics: ^5.2.4

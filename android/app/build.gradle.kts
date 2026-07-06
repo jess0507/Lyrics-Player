@@ -63,6 +63,13 @@ android {
             } else {
                 signingConfigs.getByName("debug")
             }
+            // R8 會混淆 ffmpeg-kit 的 JNI 綁定類別,啟動時崩「Bad JNI version」。
+            // 明確開啟 minify 並套用 proguard-rules.pro 的 keep 規則。
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
 }
