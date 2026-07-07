@@ -8,6 +8,7 @@ import '../../lyrics/services/lyrics_repository.dart';
 import 'lyrics_auto_generate_action.dart';
 import 'lyrics_auto_sync_action.dart';
 import 'lyrics_font_size_sheet.dart';
+import 'lyrics_sign_in_gate.dart';
 import 'lyrics_view.dart';
 
 /// 歌詞相關的選單動作,供「次控制列更多選單」與「歌詞滿版選單」共用。
@@ -88,6 +89,22 @@ Future<void> runLyricsMenuAction(
   required String title,
   VoidCallback? onDeleted,
 }) async {
+  // 自動產生 / 自動對時走雲端服務,需登入;未登入時先詢問並導向登入頁。
+  if (action == LyricsMenuAction.autoGenerate ||
+      action == LyricsMenuAction.autoSyncAeneas ||
+      action == LyricsMenuAction.autoSyncWhisperX) {
+    final l10n = AppLocalizations.of(context)!;
+    final message = action == LyricsMenuAction.autoGenerate
+        ? l10n.lyrics_auto_generate_need_login
+        : l10n.lyrics_auto_sync_need_login;
+    final signedIn = await ensureSignedInForLyrics(
+      context,
+      ref,
+      message: message,
+    );
+    if (!signedIn || !context.mounted) return;
+  }
+
   switch (action) {
     case LyricsMenuAction.autoSyncAeneas:
       await runLyricsAutoSync(
