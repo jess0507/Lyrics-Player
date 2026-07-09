@@ -3,9 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../cover/providers/track_artwork_provider.dart';
-import '../../cover/providers/track_cover_provider.dart';
 import '../../lyrics/providers/track_lyrics_provider.dart';
-import 'cover_action_sheet.dart';
 import 'lyrics_view.dart';
 import 'player_artwork.dart';
 
@@ -96,8 +94,7 @@ class _PageIndicator extends StatelessWidget {
 }
 
 /// PageView 第一頁:有封面(自訂優先,退回音檔內嵌)顯示圖片,否則佔位圖。
-/// 有曲目時右下角提供編輯鈕,開啟新增 / 更換 / 移除封面的動作選單
-/// (「移除」僅針對自訂封面,故 hasCover 只看自訂封面)。
+/// 封面編輯已移至次控制列「更多」選單([_PlayerMenuAction])。
 class _ArtworkPage extends ConsumerWidget {
   const _ArtworkPage({required this.active, required this.trackId});
 
@@ -111,10 +108,6 @@ class _ArtworkPage extends ConsumerWidget {
     final artwork = id == null
         ? null
         : ref.watch(trackArtworkProvider(id)).valueOrNull;
-    final customCover = id == null
-        ? null
-        : ref.watch(trackCoverProvider(id)).valueOrNull;
-    final l10n = AppLocalizations.of(context)!;
     return Stack(
       children: [
         Positioned.fill(
@@ -125,21 +118,6 @@ class _ArtworkPage extends ConsumerWidget {
               ? Image(image: artwork, fit: BoxFit.cover)
               : PlayerArtwork(active: active),
         ),
-        if (id != null)
-          Positioned(
-            bottom: 4,
-            right: 4,
-            child: IconButton(
-              tooltip: l10n.cover_edit,
-              icon: const Icon(Icons.add_photo_alternate_outlined),
-              onPressed: () => showCoverActionSheet(
-                context,
-                ref,
-                trackId: id,
-                hasCover: customCover != null,
-              ),
-            ),
-          ),
       ],
     );
   }
