@@ -27,17 +27,14 @@ const PlaylistEntitySchema = CollectionSchema(
       name: r'isFavorites',
       type: IsarType.bool,
     ),
-    r'name': PropertySchema(
-      id: 2,
-      name: r'name',
-      type: IsarType.string,
-    ),
+    r'name': PropertySchema(id: 2, name: r'name', type: IsarType.string),
     r'trackIds': PropertySchema(
       id: 3,
       name: r'trackIds',
       type: IsarType.stringList,
-    )
+    ),
   },
+
   estimateSize: _playlistEntityEstimateSize,
   serialize: _playlistEntitySerialize,
   deserialize: _playlistEntityDeserialize,
@@ -54,16 +51,17 @@ const PlaylistEntitySchema = CollectionSchema(
           name: r'isFavorites',
           type: IndexType.value,
           caseSensitive: false,
-        )
+        ),
       ],
-    )
+    ),
   },
   links: {},
   embeddedSchemas: {},
+
   getId: _playlistEntityGetId,
   getLinks: _playlistEntityGetLinks,
   attach: _playlistEntityAttach,
-  version: '3.1.0+1',
+  version: '3.3.2',
 );
 
 int _playlistEntityEstimateSize(
@@ -139,7 +137,10 @@ List<IsarLinkBase<dynamic>> _playlistEntityGetLinks(PlaylistEntity object) {
 }
 
 void _playlistEntityAttach(
-    IsarCollection<dynamic> col, Id id, PlaylistEntity object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  PlaylistEntity object,
+) {
   object.id = id;
 }
 
@@ -163,17 +164,16 @@ extension PlaylistEntityQueryWhereSort
 extension PlaylistEntityQueryWhere
     on QueryBuilder<PlaylistEntity, PlaylistEntity, QWhereClause> {
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterWhereClause> idEqualTo(
-      Id id) {
+    Id id,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterWhereClause> idNotEqualTo(
-      Id id) {
+    Id id,
+  ) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -196,8 +196,9 @@ extension PlaylistEntityQueryWhere
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterWhereClause> idGreaterThan(
-      Id id,
-      {bool include = false}) {
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -206,8 +207,9 @@ extension PlaylistEntityQueryWhere
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterWhereClause> idLessThan(
-      Id id,
-      {bool include = false}) {
+    Id id, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -222,56 +224,68 @@ extension PlaylistEntityQueryWhere
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterWhereClause>
-      isFavoritesEqualTo(bool isFavorites) {
+  isFavoritesEqualTo(bool isFavorites) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'isFavorites',
-        value: [isFavorites],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'isFavorites',
+          value: [isFavorites],
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterWhereClause>
-      isFavoritesNotEqualTo(bool isFavorites) {
+  isFavoritesNotEqualTo(bool isFavorites) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isFavorites',
-              lower: [],
-              upper: [isFavorites],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isFavorites',
-              lower: [isFavorites],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'isFavorites',
+                lower: [],
+                upper: [isFavorites],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'isFavorites',
+                lower: [isFavorites],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isFavorites',
-              lower: [isFavorites],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isFavorites',
-              lower: [],
-              upper: [isFavorites],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'isFavorites',
+                lower: [isFavorites],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'isFavorites',
+                lower: [],
+                upper: [isFavorites],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
@@ -280,96 +294,93 @@ extension PlaylistEntityQueryWhere
 extension PlaylistEntityQueryFilter
     on QueryBuilder<PlaylistEntity, PlaylistEntity, QFilterCondition> {
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      createdAtEqualTo(DateTime value) {
+  createdAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'createdAt', value: value),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      createdAtGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  createdAtGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'createdAt',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      createdAtLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  createdAtLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'createdAt',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      createdAtBetween(
+  createdAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'createdAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'createdAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition> idEqualTo(
-      Id value) {
+    Id value,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      idGreaterThan(
-    Id value, {
-    bool include = false,
-  }) {
+  idGreaterThan(Id value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      idLessThan(
-    Id value, {
-    bool include = false,
-  }) {
+  idLessThan(Id value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
@@ -380,74 +391,78 @@ extension PlaylistEntityQueryFilter
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      isFavoritesEqualTo(bool value) {
+  isFavoritesEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isFavorites',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isFavorites', value: value),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      nameEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  nameEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      nameGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      nameLessThan(
+  nameGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      nameBetween(
+  nameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
+  nameBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -455,135 +470,140 @@ extension PlaylistEntityQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'name',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'name',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      nameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  nameStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      nameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  nameEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      nameContains(String value, {bool caseSensitive = true}) {
+  nameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'name',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'name',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      nameMatches(String pattern, {bool caseSensitive = true}) {
+  nameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'name',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'name',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      nameIsEmpty() {
+  nameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'name',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'name', value: ''),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      nameIsNotEmpty() {
+  nameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'name',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'name', value: ''),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsElementEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  trackIdsElementEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'trackIds',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'trackIds',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsElementGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'trackIds',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsElementLessThan(
+  trackIdsElementGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'trackIds',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'trackIds',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsElementBetween(
+  trackIdsElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'trackIds',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
+  trackIdsElementBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -591,160 +611,126 @@ extension PlaylistEntityQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'trackIds',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsElementStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'trackIds',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsElementEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'trackIds',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsElementContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'trackIds',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsElementMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'trackIds',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsElementIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'trackIds',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsElementIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'trackIds',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'trackIds',
-        length,
-        true,
-        length,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'trackIds',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsIsEmpty() {
+  trackIdsElementStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'trackIds',
-        0,
-        true,
-        0,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'trackIds',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsIsNotEmpty() {
+  trackIdsElementEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'trackIds',
-        0,
-        false,
-        999999,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'trackIds',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
+  trackIdsElementContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'trackIds',
-        0,
-        true,
-        length,
-        include,
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'trackIds',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
+  trackIdsElementMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'trackIds',
-        length,
-        include,
-        999999,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'trackIds',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
       );
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
-      trackIdsLengthBetween(
+  trackIdsElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'trackIds', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
+  trackIdsElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'trackIds', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
+  trackIdsLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'trackIds', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
+  trackIdsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'trackIds', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
+  trackIdsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'trackIds', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
+  trackIdsLengthLessThan(int length, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'trackIds', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
+  trackIdsLengthGreaterThan(int length, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'trackIds', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterFilterCondition>
+  trackIdsLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -777,21 +763,21 @@ extension PlaylistEntityQuerySortBy
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterSortBy>
-      sortByCreatedAtDesc() {
+  sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterSortBy>
-      sortByIsFavorites() {
+  sortByIsFavorites() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isFavorites', Sort.asc);
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterSortBy>
-      sortByIsFavoritesDesc() {
+  sortByIsFavoritesDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isFavorites', Sort.desc);
     });
@@ -819,7 +805,7 @@ extension PlaylistEntityQuerySortThenBy
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterSortBy>
-      thenByCreatedAtDesc() {
+  thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
@@ -838,14 +824,14 @@ extension PlaylistEntityQuerySortThenBy
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterSortBy>
-      thenByIsFavorites() {
+  thenByIsFavorites() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isFavorites', Sort.asc);
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QAfterSortBy>
-      thenByIsFavoritesDesc() {
+  thenByIsFavoritesDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isFavorites', Sort.desc);
     });
@@ -867,21 +853,22 @@ extension PlaylistEntityQuerySortThenBy
 extension PlaylistEntityQueryWhereDistinct
     on QueryBuilder<PlaylistEntity, PlaylistEntity, QDistinct> {
   QueryBuilder<PlaylistEntity, PlaylistEntity, QDistinct>
-      distinctByCreatedAt() {
+  distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
     });
   }
 
   QueryBuilder<PlaylistEntity, PlaylistEntity, QDistinct>
-      distinctByIsFavorites() {
+  distinctByIsFavorites() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isFavorites');
     });
   }
 
-  QueryBuilder<PlaylistEntity, PlaylistEntity, QDistinct> distinctByName(
-      {bool caseSensitive = true}) {
+  QueryBuilder<PlaylistEntity, PlaylistEntity, QDistinct> distinctByName({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
@@ -921,7 +908,7 @@ extension PlaylistEntityQueryProperty
   }
 
   QueryBuilder<PlaylistEntity, List<String>, QQueryOperations>
-      trackIdsProperty() {
+  trackIdsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'trackIds');
     });

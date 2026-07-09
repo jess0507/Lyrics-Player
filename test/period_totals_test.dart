@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:seek_player/core/storage/isar_service.dart';
@@ -63,8 +63,8 @@ void main() {
         '-fsSL',
         '-o',
         lib.path,
-        'https://github.com/isar/isar/releases/download/'
-            '${Isar.version}/$asset',
+        // isar_community 的官方二進位站（同 initializeIsarCore 的 binariesUrl）
+        'https://binaries.isar-community.dev/${Isar.version}/$asset',
       ]);
       if (result.exitCode != 0) {
         fail('下載 IsarCore 失敗:${result.stderr}');

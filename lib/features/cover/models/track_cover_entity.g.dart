@@ -32,12 +32,9 @@ const TrackCoverEntitySchema = CollectionSchema(
       name: r'imagePath',
       type: IsarType.string,
     ),
-    r'trackId': PropertySchema(
-      id: 3,
-      name: r'trackId',
-      type: IsarType.string,
-    )
+    r'trackId': PropertySchema(id: 3, name: r'trackId', type: IsarType.string),
   },
+
   estimateSize: _trackCoverEntityEstimateSize,
   serialize: _trackCoverEntitySerialize,
   deserialize: _trackCoverEntityDeserialize,
@@ -54,16 +51,17 @@ const TrackCoverEntitySchema = CollectionSchema(
           name: r'trackId',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
-    )
+    ),
   },
   links: {},
   embeddedSchemas: {},
+
   getId: _trackCoverEntityGetId,
   getLinks: _trackCoverEntityGetLinks,
   attach: _trackCoverEntityAttach,
-  version: '3.1.0+1',
+  version: '3.3.2',
 );
 
 int _trackCoverEntityEstimateSize(
@@ -133,7 +131,10 @@ List<IsarLinkBase<dynamic>> _trackCoverEntityGetLinks(TrackCoverEntity object) {
 }
 
 void _trackCoverEntityAttach(
-    IsarCollection<dynamic> col, Id id, TrackCoverEntity object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  TrackCoverEntity object,
+) {
   object.id = id;
 }
 
@@ -186,8 +187,10 @@ extension TrackCoverEntityByIndex on IsarCollection<TrackCoverEntity> {
     return putAllByIndex(r'trackId', objects);
   }
 
-  List<Id> putAllByTrackIdSync(List<TrackCoverEntity> objects,
-      {bool saveLinks = true}) {
+  List<Id> putAllByTrackIdSync(
+    List<TrackCoverEntity> objects, {
+    bool saveLinks = true,
+  }) {
     return putAllByIndexSync(r'trackId', objects, saveLinks: saveLinks);
   }
 }
@@ -204,17 +207,15 @@ extension TrackCoverEntityQueryWhereSort
 extension TrackCoverEntityQueryWhere
     on QueryBuilder<TrackCoverEntity, TrackCoverEntity, QWhereClause> {
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterWhereClause> idEqualTo(
-      Id id) {
+    Id id,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterWhereClause>
-      idNotEqualTo(Id id) {
+  idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -237,7 +238,7 @@ extension TrackCoverEntityQueryWhere
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterWhereClause>
-      idGreaterThan(Id id, {bool include = false}) {
+  idGreaterThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -246,7 +247,7 @@ extension TrackCoverEntityQueryWhere
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterWhereClause>
-      idLessThan(Id id, {bool include = false}) {
+  idLessThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -261,56 +262,65 @@ extension TrackCoverEntityQueryWhere
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterWhereClause>
-      trackIdEqualTo(String trackId) {
+  trackIdEqualTo(String trackId) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'trackId',
-        value: [trackId],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'trackId', value: [trackId]),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterWhereClause>
-      trackIdNotEqualTo(String trackId) {
+  trackIdNotEqualTo(String trackId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'trackId',
-              lower: [],
-              upper: [trackId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'trackId',
-              lower: [trackId],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'trackId',
+                lower: [],
+                upper: [trackId],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'trackId',
+                lower: [trackId],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'trackId',
-              lower: [trackId],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'trackId',
-              lower: [],
-              upper: [trackId],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'trackId',
+                lower: [trackId],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'trackId',
+                lower: [],
+                upper: [trackId],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
@@ -319,239 +329,239 @@ extension TrackCoverEntityQueryWhere
 extension TrackCoverEntityQueryFilter
     on QueryBuilder<TrackCoverEntity, TrackCoverEntity, QFilterCondition> {
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      addedAtEqualTo(DateTime value) {
+  addedAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'addedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'addedAt', value: value),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      addedAtGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  addedAtGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'addedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'addedAt',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      addedAtLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  addedAtLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'addedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'addedAt',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      addedAtBetween(
+  addedAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'addedAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'addedAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      colorValueIsNull() {
+  colorValueIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'colorValue',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'colorValue'),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      colorValueIsNotNull() {
+  colorValueIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'colorValue',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'colorValue'),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      colorValueEqualTo(int? value) {
+  colorValueEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'colorValue',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'colorValue', value: value),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      colorValueGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
+  colorValueGreaterThan(int? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'colorValue',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'colorValue',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      colorValueLessThan(
-    int? value, {
-    bool include = false,
-  }) {
+  colorValueLessThan(int? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'colorValue',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'colorValue',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      colorValueBetween(
+  colorValueBetween(
     int? lower,
     int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'colorValue',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'colorValue',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      idEqualTo(Id value) {
+  idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      idGreaterThan(
-    Id value, {
-    bool include = false,
-  }) {
+  idGreaterThan(Id value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      idLessThan(
-    Id value, {
-    bool include = false,
-  }) {
+  idLessThan(Id value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      idBetween(
+  idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      imagePathEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  imagePathEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'imagePath',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'imagePath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      imagePathGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'imagePath',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      imagePathLessThan(
+  imagePathGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'imagePath',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'imagePath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      imagePathBetween(
+  imagePathLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'imagePath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
+  imagePathBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -559,135 +569,140 @@ extension TrackCoverEntityQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'imagePath',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'imagePath',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      imagePathStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  imagePathStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'imagePath',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'imagePath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      imagePathEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  imagePathEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'imagePath',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'imagePath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      imagePathContains(String value, {bool caseSensitive = true}) {
+  imagePathContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'imagePath',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'imagePath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      imagePathMatches(String pattern, {bool caseSensitive = true}) {
+  imagePathMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'imagePath',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'imagePath',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      imagePathIsEmpty() {
+  imagePathIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'imagePath',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'imagePath', value: ''),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      imagePathIsNotEmpty() {
+  imagePathIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'imagePath',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'imagePath', value: ''),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      trackIdEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  trackIdEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'trackId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'trackId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      trackIdGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'trackId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      trackIdLessThan(
+  trackIdGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'trackId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'trackId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      trackIdBetween(
+  trackIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'trackId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
+  trackIdBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -695,84 +710,86 @@ extension TrackCoverEntityQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'trackId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'trackId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      trackIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  trackIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'trackId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'trackId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      trackIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  trackIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'trackId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'trackId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      trackIdContains(String value, {bool caseSensitive = true}) {
+  trackIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'trackId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'trackId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      trackIdMatches(String pattern, {bool caseSensitive = true}) {
+  trackIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'trackId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'trackId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      trackIdIsEmpty() {
+  trackIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'trackId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'trackId', value: ''),
+      );
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterFilterCondition>
-      trackIdIsNotEmpty() {
+  trackIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'trackId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'trackId', value: ''),
+      );
     });
   }
 }
@@ -786,56 +803,56 @@ extension TrackCoverEntityQueryLinks
 extension TrackCoverEntityQuerySortBy
     on QueryBuilder<TrackCoverEntity, TrackCoverEntity, QSortBy> {
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      sortByAddedAt() {
+  sortByAddedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'addedAt', Sort.asc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      sortByAddedAtDesc() {
+  sortByAddedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'addedAt', Sort.desc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      sortByColorValue() {
+  sortByColorValue() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'colorValue', Sort.asc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      sortByColorValueDesc() {
+  sortByColorValueDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'colorValue', Sort.desc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      sortByImagePath() {
+  sortByImagePath() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'imagePath', Sort.asc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      sortByImagePathDesc() {
+  sortByImagePathDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'imagePath', Sort.desc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      sortByTrackId() {
+  sortByTrackId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'trackId', Sort.asc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      sortByTrackIdDesc() {
+  sortByTrackIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'trackId', Sort.desc);
     });
@@ -845,28 +862,28 @@ extension TrackCoverEntityQuerySortBy
 extension TrackCoverEntityQuerySortThenBy
     on QueryBuilder<TrackCoverEntity, TrackCoverEntity, QSortThenBy> {
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      thenByAddedAt() {
+  thenByAddedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'addedAt', Sort.asc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      thenByAddedAtDesc() {
+  thenByAddedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'addedAt', Sort.desc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      thenByColorValue() {
+  thenByColorValue() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'colorValue', Sort.asc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      thenByColorValueDesc() {
+  thenByColorValueDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'colorValue', Sort.desc);
     });
@@ -879,35 +896,35 @@ extension TrackCoverEntityQuerySortThenBy
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      thenByIdDesc() {
+  thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      thenByImagePath() {
+  thenByImagePath() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'imagePath', Sort.asc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      thenByImagePathDesc() {
+  thenByImagePathDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'imagePath', Sort.desc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      thenByTrackId() {
+  thenByTrackId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'trackId', Sort.asc);
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QAfterSortBy>
-      thenByTrackIdDesc() {
+  thenByTrackIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'trackId', Sort.desc);
     });
@@ -917,28 +934,28 @@ extension TrackCoverEntityQuerySortThenBy
 extension TrackCoverEntityQueryWhereDistinct
     on QueryBuilder<TrackCoverEntity, TrackCoverEntity, QDistinct> {
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QDistinct>
-      distinctByAddedAt() {
+  distinctByAddedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'addedAt');
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QDistinct>
-      distinctByColorValue() {
+  distinctByColorValue() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'colorValue');
     });
   }
 
   QueryBuilder<TrackCoverEntity, TrackCoverEntity, QDistinct>
-      distinctByImagePath({bool caseSensitive = true}) {
+  distinctByImagePath({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'imagePath', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QDistinct> distinctByTrackId(
-      {bool caseSensitive = true}) {
+  QueryBuilder<TrackCoverEntity, TrackCoverEntity, QDistinct>
+  distinctByTrackId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'trackId', caseSensitive: caseSensitive);
     });

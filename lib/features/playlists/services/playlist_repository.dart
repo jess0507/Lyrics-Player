@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:seek_player/core/storage/isar_service.dart';
 import 'package:seek_player/features/playlists/models/playlist_entity.dart';
 

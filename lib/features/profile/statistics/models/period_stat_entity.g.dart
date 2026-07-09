@@ -17,22 +17,15 @@ const PeriodStatEntitySchema = CollectionSchema(
   name: r'PeriodStatEntity',
   id: -3198194132626618972,
   properties: {
-    r'listenMs': PropertySchema(
-      id: 0,
-      name: r'listenMs',
-      type: IsarType.long,
-    ),
-    r'period': PropertySchema(
-      id: 1,
-      name: r'period',
-      type: IsarType.string,
-    ),
+    r'listenMs': PropertySchema(id: 0, name: r'listenMs', type: IsarType.long),
+    r'period': PropertySchema(id: 1, name: r'period', type: IsarType.string),
     r'playCount': PropertySchema(
       id: 2,
       name: r'playCount',
       type: IsarType.long,
-    )
+    ),
   },
+
   estimateSize: _periodStatEntityEstimateSize,
   serialize: _periodStatEntitySerialize,
   deserialize: _periodStatEntityDeserialize,
@@ -49,16 +42,17 @@ const PeriodStatEntitySchema = CollectionSchema(
           name: r'period',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
-    )
+    ),
   },
   links: {},
   embeddedSchemas: {},
+
   getId: _periodStatEntityGetId,
   getLinks: _periodStatEntityGetLinks,
   attach: _periodStatEntityAttach,
-  version: '3.1.0+1',
+  version: '3.3.2',
 );
 
 int _periodStatEntityEstimateSize(
@@ -123,7 +117,10 @@ List<IsarLinkBase<dynamic>> _periodStatEntityGetLinks(PeriodStatEntity object) {
 }
 
 void _periodStatEntityAttach(
-    IsarCollection<dynamic> col, Id id, PeriodStatEntity object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  PeriodStatEntity object,
+) {
   object.id = id;
 }
 
@@ -176,8 +173,10 @@ extension PeriodStatEntityByIndex on IsarCollection<PeriodStatEntity> {
     return putAllByIndex(r'period', objects);
   }
 
-  List<Id> putAllByPeriodSync(List<PeriodStatEntity> objects,
-      {bool saveLinks = true}) {
+  List<Id> putAllByPeriodSync(
+    List<PeriodStatEntity> objects, {
+    bool saveLinks = true,
+  }) {
     return putAllByIndexSync(r'period', objects, saveLinks: saveLinks);
   }
 }
@@ -194,17 +193,15 @@ extension PeriodStatEntityQueryWhereSort
 extension PeriodStatEntityQueryWhere
     on QueryBuilder<PeriodStatEntity, PeriodStatEntity, QWhereClause> {
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause> idEqualTo(
-      Id id) {
+    Id id,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
-      ));
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      idNotEqualTo(Id id) {
+  idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -227,7 +224,7 @@ extension PeriodStatEntityQueryWhere
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      idGreaterThan(Id id, {bool include = false}) {
+  idGreaterThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -236,7 +233,7 @@ extension PeriodStatEntityQueryWhere
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      idLessThan(Id id, {bool include = false}) {
+  idLessThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -251,56 +248,65 @@ extension PeriodStatEntityQueryWhere
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      periodEqualTo(String period) {
+  periodEqualTo(String period) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'period',
-        value: [period],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'period', value: [period]),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterWhereClause>
-      periodNotEqualTo(String period) {
+  periodNotEqualTo(String period) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'period',
-              lower: [],
-              upper: [period],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'period',
-              lower: [period],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'period',
+                lower: [],
+                upper: [period],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'period',
+                lower: [period],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'period',
-              lower: [period],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'period',
-              lower: [],
-              upper: [period],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'period',
+                lower: [period],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'period',
+                lower: [],
+                upper: [period],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
@@ -309,165 +315,166 @@ extension PeriodStatEntityQueryWhere
 extension PeriodStatEntityQueryFilter
     on QueryBuilder<PeriodStatEntity, PeriodStatEntity, QFilterCondition> {
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      idEqualTo(Id value) {
+  idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      idGreaterThan(
-    Id value, {
-    bool include = false,
-  }) {
+  idGreaterThan(Id value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      idLessThan(
-    Id value, {
-    bool include = false,
-  }) {
+  idLessThan(Id value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      idBetween(
+  idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      listenMsEqualTo(int value) {
+  listenMsEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'listenMs',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'listenMs', value: value),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      listenMsGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
+  listenMsGreaterThan(int value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'listenMs',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'listenMs',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      listenMsLessThan(
-    int value, {
-    bool include = false,
-  }) {
+  listenMsLessThan(int value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'listenMs',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'listenMs',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      listenMsBetween(
+  listenMsBetween(
     int lower,
     int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'listenMs',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'listenMs',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      periodEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  periodEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'period',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'period',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      periodGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'period',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      periodLessThan(
+  periodGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'period',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'period',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      periodBetween(
+  periodLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'period',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
+  periodBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -475,140 +482,141 @@ extension PeriodStatEntityQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'period',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'period',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      periodStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  periodStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'period',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'period',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      periodEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  periodEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'period',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'period',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      periodContains(String value, {bool caseSensitive = true}) {
+  periodContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'period',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'period',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      periodMatches(String pattern, {bool caseSensitive = true}) {
+  periodMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'period',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'period',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      periodIsEmpty() {
+  periodIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'period',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'period', value: ''),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      periodIsNotEmpty() {
+  periodIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'period',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'period', value: ''),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      playCountEqualTo(int value) {
+  playCountEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'playCount',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'playCount', value: value),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      playCountGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
+  playCountGreaterThan(int value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'playCount',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'playCount',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      playCountLessThan(
-    int value, {
-    bool include = false,
-  }) {
+  playCountLessThan(int value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'playCount',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'playCount',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterFilterCondition>
-      playCountBetween(
+  playCountBetween(
     int lower,
     int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'playCount',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'playCount',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
@@ -622,42 +630,42 @@ extension PeriodStatEntityQueryLinks
 extension PeriodStatEntityQuerySortBy
     on QueryBuilder<PeriodStatEntity, PeriodStatEntity, QSortBy> {
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      sortByListenMs() {
+  sortByListenMs() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'listenMs', Sort.asc);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      sortByListenMsDesc() {
+  sortByListenMsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'listenMs', Sort.desc);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      sortByPeriod() {
+  sortByPeriod() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'period', Sort.asc);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      sortByPeriodDesc() {
+  sortByPeriodDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'period', Sort.desc);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      sortByPlayCount() {
+  sortByPlayCount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'playCount', Sort.asc);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      sortByPlayCountDesc() {
+  sortByPlayCountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'playCount', Sort.desc);
     });
@@ -673,49 +681,49 @@ extension PeriodStatEntityQuerySortThenBy
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      thenByIdDesc() {
+  thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      thenByListenMs() {
+  thenByListenMs() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'listenMs', Sort.asc);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      thenByListenMsDesc() {
+  thenByListenMsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'listenMs', Sort.desc);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      thenByPeriod() {
+  thenByPeriod() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'period', Sort.asc);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      thenByPeriodDesc() {
+  thenByPeriodDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'period', Sort.desc);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      thenByPlayCount() {
+  thenByPlayCount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'playCount', Sort.asc);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QAfterSortBy>
-      thenByPlayCountDesc() {
+  thenByPlayCountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'playCount', Sort.desc);
     });
@@ -725,21 +733,22 @@ extension PeriodStatEntityQuerySortThenBy
 extension PeriodStatEntityQueryWhereDistinct
     on QueryBuilder<PeriodStatEntity, PeriodStatEntity, QDistinct> {
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QDistinct>
-      distinctByListenMs() {
+  distinctByListenMs() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'listenMs');
     });
   }
 
-  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QDistinct> distinctByPeriod(
-      {bool caseSensitive = true}) {
+  QueryBuilder<PeriodStatEntity, PeriodStatEntity, QDistinct> distinctByPeriod({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'period', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<PeriodStatEntity, PeriodStatEntity, QDistinct>
-      distinctByPlayCount() {
+  distinctByPlayCount() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'playCount');
     });
