@@ -7,6 +7,8 @@ class Track {
     required this.uri,
     required this.title,
     this.artist,
+    this.album,
+    this.albumId,
     this.durationMs,
   });
 
@@ -17,6 +19,12 @@ class Track {
   final String uri;
   final String title;
   final String? artist;
+  final String? album;
+
+  /// MediaStore 專輯 id;供 `OnAudioQuery.queryArtwork(ArtworkType.ALBUM)`
+  /// 取內嵌封面用,封面圖本身不存進 Track。
+  final int? albumId;
+
   final int? durationMs;
 
   Duration? get duration =>
@@ -27,6 +35,8 @@ class Track {
         uri: uri,
         title: title,
         artist: artist,
+        album: album,
+        albumId: albumId,
         durationMs: durationMs ?? this.durationMs,
       );
 
@@ -35,6 +45,8 @@ class Track {
         'uri': uri,
         'title': title,
         'artist': artist,
+        'album': album,
+        'albumId': albumId,
         'durationMs': durationMs,
       };
 
@@ -43,6 +55,8 @@ class Track {
         uri: json['uri'] as String,
         title: json['title'] as String,
         artist: json['artist'] as String?,
+        album: json['album'] as String?,
+        albumId: json['albumId'] as int?,
         durationMs: json['durationMs'] as int?,
       );
 

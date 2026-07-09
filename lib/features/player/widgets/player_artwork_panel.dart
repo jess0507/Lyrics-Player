@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../cover/providers/track_artwork_provider.dart';
 import '../../cover/providers/track_cover_provider.dart';
 import '../../lyrics/providers/track_lyrics_provider.dart';
 import 'cover_action_sheet.dart';
@@ -94,8 +95,9 @@ class _PageIndicator extends StatelessWidget {
   }
 }
 
-/// PageView 第一頁:有自訂封面顯示圖片,否則佔位圖。有曲目時右下角提供
-/// 編輯鈕,開啟新增 / 更換 / 移除封面的動作選單。
+/// PageView 第一頁:有封面(自訂優先,退回音檔內嵌)顯示圖片,否則佔位圖。
+/// 有曲目時右下角提供編輯鈕,開啟新增 / 更換 / 移除封面的動作選單
+/// (「移除」僅針對自訂封面,故 hasCover 只看自訂封面)。
 class _ArtworkPage extends ConsumerWidget {
   const _ArtworkPage({required this.active, required this.trackId});
 
@@ -106,7 +108,10 @@ class _ArtworkPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
     final id = trackId;
-    final cover = id == null
+    final artwork = id == null
+        ? null
+        : ref.watch(trackArtworkProvider(id)).valueOrNull;
+    final customCover = id == null
         ? null
         : ref.watch(trackCoverProvider(id)).valueOrNull;
     final l10n = AppLocalizations.of(context)!;
@@ -116,8 +121,8 @@ class _ArtworkPage extends ConsumerWidget {
           child: ColoredBox(color: scheme.surfaceContainerHighest),
         ),
         Positioned.fill(
-          child: cover != null
-              ? Image.file(cover, fit: BoxFit.cover)
+          child: artwork != null
+              ? Image(image: artwork, fit: BoxFit.cover)
               : PlayerArtwork(active: active),
         ),
         if (id != null)
@@ -131,7 +136,7 @@ class _ArtworkPage extends ConsumerWidget {
                 context,
                 ref,
                 trackId: id,
-                hasCover: cover != null,
+                hasCover: customCover != null,
               ),
             ),
           ),

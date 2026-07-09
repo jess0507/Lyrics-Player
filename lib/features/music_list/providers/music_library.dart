@@ -43,6 +43,10 @@ class MusicLibrary extends AsyncNotifier<List<Track>> {
             artist: (s.artist == null || s.artist == '<unknown>')
                 ? null
                 : s.artist,
+            album: (s.album == null || s.album == '<unknown>')
+                ? null
+                : s.album,
+            albumId: s.albumId,
             durationMs: s.duration,
           ),
     ];
