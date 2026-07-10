@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:seek_player/features/player/widgets/lyrics_actions_sheet.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 import '../../lyrics/providers/track_lyrics_provider.dart';
 import '../../lyrics/services/lyrics_import_service.dart';
 import '../providers/lyrics_font_scale_controller.dart';
@@ -99,11 +100,9 @@ Future<void> runLyricsImport(
         .read(lyricsImportServiceProvider)
         .importForTrack(trackId: trackId, title: title);
     if (!imported) return; // 使用者取消
-    messenger.showSnackBar(SnackBar(content: Text(l10n.lyrics_import_success)));
+    messenger.showAppSnackBar(l10n.lyrics_import_success);
   } on LyricsImportException catch (e) {
-    messenger.showSnackBar(
-      SnackBar(content: Text(_importErrorText(l10n, e.error))),
-    );
+    messenger.showAppSnackBar(_importErrorText(l10n, e.error));
   }
 }
 

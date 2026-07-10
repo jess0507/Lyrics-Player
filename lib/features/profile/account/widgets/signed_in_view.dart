@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/auth/auth_service.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../shared/widgets/app_snack_bar.dart';
 
 /// 已登入:顯示頭像、Email、登出與刪除帳號。
 class UserInfoView extends ConsumerWidget {
@@ -93,11 +94,9 @@ class UserInfoView extends ConsumerWidget {
     if (confirmed != true) return;
     try {
       await auth.deleteAccountData();
-      messenger.showSnackBar(
-        SnackBar(content: Text(l10n.account_delete_data_done)),
-      );
+      messenger.showAppSnackBar(l10n.account_delete_data_done);
     } on FirebaseFunctionsException catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text(e.message ?? e.code)));
+      messenger.showAppSnackBar(e.message ?? e.code);
     }
   }
 
@@ -125,9 +124,9 @@ class UserInfoView extends ConsumerWidget {
     try {
       await auth.deleteAccount();
     } on FirebaseFunctionsException catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text(e.message ?? e.code)));
+      messenger.showAppSnackBar(e.message ?? e.code);
     } on FirebaseAuthException catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text(e.message ?? e.code)));
+      messenger.showAppSnackBar(e.message ?? e.code);
     }
   }
 }

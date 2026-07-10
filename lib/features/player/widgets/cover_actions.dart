@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 import '../../cover/services/cover_import_service.dart';
 
 /// 挑圖並設為曲目自訂封面(新增 / 更換)。成功以 SnackBar 回饋,
@@ -17,9 +18,9 @@ Future<void> setTrackCover(
     final done =
         await ref.read(coverImportServiceProvider).pickAndSetForTrack(trackId);
     if (!done) return; // 使用者取消
-    messenger.showSnackBar(SnackBar(content: Text(l10n.cover_updated)));
+    messenger.showAppSnackBar(l10n.cover_updated);
   } on CoverImportException catch (e) {
-    messenger.showSnackBar(SnackBar(content: Text(_errorText(l10n, e.error))));
+    messenger.showAppSnackBar(_errorText(l10n, e.error));
   }
 }
 
@@ -32,7 +33,7 @@ Future<void> removeTrackCover(
   final l10n = AppLocalizations.of(context)!;
   final messenger = ScaffoldMessenger.of(context);
   await ref.read(coverImportServiceProvider).removeForTrack(trackId);
-  messenger.showSnackBar(SnackBar(content: Text(l10n.cover_removed)));
+  messenger.showAppSnackBar(l10n.cover_removed);
 }
 
 String _errorText(AppLocalizations l10n, CoverImportError error) =>

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../../shared/widgets/app_snack_bar.dart';
 import '../../lyrics/auto_sync/lyrics_auto_sync_controller.dart';
 import '../../lyrics/auto_sync/lyrics_auto_sync_service.dart';
 
@@ -38,14 +39,10 @@ Future<void> runLyricsAutoSync(
 
   navigator.pop(); // 關閉進度框
   if (ok) {
-    messenger.showSnackBar(
-      SnackBar(content: Text(l10n.lyrics_auto_sync_success)),
-    );
+    messenger.showAppSnackBar(l10n.lyrics_auto_sync_success);
   } else {
     final error = ref.read(lyricsAutoSyncControllerProvider(trackId)).error;
-    messenger.showSnackBar(
-      SnackBar(content: Text(_autoSyncErrorText(l10n, error))),
-    );
+    messenger.showAppSnackBar(_autoSyncErrorText(l10n, error));
   }
 }
 

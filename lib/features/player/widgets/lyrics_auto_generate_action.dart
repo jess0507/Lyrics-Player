@@ -4,6 +4,7 @@ import 'package:seek_player/features/lyrics/auto_generate/lyrics_auto_generate_c
 import 'package:seek_player/features/lyrics/auto_generate/lyrics_auto_generate_service.dart';
 import 'package:seek_player/features/player/widgets/lyrics_auto_sync_action.dart';
 import 'package:seek_player/l10n/app_localizations.dart';
+import 'package:seek_player/shared/widgets/app_snack_bar.dart';
 
 /// 觸發自動產生歌詞:顯示不可關閉的進度對話框,完成後關閉並以 SnackBar 回報。
 /// 成功時 service 已 invalidate `trackLyricsProvider`,歌詞視圖自動顯示產物。
@@ -38,15 +39,11 @@ Future<void> runLyricsAutoGenerate(
   navigator.pop(); // 關閉進度框
   if (ok) {
     debugPrint('[LyricsAutoGen] 成功 trackId=$trackId');
-    messenger.showSnackBar(
-      SnackBar(content: Text(l10n.lyrics_auto_generate_success)),
-    );
+    messenger.showAppSnackBar(l10n.lyrics_auto_generate_success);
   } else {
     final error = ref.read(lyricsAutoGenerateControllerProvider(trackId)).error;
     debugPrint('[LyricsAutoGen] 失敗 trackId=$trackId error=$error');
-    messenger.showSnackBar(
-      SnackBar(content: Text(_autoGenerateErrorText(l10n, error))),
-    );
+    messenger.showAppSnackBar(_autoGenerateErrorText(l10n, error));
   }
 }
 

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/auth/auth_service.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../shared/widgets/app_snack_bar.dart';
 import 'country_code_dropdown.dart';
 
 /// 未登入:選擇 Google、手機簡訊 OTP 或 Email/密碼登入。
@@ -67,9 +68,7 @@ class _SignedOutViewState extends ConsumerState<SignInView> {
 
   void _showMessage(String message) {
     if (!mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showAppSnackBar(message);
   }
 
   /// 選擇登入方式(展開對應表單);重新選擇手機時重置驗證碼狀態。
