@@ -151,5 +151,9 @@
   "playlist_empty": "Bu çalma listesinde henüz şarkı yok",
   "playlists_empty": "Henüz çalma listesi yok",
   "playlist_play_all": "Tümünü çal",
-  "playlist_track_count": "{count, plural, =0{Şarkı yok} =1{1 şarkı} other{{count} şarkı}}"
+  "playlist_track_count": "{count, plural, =0{Şarkı yok} =1{1 şarkı} other{{count} şarkı}}",
+  "update_later": "Daha sonra",
+  "update_ready_message": "Yeni bir sürüm hazır",
+  "update_restart_action": "Yeniden başlat",
+  "update_restart_manual_hint": "Güncellemeyi uygulamak için lütfen uygulamayı tamamen kapatıp yeniden açın."
 }

@@ -503,4 +503,17 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => 'Plus tard';
+
+  @override
+  String get update_ready_message => 'Une nouvelle version est prête';
+
+  @override
+  String get update_restart_action => 'Redémarrer';
+
+  @override
+  String get update_restart_manual_hint =>
+      'Veuillez fermer complètement l\'application puis la rouvrir pour appliquer la mise à jour.';
 }

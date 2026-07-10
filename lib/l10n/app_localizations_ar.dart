@@ -497,4 +497,17 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => 'لاحقًا';
+
+  @override
+  String get update_ready_message => 'نسخة جديدة جاهزة';
+
+  @override
+  String get update_restart_action => 'إعادة التشغيل';
+
+  @override
+  String get update_restart_manual_hint =>
+      'يرجى إغلاق التطبيق تمامًا ثم إعادة فتحه لتطبيق التحديث.';
 }

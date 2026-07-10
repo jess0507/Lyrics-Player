@@ -1037,6 +1037,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =0{No songs} =1{1 song} other{{count} songs}}'**
   String playlist_track_count(int count);
+
+  /// No description provided for @update_later.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get update_later;
+
+  /// No description provided for @update_ready_message.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version is ready'**
+  String get update_ready_message;
+
+  /// No description provided for @update_restart_action.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get update_restart_action;
+
+  /// No description provided for @update_restart_manual_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fully close and reopen the app to apply the update.'**
+  String get update_restart_manual_hint;
 }
 
 class _AppLocalizationsDelegate

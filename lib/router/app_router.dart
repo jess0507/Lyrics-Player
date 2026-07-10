@@ -13,11 +13,11 @@ import '../features/profile/settings/settings_page.dart';
 import '../features/profile/statistics/statistics_page.dart';
 import '../shared/widgets/scaffold_with_nav.dart';
 
-final _rootKey = GlobalKey<NavigatorState>();
+final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    navigatorKey: _rootKey,
+    navigatorKey: rootNavigatorKey,
     initialLocation: '/music',
     routes: [
       StatefulShellRoute.indexedStack(

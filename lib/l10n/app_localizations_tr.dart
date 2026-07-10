@@ -498,4 +498,17 @@ class AppLocalizationsTr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => 'Daha sonra';
+
+  @override
+  String get update_ready_message => 'Yeni bir sürüm hazır';
+
+  @override
+  String get update_restart_action => 'Yeniden başlat';
+
+  @override
+  String get update_restart_manual_hint =>
+      'Güncellemeyi uygulamak için lütfen uygulamayı tamamen kapatıp yeniden açın.';
 }

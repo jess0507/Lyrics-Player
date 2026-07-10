@@ -498,4 +498,17 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => 'Позже';
+
+  @override
+  String get update_ready_message => 'Новая версия готова';
+
+  @override
+  String get update_restart_action => 'Перезапустить';
+
+  @override
+  String get update_restart_manual_hint =>
+      'Полностью закройте приложение и откройте его снова, чтобы применить обновление.';
 }

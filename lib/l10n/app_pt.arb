@@ -151,5 +151,9 @@
   "playlist_empty": "Ainda não há músicas nesta playlist",
   "playlists_empty": "Ainda não há playlists",
   "playlist_play_all": "Reproduzir tudo",
-  "playlist_track_count": "{count, plural, =0{Nenhuma música} =1{1 música} other{{count} músicas}}"
+  "playlist_track_count": "{count, plural, =0{Nenhuma música} =1{1 música} other{{count} músicas}}",
+  "update_later": "Mais tarde",
+  "update_ready_message": "Uma nova versão está pronta",
+  "update_restart_action": "Reiniciar",
+  "update_restart_manual_hint": "Feche completamente o app e abra-o novamente para aplicar a atualização."
 }

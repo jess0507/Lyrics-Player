@@ -494,4 +494,17 @@ class AppLocalizationsVi extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => 'Để sau';
+
+  @override
+  String get update_ready_message => 'Phiên bản mới đã sẵn sàng';
+
+  @override
+  String get update_restart_action => 'Khởi động lại';
+
+  @override
+  String get update_restart_manual_hint =>
+      'Vui lòng đóng hoàn toàn ứng dụng và mở lại để áp dụng bản cập nhật.';
 }

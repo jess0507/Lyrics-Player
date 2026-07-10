@@ -171,5 +171,9 @@
     "placeholders": {
       "count": { "type": "int" }
     }
-  }
+  },
+  "update_later": "Later",
+  "update_ready_message": "A new version is ready",
+  "update_restart_action": "Restart",
+  "update_restart_manual_hint": "Please fully close and reopen the app to apply the update."
 }

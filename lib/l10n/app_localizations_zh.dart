@@ -477,6 +477,18 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => '稍後';
+
+  @override
+  String get update_ready_message => '新版本已就緒';
+
+  @override
+  String get update_restart_action => '重新啟動';
+
+  @override
+  String get update_restart_manual_hint => '請完全關閉並重新開啟 App 以套用更新';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -952,6 +964,18 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => '稍后';
+
+  @override
+  String get update_ready_message => '新版本已就绪';
+
+  @override
+  String get update_restart_action => '重新启动';
+
+  @override
+  String get update_restart_manual_hint => '请完全关闭并重新打开 App 以应用更新';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1427,4 +1451,16 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => '稍後';
+
+  @override
+  String get update_ready_message => '新版本已就緒';
+
+  @override
+  String get update_restart_action => '重新啟動';
+
+  @override
+  String get update_restart_manual_hint => '請完全關閉並重新開啟 App 以套用更新';
 }

@@ -497,4 +497,17 @@ class AppLocalizationsId extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => 'Nanti';
+
+  @override
+  String get update_ready_message => 'Versi baru sudah siap';
+
+  @override
+  String get update_restart_action => 'Mulai ulang';
+
+  @override
+  String get update_restart_manual_hint =>
+      'Tutup aplikasi sepenuhnya lalu buka kembali untuk menerapkan pembaruan.';
 }

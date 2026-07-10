@@ -498,4 +498,17 @@ class AppLocalizationsPt extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => 'Mais tarde';
+
+  @override
+  String get update_ready_message => 'Uma nova versão está pronta';
+
+  @override
+  String get update_restart_action => 'Reiniciar';
+
+  @override
+  String get update_restart_manual_hint =>
+      'Feche completamente o app e abra-o novamente para aplicar a atualização.';
 }

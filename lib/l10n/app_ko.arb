@@ -151,5 +151,9 @@
   "playlist_empty": "이 재생목록에 아직 곡이 없습니다",
   "playlists_empty": "아직 재생목록이 없습니다",
   "playlist_play_all": "전체 재생",
-  "playlist_track_count": "{count, plural, =0{곡 없음} other{{count}곡}}"
+  "playlist_track_count": "{count, plural, =0{곡 없음} other{{count}곡}}",
+  "update_later": "나중에",
+  "update_ready_message": "새 버전이 준비되었습니다",
+  "update_restart_action": "다시 시작",
+  "update_restart_manual_hint": "업데이트를 적용하려면 앱을 완전히 종료한 후 다시 열어 주세요"
 }

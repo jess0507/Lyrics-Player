@@ -151,5 +151,9 @@
   "playlist_empty": "لا توجد أغانٍ في قائمة التشغيل هذه بعد",
   "playlists_empty": "لا توجد قوائم تشغيل بعد",
   "playlist_play_all": "تشغيل الكل",
-  "playlist_track_count": "{count, plural, =0{لا أغاني} =1{أغنية واحدة} =2{أغنيتان} few{{count} أغانٍ} many{{count} أغنية} other{{count} أغنية}}"
+  "playlist_track_count": "{count, plural, =0{لا أغاني} =1{أغنية واحدة} =2{أغنيتان} few{{count} أغانٍ} many{{count} أغنية} other{{count} أغنية}}",
+  "update_later": "لاحقًا",
+  "update_ready_message": "نسخة جديدة جاهزة",
+  "update_restart_action": "إعادة التشغيل",
+  "update_restart_manual_hint": "يرجى إغلاق التطبيق تمامًا ثم إعادة فتحه لتطبيق التحديث."
 }

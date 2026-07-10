@@ -497,4 +497,17 @@ class AppLocalizationsHi extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => 'बाद में';
+
+  @override
+  String get update_ready_message => 'नया संस्करण तैयार है';
+
+  @override
+  String get update_restart_action => 'पुनः आरंभ करें';
+
+  @override
+  String get update_restart_manual_hint =>
+      'अपडेट लागू करने के लिए कृपया ऐप को पूरी तरह बंद करके दोबारा खोलें।';
 }

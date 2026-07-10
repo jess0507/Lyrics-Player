@@ -479,4 +479,17 @@ class AppLocalizationsJa extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => 'あとで';
+
+  @override
+  String get update_ready_message => '新しいバージョンの準備ができました';
+
+  @override
+  String get update_restart_action => '再起動';
+
+  @override
+  String get update_restart_manual_hint =>
+      'アップデートを適用するには、アプリを完全に終了してから再度開いてください';
 }

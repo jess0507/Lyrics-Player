@@ -482,4 +482,16 @@ class AppLocalizationsKo extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get update_later => '나중에';
+
+  @override
+  String get update_ready_message => '새 버전이 준비되었습니다';
+
+  @override
+  String get update_restart_action => '다시 시작';
+
+  @override
+  String get update_restart_manual_hint => '업데이트를 적용하려면 앱을 완전히 종료한 후 다시 열어 주세요';
 }

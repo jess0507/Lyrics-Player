@@ -151,5 +151,9 @@
   "playlist_empty": "Aucune chanson dans cette playlist pour l’instant",
   "playlists_empty": "Aucune playlist pour l’instant",
   "playlist_play_all": "Tout lire",
-  "playlist_track_count": "{count, plural, =0{Aucune chanson} =1{1 chanson} other{{count} chansons}}"
+  "playlist_track_count": "{count, plural, =0{Aucune chanson} =1{1 chanson} other{{count} chansons}}",
+  "update_later": "Plus tard",
+  "update_ready_message": "Une nouvelle version est prête",
+  "update_restart_action": "Redémarrer",
+  "update_restart_manual_hint": "Veuillez fermer complètement l'application puis la rouvrir pour appliquer la mise à jour."
 }

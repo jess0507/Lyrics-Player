@@ -67,6 +67,38 @@ code 的 plugin、升 Flutter 版本)仍須走商店發新版。
    用 `shorebird preview --track staging` 在實機確認後再 promote 到 stable。
 4. 使用者端:下次開 app 背景下載,再下次啟動生效。
 
+### App 內更新提示(2026-07-10 已實作)
+
+加入 `shorebird_code_push`(2.0.7)與 `restart_app`,做成「背景下載 →
+SnackBar 提示 → 使用者點按鈕重啟生效」。`auto_update` 維持 `true`(雙層):
+引擎每次啟動自動背景下載,**不依賴 app 內 Dart 邏輯**——即使 app 內流程
+沒偵測到 / 使用者沒點按鈕,自行重開 app 也會套用更新;app 內流程只負責
+提示體驗。因引擎可能已在下載,`update()` 回 `IN_PROGRESS` 即回傳,
+controller 需輪詢本機 patch 編號(`readCurrentPatch` / `readNextPatch`)
+確認下載完成才顯示提示,逾時(60s)安靜放棄、交給引擎後援。
+
+- **不卡 UI 的依據**:`shorebird_code_push` 2.x 的 `checkForUpdate()` /
+  `update()` 內部以 `Isolate.run` 在背景 isolate 執行 FFI(已讀套件原始碼
+  確認),await 不佔 UI thread;唯一同步 FFI 是 `ShorebirdUpdater()` 建構子
+  讀本機 patch 編號,因此連建構都延到第一幀之後
+  (`addPostFrameCallback`)才做,啟動關鍵路徑完全不碰更新邏輯。
+- **狀態層**(`lib/core/update/`,遵守一檔一 provider):
+  - `shorebird_updater_provider.dart`:提供 `ShorebirdUpdater` 實例。
+  - `patch_update_controller.dart`:`idle → checking → downloading →
+    restartReady | upToDate | error` 狀態機;`checkForUpdate` 回傳
+    `restartRequired`(patch 早已下載好)時直接進 `restartReady`。
+    失敗只 debugPrint + Crashlytics non-fatal,不影響 App。
+- **UI**:`update_ready_listener.dart` 掛在 `MaterialApp.router` 的
+  `builder`,`restartReady` 時以 AlertDialog 詢問「新版本已就緒」
+  (稍後 / 重新啟動)。builder 位於 Navigator 之上,showDialog 需用
+  `rootNavigatorKey`(原 app_router 的 `_rootKey` 改為公開)的 context。
+- **重啟**:patch 只在引擎冷啟動載入(flutter_phoenix 重建 widget tree
+  無效)。Android 用 `Restart.restartApp()` 整個 process 重啟;iOS 無法
+  程式化重啟(exit 違反審核指引),按鈕改提示手動重開。
+- i18n:四個 key(`update_ready_message` / `update_later` /
+  `update_restart_action` / `update_restart_manual_hint`)已補齊
+  全部 17 個 arb。
+
 ## 待辦 / 風險
 
 - [ ] iOS:Shorebird 支援 iOS patch(部分 patched code 走直譯、有效能

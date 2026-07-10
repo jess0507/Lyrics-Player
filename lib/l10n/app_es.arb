@@ -151,5 +151,9 @@
   "playlist_empty": "Aún no hay canciones en esta lista",
   "playlists_empty": "Aún no hay listas",
   "playlist_play_all": "Reproducir todo",
-  "playlist_track_count": "{count, plural, =0{Sin canciones} =1{1 canción} other{{count} canciones}}"
+  "playlist_track_count": "{count, plural, =0{Sin canciones} =1{1 canción} other{{count} canciones}}",
+  "update_later": "Más tarde",
+  "update_ready_message": "Una nueva versión está lista",
+  "update_restart_action": "Reiniciar",
+  "update_restart_manual_hint": "Cierra completamente la app y vuelve a abrirla para aplicar la actualización."
 }
