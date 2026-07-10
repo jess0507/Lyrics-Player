@@ -90,6 +90,7 @@ flutter:
   generate: true
   assets:
     - assets/icon/
+    - shorebird.yaml
 
 # Asset type-safe 引用產生設定(flutter_gen)
 # 產生指令：dart run build_runner build
