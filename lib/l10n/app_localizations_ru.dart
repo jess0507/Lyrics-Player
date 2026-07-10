@@ -511,4 +511,11 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get update_restart_manual_hint =>
       'Полностью закройте приложение и откройте его снова, чтобы применить обновление.';
+
+  @override
+  String get update_store_action => 'Обновить';
+
+  @override
+  String get update_store_message =>
+      'В Google Play доступна новая версия. Обновить сейчас?';
 }

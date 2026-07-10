@@ -489,6 +489,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get update_restart_manual_hint => '請完全關閉並重新開啟 App 以套用更新';
+
+  @override
+  String get update_store_action => '更新';
+
+  @override
+  String get update_store_message => 'Google Play 上有新版本，要立即更新嗎？';
 }
 
 /// The translations for Chinese, as used in China (`zh_CN`).
@@ -976,6 +982,12 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get update_restart_manual_hint => '请完全关闭并重新打开 App 以应用更新';
+
+  @override
+  String get update_store_action => '更新';
+
+  @override
+  String get update_store_message => 'Google Play 上有新版本，要立即更新吗？';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1463,4 +1475,10 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get update_restart_manual_hint => '請完全關閉並重新開啟 App 以套用更新';
+
+  @override
+  String get update_store_action => '更新';
+
+  @override
+  String get update_store_message => 'Google Play 上有新版本，要立即更新嗎？';
 }

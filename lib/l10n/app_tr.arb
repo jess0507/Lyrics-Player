@@ -155,5 +155,7 @@
   "update_later": "Daha sonra",
   "update_ready_message": "Yeni bir sürüm hazır",
   "update_restart_action": "Yeniden başlat",
-  "update_restart_manual_hint": "Güncellemeyi uygulamak için lütfen uygulamayı tamamen kapatıp yeniden açın."
+  "update_restart_manual_hint": "Güncellemeyi uygulamak için lütfen uygulamayı tamamen kapatıp yeniden açın.",
+  "update_store_action": "Güncelle",
+  "update_store_message": "Google Play'de yeni bir sürüm mevcut. Şimdi güncellensin mi?"
 }

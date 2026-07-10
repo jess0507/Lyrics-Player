@@ -494,4 +494,10 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get update_restart_manual_hint => '업데이트를 적용하려면 앱을 완전히 종료한 후 다시 열어 주세요';
+
+  @override
+  String get update_store_action => '업데이트';
+
+  @override
+  String get update_store_message => 'Google Play에 새 버전이 있습니다. 지금 업데이트할까요?';
 }

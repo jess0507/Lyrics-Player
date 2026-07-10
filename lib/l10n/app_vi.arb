@@ -155,5 +155,7 @@
   "update_later": "Để sau",
   "update_ready_message": "Phiên bản mới đã sẵn sàng",
   "update_restart_action": "Khởi động lại",
-  "update_restart_manual_hint": "Vui lòng đóng hoàn toàn ứng dụng và mở lại để áp dụng bản cập nhật."
+  "update_restart_manual_hint": "Vui lòng đóng hoàn toàn ứng dụng và mở lại để áp dụng bản cập nhật.",
+  "update_store_action": "Cập nhật",
+  "update_store_message": "Đã có phiên bản mới trên Google Play. Cập nhật ngay?"
 }

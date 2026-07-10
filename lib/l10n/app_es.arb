@@ -155,5 +155,7 @@
   "update_later": "Más tarde",
   "update_ready_message": "Una nueva versión está lista",
   "update_restart_action": "Reiniciar",
-  "update_restart_manual_hint": "Cierra completamente la app y vuelve a abrirla para aplicar la actualización."
+  "update_restart_manual_hint": "Cierra completamente la app y vuelve a abrirla para aplicar la actualización.",
+  "update_store_action": "Actualizar",
+  "update_store_message": "Hay una nueva versión disponible en Google Play. ¿Actualizar ahora?"
 }

@@ -155,5 +155,7 @@
   "update_later": "あとで",
   "update_ready_message": "新しいバージョンの準備ができました",
   "update_restart_action": "再起動",
-  "update_restart_manual_hint": "アップデートを適用するには、アプリを完全に終了してから再度開いてください"
+  "update_restart_manual_hint": "アップデートを適用するには、アプリを完全に終了してから再度開いてください",
+  "update_store_action": "更新",
+  "update_store_message": "Google Play に新しいバージョンがあります。今すぐ更新しますか？"
 }

@@ -492,4 +492,10 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get update_restart_manual_hint =>
       'アップデートを適用するには、アプリを完全に終了してから再度開いてください';
+
+  @override
+  String get update_store_action => '更新';
+
+  @override
+  String get update_store_message => 'Google Play に新しいバージョンがあります。今すぐ更新しますか？';
 }

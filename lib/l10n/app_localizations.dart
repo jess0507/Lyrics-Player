@@ -1061,6 +1061,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please fully close and reopen the app to apply the update.'**
   String get update_restart_manual_hint;
+
+  /// No description provided for @update_store_action.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update_store_action;
+
+  /// No description provided for @update_store_message.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version is available on Google Play. Update now?'**
+  String get update_store_message;
 }
 
 class _AppLocalizationsDelegate

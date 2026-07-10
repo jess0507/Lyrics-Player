@@ -155,5 +155,7 @@
   "update_later": "Nanti",
   "update_ready_message": "Versi baru sudah siap",
   "update_restart_action": "Mulai ulang",
-  "update_restart_manual_hint": "Tutup aplikasi sepenuhnya lalu buka kembali untuk menerapkan pembaruan."
+  "update_restart_manual_hint": "Tutup aplikasi sepenuhnya lalu buka kembali untuk menerapkan pembaruan.",
+  "update_store_action": "Perbarui",
+  "update_store_message": "Versi baru tersedia di Google Play. Perbarui sekarang?"
 }

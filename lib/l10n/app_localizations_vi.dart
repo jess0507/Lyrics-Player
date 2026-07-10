@@ -507,4 +507,11 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get update_restart_manual_hint =>
       'Vui lòng đóng hoàn toàn ứng dụng và mở lại để áp dụng bản cập nhật.';
+
+  @override
+  String get update_store_action => 'Cập nhật';
+
+  @override
+  String get update_store_message =>
+      'Đã có phiên bản mới trên Google Play. Cập nhật ngay?';
 }

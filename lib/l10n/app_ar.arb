@@ -155,5 +155,7 @@
   "update_later": "لاحقًا",
   "update_ready_message": "نسخة جديدة جاهزة",
   "update_restart_action": "إعادة التشغيل",
-  "update_restart_manual_hint": "يرجى إغلاق التطبيق تمامًا ثم إعادة فتحه لتطبيق التحديث."
+  "update_restart_manual_hint": "يرجى إغلاق التطبيق تمامًا ثم إعادة فتحه لتطبيق التحديث.",
+  "update_store_action": "تحديث",
+  "update_store_message": "يتوفر إصدار جديد على Google Play. هل تريد التحديث الآن؟"
 }

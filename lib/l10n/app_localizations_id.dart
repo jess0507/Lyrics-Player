@@ -510,4 +510,11 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get update_restart_manual_hint =>
       'Tutup aplikasi sepenuhnya lalu buka kembali untuk menerapkan pembaruan.';
+
+  @override
+  String get update_store_action => 'Perbarui';
+
+  @override
+  String get update_store_message =>
+      'Versi baru tersedia di Google Play. Perbarui sekarang?';
 }

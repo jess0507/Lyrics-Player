@@ -155,5 +155,7 @@
   "update_later": "稍后",
   "update_ready_message": "新版本已就绪",
   "update_restart_action": "重新启动",
-  "update_restart_manual_hint": "请完全关闭并重新打开 App 以应用更新"
+  "update_restart_manual_hint": "请完全关闭并重新打开 App 以应用更新",
+  "update_store_action": "更新",
+  "update_store_message": "Google Play 上有新版本，要立即更新吗？"
 }

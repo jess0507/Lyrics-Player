@@ -514,4 +514,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get update_restart_manual_hint =>
       'Bitte schließen Sie die App vollständig und öffnen Sie sie erneut, um das Update anzuwenden.';
+
+  @override
+  String get update_store_action => 'Aktualisieren';
+
+  @override
+  String get update_store_message =>
+      'Eine neue Version ist bei Google Play verfügbar. Jetzt aktualisieren?';
 }

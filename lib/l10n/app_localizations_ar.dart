@@ -510,4 +510,11 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get update_restart_manual_hint =>
       'يرجى إغلاق التطبيق تمامًا ثم إعادة فتحه لتطبيق التحديث.';
+
+  @override
+  String get update_store_action => 'تحديث';
+
+  @override
+  String get update_store_message =>
+      'يتوفر إصدار جديد على Google Play. هل تريد التحديث الآن؟';
 }

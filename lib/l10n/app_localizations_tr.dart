@@ -511,4 +511,11 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get update_restart_manual_hint =>
       'Güncellemeyi uygulamak için lütfen uygulamayı tamamen kapatıp yeniden açın.';
+
+  @override
+  String get update_store_action => 'Güncelle';
+
+  @override
+  String get update_store_message =>
+      'Google Play\'de yeni bir sürüm mevcut. Şimdi güncellensin mi?';
 }

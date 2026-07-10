@@ -155,5 +155,7 @@
   "update_later": "Позже",
   "update_ready_message": "Новая версия готова",
   "update_restart_action": "Перезапустить",
-  "update_restart_manual_hint": "Полностью закройте приложение и откройте его снова, чтобы применить обновление."
+  "update_restart_manual_hint": "Полностью закройте приложение и откройте его снова, чтобы применить обновление.",
+  "update_store_action": "Обновить",
+  "update_store_message": "В Google Play доступна новая версия. Обновить сейчас?"
 }
