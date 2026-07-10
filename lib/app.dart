@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/sync/sync_service.dart';
-import 'core/update/update_ready_listener.dart';
+import 'core/update/app_update_listener.dart';
 import 'l10n/app_localizations.dart';
 import 'router/app_router.dart';
 import 'shared/providers/settings_controller.dart';
@@ -28,8 +28,8 @@ class SeekPlayerApp extends ConsumerWidget {
       darkTheme: AppTheme.dark(settings.seedColor),
       themeMode: settings.themeMode,
       routerConfig: router,
-      // Shorebird patch 背景更新:下載完成時全域顯示「重新啟動」提示。
-      builder: (context, child) => UpdateReadyListener(child: child!),
+      // 更新提示:Google Play 新版本優先,其次 Shorebird patch 重啟提示。
+      builder: (context, child) => AppUpdateListener(child: child!),
     );
   }
 }
