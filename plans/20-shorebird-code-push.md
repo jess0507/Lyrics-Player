@@ -40,6 +40,21 @@ code 的 plugin、升 Flutter 版本)仍須走商店發新版。
    已移除),以 `SHOREBIRD_TOKEN` 環境變數存入 CI secrets;
    release / patch 步驟改呼叫 shorebird CLI(取代 `flutter build appbundle`)。
 
+### CI 整合(2026-07-10 已實作)
+
+- `release.yml`:改為 **`v*` tag push 觸發**,`shorebird release android` 建
+  AAB 並照舊上傳 Play internal track。
+- `patch.yml`(新增):**master push 觸發**,對最新 tag 對應版本
+  `shorebird patch android --release-version=<name>+<code>`;HEAD 恰為 tag
+  或尚無 tag 時自動跳過。
+- **版號規則改為錨定在最新 tag 的 commit**(非 HEAD),tag 之間版號不變,
+  patch 才有固定 baseline:`versionName = tag 去 v 前綴`(v1.2.0 → 1.2.0,
+  使用者看到的版本)、`versionCode = 到 tag 為止的總 commit 數`(僅供
+  Play Console 遞增識別;shorebird patch 以 `name+code` 格式指定目標)。pubspec `version:` 維持
+  placeholder,由 CI `--build-name/--build-number` 覆寫(取代原步驟 1 的
+  「bump pubspec version」——上架新版一律改用打 tag)。
+- 詳細操作見 `.github/workflows/RELEASE_SETUP.md`。
+
 ### 每次「上架商店」的新版(原生變更或大版本)
 1. bump `pubspec.yaml` 的 `version:`(例 `1.0.1+2`)。
 2. `shorebird release android` 產出 AAB(`build/app/outputs/bundle/release/`)。

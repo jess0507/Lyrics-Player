@@ -1,0 +1,137 @@
+name: OTA Patch (Shorebird)
+
+# master 有新 push 時,對「最新 tag 對應的 release 版本」下 Shorebird patch,
+# 純 Dart 變更數分鐘內 OTA 出貨,不經 Play Store。
+# 版號與 release.yml 用同一套規則、同樣錨定在最新 tag 計算,
+# 所以 tag 之間的每次 push 算出的目標版本都相同,patch 才打得到 baseline。
+#
+# 注意:
+# - 動到 native(gradle / AndroidManifest / 含 native code 的 plugin / Flutter 升版)
+#   的變更無法 patch,shorebird 會偵測並讓此 job 失敗(勿加 --force),
+#   此時請打新 tag 走 release.yml 上架。
+# - 最新 tag 必須已用 shorebird release 建過(即已跑過新版 release.yml),
+#   否則 patch 找不到 baseline 會失敗——首次導入時屬預期行為,先打一個 tag 即可。
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+# patch 依序執行,避免連續 push 時亂序。
+concurrency:
+  group: shorebird-patch
+  cancel-in-progress: false
+
+jobs:
+  version:
+    name: Compute target release version
+    runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.version.outputs.skip }}
+      name: ${{ steps.version.outputs.name }}
+      build: ${{ steps.version.outputs.build }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 需完整歷史以取得 tag 並計算 commit 數
+
+      - name: Compute version
+        id: version
+        run: |
+          RAW_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$RAW_TAG" ]; then
+            echo "尚無任何 tag,沒有可 patch 的 release,跳過。"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # HEAD 本身就是 tag(tag 與 master 同時 push)→ 由 release.yml 處理,不 patch。
+          if git describe --tags --exact-match HEAD >/dev/null 2>&1; then
+            echo "HEAD 即 tag $RAW_TAG,交給 release workflow,跳過 patch。"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          VERSION_NAME=${RAW_TAG#v}
+          BUILD_NUMBER=$(git rev-list "$RAW_TAG" --count)
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "name=$VERSION_NAME" >> "$GITHUB_OUTPUT"
+          echo "build=$BUILD_NUMBER" >> "$GITHUB_OUTPUT"
+          echo "patch 目標: $VERSION_NAME+$BUILD_NUMBER（tag: $RAW_TAG,落後 $(git rev-list "$RAW_TAG"..HEAD --count) commits）"
+
+  patch:
+    name: Shorebird patch
+    needs: version
+    if: needs.version.outputs.skip != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # analyze / test 用一般 Flutter;patch 建置由 Shorebird 以 release 當時的 Flutter revision 執行。
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate localizations
+        run: flutter gen-l10n
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
+      # patch 也會完整建置 release binary 來 diff,需要同一套簽章設定。
+      - name: Decode keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: echo "$KEYSTORE_BASE64" | base64 -d > android/app/upload-keystore.jks
+
+      - name: Create key.properties
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          cat > android/key.properties <<EOF
+          storePassword=${KEYSTORE_PASSWORD}
+          keyPassword=${KEY_PASSWORD}
+          keyAlias=${KEY_ALIAS}
+          storeFile=upload-keystore.jks
+          EOF
+
+      - name: Set up Shorebird
+        uses: shorebirdtech/setup-shorebird@v1
+
+      # 直接推 stable track(裝置下次啟動背景下載、再下次啟動生效)。
+      # 若要先在實機驗證,可改加 --track staging,確認後於 console promote。
+      - name: Shorebird patch
+        env:
+          SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
+        run: shorebird patch android --release-version="${{ needs.version.outputs.name }}+${{ needs.version.outputs.build }}"
+
+      - name: Cleanup secrets
+        if: always()
+        run: rm -f android/key.properties android/app/upload-keystore.jks
+
+      - name: Write summary
+        run: |
+          {
+            echo "## 🩹 OTA Patch"
+            echo ""
+            echo "| 項目 | 值 |"
+            echo "| --- | --- |"
+            echo "| release-version | \`${{ needs.version.outputs.name }}+${{ needs.version.outputs.build }}\` |"
+            echo "| track | \`stable\` |"
+          } >> "$GITHUB_STEP_SUMMARY"
