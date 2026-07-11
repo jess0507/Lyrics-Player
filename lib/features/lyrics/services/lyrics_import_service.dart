@@ -14,9 +14,17 @@ enum LyricsImportError { tooLarge, unreadable, empty }
 /// 匯入失敗;UI 以 [error] 決定 SnackBar 文案。使用者取消選檔不是失敗,
 /// 由 [LyricsImportService.importForTrack] 回 false 表示。
 class LyricsImportException implements Exception {
-  const LyricsImportException(this.error);
+  const LyricsImportException(this.error, {this.message});
 
   final LyricsImportError error;
+
+  /// 供錯誤回報用的細節(檔案大小 / 格式等),不是 UI 文案。
+  final String? message;
+
+  @override
+  String toString() =>
+      'LyricsImportException(${error.name}'
+      '${message == null ? '' : ', $message'})';
 }
 
 /// 手動匯入歌詞:SAF 選檔 → 大小上限 → 解碼 → 試 parse 驗證 → 存 Isar。
@@ -43,14 +51,21 @@ class LyricsImportService {
     if (file == null || file.path == null) return false; // 取消
 
     if (file.size > _maxBytes) {
-      throw const LyricsImportException(LyricsImportError.tooLarge);
+      throw LyricsImportException(
+        LyricsImportError.tooLarge,
+        message:
+            'size=${file.size}B > max=${_maxBytes}B, ext=${file.extension}',
+      );
     }
 
     final bytes = await File(file.path!).readAsBytes();
     final content = _decode(bytes);
     final format = detectLyricsFormat(file.name);
     if (parseLyrics(content, format).isEmpty) {
-      throw const LyricsImportException(LyricsImportError.empty);
+      throw LyricsImportException(
+        LyricsImportError.empty,
+        message: 'format=${format.name}, chars=${content.length}',
+      );
     }
 
     final entity = LyricsEntity()

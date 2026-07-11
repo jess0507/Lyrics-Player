@@ -1,10 +1,9 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
 
-import '../firebase_available_provider.dart';
+import '../crash_reporter.dart';
 import 'shorebird_updater_provider.dart';
 
 /// Shorebird patch 背景更新的進度狀態。
@@ -59,9 +58,7 @@ class PatchUpdateController extends Notifier<PatchUpdateState> {
       }
     } catch (e, s) {
       debugPrint('Shorebird patch 更新失敗：$e');
-      if (ref.read(firebaseAvailableProvider)) {
-        FirebaseCrashlytics.instance.recordError(e, s, fatal: false);
-      }
+      reportError(e, s, reason: 'Shorebird patch 更新失敗');
       state = PatchUpdateState.error;
     }
   }

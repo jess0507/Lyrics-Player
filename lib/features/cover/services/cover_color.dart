@@ -5,6 +5,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
 
+import '../../../core/crash_reporter.dart';
+
 /// 從封面圖檔以 [PaletteGenerator] 抽出主色;圖檔遺失 / 無法解碼等任何
 /// 失敗皆回 null(best-effort,呼叫端據此退回主題色)。
 ///
@@ -38,7 +40,8 @@ Future<Color?> extractCoverColor(File file) async {
       return palette.dominantColor?.color.toARGB32();
     });
     return argb == null ? null : Color(argb);
-  } catch (_) {
+  } catch (e, s) {
+    reportError(e, s, reason: '封面取色失敗，退回主題色');
     return null;
   }
 }

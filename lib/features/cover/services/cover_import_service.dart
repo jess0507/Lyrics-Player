@@ -15,9 +15,17 @@ enum CoverImportError { tooLarge, unreadable }
 /// 設定封面失敗;UI 以 [error] 決定 SnackBar 文案。使用者取消選圖不是失敗,
 /// 由 [CoverImportService.pickAndSetForTrack] 回 false 表示。
 class CoverImportException implements Exception {
-  const CoverImportException(this.error);
+  const CoverImportException(this.error, {this.message});
 
   final CoverImportError error;
+
+  /// 供錯誤回報用的細節(檔案大小 / 副檔名等),不是 UI 文案。
+  final String? message;
+
+  @override
+  String toString() =>
+      'CoverImportException(${error.name}'
+      '${message == null ? '' : ', $message'})';
 }
 
 /// 自訂封面:挑圖 → 複製到 app 文件夾 `covers/` → upsert(唯一索引 replace)。
@@ -38,7 +46,12 @@ class CoverImportService {
     if (file == null || file.path == null) return false; // 取消
 
     if (file.size > _maxBytes) {
-      throw const CoverImportException(CoverImportError.tooLarge);
+      throw CoverImportException(
+        CoverImportError.tooLarge,
+        message:
+            'size=${file.size}B > max=${_maxBytes}B, '
+            'ext=${_extension(file.name)}',
+      );
     }
 
     final source = File(file.path!);
@@ -94,8 +107,8 @@ class CoverImportService {
   Future<List<int>> _read(File source) async {
     try {
       return await source.readAsBytes();
-    } on FileSystemException {
-      throw const CoverImportException(CoverImportError.unreadable);
+    } on FileSystemException catch (e) {
+      throw CoverImportException(CoverImportError.unreadable, message: '$e');
     }
   }
 

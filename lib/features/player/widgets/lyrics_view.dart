@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:seek_player/features/player/widgets/lyrics_actions_sheet.dart';
 
+import '../../../core/crash_reporter.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 import '../../lyrics/providers/track_lyrics_provider.dart';
@@ -101,7 +102,8 @@ Future<void> runLyricsImport(
         .importForTrack(trackId: trackId, title: title);
     if (!imported) return; // 使用者取消
     messenger.showAppSnackBar(l10n.lyrics_import_success);
-  } on LyricsImportException catch (e) {
+  } on LyricsImportException catch (e, s) {
+    reportError(e, s, reason: '匯入歌詞失敗（${e.error.name}）');
     messenger.showAppSnackBar(_importErrorText(l10n, e.error));
   }
 }

@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../l10n/app_localizations.dart';
 import '../../router/app_router.dart';
 import '../../shared/widgets/app_snack_bar.dart';
+import '../crash_reporter.dart';
 import 'patch_update_controller.dart';
 import 'store_update_controller.dart';
 
@@ -154,8 +155,9 @@ class _AppUpdateListenerState extends ConsumerState<AppUpdateListener> {
         mode: LaunchMode.externalApplication,
       );
       if (launched) return;
-    } catch (_) {
+    } catch (e, s) {
       // 裝置上沒有 Play 商店 app 時走瀏覽器版。
+      reportError(e, s, reason: '開啟 Play 商店 app 失敗，退回瀏覽器版');
     }
     await launchUrl(web, mode: LaunchMode.externalApplication);
   }

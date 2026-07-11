@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/auth/auth_service.dart';
+import '../../../../core/crash_reporter.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/app_snack_bar.dart';
 
@@ -95,7 +96,8 @@ class UserInfoView extends ConsumerWidget {
     try {
       await auth.deleteAccountData();
       messenger.showAppSnackBar(l10n.account_delete_data_done);
-    } on FirebaseFunctionsException catch (e) {
+    } on FirebaseFunctionsException catch (e, s) {
+      reportError(e, s, reason: 'delete_account_data 失敗（code=${e.code}）');
       messenger.showAppSnackBar(e.message ?? e.code);
     }
   }
@@ -123,9 +125,11 @@ class UserInfoView extends ConsumerWidget {
     if (confirmed != true) return;
     try {
       await auth.deleteAccount();
-    } on FirebaseFunctionsException catch (e) {
+    } on FirebaseFunctionsException catch (e, s) {
+      reportError(e, s, reason: 'delete_account 失敗（code=${e.code}）');
       messenger.showAppSnackBar(e.message ?? e.code);
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e, s) {
+      reportError(e, s, reason: '刪除帳號後登出失敗（code=${e.code}）');
       messenger.showAppSnackBar(e.message ?? e.code);
     }
   }

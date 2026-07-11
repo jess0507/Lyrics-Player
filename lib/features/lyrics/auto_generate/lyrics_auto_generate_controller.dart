@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/crash_reporter.dart';
 import 'lyrics_auto_generate_service.dart';
 
 /// 自動產生整體狀態。
@@ -55,7 +56,8 @@ class LyricsAutoGenerateController
         error: e.error,
       );
       return false;
-    } catch (_) {
+    } catch (e, s) {
+      reportError(e, s, reason: '自動產生歌詞：未預期錯誤');
       state = const LyricsAutoGenerateState(
         status: LyricsAutoGenerateStatus.failure,
         error: LyricsAutoGenerateError.unknown,

@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
+import '../../../core/crash_reporter.dart';
 import '../auto_sync/audio_compressor.dart';
 import '../models/lyrics_entity.dart';
 import '../providers/track_lyrics_provider.dart';
@@ -91,7 +92,8 @@ class LyricsAutoGenerateService {
       compressed = await _ref
           .read(audioCompressorProvider)
           .compressForAlignment(audioPath);
-    } on AudioCompressException {
+    } on AudioCompressException catch (e, s) {
+      reportError(e, s, reason: '自動產生歌詞：壓縮音訊失敗');
       throw const LyricsAutoGenerateException(
         LyricsAutoGenerateError.compressFailed,
       );
@@ -108,7 +110,8 @@ class LyricsAutoGenerateService {
         compressed,
         SettableMetadata(contentType: 'audio/mp4'),
       );
-    } on FirebaseException {
+    } on FirebaseException catch (e, s) {
+      reportError(e, s, reason: '自動產生歌詞：上傳音訊到 GCS 失敗');
       throw const LyricsAutoGenerateException(
         LyricsAutoGenerateError.uploadFailed,
       );
@@ -143,8 +146,9 @@ class LyricsAutoGenerateService {
         );
       }
       lrc = value;
-    } on FirebaseFunctionsException catch (e) {
+    } on FirebaseFunctionsException catch (e, s) {
       debugPrint('Firebase Funcion generate_lyrics: $e');
+      reportError(e, s, reason: 'generate_lyrics 失敗（code=${e.code}）');
       throw LyricsAutoGenerateException(_mapFunctionsError(e));
     }
 

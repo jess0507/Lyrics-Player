@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/crash_reporter.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/widgets/app_snack_bar.dart';
 import '../../cover/services/cover_import_service.dart';
@@ -19,7 +20,8 @@ Future<void> setTrackCover(
         await ref.read(coverImportServiceProvider).pickAndSetForTrack(trackId);
     if (!done) return; // 使用者取消
     messenger.showAppSnackBar(l10n.cover_updated);
-  } on CoverImportException catch (e) {
+  } on CoverImportException catch (e, s) {
+    reportError(e, s, reason: '匯入封面失敗（${e.error.name}）');
     messenger.showAppSnackBar(_errorText(l10n, e.error));
   }
 }

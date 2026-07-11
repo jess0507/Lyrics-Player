@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_update/in_app_update.dart';
 
+import '../crash_reporter.dart';
+
 /// Google Play 商店版本檢查的狀態。
 enum StoreUpdateState {
   idle,
@@ -47,8 +49,9 @@ class StoreUpdateController extends Notifier<StoreUpdateState> {
       state = info.updateAvailability == UpdateAvailability.updateAvailable
           ? StoreUpdateState.updateAvailable
           : StoreUpdateState.upToDate;
-    } catch (e) {
+    } catch (e, s) {
       debugPrint('Google Play 版本檢查失敗：$e');
+      reportError(e, s, reason: 'Google Play 版本檢查失敗');
       state = StoreUpdateState.error;
     }
   }

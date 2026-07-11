@@ -9,6 +9,7 @@ import '../../features/profile/statistics/models/period_stat_entity.dart';
 import '../../features/profile/statistics/services/statistics_service.dart';
 import '../../shared/providers/settings_controller.dart';
 import '../auth/auth_service.dart';
+import '../crash_reporter.dart';
 import '../firebase_available_provider.dart';
 import 'sync_state_store.dart';
 
@@ -67,8 +68,9 @@ class SyncService {
   Future<void> _onSignedIn(String uid) async {
     try {
       if (await _restoreFromCloud(uid)) return;
-    } catch (e) {
+    } catch (e, s) {
       debugPrint('[Sync] 還原失敗，略過：$e');
+      reportError(e, s, reason: '登入後從雲端還原失敗');
     }
     await _maybeUpload(uid, throttled: false);
   }
@@ -184,9 +186,10 @@ class SyncService {
       });
       _store.markSynced();
       debugPrint('[Sync] 已上傳統計與設定（${stats.days.length} 筆每日記錄）');
-    } catch (e) {
+    } catch (e, s) {
       // 離線、權限、逾時等：靜默略過，lastSyncAt 不動，下次啟動自然再試。
       debugPrint('[Sync] 上傳失敗，略過：$e');
+      reportError(e, s, reason: '統計 / 設定上傳失敗');
     }
   }
 }

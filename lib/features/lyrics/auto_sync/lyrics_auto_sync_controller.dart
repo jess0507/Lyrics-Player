@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/crash_reporter.dart';
 import 'lyrics_auto_sync_service.dart';
 
 /// 對時整體狀態。
@@ -60,7 +61,8 @@ class LyricsAutoSyncController
         error: e.error,
       );
       return false;
-    } catch (_) {
+    } catch (e, s) {
+      reportError(e, s, reason: '歌詞對時：未預期錯誤');
       state = const LyricsAutoSyncState(
         status: LyricsAutoSyncStatus.failure,
         error: LyricsAutoSyncError.unknown,

@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
+import '../../../core/crash_reporter.dart';
 import '../models/lyrics_entity.dart';
 import '../services/lyrics_parser.dart';
 import '../services/lyrics_repository.dart';
@@ -117,7 +118,8 @@ class LyricsAutoSyncService {
       compressed = await _ref
           .read(audioCompressorProvider)
           .compressForAlignment(audioPath);
-    } on AudioCompressException {
+    } on AudioCompressException catch (e, s) {
+      reportError(e, s, reason: '歌詞對時：壓縮音訊失敗');
       throw const LyricsAutoSyncException(LyricsAutoSyncError.compressFailed);
     }
 
@@ -132,7 +134,8 @@ class LyricsAutoSyncService {
         compressed,
         SettableMetadata(contentType: 'audio/mp4'),
       );
-    } on FirebaseException {
+    } on FirebaseException catch (e, s) {
+      reportError(e, s, reason: '歌詞對時：上傳音訊到 GCS 失敗');
       throw const LyricsAutoSyncException(LyricsAutoSyncError.uploadFailed);
     } finally {
       // 壓縮暫存檔已上傳(或上傳失敗),本機不再需要。
@@ -168,7 +171,8 @@ class LyricsAutoSyncService {
         );
       }
       lrc = value;
-    } on FirebaseFunctionsException catch (e) {
+    } on FirebaseFunctionsException catch (e, s) {
+      reportError(e, s, reason: 'align_lyrics 失敗（code=${e.code}）');
       throw LyricsAutoSyncException(_mapFunctionsError(e));
     }
 

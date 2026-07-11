@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/auth/auth_service.dart';
+import '../../../../core/crash_reporter.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/widgets/app_snack_bar.dart';
 import 'country_code_dropdown.dart';
@@ -59,6 +60,7 @@ class _SignedOutViewState extends ConsumerState<SignInView> {
       return false;
     } catch (e, s) {
       debugPrint('[Account] 登入流程錯誤:$e\n$s');
+      reportError(e, s, reason: '登入流程未預期錯誤');
       _showMessage('$e');
       return false;
     } finally {
