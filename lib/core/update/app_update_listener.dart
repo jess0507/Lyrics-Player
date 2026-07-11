@@ -125,8 +125,9 @@ class _AppUpdateListenerState extends ConsumerState<AppUpdateListener> {
         FilledButton(
           onPressed: () {
             if (Platform.isAndroid) {
-              // 整個 process 重啟,引擎冷啟動後載入新 patch。
-              Restart.restartApp();
+              // 必須用 process 模式殺掉整個 process 冷啟動,
+              // 預設模式只重建 Activity,engine 不重載、patch 不會生效。
+              Restart.restartApp(mode: RestartMode.process);
             } else {
               // iOS 無法程式化重啟(exit 違反審核指引),
               // 請使用者手動重開。
