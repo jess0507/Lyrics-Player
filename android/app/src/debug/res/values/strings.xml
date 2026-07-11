@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- debug 版顯示名稱,固定單一語系即可,方便與 release 版並存時區分。 -->
+    <string name="app_name_dev">Lyrics Player Dev</string>
+</resources>

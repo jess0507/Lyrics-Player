@@ -37,6 +37,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // app 顯示名稱的 manifest placeholder;debug 覆寫為 app_name_dev。
+        manifestPlaceholders["appLabel"] = "@string/app_name"
     }
 
     signingConfigs {
@@ -51,6 +53,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            // 與 release 版分開的 applicationId,讓兩者可同時安裝在同一台裝置。
+            // Firebase 已另註冊 com.js.seek_player.dev(見 google-services.json)。
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            manifestPlaceholders["appLabel"] = "@string/app_name_dev"
+        }
         release {
             // 有 key.properties（CI / 已設定簽章）時用 release，否則回退 debug 讓本機可建置。
             signingConfig = if (keystorePropertiesFile.exists()) {
