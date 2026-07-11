@@ -84,6 +84,8 @@
   "account_reset_sent": "Письмо для сброса пароля отправлено",
   "account_anonymous": "Анонимный аккаунт",
   "account_unavailable": "Функции аккаунта временно недоступны.",
+  "account_sign_in_failed": "Не удалось войти. Попробуйте ещё раз.",
+  "account_operation_failed": "Не удалось выполнить операцию. Повторите попытку позже.",
   "common_cancel": "Отмена",
   "common_confirm": "Подтвердить",
   "common_ok": "ОК",

@@ -271,6 +271,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les fonctionnalités du compte sont temporairement indisponibles.';
 
   @override
+  String get account_sign_in_failed =>
+      'Échec de la connexion. Veuillez réessayer.';
+
+  @override
+  String get account_operation_failed =>
+      'L\'opération a échoué. Veuillez réessayer plus tard.';
+
+  @override
   String get common_cancel => 'Annuler';
 
   @override

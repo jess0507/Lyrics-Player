@@ -84,6 +84,8 @@
   "account_reset_sent": "Password reset email sent",
   "account_anonymous": "Anonymous account",
   "account_unavailable": "Account features are temporarily unavailable.",
+  "account_sign_in_failed": "Sign-in failed. Please try again.",
+  "account_operation_failed": "The operation failed. Please try again later.",
   "common_cancel": "Cancel",
   "common_confirm": "Confirm",
   "common_ok": "OK",

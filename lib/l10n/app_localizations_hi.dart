@@ -269,6 +269,14 @@ class AppLocalizationsHi extends AppLocalizations {
       'खाता सुविधाएँ अस्थायी रूप से अनुपलब्ध हैं।';
 
   @override
+  String get account_sign_in_failed =>
+      'साइन इन विफल रहा। कृपया पुनः प्रयास करें।';
+
+  @override
+  String get account_operation_failed =>
+      'कार्रवाई विफल रही। कृपया बाद में पुनः प्रयास करें।';
+
+  @override
   String get common_cancel => 'रद्द करें';
 
   @override

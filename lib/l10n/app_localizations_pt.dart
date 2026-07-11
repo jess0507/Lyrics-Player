@@ -269,6 +269,13 @@ class AppLocalizationsPt extends AppLocalizations {
       'Os recursos da conta estão temporariamente indisponíveis.';
 
   @override
+  String get account_sign_in_failed => 'Falha ao entrar. Tente novamente.';
+
+  @override
+  String get account_operation_failed =>
+      'A operação falhou. Tente novamente mais tarde.';
+
+  @override
   String get common_cancel => 'Cancelar';
 
   @override

@@ -84,6 +84,8 @@
   "account_reset_sent": "Correo de restablecimiento de contraseña enviado",
   "account_anonymous": "Cuenta anónima",
   "account_unavailable": "Las funciones de cuenta no están disponibles temporalmente.",
+  "account_sign_in_failed": "No se pudo iniciar sesión. Inténtalo de nuevo.",
+  "account_operation_failed": "La operación falló. Inténtalo de nuevo más tarde.",
   "common_cancel": "Cancelar",
   "common_confirm": "Confirmar",
   "common_ok": "Aceptar",

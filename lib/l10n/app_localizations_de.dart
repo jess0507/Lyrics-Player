@@ -270,6 +270,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Kontofunktionen sind vorübergehend nicht verfügbar.';
 
   @override
+  String get account_sign_in_failed =>
+      'Anmeldung fehlgeschlagen. Bitte versuche es erneut.';
+
+  @override
+  String get account_operation_failed =>
+      'Vorgang fehlgeschlagen. Bitte versuche es später erneut.';
+
+  @override
   String get common_cancel => 'Abbrechen';
 
   @override

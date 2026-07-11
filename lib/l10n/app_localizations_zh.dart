@@ -261,6 +261,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get account_unavailable => '帳戶功能暫時無法使用。';
 
   @override
+  String get account_sign_in_failed => '登入失敗,請再試一次。';
+
+  @override
+  String get account_operation_failed => '操作失敗,請稍後再試。';
+
+  @override
   String get common_cancel => '取消';
 
   @override
@@ -754,6 +760,12 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get account_unavailable => '账户功能暂时不可用。';
 
   @override
+  String get account_sign_in_failed => '登录失败,请重试。';
+
+  @override
+  String get account_operation_failed => '操作失败,请稍后再试。';
+
+  @override
   String get common_cancel => '取消';
 
   @override
@@ -1245,6 +1257,12 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get account_unavailable => '帳戶功能暫時無法使用。';
+
+  @override
+  String get account_sign_in_failed => '登入失敗,請再試一次。';
+
+  @override
+  String get account_operation_failed => '操作失敗,請稍後再試。';
 
   @override
   String get common_cancel => '取消';

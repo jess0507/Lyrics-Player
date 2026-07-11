@@ -267,6 +267,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get account_unavailable => 'ميزات الحساب غير متاحة مؤقتاً.';
 
   @override
+  String get account_sign_in_failed =>
+      'فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get account_operation_failed => 'فشلت العملية. يرجى المحاولة لاحقًا.';
+
+  @override
   String get common_cancel => 'إلغاء';
 
   @override

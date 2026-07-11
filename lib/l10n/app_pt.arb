@@ -84,6 +84,8 @@
   "account_reset_sent": "E-mail de redefinição de senha enviado",
   "account_anonymous": "Conta anônima",
   "account_unavailable": "Os recursos da conta estão temporariamente indisponíveis.",
+  "account_sign_in_failed": "Falha ao entrar. Tente novamente.",
+  "account_operation_failed": "A operação falhou. Tente novamente mais tarde.",
   "common_cancel": "Cancelar",
   "common_confirm": "Confirmar",
   "common_ok": "OK",

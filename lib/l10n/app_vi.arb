@@ -84,6 +84,8 @@
   "account_reset_sent": "Đã gửi email đặt lại mật khẩu",
   "account_anonymous": "Tài khoản ẩn danh",
   "account_unavailable": "Tính năng tài khoản tạm thời không khả dụng.",
+  "account_sign_in_failed": "Đăng nhập không thành công. Vui lòng thử lại.",
+  "account_operation_failed": "Thao tác không thành công. Vui lòng thử lại sau.",
   "common_cancel": "Hủy",
   "common_confirm": "Xác nhận",
   "common_ok": "OK",

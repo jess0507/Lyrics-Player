@@ -84,6 +84,8 @@
   "account_reset_sent": "E-Mail zum Zurücksetzen des Passworts gesendet",
   "account_anonymous": "Anonymes Konto",
   "account_unavailable": "Kontofunktionen sind vorübergehend nicht verfügbar.",
+  "account_sign_in_failed": "Anmeldung fehlgeschlagen. Bitte versuche es erneut.",
+  "account_operation_failed": "Vorgang fehlgeschlagen. Bitte versuche es später erneut.",
   "common_cancel": "Abbrechen",
   "common_confirm": "Bestätigen",
   "common_ok": "OK",

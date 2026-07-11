@@ -270,6 +270,13 @@ class AppLocalizationsId extends AppLocalizations {
       'Fitur akun tidak tersedia untuk sementara.';
 
   @override
+  String get account_sign_in_failed => 'Gagal masuk. Silakan coba lagi.';
+
+  @override
+  String get account_operation_failed =>
+      'Operasi gagal. Silakan coba lagi nanti.';
+
+  @override
   String get common_cancel => 'Batal';
 
   @override

@@ -270,6 +270,14 @@ class AppLocalizationsVi extends AppLocalizations {
       'Tính năng tài khoản tạm thời không khả dụng.';
 
   @override
+  String get account_sign_in_failed =>
+      'Đăng nhập không thành công. Vui lòng thử lại.';
+
+  @override
+  String get account_operation_failed =>
+      'Thao tác không thành công. Vui lòng thử lại sau.';
+
+  @override
   String get common_cancel => 'Hủy';
 
   @override

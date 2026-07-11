@@ -264,6 +264,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get account_unavailable => '계정 기능을 일시적으로 사용할 수 없습니다.';
 
   @override
+  String get account_sign_in_failed => '로그인에 실패했습니다. 다시 시도해 주세요.';
+
+  @override
+  String get account_operation_failed => '작업에 실패했습니다. 나중에 다시 시도해 주세요.';
+
+  @override
   String get common_cancel => '취소';
 
   @override

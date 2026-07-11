@@ -84,6 +84,8 @@
   "account_reset_sent": "E-mail de réinitialisation du mot de passe envoyé",
   "account_anonymous": "Compte anonyme",
   "account_unavailable": "Les fonctionnalités du compte sont temporairement indisponibles.",
+  "account_sign_in_failed": "Échec de la connexion. Veuillez réessayer.",
+  "account_operation_failed": "L'opération a échoué. Veuillez réessayer plus tard.",
   "common_cancel": "Annuler",
   "common_confirm": "Confirmer",
   "common_ok": "OK",

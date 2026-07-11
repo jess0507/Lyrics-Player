@@ -268,6 +268,14 @@ class AppLocalizationsTr extends AppLocalizations {
       'Hesap özellikleri geçici olarak kullanılamıyor.';
 
   @override
+  String get account_sign_in_failed =>
+      'Oturum açılamadı. Lütfen tekrar deneyin.';
+
+  @override
+  String get account_operation_failed =>
+      'İşlem başarısız oldu. Lütfen daha sonra tekrar deneyin.';
+
+  @override
   String get common_cancel => 'İptal';
 
   @override

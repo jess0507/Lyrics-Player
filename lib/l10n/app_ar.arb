@@ -84,6 +84,8 @@
   "account_reset_sent": "تم إرسال بريد إعادة تعيين كلمة المرور",
   "account_anonymous": "حساب مجهول",
   "account_unavailable": "ميزات الحساب غير متاحة مؤقتاً.",
+  "account_sign_in_failed": "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+  "account_operation_failed": "فشلت العملية. يرجى المحاولة لاحقًا.",
   "common_cancel": "إلغاء",
   "common_confirm": "تأكيد",
   "common_ok": "موافق",

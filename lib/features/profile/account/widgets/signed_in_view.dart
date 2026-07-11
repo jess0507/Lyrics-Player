@@ -98,7 +98,7 @@ class UserInfoView extends ConsumerWidget {
       messenger.showAppSnackBar(l10n.account_delete_data_done);
     } on FirebaseFunctionsException catch (e, s) {
       reportError(e, s, reason: 'delete_account_data 失敗（code=${e.code}）');
-      messenger.showAppSnackBar(e.message ?? e.code);
+      messenger.showAppSnackBar(l10n.account_operation_failed);
     }
   }
 
@@ -127,10 +127,10 @@ class UserInfoView extends ConsumerWidget {
       await auth.deleteAccount();
     } on FirebaseFunctionsException catch (e, s) {
       reportError(e, s, reason: 'delete_account 失敗（code=${e.code}）');
-      messenger.showAppSnackBar(e.message ?? e.code);
+      messenger.showAppSnackBar(l10n.account_operation_failed);
     } on FirebaseAuthException catch (e, s) {
       reportError(e, s, reason: '刪除帳號後登出失敗（code=${e.code}）');
-      messenger.showAppSnackBar(e.message ?? e.code);
+      messenger.showAppSnackBar(l10n.account_operation_failed);
     }
   }
 }

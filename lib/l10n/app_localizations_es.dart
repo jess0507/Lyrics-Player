@@ -271,6 +271,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Las funciones de cuenta no están disponibles temporalmente.';
 
   @override
+  String get account_sign_in_failed =>
+      'No se pudo iniciar sesión. Inténtalo de nuevo.';
+
+  @override
+  String get account_operation_failed =>
+      'La operación falló. Inténtalo de nuevo más tarde.';
+
+  @override
   String get common_cancel => 'Cancelar';
 
   @override

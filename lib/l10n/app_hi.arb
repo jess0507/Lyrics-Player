@@ -84,6 +84,8 @@
   "account_reset_sent": "पासवर्ड रीसेट ईमेल भेजा गया",
   "account_anonymous": "अनाम खाता",
   "account_unavailable": "खाता सुविधाएँ अस्थायी रूप से अनुपलब्ध हैं।",
+  "account_sign_in_failed": "साइन इन विफल रहा। कृपया पुनः प्रयास करें।",
+  "account_operation_failed": "कार्रवाई विफल रही। कृपया बाद में पुनः प्रयास करें।",
   "common_cancel": "रद्द करें",
   "common_confirm": "पुष्टि करें",
   "common_ok": "ठीक है",

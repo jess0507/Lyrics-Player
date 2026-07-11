@@ -630,6 +630,18 @@ abstract class AppLocalizations {
   /// **'Account features are temporarily unavailable.'**
   String get account_unavailable;
 
+  /// No description provided for @account_sign_in_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-in failed. Please try again.'**
+  String get account_sign_in_failed;
+
+  /// No description provided for @account_operation_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'The operation failed. Please try again later.'**
+  String get account_operation_failed;
+
   /// No description provided for @common_cancel.
   ///
   /// In en, this message translates to:

@@ -269,6 +269,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Account features are temporarily unavailable.';
 
   @override
+  String get account_sign_in_failed => 'Sign-in failed. Please try again.';
+
+  @override
+  String get account_operation_failed =>
+      'The operation failed. Please try again later.';
+
+  @override
   String get common_cancel => 'Cancel';
 
   @override

@@ -84,6 +84,8 @@
   "account_reset_sent": "Parola sıfırlama e-postası gönderildi",
   "account_anonymous": "Anonim hesap",
   "account_unavailable": "Hesap özellikleri geçici olarak kullanılamıyor.",
+  "account_sign_in_failed": "Oturum açılamadı. Lütfen tekrar deneyin.",
+  "account_operation_failed": "İşlem başarısız oldu. Lütfen daha sonra tekrar deneyin.",
   "common_cancel": "İptal",
   "common_confirm": "Onayla",
   "common_ok": "Tamam",

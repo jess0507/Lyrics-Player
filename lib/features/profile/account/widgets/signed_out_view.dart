@@ -47,6 +47,7 @@ class _SignedOutViewState extends ConsumerState<SignInView> {
 
   /// 執行 [action],成功回傳 true、失敗顯示錯誤並回傳 false。
   Future<bool> _run(Future<void> Function() action) async {
+    final l10n = AppLocalizations.of(context)!;
     setState(() => _busy = true);
     try {
       await action();
@@ -56,12 +57,12 @@ class _SignedOutViewState extends ConsumerState<SignInView> {
         '[Account] FirebaseAuthException code=${e.code} '
         'message=${e.message}\n$s',
       );
-      _showMessage(e.message ?? e.code);
+      _showMessage(l10n.account_sign_in_failed);
       return false;
     } catch (e, s) {
       debugPrint('[Account] 登入流程錯誤:$e\n$s');
       reportError(e, s, reason: '登入流程未預期錯誤');
-      _showMessage('$e');
+      _showMessage(l10n.account_sign_in_failed);
       return false;
     } finally {
       if (mounted) setState(() => _busy = false);

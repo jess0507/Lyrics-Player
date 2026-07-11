@@ -267,6 +267,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get account_unavailable => 'Функции аккаунта временно недоступны.';
 
   @override
+  String get account_sign_in_failed => 'Не удалось войти. Попробуйте ещё раз.';
+
+  @override
+  String get account_operation_failed =>
+      'Не удалось выполнить операцию. Повторите попытку позже.';
+
+  @override
   String get common_cancel => 'Отмена';
 
   @override

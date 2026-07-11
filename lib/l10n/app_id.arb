@@ -84,6 +84,8 @@
   "account_reset_sent": "Email pengaturan ulang kata sandi telah dikirim",
   "account_anonymous": "Akun anonim",
   "account_unavailable": "Fitur akun tidak tersedia untuk sementara.",
+  "account_sign_in_failed": "Gagal masuk. Silakan coba lagi.",
+  "account_operation_failed": "Operasi gagal. Silakan coba lagi nanti.",
   "common_cancel": "Batal",
   "common_confirm": "Konfirmasi",
   "common_ok": "OK",
