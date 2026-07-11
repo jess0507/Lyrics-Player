@@ -19,7 +19,9 @@ class PlaylistsPage extends ConsumerWidget {
       title: l10n.playlist_new,
     );
     if (name == null) return;
-    await ref.read(playlistRepositoryProvider).create(name);
+    final id = await ref.read(playlistRepositoryProvider).create(name);
+    if (!context.mounted) return;
+    context.push('/playlists/$id');
   }
 
   Future<void> _rename(
