@@ -4,7 +4,7 @@ import 'package:just_audio/just_audio.dart';
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
 
-/// Mini player 的播放 / 暫停按鈕，載入中時顯示 spinner。
+/// Mini player 的播放 / 暫停按鈕，載入來源時顯示 spinner。
 class MiniPlayPauseButton extends StatelessWidget {
   const MiniPlayPauseButton({super.key, required this.audio});
 
@@ -20,8 +20,9 @@ class MiniPlayPauseButton extends StatelessWidget {
         final processing = state?.processingState;
         final playing = state?.playing ?? false;
 
-        if (processing == ProcessingState.loading ||
-            processing == ProcessingState.buffering) {
+        // 只在 loading(載入來源)顯示 spinner;buffering 多半是 seek 後的
+        // 瞬間狀態,換成 spinner 會讓按鈕閃爍跳動。
+        if (processing == ProcessingState.loading) {
           // 載入中的 spinner 不是按鈕，吞掉點擊避免穿透到外層 InkWell 觸發展開。
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
