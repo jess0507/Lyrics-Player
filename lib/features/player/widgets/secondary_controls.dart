@@ -34,11 +34,10 @@ class SecondaryControls extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final lyrics = _buildLyrics(context, ref);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ?lyrics,
           StreamBuilder<bool>(
             stream: audio.shuffleModeEnabledStream,
             builder: (context, snapshot) {
@@ -69,6 +68,7 @@ class SecondaryControls extends ConsumerWidget {
               );
             },
           ),
+          ?lyrics,
           IconButton(
             iconSize: _kIconSize,
             tooltip: MaterialLocalizations.of(context).showMenuTooltip,

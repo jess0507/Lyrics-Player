@@ -210,8 +210,14 @@ class _PlayerLayoutState extends State<_PlayerLayout> {
           ),
         ),
         const Spacer(),
-        SeekBar(audio: widget.audio, enabled: widget.hasTrack),
-        PlayerControls(audio: widget.audio, enabled: widget.hasTrack),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: SeekBar(audio: widget.audio, enabled: widget.hasTrack),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: PlayerControls(audio: widget.audio, enabled: widget.hasTrack),
+        ),
         SecondaryControls(
           audio: widget.audio,
           enabled: widget.hasTrack,
