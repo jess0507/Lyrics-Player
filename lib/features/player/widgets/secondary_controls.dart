@@ -10,9 +10,6 @@ import 'secondary_controls_menu.dart';
 /// 次控制列圖示的固定大小。
 const _kIconSize = 20.0;
 
-/// 次控制列圖示的顏色（深灰色，未選取時）。
-const _kIconColor = Colors.grey;
-
 /// 次控制列：歌詞、隨機、循環,其餘動作(加入播放清單、播放速度、自動對時、
 /// 字體大小、重新匯入、刪除歌詞)收進「更多」選單。
 class SecondaryControls extends ConsumerWidget {
@@ -48,10 +45,6 @@ class SecondaryControls extends ConsumerWidget {
               final shuffle = snapshot.data ?? false;
               return IconButton(
                 iconSize: _kIconSize,
-                // 選取時用 primary 上色,與未選取的灰色明確區分。
-                color: shuffle
-                    ? Theme.of(context).colorScheme.primary
-                    : _kIconColor,
                 isSelected: shuffle,
                 onPressed: enabled ? () => audio.setShuffle(!shuffle) : null,
                 icon: const Icon(Icons.shuffle),
@@ -70,9 +63,6 @@ class SecondaryControls extends ConsumerWidget {
                   : Icons.repeat;
               return IconButton(
                 iconSize: _kIconSize,
-                color: selected
-                    ? Theme.of(context).colorScheme.primary
-                    : _kIconColor,
                 isSelected: selected,
                 onPressed: enabled ? () => _cycleLoop(mode) : null,
                 icon: Icon(icon),
@@ -81,7 +71,6 @@ class SecondaryControls extends ConsumerWidget {
           ),
           IconButton(
             iconSize: _kIconSize,
-            color: _kIconColor,
             tooltip: MaterialLocalizations.of(context).showMenuTooltip,
             onPressed: enabled
                 ? () => showSecondaryControlsMenuSheet(
@@ -107,7 +96,6 @@ class SecondaryControls extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     return IconButton(
       iconSize: _kIconSize,
-      color: _kIconColor,
       tooltip: l10n.lyrics_show,
       onPressed: enabled
           ? () => showLyricsActionsSheet(
