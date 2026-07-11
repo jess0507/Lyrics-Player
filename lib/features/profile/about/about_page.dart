@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../l10n/app_localizations.dart';
+import 'providers/app_version_provider.dart';
 
-class AboutPage extends StatelessWidget {
+class AboutPage extends ConsumerWidget {
   const AboutPage({super.key});
-
-  // 對應 pubspec.yaml 的 version。
-  static const _version = '1.0.0+1';
 
   static final _privacyPolicyUrl = Uri.parse(
     'https://jess0507.github.io/seek-player-privacy-policy/',
@@ -19,8 +18,9 @@ class AboutPage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final version = ref.watch(appVersionProvider).valueOrNull ?? '';
     return Scaffold(
       appBar: AppBar(title: Text(l10n.profile_about)),
       body: ListView(
@@ -44,7 +44,7 @@ class AboutPage extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.tag),
             title: Text(l10n.about_version),
-            trailing: const Text(_version),
+            trailing: Text(version),
           ),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
@@ -59,7 +59,7 @@ class AboutPage extends StatelessWidget {
             onTap: () => showLicensePage(
               context: context,
               applicationName: l10n.app_title,
-              applicationVersion: _version,
+              applicationVersion: version,
             ),
           ),
         ],
