@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:seek_player/shared/widgets/marquee_text.dart';
 
 import '../../core/audio/audio_player_service.dart';
 import '../../l10n/app_localizations.dart';
@@ -52,7 +53,7 @@ class MiniPlayer extends ConsumerWidget {
                   child: Row(
                     children: [
                       const SizedBox(width: 16),
-                      if (cover != null)
+                      if (cover != null) ...[
                         ClipRRect(
                           borderRadius: BorderRadius.circular(4),
                           child: Image(
@@ -61,20 +62,22 @@ class MiniPlayer extends ConsumerWidget {
                             height: 40,
                             fit: BoxFit.cover,
                           ),
-                        )
-                      else
+                        ),
+                        const SizedBox(width: 12),
+                      ] else
                         SizedBox.shrink(),
-                      const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            MarqueeText(
                               title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: scheme.primary,
+                                  ),
                             ),
                             if (artist.isNotEmpty)
                               Text(
