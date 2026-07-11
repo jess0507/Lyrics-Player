@@ -471,6 +471,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get playlist_add_to => 'Thêm vào danh sách phát';
 
   @override
+  String get playlist_add_tracks => 'Thêm vào danh sách phát này';
+
+  @override
   String playlist_added(String name) {
     return 'Đã thêm vào \"$name\"';
   }

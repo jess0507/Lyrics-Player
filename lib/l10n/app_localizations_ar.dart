@@ -469,6 +469,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get playlist_add_to => 'إضافة إلى قائمة التشغيل';
 
   @override
+  String get playlist_add_tracks => 'إضافة إلى قائمة التشغيل هذه';
+
+  @override
   String playlist_added(String name) {
     return 'تمت الإضافة إلى \"$name\"';
   }

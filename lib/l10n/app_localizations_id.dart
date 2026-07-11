@@ -473,6 +473,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get playlist_add_to => 'Tambahkan ke playlist';
 
   @override
+  String get playlist_add_tracks => 'Tambahkan ke playlist ini';
+
+  @override
   String playlist_added(String name) {
     return 'Ditambahkan ke \"$name\"';
   }

@@ -454,6 +454,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get playlist_add_to => 'プレイリストに追加';
 
   @override
+  String get playlist_add_tracks => 'このプレイリストに追加';
+
+  @override
   String playlist_added(String name) {
     return '「$name」に追加しました';
   }

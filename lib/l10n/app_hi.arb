@@ -147,6 +147,7 @@
   "playlist_delete": "प्लेलिस्ट हटाएं",
   "playlist_delete_confirm": "\"{name}\" हटाएं?",
   "playlist_add_to": "प्लेलिस्ट में जोड़ें",
+  "playlist_add_tracks": "इस प्लेलिस्ट में जोड़ें",
   "playlist_added": "\"{name}\" में जोड़ा गया",
   "playlist_already_added": "पहले से \"{name}\" में है",
   "playlist_remove_track": "प्लेलिस्ट से हटाएं",

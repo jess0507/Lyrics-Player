@@ -147,6 +147,7 @@
   "playlist_delete": "Xóa danh sách phát",
   "playlist_delete_confirm": "Xóa \"{name}\"?",
   "playlist_add_to": "Thêm vào danh sách phát",
+  "playlist_add_tracks": "Thêm vào danh sách phát này",
   "playlist_added": "Đã thêm vào \"{name}\"",
   "playlist_already_added": "Đã có trong \"{name}\"",
   "playlist_remove_track": "Xóa khỏi danh sách phát",

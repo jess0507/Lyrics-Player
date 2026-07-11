@@ -147,6 +147,7 @@
   "playlist_delete": "재생목록 삭제",
   "playlist_delete_confirm": "\"{name}\"을(를) 삭제할까요?",
   "playlist_add_to": "재생목록에 추가",
+  "playlist_add_tracks": "이 재생목록에 추가",
   "playlist_added": "\"{name}\"에 추가됨",
   "playlist_already_added": "이미 \"{name}\"에 있음",
   "playlist_remove_track": "재생목록에서 제거",

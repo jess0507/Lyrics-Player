@@ -452,6 +452,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get playlist_add_to => '加入播放清單';
 
   @override
+  String get playlist_add_tracks => '新增至這個播放清單';
+
+  @override
   String playlist_added(String name) {
     return '已加入「$name」';
   }
@@ -951,6 +954,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get playlist_add_to => '加入播放列表';
 
   @override
+  String get playlist_add_tracks => '添加到这个播放列表';
+
+  @override
   String playlist_added(String name) {
     return '已加入“$name”';
   }
@@ -1448,6 +1454,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get playlist_add_to => '加入播放清單';
+
+  @override
+  String get playlist_add_tracks => '新增至這個播放清單';
 
   @override
   String playlist_added(String name) {

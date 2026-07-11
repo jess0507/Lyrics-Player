@@ -147,6 +147,7 @@
   "playlist_delete": "Hapus playlist",
   "playlist_delete_confirm": "Hapus \"{name}\"?",
   "playlist_add_to": "Tambahkan ke playlist",
+  "playlist_add_tracks": "Tambahkan ke playlist ini",
   "playlist_added": "Ditambahkan ke \"{name}\"",
   "playlist_already_added": "Sudah ada di \"{name}\"",
   "playlist_remove_track": "Hapus dari playlist",

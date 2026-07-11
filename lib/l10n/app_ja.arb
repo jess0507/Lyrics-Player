@@ -147,6 +147,7 @@
   "playlist_delete": "プレイリストを削除",
   "playlist_delete_confirm": "「{name}」を削除しますか?",
   "playlist_add_to": "プレイリストに追加",
+  "playlist_add_tracks": "このプレイリストに追加",
   "playlist_added": "「{name}」に追加しました",
   "playlist_already_added": "すでに「{name}」にあります",
   "playlist_remove_track": "プレイリストから削除",

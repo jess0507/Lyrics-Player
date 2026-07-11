@@ -473,6 +473,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get playlist_add_to => 'प्लेलिस्ट में जोड़ें';
 
   @override
+  String get playlist_add_tracks => 'इस प्लेलिस्ट में जोड़ें';
+
+  @override
   String playlist_added(String name) {
     return '\"$name\" में जोड़ा गया';
   }

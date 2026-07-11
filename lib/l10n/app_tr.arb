@@ -147,6 +147,7 @@
   "playlist_delete": "Çalma listesini sil",
   "playlist_delete_confirm": "\"{name}\" silinsin mi?",
   "playlist_add_to": "Çalma listesine ekle",
+  "playlist_add_tracks": "Bu çalma listesine ekle",
   "playlist_added": "\"{name}\" listesine eklendi",
   "playlist_already_added": "Zaten \"{name}\" içinde",
   "playlist_remove_track": "Çalma listesinden kaldır",

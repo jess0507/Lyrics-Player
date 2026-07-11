@@ -147,6 +147,7 @@
   "playlist_delete": "Удалить плейлист",
   "playlist_delete_confirm": "Удалить «{name}»?",
   "playlist_add_to": "Добавить в плейлист",
+  "playlist_add_tracks": "Добавить в этот плейлист",
   "playlist_added": "Добавлено в «{name}»",
   "playlist_already_added": "Уже в «{name}»",
   "playlist_remove_track": "Удалить из плейлиста",

@@ -478,6 +478,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get playlist_add_to => 'Ajouter à la playlist';
 
   @override
+  String get playlist_add_tracks => 'Ajouter à cette playlist';
+
+  @override
   String playlist_added(String name) {
     return 'Ajouté à « $name »';
   }

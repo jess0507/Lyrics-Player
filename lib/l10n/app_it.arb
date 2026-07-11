@@ -147,6 +147,7 @@
   "playlist_delete": "Elimina playlist",
   "playlist_delete_confirm": "Eliminare «{name}»?",
   "playlist_add_to": "Aggiungi alla playlist",
+  "playlist_add_tracks": "Aggiungi a questa playlist",
   "playlist_added": "Aggiunto a «{name}»",
   "playlist_already_added": "Già in «{name}»",
   "playlist_remove_track": "Rimuovi dalla playlist",

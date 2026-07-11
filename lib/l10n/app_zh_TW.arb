@@ -147,6 +147,7 @@
   "playlist_delete": "刪除播放清單",
   "playlist_delete_confirm": "確定要刪除「{name}」嗎?",
   "playlist_add_to": "加入播放清單",
+  "playlist_add_tracks": "新增至這個播放清單",
   "playlist_added": "已加入「{name}」",
   "playlist_already_added": "已在「{name}」中",
   "playlist_remove_track": "從清單移除",

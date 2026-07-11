@@ -471,6 +471,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get playlist_add_to => 'Добавить в плейлист';
 
   @override
+  String get playlist_add_tracks => 'Добавить в этот плейлист';
+
+  @override
   String playlist_added(String name) {
     return 'Добавлено в «$name»';
   }

@@ -457,6 +457,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get playlist_add_to => '재생목록에 추가';
 
   @override
+  String get playlist_add_tracks => '이 재생목록에 추가';
+
+  @override
   String playlist_added(String name) {
     return '\"$name\"에 추가됨';
   }

@@ -152,6 +152,7 @@
     }
   },
   "playlist_add_to": "Add to playlist",
+  "playlist_add_tracks": "Add to this playlist",
   "playlist_added": "Added to \"{name}\"",
   "@playlist_added": {
     "placeholders": {

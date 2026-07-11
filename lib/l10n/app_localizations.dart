@@ -1008,6 +1008,12 @@ abstract class AppLocalizations {
   /// **'Add to playlist'**
   String get playlist_add_to;
 
+  /// No description provided for @playlist_add_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to this playlist'**
+  String get playlist_add_tracks;
+
   /// No description provided for @playlist_added.
   ///
   /// In en, this message translates to:
