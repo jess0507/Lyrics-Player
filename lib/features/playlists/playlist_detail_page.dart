@@ -39,7 +39,7 @@ class PlaylistDetailPage extends ConsumerWidget {
           if (tracks.isNotEmpty)
             IconButton(
               tooltip: l10n.playlist_play_all,
-              icon: const Icon(Icons.play_arrow),
+              icon: const Icon(Icons.play_arrow_rounded),
               onPressed: () =>
                   ref.read(playbackControllerProvider).playTracksAt(tracks, 0),
             ),

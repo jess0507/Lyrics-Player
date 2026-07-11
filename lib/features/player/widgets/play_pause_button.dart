@@ -5,7 +5,11 @@ import '../../../core/audio/audio_player_service.dart';
 
 /// 播放 / 暫停按鈕：載入或緩衝中時顯示轉圈進度。
 class PlayPauseButton extends StatelessWidget {
-  const PlayPauseButton({super.key, required this.audio, required this.enabled});
+  const PlayPauseButton({
+    super.key,
+    required this.audio,
+    required this.enabled,
+  });
 
   final AudioPlayerService audio;
   final bool enabled;
@@ -32,7 +36,9 @@ class PlayPauseButton extends StatelessWidget {
             child: IconButton.filled(
               iconSize: 40,
               onPressed: !enabled ? null : (playing ? audio.pause : audio.play),
-              icon: Icon(playing ? Icons.pause : Icons.play_arrow),
+              icon: Icon(
+                playing ? Icons.pause_rounded : Icons.play_arrow_rounded,
+              ),
             ),
           );
         },
