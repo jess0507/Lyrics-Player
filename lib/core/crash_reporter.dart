@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
@@ -17,4 +18,16 @@ void reportError(Object error, StackTrace stack, {String? reason}) {
       fatal: false,
     ),
   );
+}
+
+/// 將登入使用者的 uid 綁定到 Crashlytics,之後的回報都會帶上該識別。
+///
+/// 登出時清空。僅記 uid 不記 email,避免把 PII 傳進 Crashlytics。
+/// 須在 Firebase 初始化成功後呼叫。
+void bindCrashUserIdentifier() {
+  FirebaseAuth.instance.authStateChanges().listen((user) {
+    unawaited(
+      FirebaseCrashlytics.instance.setUserIdentifier(user?.uid ?? ''),
+    );
+  });
 }

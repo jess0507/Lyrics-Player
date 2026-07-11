@@ -10,6 +10,7 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:seek_player/features/playlists/services/playlist_repository.dart';
 
 import 'app.dart';
+import 'core/crash_reporter.dart';
 import 'core/firebase_available_provider.dart';
 import 'core/storage/isar_service.dart';
 import 'core/storage/preferences_service.dart';
@@ -54,6 +55,8 @@ Future<void> main() async {
       FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
       return true;
     };
+    // 回報帶上登入使用者的 uid,方便在 Crashlytics 對回特定帳號。
+    bindCrashUserIdentifier();
 
     firebaseAvailable = true;
   } catch (e) {
