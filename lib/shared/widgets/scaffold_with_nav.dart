@@ -21,6 +21,8 @@ class ScaffoldWithNav extends StatelessWidget {
         children: [
           const MiniPlayer(),
           NavigationBar(
+            // 比 M3 預設(80)窄一點。
+            height: 58,
             selectedIndex: navigationShell.currentIndex,
             // 點擊任一 tab 都回到該分支根頁(不還原上次停留的子頁)。
             onDestinationSelected: (index) =>
