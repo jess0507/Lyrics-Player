@@ -61,7 +61,9 @@ class PlaylistAddTracksPage extends ConsumerWidget {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            l10n.playlist_add_tracks,
+            addedIds.isEmpty
+                ? l10n.playlist_add_tracks
+                : l10n.playlist_edit_tracks,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

@@ -46,7 +46,11 @@ class _SignedOutViewState extends ConsumerState<SignInView> {
   AuthService get _auth => ref.read(authServiceProvider);
 
   /// 執行 [action],成功回傳 true、失敗顯示錯誤並回傳 false。
-  Future<bool> _run(Future<void> Function() action) async {
+  /// 未指定 [failureMessage] 時預設顯示「登入失敗」。
+  Future<bool> _run(
+    Future<void> Function() action, {
+    String? failureMessage,
+  }) async {
     final l10n = AppLocalizations.of(context)!;
     setState(() => _busy = true);
     try {
@@ -57,12 +61,12 @@ class _SignedOutViewState extends ConsumerState<SignInView> {
         '[Account] FirebaseAuthException code=${e.code} '
         'message=${e.message}\n$s',
       );
-      _showMessage(l10n.account_sign_in_failed);
+      _showMessage(failureMessage ?? l10n.account_sign_in_failed);
       return false;
     } catch (e, s) {
       debugPrint('[Account] 登入流程錯誤:$e\n$s');
       reportError(e, s, reason: '登入流程未預期錯誤');
-      _showMessage(l10n.account_sign_in_failed);
+      _showMessage(failureMessage ?? l10n.account_sign_in_failed);
       return false;
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -121,10 +125,14 @@ class _SignedOutViewState extends ConsumerState<SignInView> {
 
   /// 以 email/密碼註冊新帳號(成功即自動登入)。
   Future<void> _signUpEmail() async {
+    final l10n = AppLocalizations.of(context)!;
     final email = _email.text.trim();
     final password = _password.text;
     if (email.isEmpty || password.isEmpty) return;
-    await _run(() => _auth.signUpWithEmail(email, password));
+    await _run(
+      () => _auth.signUpWithEmail(email, password),
+      failureMessage: l10n.account_sign_up_failed,
+    );
   }
 
   /// 寄送密碼重設信。

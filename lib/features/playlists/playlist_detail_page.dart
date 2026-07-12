@@ -63,7 +63,11 @@ class PlaylistDetailPage extends ConsumerWidget {
                 onPressed: () =>
                     showPlaylistAddTracksSheet(context, playlistId),
                 icon: const Icon(Icons.add),
-                label: Text(l10n.playlist_add_tracks),
+                label: Text(
+                  tracks.isEmpty
+                      ? l10n.playlist_add_tracks
+                      : l10n.playlist_edit_tracks,
+                ),
               ),
             ),
           ),
