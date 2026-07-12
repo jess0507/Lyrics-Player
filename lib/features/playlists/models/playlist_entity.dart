@@ -4,7 +4,7 @@ part 'playlist_entity.g.dart';
 
 /// 一個使用者播放清單。曲目以 MediaStore trackId 的有序清單保存
 /// (裝置綁定,同統計 / 歌詞的已知限制);顯示時再回 music library 解析成
-/// [Track]。純本機資料,v1 不同步 Firestore。
+/// [Track]。隨帳號備份至 Firestore `users/{uid}`(見 SyncService)。
 @collection
 class PlaylistEntity {
   Id id = Isar.autoIncrement;

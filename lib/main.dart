@@ -14,6 +14,7 @@ import 'core/crash_reporter.dart';
 import 'core/firebase_available_provider.dart';
 import 'core/storage/isar_service.dart';
 import 'core/storage/preferences_service.dart';
+import 'core/sync/sync_state_store.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -67,7 +68,10 @@ Future<void> main() async {
   final isar = await openIsar();
 
   // 確保預設「我的最愛」清單存在(DB 內存名僅作 fallback,UI 顯示在地化名稱)。
-  await PlaylistRepository(isar).ensureDefaultFavorites('我的最愛');
+  await PlaylistRepository(
+    isar,
+    SyncStateStore(prefs),
+  ).ensureDefaultFavorites('我的最愛');
 
   runApp(
     ProviderScope(
