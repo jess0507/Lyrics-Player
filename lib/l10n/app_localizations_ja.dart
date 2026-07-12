@@ -266,6 +266,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get account_sign_in_failed => 'ログインに失敗しました。もう一度お試しください。';
 
   @override
+  String get account_sign_up_failed => '登録に失敗しました。もう一度お試しください。';
+
+  @override
   String get account_operation_failed => '処理に失敗しました。しばらくしてからもう一度お試しください。';
 
   @override
@@ -455,6 +458,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get playlist_add_tracks => 'このプレイリストに追加';
+
+  @override
+  String get playlist_edit_tracks => 'プレイリストを編集';
 
   @override
   String playlist_added(String name) {

@@ -264,6 +264,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get account_sign_in_failed => '登入失敗,請再試一次。';
 
   @override
+  String get account_sign_up_failed => '註冊失敗,請再試一次。';
+
+  @override
   String get account_operation_failed => '操作失敗,請稍後再試。';
 
   @override
@@ -453,6 +456,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get playlist_add_tracks => '新增至這個播放清單';
+
+  @override
+  String get playlist_edit_tracks => '編輯播放清單';
 
   @override
   String playlist_added(String name) {
@@ -766,6 +772,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get account_sign_in_failed => '登录失败,请重试。';
 
   @override
+  String get account_sign_up_failed => '注册失败,请重试。';
+
+  @override
   String get account_operation_failed => '操作失败,请稍后再试。';
 
   @override
@@ -955,6 +964,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
 
   @override
   String get playlist_add_tracks => '添加到这个播放列表';
+
+  @override
+  String get playlist_edit_tracks => '编辑播放列表';
 
   @override
   String playlist_added(String name) {
@@ -1268,6 +1280,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get account_sign_in_failed => '登入失敗,請再試一次。';
 
   @override
+  String get account_sign_up_failed => '註冊失敗,請再試一次。';
+
+  @override
   String get account_operation_failed => '操作失敗,請稍後再試。';
 
   @override
@@ -1457,6 +1472,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get playlist_add_tracks => '新增至這個播放清單';
+
+  @override
+  String get playlist_edit_tracks => '編輯播放清單';
 
   @override
   String playlist_added(String name) {

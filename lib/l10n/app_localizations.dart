@@ -636,6 +636,12 @@ abstract class AppLocalizations {
   /// **'Sign-in failed. Please try again.'**
   String get account_sign_in_failed;
 
+  /// No description provided for @account_sign_up_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-up failed. Please try again.'**
+  String get account_sign_up_failed;
+
   /// No description provided for @account_operation_failed.
   ///
   /// In en, this message translates to:
@@ -1013,6 +1019,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add to this playlist'**
   String get playlist_add_tracks;
+
+  /// No description provided for @playlist_edit_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit playlist'**
+  String get playlist_edit_tracks;
 
   /// No description provided for @playlist_added.
   ///

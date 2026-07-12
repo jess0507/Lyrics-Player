@@ -274,6 +274,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Anmeldung fehlgeschlagen. Bitte versuche es erneut.';
 
   @override
+  String get account_sign_up_failed =>
+      'Registrierung fehlgeschlagen. Bitte versuche es erneut.';
+
+  @override
   String get account_operation_failed =>
       'Vorgang fehlgeschlagen. Bitte versuche es später erneut.';
 
@@ -478,6 +482,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get playlist_add_tracks => 'Zu dieser Playlist hinzufügen';
+
+  @override
+  String get playlist_edit_tracks => 'Playlist bearbeiten';
 
   @override
   String playlist_added(String name) {

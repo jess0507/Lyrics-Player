@@ -85,6 +85,7 @@
   "account_anonymous": "Anonymous account",
   "account_unavailable": "Account features are temporarily unavailable.",
   "account_sign_in_failed": "Sign-in failed. Please try again.",
+  "account_sign_up_failed": "Sign-up failed. Please try again.",
   "account_operation_failed": "The operation failed. Please try again later.",
   "common_cancel": "Cancel",
   "common_confirm": "Confirm",
@@ -153,6 +154,7 @@
   },
   "playlist_add_to": "Add to playlist",
   "playlist_add_tracks": "Add to this playlist",
+  "playlist_edit_tracks": "Edit playlist",
   "playlist_added": "Added to \"{name}\"",
   "@playlist_added": {
     "placeholders": {

@@ -270,6 +270,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get account_sign_in_failed => 'Не удалось войти. Попробуйте ещё раз.';
 
   @override
+  String get account_sign_up_failed =>
+      'Не удалось зарегистрироваться. Попробуйте ещё раз.';
+
+  @override
   String get account_operation_failed =>
       'Не удалось выполнить операцию. Повторите попытку позже.';
 
@@ -472,6 +476,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get playlist_add_tracks => 'Добавить в этот плейлист';
+
+  @override
+  String get playlist_edit_tracks => 'Редактировать плейлист';
 
   @override
   String playlist_added(String name) {

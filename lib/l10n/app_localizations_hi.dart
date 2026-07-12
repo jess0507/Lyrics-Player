@@ -273,6 +273,10 @@ class AppLocalizationsHi extends AppLocalizations {
       'साइन इन विफल रहा। कृपया पुनः प्रयास करें।';
 
   @override
+  String get account_sign_up_failed =>
+      'साइन अप विफल रहा। कृपया पुनः प्रयास करें।';
+
+  @override
   String get account_operation_failed =>
       'कार्रवाई विफल रही। कृपया बाद में पुनः प्रयास करें।';
 
@@ -474,6 +478,9 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get playlist_add_tracks => 'इस प्लेलिस्ट में जोड़ें';
+
+  @override
+  String get playlist_edit_tracks => 'प्लेलिस्ट संपादित करें';
 
   @override
   String playlist_added(String name) {

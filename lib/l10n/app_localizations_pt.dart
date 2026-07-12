@@ -272,6 +272,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get account_sign_in_failed => 'Falha ao entrar. Tente novamente.';
 
   @override
+  String get account_sign_up_failed => 'Falha ao cadastrar. Tente novamente.';
+
+  @override
   String get account_operation_failed =>
       'A operação falhou. Tente novamente mais tarde.';
 
@@ -474,6 +477,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get playlist_add_tracks => 'Adicionar a esta playlist';
+
+  @override
+  String get playlist_edit_tracks => 'Editar playlist';
 
   @override
   String playlist_added(String name) {

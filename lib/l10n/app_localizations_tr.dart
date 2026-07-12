@@ -272,6 +272,10 @@ class AppLocalizationsTr extends AppLocalizations {
       'Oturum açılamadı. Lütfen tekrar deneyin.';
 
   @override
+  String get account_sign_up_failed =>
+      'Kayıt olunamadı. Lütfen tekrar deneyin.';
+
+  @override
   String get account_operation_failed =>
       'İşlem başarısız oldu. Lütfen daha sonra tekrar deneyin.';
 
@@ -475,6 +479,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get playlist_add_tracks => 'Bu çalma listesine ekle';
+
+  @override
+  String get playlist_edit_tracks => 'Çalma listesini düzenle';
 
   @override
   String playlist_added(String name) {

@@ -275,6 +275,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Échec de la connexion. Veuillez réessayer.';
 
   @override
+  String get account_sign_up_failed =>
+      'Échec de l\'inscription. Veuillez réessayer.';
+
+  @override
   String get account_operation_failed =>
       'L\'opération a échoué. Veuillez réessayer plus tard.';
 
@@ -479,6 +483,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playlist_add_tracks => 'Ajouter à cette playlist';
+
+  @override
+  String get playlist_edit_tracks => 'Modifier la playlist';
 
   @override
   String playlist_added(String name) {

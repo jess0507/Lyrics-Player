@@ -273,6 +273,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get account_sign_in_failed => 'Gagal masuk. Silakan coba lagi.';
 
   @override
+  String get account_sign_up_failed => 'Gagal mendaftar. Silakan coba lagi.';
+
+  @override
   String get account_operation_failed =>
       'Operasi gagal. Silakan coba lagi nanti.';
 
@@ -474,6 +477,9 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get playlist_add_tracks => 'Tambahkan ke playlist ini';
+
+  @override
+  String get playlist_edit_tracks => 'Edit playlist';
 
   @override
   String playlist_added(String name) {

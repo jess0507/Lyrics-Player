@@ -267,6 +267,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get account_sign_in_failed => '로그인에 실패했습니다. 다시 시도해 주세요.';
 
   @override
+  String get account_sign_up_failed => '회원가입에 실패했습니다. 다시 시도해 주세요.';
+
+  @override
   String get account_operation_failed => '작업에 실패했습니다. 나중에 다시 시도해 주세요.';
 
   @override
@@ -458,6 +461,9 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get playlist_add_tracks => '이 재생목록에 추가';
+
+  @override
+  String get playlist_edit_tracks => '재생목록 편집';
 
   @override
   String playlist_added(String name) {

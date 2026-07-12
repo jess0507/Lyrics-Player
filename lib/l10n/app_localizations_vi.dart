@@ -274,6 +274,10 @@ class AppLocalizationsVi extends AppLocalizations {
       'Đăng nhập không thành công. Vui lòng thử lại.';
 
   @override
+  String get account_sign_up_failed =>
+      'Đăng ký không thành công. Vui lòng thử lại.';
+
+  @override
   String get account_operation_failed =>
       'Thao tác không thành công. Vui lòng thử lại sau.';
 
@@ -472,6 +476,9 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get playlist_add_tracks => 'Thêm vào danh sách phát này';
+
+  @override
+  String get playlist_edit_tracks => 'Chỉnh sửa danh sách phát';
 
   @override
   String playlist_added(String name) {
