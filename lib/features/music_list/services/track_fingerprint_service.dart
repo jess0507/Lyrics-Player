@@ -46,7 +46,7 @@ class TrackFingerprintService {
     }
     if (pending.isEmpty) return result;
 
-    final hashes = await Isolate.run(() => _computeHashes(pending));
+    final hashes = await _computeHashesInIsolate(pending);
 
     final updates = <TrackFingerprintEntity>[];
     for (final job in pending) {
@@ -67,6 +67,15 @@ class TrackFingerprintService {
     }
     return result;
   }
+
+  /// 把 hash 計算送進獨立 isolate,不佔 main isolate 幀預算。
+  ///
+  /// 必須包在 static 方法內建立 closure:instance method 內的 closure
+  /// 會連同 method context 捕捉 `this`,`_isar`(native 物件)不可跨
+  /// isolate 傳送,`Isolate.spawn` 會直接丟例外。
+  static Future<Map<String, String>> _computeHashesInIsolate(
+    List<({String path, int size, int modifiedMs})> jobs,
+  ) => Isolate.run(() => _computeHashes(jobs));
 
   /// 於背景 isolate 執行:整批讀檔 + sha1。讀不到的檔案不在結果中。
   static Future<Map<String, String>> _computeHashes(
