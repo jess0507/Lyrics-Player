@@ -5,7 +5,8 @@ import 'package:seek_player/core/sync/sync_state_store.dart';
 import 'package:seek_player/features/playlists/models/playlist_entity.dart';
 
 /// 播放清單的 Isar CRUD。曲目以有序 trackId 清單保存,解析交給讀取端。
-/// 每次使用者寫入都 markModified,由 SyncService 併入 `users/{uid}` 備份。
+/// 每次使用者寫入都 markPlaylistModified,SyncService 監聽該事件
+/// 節流(5 分鐘)上傳 `users/{uid}` 備份。
 class PlaylistRepository {
   PlaylistRepository(this._isar, this._syncState);
 
@@ -54,7 +55,7 @@ class PlaylistRepository {
           ..createdAt = DateTime.now(),
       ),
     );
-    _syncState.markModified();
+    _syncState.markPlaylistModified();
     return id;
   }
 
@@ -67,12 +68,12 @@ class PlaylistRepository {
       await _col.put(pl);
       return true;
     });
-    if (changed) _syncState.markModified();
+    if (changed) _syncState.markPlaylistModified();
   }
 
   Future<void> delete(int id) async {
     final deleted = await _isar.writeTxn(() => _col.delete(id));
-    if (deleted) _syncState.markModified();
+    if (deleted) _syncState.markPlaylistModified();
   }
 
   /// 加入一首(已存在則不重覆附加)。
@@ -84,7 +85,7 @@ class PlaylistRepository {
       await _col.put(pl);
       return true;
     });
-    if (changed) _syncState.markModified();
+    if (changed) _syncState.markPlaylistModified();
   }
 
   Future<void> removeTrack(int id, String trackId) async {
@@ -95,7 +96,7 @@ class PlaylistRepository {
       await _col.put(pl);
       return true;
     });
-    if (changed) _syncState.markModified();
+    if (changed) _syncState.markPlaylistModified();
   }
 
   /// 整批覆寫順序(拖曳排序用)。
@@ -107,7 +108,7 @@ class PlaylistRepository {
       await _col.put(pl);
       return true;
     });
-    if (changed) _syncState.markModified();
+    if (changed) _syncState.markPlaylistModified();
   }
 }
 

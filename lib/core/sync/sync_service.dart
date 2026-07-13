@@ -17,8 +17,8 @@ import 'sync_state_store.dart';
 /// schema 版本與主文件組裝。各領域（設定 / 統計 / 播放清單 / 歌詞）的
 /// 編解碼與還原分別在 `*_sync.dart`。
 ///
-/// 登入中為上傳備份（App 啟動、回前景與歌詞變更當下觸發、背景執行、
-/// 有變更才上傳）；
+/// 登入中為上傳備份（App 啟動、回前景、歌詞變更當下與播放清單變更
+/// 節流 5 分鐘觸發、背景執行、有變更才上傳）；
 /// 登入當下一律以雲端為準還原，
 /// 未登入期間的本機資料視為不保存。全程不阻塞 UI、失敗靜默略過不重試，
 /// 下次啟動自然再試。詳細策略見 `plans/statistics-isar-firestore-sync.md`。
@@ -34,6 +34,15 @@ class SyncService {
   /// v5：新增 `lyrics/{trackId}` 子集合（見 LyricsSync）。
   /// v5+ 的文件以子集合為歌詞的權威來源。
   static const _schemaVersion = 5;
+
+  /// 播放清單變更觸發上傳的節流窗長。
+  static const _playlistPushThrottle = Duration(minutes: 5);
+
+  /// 節流窗內排定的上傳；null 表示無排定。
+  Timer? _playlistPushTimer;
+
+  /// 上次由播放清單變更觸發上傳的時間（記憶體內，App 重啟歸零）。
+  DateTime? _lastPlaylistPushAt;
 
   SyncStateStore get _store => ref.read(syncStateStoreProvider);
 
@@ -81,6 +90,13 @@ class SyncService {
     });
     ref.onDispose(lyricsSub.cancel);
 
+    // 播放清單變更後節流上傳（見 _onPlaylistModified）。
+    final playlistSub = _store.playlistModifiedEvents.listen(
+      (_) => _onPlaylistModified(),
+    );
+    ref.onDispose(playlistSub.cancel);
+    ref.onDispose(() => _playlistPushTimer?.cancel());
+
     // App 回到前景時補一次同步班次（登入中、有變更才上傳）。
     final lifecycle = AppLifecycleListener(
       onResume: () {
@@ -91,6 +107,40 @@ class SyncService {
       },
     );
     ref.onDispose(lifecycle.dispose);
+  }
+
+  /// 播放清單變更當下的節流上傳：窗外首次變更立即上傳；窗內的後續
+  /// 變更合併為窗末一次（走 _maybeUpload，期間已被別的班次推掉就跳過）。
+  /// 未登入時不排程，留著變更時戳由登入後的班次補推。
+  void _onPlaylistModified() {
+    if (ref.read(authServiceProvider).currentUser == null) {
+      debugPrint('[Sync] 播放清單變更但未登入，留待登入後補推');
+      return;
+    }
+    if (_playlistPushTimer != null) return; // 窗內已排定，合併
+    final now = DateTime.now();
+    final last = _lastPlaylistPushAt;
+    final elapsed = last == null ? _playlistPushThrottle : now.difference(last);
+    if (elapsed >= _playlistPushThrottle) {
+      _lastPlaylistPushAt = now;
+      debugPrint('[Sync] 播放清單變更，立即上傳');
+      unawaited(_uploadForCurrentUser());
+      return;
+    }
+    final delay = _playlistPushThrottle - elapsed;
+    debugPrint('[Sync] 播放清單變更，節流 ${delay.inSeconds}s 後上傳');
+    _playlistPushTimer = Timer(delay, () {
+      _playlistPushTimer = null;
+      _lastPlaylistPushAt = DateTime.now();
+      unawaited(_uploadForCurrentUser());
+    });
+  }
+
+  /// 以當下登入者跑一次上傳判斷；期間登出則不上傳。
+  Future<void> _uploadForCurrentUser() async {
+    final uid = ref.read(authServiceProvider).currentUser?.uid;
+    if (uid == null) return;
+    await _maybeUpload(uid);
   }
 
   /// 登入成功當下：一律以雲端為準還原；雲端沒有資料才走上傳（互斥）。

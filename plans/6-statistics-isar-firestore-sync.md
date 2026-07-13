@@ -282,3 +282,21 @@ users/{uid}                     # 使用者根文件
   也在此）；`sync_service.dart` 只留調度（觸發時機、變更判斷、
   schemaVersion 與主文件組裝）。行為不變。
 - 驗證：`flutter analyze` 無 issue、`flutter test` 29 項全過。
+
+## 增補：播放清單變更即時上傳（節流 5 分鐘，2026-07-13）
+
+播放清單操作（建立 / 改名 / 刪除 / 加減曲 / 排序）不再只等 App 啟動 /
+回前景的班次，變更當下就觸發上傳，但以 5 分鐘節流控制寫入頻率：
+
+- **事件通道**：`markPlaylistModified` = `markModified`（主文件變更時戳
+  照舊共用）+ 發 `SyncStateStore.playlistModifiedEvents` 事件；
+  PlaylistRepository 六個寫入點全數改呼叫它。統計每次播放都會
+  `markModified`，所以不能共用該時戳當觸發源，需要專屬事件。
+- **節流語意（leading + trailing）**：窗外首次變更立即上傳；5 分鐘窗內
+  的後續變更合併為窗末一次（Timer 排定）。觸發走 `_maybeUpload`，
+  期間若已被回前景等其他班次推掉就自動跳過。
+- **上次觸發時間存記憶體**（App 重啟歸零）：重啟後首次變更一律立即推，
+  跨重啟最壞情況只是多推一次快照，可接受。
+- 未登入時不排程，留著變更時戳由登入後的班次補推；登出後 Timer 到期
+  也不上傳（`_uploadForCurrentUser` 以當下登入者判斷）。
+- 驗證：`flutter analyze` 無 issue、`flutter test` 29 項全過。

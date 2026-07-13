@@ -30,6 +30,18 @@ class SyncStateStore {
   /// 統計或設定每次寫入時呼叫。
   void markModified() => _write(_kLastModifiedAt, DateTime.now());
 
+  final _playlistModifiedEvents = StreamController<void>.broadcast();
+
+  /// [markPlaylistModified] 之後發出事件；SyncService 監聽以節流上傳
+  /// （時戳先寫再通知，監聽端讀到的變更狀態必為最新）。
+  Stream<void> get playlistModifiedEvents => _playlistModifiedEvents.stream;
+
+  /// 播放清單每次寫入時呼叫（變更時戳與統計 / 設定共用主文件那組）。
+  void markPlaylistModified() {
+    markModified();
+    _playlistModifiedEvents.add(null);
+  }
+
   /// 上傳成功（或還原完成）時呼叫，更新 lastSyncAt。
   void markSynced() => _write(_kLastSyncAt, DateTime.now());
 
