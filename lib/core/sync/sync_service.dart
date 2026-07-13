@@ -4,20 +4,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../features/playlists/models/playlist_entity.dart';
-import '../../features/playlists/services/playlist_repository.dart';
-import '../../features/profile/statistics/models/daily_track_stat_entity.dart';
-import '../../features/profile/statistics/models/period_stat_entity.dart';
-import '../../features/profile/statistics/services/statistics_service.dart';
-import '../../shared/providers/settings_controller.dart';
 import '../auth/auth_service.dart';
 import '../crash_reporter.dart';
 import '../firebase_available_provider.dart';
+import 'lyrics_sync.dart';
+import 'playlists_sync.dart';
+import 'settings_sync.dart';
+import 'statistics_sync.dart';
 import 'sync_state_store.dart';
 
-/// 使用者資料（設定 + 統計 + 播放清單）與 Firestore `users/{uid}` 的同步。
+/// 使用者資料與 Firestore `users/{uid}` 同步的調度：觸發時機、變更判斷、
+/// schema 版本與主文件組裝。各領域（設定 / 統計 / 播放清單 / 歌詞）的
+/// 編解碼與還原分別在 `*_sync.dart`。
 ///
-/// 登入中為上傳備份（App 啟動與回前景時觸發、背景執行、有變更才上傳）；
+/// 登入中為上傳備份（App 啟動、回前景與歌詞變更當下觸發、背景執行、
+/// 有變更才上傳）；
 /// 登入當下一律以雲端為準還原，
 /// 未登入期間的本機資料視為不保存。全程不阻塞 UI、失敗靜默略過不重試，
 /// 下次啟動自然再試。詳細策略見 `plans/statistics-isar-firestore-sync.md`。
@@ -30,9 +31,13 @@ class SyncService {
 
   /// Firestore v3：新增 `monthlyTotals`（月粒度期間總量）——它是未來 `days` 明細
   /// v4：新增 `playlists`（播放清單與其有序 trackIds 關係）。
-  static const _schemaVersion = 4;
+  /// v5：新增 `lyrics/{trackId}` 子集合（見 LyricsSync）。
+  /// v5+ 的文件以子集合為歌詞的權威來源。
+  static const _schemaVersion = 5;
 
   SyncStateStore get _store => ref.read(syncStateStoreProvider);
+
+  LyricsSync get _lyricsSync => ref.read(lyricsSyncProvider);
 
   DocumentReference<Map<String, dynamic>> _userDoc(String uid) =>
       FirebaseFirestore.instance.collection('users').doc(uid);
@@ -42,6 +47,7 @@ class SyncService {
       debugPrint('[Sync] Firebase 不可用，停用同步');
       return;
     }
+    _lyricsSync.markExistingPending();
     // 首個事件是啟動時的既有登入狀態（App 啟動觸發上傳判斷）；
     // 其後的 null -> user 轉變才是「登入成功當下」（先還原判斷）。
     var isStartupEvent = true;
@@ -62,6 +68,19 @@ class SyncService {
     });
     ref.onDispose(sub.cancel);
 
+    // 歌詞變更當下立即推送（不等下次班次）；未登入時留著待推記號，
+    // 登入後的班次自然補推。
+    final lyricsSub = _store.lyricsModifiedEvents.listen((_) {
+      final uid = ref.read(authServiceProvider).currentUser?.uid;
+      if (uid == null) {
+        debugPrint('[Sync] 歌詞變更但未登入，留待登入後補推');
+        return;
+      }
+      debugPrint('[Sync] 歌詞變更，立即推送');
+      unawaited(_upload(uid));
+    });
+    ref.onDispose(lyricsSub.cancel);
+
     // App 回到前景時補一次同步班次（登入中、有變更才上傳）。
     final lifecycle = AppLifecycleListener(
       onResume: () {
@@ -77,9 +96,12 @@ class SyncService {
   /// 登入成功當下：一律以雲端為準還原；雲端沒有資料才走上傳（互斥）。
   ///
   /// 未登入期間累計的本機資料視為「不想保存」，登入時直接被雲端覆寫。
+  /// 還原後仍跑一次上傳判斷：v4 舊文件沒有歌詞子集合，本機歌詞
+  /// 保留為待推狀態，這裡順勢補推（文件一併升 v5）；v5 還原後
+  /// 無待推項目，判斷會直接跳過。
   Future<void> _onSignedIn(String uid) async {
     try {
-      if (await _restoreFromCloud(uid)) return;
+      await _restoreFromCloud(uid);
     } catch (e, s) {
       debugPrint('[Sync] 還原失敗，略過：$e');
       reportError(e, s, reason: '登入後從雲端還原失敗');
@@ -87,71 +109,49 @@ class SyncService {
     await _maybeUpload(uid);
   }
 
-  /// 以雲端快照整份覆寫本機（不合併）。回傳是否已執行還原；
-  /// 雲端沒有文件或 schema 不相容時回傳 false，由呼叫端走上傳判斷。
-  Future<bool> _restoreFromCloud(String uid) async {
+  /// 以雲端快照整份覆寫本機（不合併）。雲端沒有文件或 schema 不相容時
+  /// 不動本機，由呼叫端接續的上傳判斷接手。
+  Future<void> _restoreFromCloud(String uid) async {
     final snapshot = await _userDoc(uid).get();
     final data = snapshot.data();
     if (data == null) {
       // 雲端沒有文件（首次使用）→ 走上傳判斷。
       debugPrint('[Sync] 雲端無文件，跳過還原');
-      return false;
+      return;
     }
     final version = (data['schemaVersion'] as num?)?.toInt() ?? 1;
     if (version > _schemaVersion) {
       debugPrint('[Sync] 雲端 schemaVersion $version 較新，跳過還原');
-      return false;
+      return;
     }
 
-    final settings = data['settings'];
-    if (settings is Map) {
-      ref
-          .read(settingsControllerProvider.notifier)
-          .restoreFromRemote(
-            locale: settings['locale'] as String?,
-            themeMode: settings['themeMode'] as String?,
-            seedColor: settings['seedColor'] as String?,
-            useGradient: settings['useGradient'] as bool?,
-            gradientFromCover: settings['gradientFromCover'] as bool?,
-            autoFullScreenLyrics: settings['autoFullScreenLyrics'] as bool?,
-          );
-    }
-    final rawTotals = data['monthlyTotals'] as Object?;
+    ref.read(settingsSyncProvider).restore(data['settings']);
+    // v3+ 才有 monthlyTotals 欄位。
     ref
-        .read(statisticsControllerProvider.notifier)
-        .restoreFromRemote(
-          (data['days'] as Object?).toDailyTrackStats(),
-          monthlyTotals: version >= 3 && rawTotals is Map
-              ? rawTotals.toMonthlyTotals()
-              : null,
-        );
-
+        .read(statisticsSyncProvider)
+        .restore(data['days'], version >= 3 ? data['monthlyTotals'] : null);
     // v4+ 才有 playlists 欄位；舊文件缺欄位時不動本機清單。
-    final rawPlaylists = data['playlists'] as Object?;
-    if (rawPlaylists is List) {
-      await ref
-          .read(playlistRepositoryProvider)
-          .restoreFromRemote(rawPlaylists.toPlaylists());
+    await ref.read(playlistsSyncProvider).restore(data['playlists']);
+    // v5+ 才以歌詞子集合為權威來源（空集合也整份覆寫本機）；
+    // v4 舊文件不動本機歌詞，由還原後的上傳判斷補推。
+    if (version >= 5) {
+      await _lyricsSync.restore(_userDoc(uid));
     }
 
     // 還原後視同已同步；lastModifiedAt 不動（還原不算本機變更）。
     _store.markSynced();
-    debugPrint('[Sync] 已從雲端還原設定、統計與播放清單');
-    return true;
+    debugPrint('[Sync] 已從雲端還原設定、統計、播放清單與歌詞');
   }
 
   /// 自上次同步後有變更才上傳（App 啟動 / 回前景 / 登入後無雲端資料時觸發）。
   Future<void> _maybeUpload(String uid) async {
-    // 先讀統計 provider，確保 prefs -> Isar 遷移已執行
-    // （遷移視為本機變更，會更新 lastModifiedAt）。
-    final stats = ref.read(statisticsControllerProvider);
+    ref.read(statisticsSyncProvider).ensureMigrated();
     final lastModified = _store.lastModifiedAt;
-    if (lastModified == null) {
-      debugPrint('[Sync] 本機從未變更（lastModifiedAt=null），跳過上傳');
-      return;
-    }
     final lastSync = _store.lastSyncAt;
-    if (lastSync != null && !lastModified.isAfter(lastSync)) {
+    final mainChanged =
+        lastModified != null &&
+        (lastSync == null || lastModified.isAfter(lastSync));
+    if (!mainChanged && !_lyricsSync.pushPending) {
       debugPrint(
         '[Sync] 上次同步後無變更，跳過上傳'
         '（lastModifiedAt=$lastModified, lastSyncAt=$lastSync）',
@@ -161,7 +161,7 @@ class SyncService {
     debugPrint(
       '[Sync] 開始上傳（lastModifiedAt=$lastModified, lastSyncAt=$lastSync）',
     );
-    await _upload(uid, stats);
+    await _upload(uid);
   }
 
   /// 統計重設後呼叫：立即上傳歸零快照（tracks 清空、settings 維持現值），
@@ -176,32 +176,31 @@ class SyncService {
       debugPrint('[Sync] 未登入，重設後不上傳');
       return;
     }
-    await _upload(uid, ref.read(statisticsControllerProvider));
+    await _upload(uid);
   }
 
   /// `set()` 整份覆寫（不帶 merge）：雲端永遠是單一裝置的完整快照
   /// （last-write-wins，不合併、不加總）。
-  Future<void> _upload(String uid, StatisticsData stats) async {
+  Future<void> _upload(String uid) async {
     try {
-      // monthlyTotals 與 days 在同一個同步區塊內讀取（中間無 await），
-      // 與本機為同一快照；整份 set() 覆寫，雲端明細與 totals 一致性不破。
-      final monthlyTotals = ref
-          .read(statisticsControllerProvider.notifier)
-          .monthlyTotals();
-      final playlists = ref.read(playlistRepositoryProvider).getAllSync();
+      final statsFields = ref.read(statisticsSyncProvider).encodeFields();
+      final playlists = ref.read(playlistsSyncProvider).encode();
       await _userDoc(uid).set({
         'schemaVersion': _schemaVersion,
-        'settings': ref.read(settingsControllerProvider).toRemoteMap(),
-        'days': stats.days.toRemoteMap(),
-        'monthlyTotals': monthlyTotals.toRemoteMap(),
-        'playlists': playlists.toRemoteList(),
+        'settings': ref.read(settingsSyncProvider).encode(),
+        ...statsFields,
+        'playlists': playlists,
         'updatedAt': FieldValue.serverTimestamp(),
       });
       _store.markSynced();
       debugPrint(
         '[Sync] 已上傳統計、設定與播放清單'
-        '（${stats.days.length} 筆每日記錄、${playlists.length} 份清單）',
+        '（${(statsFields['days'] as Map).length} 天統計、'
+        '${playlists.length} 份清單）',
       );
+      // 主文件之後才推歌詞：失敗時 lastLyricsSyncAt 不動，
+      // 下個班次由 pushPending 單獨重試（主文件重寫無妨，冪等）。
+      if (_lyricsSync.pushPending) await _lyricsSync.push(_userDoc(uid));
     } catch (e, s) {
       // 離線、權限、逾時等：靜默略過，lastSyncAt 不動，下次啟動自然再試。
       debugPrint('[Sync] 上傳失敗，略過：$e');
@@ -212,103 +211,3 @@ class SyncService {
 
 /// 於 App 根 widget watch 一次以啟動同步（建立後自行監聽登入狀態）。
 final syncServiceProvider = Provider<SyncService>((ref) => SyncService(ref));
-
-/// 每日記錄 -> 雲端 `days` map 的編碼。
-extension _DailyStatsRemoteEncode on List<DailyTrackStatEntity> {
-  /// 攤平每日記錄為巢狀 map：`{ <day>: { <trackId>: { title, ... } } }`。
-  Map<String, Map<String, Object>> toRemoteMap() {
-    final result = <String, Map<String, Object>>{};
-    for (final d in this) {
-      (result[d.day] ??= {})[d.trackId] = {
-        'title': d.title,
-        'playCount': d.playCount,
-        'listenMs': d.listenMs,
-      };
-    }
-    return result;
-  }
-}
-
-/// 月粒度 totals -> 雲端 `monthlyTotals` map 的編碼。
-extension _MonthlyTotalsRemoteEncode on List<PeriodStatEntity> {
-  /// 攤平月粒度 totals 為 map：`{ <yyyy-MM>: { playCount, listenMs } }`。
-  Map<String, Map<String, Object>> toRemoteMap() => {
-    for (final t in this)
-      t.period: {'playCount': t.playCount, 'listenMs': t.listenMs},
-  };
-}
-
-/// 播放清單 -> 雲端 `playlists` 陣列的編碼（保留 Isar 內的自然順序）。
-/// trackIds 為檔案內容指紋，換裝置後只要同一份音檔存在即可對回曲目。
-extension _PlaylistsRemoteEncode on List<PlaylistEntity> {
-  List<Map<String, Object>> toRemoteList() => [
-    for (final p in this)
-      {
-        'name': p.name,
-        'isFavorites': p.isFavorites,
-        'createdAt': p.createdAt.millisecondsSinceEpoch,
-        'trackIds': p.trackIds,
-      },
-  ];
-}
-
-/// 雲端 `playlists` 陣列 -> 播放清單實體的解碼，容錯：缺欄位給預設值、
-/// 格式不符的條目跳過。
-extension _RemotePlaylistsDecode on List<dynamic> {
-  List<PlaylistEntity> toPlaylists() => [
-    for (final value in this)
-      if (value is Map)
-        PlaylistEntity()
-          ..name = (value['name'] as String?) ?? ''
-          ..isFavorites = (value['isFavorites'] as bool?) ?? false
-          ..createdAt = DateTime.fromMillisecondsSinceEpoch(
-            (value['createdAt'] as num? ?? 0).toInt(),
-          )
-          ..trackIds = [
-            for (final t in (value['trackIds'] as List? ?? const [])) '$t',
-          ],
-  ];
-}
-
-/// 雲端原始值（`Object?`）-> 統計實體的解碼，容錯：缺欄位給預設值、
-/// 格式不符的條目跳過。
-extension _RemoteStatsDecode on Object? {
-  /// 解析雲端 days 巢狀 map。
-  List<DailyTrackStatEntity> toDailyTrackStats() {
-    final raw = this;
-    if (raw is! Map) return const [];
-    final entities = <DailyTrackStatEntity>[];
-    raw.forEach((day, tracks) {
-      if (tracks is! Map) return;
-      tracks.forEach((trackId, value) {
-        if (value is! Map) return;
-        entities.add(
-          DailyTrackStatEntity()
-            ..day = '$day'
-            ..trackId = '$trackId'
-            ..title = (value['title'] as String?) ?? '$trackId'
-            ..playCount = (value['playCount'] as num? ?? 0).toInt()
-            ..listenMs = (value['listenMs'] as num? ?? 0).toInt(),
-        );
-      });
-    });
-    return entities;
-  }
-
-  /// 解析雲端 monthlyTotals map。
-  List<PeriodStatEntity> toMonthlyTotals() {
-    final raw = this;
-    if (raw is! Map) return const [];
-    final entities = <PeriodStatEntity>[];
-    raw.forEach((month, value) {
-      if (value is! Map) return;
-      entities.add(
-        PeriodStatEntity()
-          ..period = '$month'
-          ..playCount = (value['playCount'] as num? ?? 0).toInt()
-          ..listenMs = (value['listenMs'] as num? ?? 0).toInt(),
-      );
-    });
-    return entities;
-  }
-}

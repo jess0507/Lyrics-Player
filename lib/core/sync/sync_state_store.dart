@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../storage/preferences_service.dart';
@@ -6,11 +8,16 @@ import '../storage/preferences_service.dart';
 ///
 /// 統計與設定的寫入端呼叫 [markModified]；同步端以
 /// 「lastModifiedAt > lastSyncAt」判斷是否有變更需要上傳。
+/// 歌詞走子集合、上傳成本高（逐曲文件），另用一組獨立時戳
+/// （[markLyricsModified] / [markLyricsSynced]）判斷，避免統計
+/// 每次播放的變更都連帶重推全部歌詞。
 class SyncStateStore {
   SyncStateStore(this._prefs);
 
   static const _kLastSyncAt = 'sync.lastSyncAt';
   static const _kLastModifiedAt = 'sync.lastModifiedAt';
+  static const _kLyricsSyncAt = 'sync.lastLyricsSyncAt';
+  static const _kLyricsModifiedAt = 'sync.lyricsModifiedAt';
 
   final PreferencesService _prefs;
 
@@ -25,6 +32,27 @@ class SyncStateStore {
 
   /// 上傳成功（或還原完成）時呼叫，更新 lastSyncAt。
   void markSynced() => _write(_kLastSyncAt, DateTime.now());
+
+  /// 上次成功推送歌詞子集合的時間；null 表示從未推送。
+  DateTime? get lastLyricsSyncAt => _read(_kLyricsSyncAt);
+
+  /// 歌詞最後一次本機變更的時間；null 表示從未變更。
+  DateTime? get lyricsModifiedAt => _read(_kLyricsModifiedAt);
+
+  final _lyricsModifiedEvents = StreamController<void>.broadcast();
+
+  /// [markLyricsModified] 之後發出事件；SyncService 監聽以立即推送
+  /// （時戳先寫再通知，監聽端讀到的待推狀態必為最新）。
+  Stream<void> get lyricsModifiedEvents => _lyricsModifiedEvents.stream;
+
+  /// 歌詞每次寫入 / 刪除時呼叫。
+  void markLyricsModified() {
+    _write(_kLyricsModifiedAt, DateTime.now());
+    _lyricsModifiedEvents.add(null);
+  }
+
+  /// 歌詞子集合推送成功（或還原完成）時呼叫。
+  void markLyricsSynced() => _write(_kLyricsSyncAt, DateTime.now());
 
   DateTime? _read(String key) {
     final ms = _prefs.getInt(key);

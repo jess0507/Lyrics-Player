@@ -240,3 +240,45 @@ users/{uid}                     # 使用者根文件
 - 驗證：`flutter analyze` 無 issue、`flutter test` 8 項全過
   （總計導出 / topTracks 聚合 / tracksOn / dailyTotals / dayKey）。
   UI 圖表（軸線圖）為後續任務，本次僅落資料層。
+
+## 增補：歌詞備份（sync schema v5，2026-07-13）
+
+推翻 v1「歌詞純本機不同步」決策（原因是體積與版權疑慮、換機重匯即可）：
+播放清單同步與 trackId 指紋化完成後，歌詞成為唯一換機會遺失的使用者資料，
+決定一併納入備份。
+
+- **子集合而非主文件欄位**：歌詞原文一首可達數 KB～1 MiB（匯入上限），
+  塞進 `users/{uid}` 主文件會撞單一文件 1 MiB 上限，
+  改存 `users/{uid}/lyrics/{trackId}` 逐曲一份文件
+  （欄位：`title` / `format` / `source` / `content` / `addedAt`）。
+  單曲內文 > 900 KiB 者跳過不上傳（留欄位餘裕，避免整批失敗）。
+- **主文件升 v5**：v5+ 的文件以子集合為歌詞權威來源（空集合也整份覆寫
+  本機）；還原 v4 舊文件時不動本機歌詞，還原後接續的上傳判斷把
+  存量歌詞補推、文件順勢升 v5（`_onSignedIn` 還原成功後不再提早 return）。
+- **獨立變更時戳**：統計每次播放都在變，若共用 `lastModifiedAt` 每個班次
+  都會全量重推歌詞（讀雲端 ID + 逐曲重寫）。`SyncStateStore` 另設
+  `lyricsModifiedAt` / `lastLyricsSyncAt`，只在歌詞真的變更後推送；
+  推送失敗只重試歌詞（主文件重寫冪等無妨）。
+- **寫入端集中在 LyricsRepository**：`save` / `deleteByTrackId`（有真的刪到）
+  呼叫 `markLyricsModified`，匯入 / 自動產生 / 自動對時 / 刪除全都經過它。
+- **變更當下立即推送**：`markLyricsModified` 先寫時戳再發事件
+  （`SyncStateStore.lyricsModifiedEvents`），SyncService 監聽後立即跑
+  `_upload`，不等下次班次。走事件而非 repository 直呼 SyncService，
+  避免 feature → core/sync 的循環 import；未登入時只留待推記號，
+  登入後班次補推。失敗沿用既有語意：靜默略過、記號不動、下個班次重試。
+- **存量遷移**：本功能上線前匯入的歌詞沒有變更記號，`SyncService._init`
+  一次性補記（兩個歌詞時戳皆 null 且本機有歌詞才補），
+  讓首個班次推上雲端。全新安裝（本機無歌詞）不觸發，
+  避免登入還原前誤刪雲端歌詞。
+- **推送語意與主文件一致**：全量快照、last-write-wins——先讀雲端文件 ID，
+  刪除本機沒有的、整批重寫本機所有歌詞（WriteBatch 每 400 個操作分批）。
+- **還原後 UI**：`trackLyricsProvider` 不走 Isar watch，
+  還原完成後 `ref.invalidate` 整個 family 觸發重讀。
+- `firestore.rules` 既有的 `users/{uid}/{document=**}` 規則已涵蓋子集合，
+  不需改動。
+- **檔案組織（同日重構）**：各領域的編解碼與還原拆至 `core/sync/` 下
+  一領域一檔一 provider——`settings_sync.dart` / `statistics_sync.dart` /
+  `playlists_sync.dart` / `lyrics_sync.dart`（推送 / 待推判斷 / 存量補記
+  也在此）；`sync_service.dart` 只留調度（觸發時機、變更判斷、
+  schemaVersion 與主文件組裝）。行為不變。
+- 驗證：`flutter analyze` 無 issue、`flutter test` 29 項全過。
