@@ -12,7 +12,8 @@ class Track {
     this.durationMs,
   });
 
-  /// 穩定識別碼（目前使用檔案 URI）。
+  /// 穩定識別碼:檔案內容指紋(sha1,見 TrackFingerprintService),
+  /// 跨裝置 / 重掃 / 換路徑對同一檔案不變;讀檔失敗時退回 MediaStore id。
   final String id;
 
   /// 可供 just_audio 載入的 URI（如 `file:///storage/.../song.mp3`）。

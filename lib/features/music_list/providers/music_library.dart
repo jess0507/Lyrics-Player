@@ -5,6 +5,7 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:seek_player/features/cover/services/cover_import_service.dart';
 import 'package:seek_player/features/music_list/models/track.dart';
+import 'package:seek_player/features/music_list/services/track_fingerprint_service.dart';
 
 /// 本機音樂庫：直接掃描裝置 MediaStore（不複製檔案、不另存資料庫）。
 ///
@@ -26,6 +27,9 @@ class MusicLibrary extends AsyncNotifier<List<Track>> {
   }
 
   /// 查詢裝置上所有音樂並映射為 [Track]。
+  ///
+  /// track id 以檔案內容指紋為準(跨裝置 / 重掃穩定);讀不到檔案內容時
+  /// 退回 MediaStore id(僅該曲維持裝置綁定)。
   Future<List<Track>> _scan() async {
     final songs = await _audioQuery.querySongs(
       sortType: SongSortType.TITLE,
@@ -33,22 +37,27 @@ class MusicLibrary extends AsyncNotifier<List<Track>> {
       uriType: UriType.EXTERNAL,
       ignoreCase: true,
     );
-    return [
+    final musicSongs = [
       for (final s in songs)
-        if (s.isMusic ?? true)
-          Track(
-            id: s.id.toString(),
-            uri: s.uri ?? Uri.file(s.data).toString(),
-            title: s.title,
-            artist: (s.artist == null || s.artist == '<unknown>')
-                ? null
-                : s.artist,
-            album: (s.album == null || s.album == '<unknown>')
-                ? null
-                : s.album,
-            albumId: s.albumId,
-            durationMs: s.duration,
-          ),
+        if (s.isMusic ?? true) s,
+    ];
+    final fingerprints = await ref
+        .read(trackFingerprintServiceProvider)
+        .fingerprints([for (final s in musicSongs) s.data]);
+
+    return [
+      for (final s in musicSongs)
+        Track(
+          id: fingerprints[s.data] ?? s.id.toString(),
+          uri: s.uri ?? Uri.file(s.data).toString(),
+          title: s.title,
+          artist: (s.artist == null || s.artist == '<unknown>')
+              ? null
+              : s.artist,
+          album: (s.album == null || s.album == '<unknown>') ? null : s.album,
+          albumId: s.albumId,
+          durationMs: s.duration,
+        ),
     ];
   }
 

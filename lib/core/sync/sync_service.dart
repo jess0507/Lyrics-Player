@@ -239,8 +239,7 @@ extension _MonthlyTotalsRemoteEncode on List<PeriodStatEntity> {
 }
 
 /// 播放清單 -> 雲端 `playlists` 陣列的編碼（保留 Isar 內的自然順序）。
-/// trackIds 為 MediaStore id（裝置綁定），跨裝置還原後可能解析不到曲目，
-/// 同統計 / 歌詞的已知限制。
+/// trackIds 為檔案內容指紋，換裝置後只要同一份音檔存在即可對回曲目。
 extension _PlaylistsRemoteEncode on List<PlaylistEntity> {
   List<Map<String, Object>> toRemoteList() => [
     for (final p in this)
