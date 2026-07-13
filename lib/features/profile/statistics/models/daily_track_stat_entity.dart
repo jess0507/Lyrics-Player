@@ -14,8 +14,8 @@ class DailyTrackStatEntity {
   @Index(unique: true, replace: true, composite: [CompositeIndex('trackId')])
   late String day;
 
-  /// MediaStore ID（裝置綁定，換裝置會不同），因此 [title] 一併保存，
-  /// 作為跨機聚合的對齊依據（顯示層以 title 聚合）。
+  /// trackId（檔案內容指紋，見 TrackFingerprintService，跨裝置對同一檔案
+  /// 穩定）；[title] 一併保存，顯示層以 title 聚合。
   late String trackId;
 
   late String title;

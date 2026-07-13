@@ -9,7 +9,7 @@ part 'lyrics_entity.g.dart';
 class LyricsEntity {
   Id id = Isar.autoIncrement;
 
-  /// MediaStore trackId(裝置綁定,同統計的已知限制)。唯一索引 replace:
+  /// trackId(檔案內容指紋,見 TrackFingerprintService)。唯一索引 replace:
   /// 同一曲重複匯入直接覆蓋舊歌詞。
   @Index(unique: true, replace: true)
   late String trackId;
