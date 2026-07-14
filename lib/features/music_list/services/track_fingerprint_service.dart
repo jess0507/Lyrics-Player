@@ -24,6 +24,13 @@ class TrackFingerprintService {
   IsarCollection<TrackFingerprintEntity> get _col =>
       _isar.trackFingerprintEntitys;
 
+  /// 反查指紋對應的快取路徑(同內容存在多份檔案時全部回傳,
+  /// 由呼叫端挑仍存在者)。
+  List<String> cachedPathsForHash(String hash) => [
+    for (final entity in _col.filter().hashEqualTo(hash).findAllSync())
+      entity.path,
+  ];
+
   /// 回傳 `路徑 -> 指紋`;讀不到的檔案不在結果中(由呼叫端 fallback)。
   Future<Map<String, String>> fingerprints(Iterable<String> paths) async {
     final result = <String, String>{};

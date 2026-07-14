@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+    <!-- 背景歌詞生成 / 對時（LyricsBackgroundService,Android 14+ 需宣告類型權限） -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <!-- 網路（Firestore 同步、Shorebird OTA 更新下載 patch） -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -52,6 +54,11 @@
                 <action android:name="android.media.browse.MediaBrowserService"/>
             </intent-filter>
         </service>
+        <!-- 背景歌詞生成 / 對時前景服務（不設 stopWithTask,滑掉 app 仍繼續） -->
+        <service android:name=".LyricsBackgroundService"
+            android:foregroundServiceType="dataSync"
+            android:exported="false"/>
+
         <receiver android:name="com.ryanheise.audioservice.MediaButtonReceiver"
             android:exported="true">
             <intent-filter>

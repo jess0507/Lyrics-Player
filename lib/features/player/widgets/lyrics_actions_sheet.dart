@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../l10n/app_localizations.dart';
+import '../../lyrics/background/lyrics_background_running.dart';
 import '../../lyrics/providers/track_lyrics_provider.dart';
 import 'lyrics_menu_action.dart';
 
@@ -57,6 +58,8 @@ class _LyricsActionsSheet extends ConsumerWidget {
       canAutoSync: canAutoSync,
       hasLyrics: hasLyrics,
     );
+    // 背景任務一次只跑一件:執行中時停用「自動產生 / 自動對時」(變淺不可點)。
+    final backgroundRunning = ref.watch(lyricsBackgroundRunningProvider);
 
     return SafeArea(
       child: Column(
@@ -64,6 +67,7 @@ class _LyricsActionsSheet extends ConsumerWidget {
         children: [
           for (final action in actions)
             ListTile(
+              enabled: !(backgroundRunning && action.usesBackgroundTask),
               leading: Icon(action.icon),
               title: Text(action.label(l10n)),
               onTap: () {

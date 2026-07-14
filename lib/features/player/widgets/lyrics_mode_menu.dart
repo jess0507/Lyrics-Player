@@ -5,6 +5,7 @@ import 'package:just_audio/just_audio.dart';
 import '../../../core/audio/audio_player_service.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/providers/settings_controller.dart';
+import '../../lyrics/background/lyrics_background_running.dart';
 import '../../lyrics/providers/track_lyrics_provider.dart';
 import 'lyrics_menu_action.dart';
 import 'speed_button.dart';
@@ -45,6 +46,8 @@ class LyricsModeMenu extends ConsumerWidget {
       canAutoSync: canAutoSync,
       hasLyrics: hasLyrics,
     );
+    // 背景任務一次只跑一件:執行中時停用「自動產生 / 自動對時」(變淺不可點)。
+    final backgroundRunning = ref.watch(lyricsBackgroundRunningProvider);
 
     return PopupMenuButton<Object>(
       icon: const Icon(Icons.more_vert),
@@ -100,7 +103,12 @@ class LyricsModeMenu extends ConsumerWidget {
           for (final action in lyricsActions)
             PopupMenuItem(
               value: action,
-              child: _MenuRow(icon: action.icon, label: action.label(l10n)),
+              enabled: !(backgroundRunning && action.usesBackgroundTask),
+              child: _MenuRow(
+                icon: action.icon,
+                label: action.label(l10n),
+                enabled: !(backgroundRunning && action.usesBackgroundTask),
+              ),
             ),
         ],
       ],
@@ -154,23 +162,30 @@ class LyricsModeMenu extends ConsumerWidget {
 }
 
 /// 選單列:圖示 + 文字,選取時上色,可選右側狀態文字(如速度倍率)。
+/// [enabled] 為 false 時整列以停用色(淺色)顯示。
 class _MenuRow extends StatelessWidget {
   const _MenuRow({
     required this.icon,
     required this.label,
     this.selected = false,
+    this.enabled = true,
     this.trailing,
   });
 
   final IconData icon;
   final String label;
   final bool selected;
+  final bool enabled;
   final String? trailing;
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final color = selected ? scheme.primary : null;
+    final color = !enabled
+        ? scheme.onSurface.withValues(alpha: 0.38)
+        : selected
+        ? scheme.primary
+        : null;
     return Row(
       children: [
         Icon(icon, size: 20, color: color),

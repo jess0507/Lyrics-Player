@@ -45,6 +45,13 @@ enum LyricsMenuAction {
     delete => Icons.delete_outline,
   };
 
+  /// 是否為背景任務(前景服務,一次只跑一件):
+  /// 背景執行中時,選單須停用這些項目避免重複觸發。
+  bool get usesBackgroundTask => switch (this) {
+    autoGenerate || autoSyncAeneas || autoSyncWhisperX => true,
+    _ => false,
+  };
+
   String label(AppLocalizations l10n) => switch (this) {
     autoGenerate => l10n.lyrics_auto_generate,
     import => l10n.lyrics_import,

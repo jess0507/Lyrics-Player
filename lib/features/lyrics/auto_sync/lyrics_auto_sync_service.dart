@@ -5,12 +5,12 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 
 import '../../../core/crash_reporter.dart';
 import '../models/lyrics_entity.dart';
 import '../services/lyrics_parser.dart';
 import '../services/lyrics_repository.dart';
+import '../services/track_audio_resolver.dart';
 import '../providers/track_lyrics_provider.dart';
 import 'audio_compressor.dart';
 
@@ -57,6 +57,9 @@ enum LyricsAutoSyncError {
   /// 連線 / 服務暫時不可用。
   network,
 
+  /// 已有其他背景歌詞任務執行中(背景一次只跑一件)。
+  busy,
+
   /// 其他未預期錯誤。
   unknown,
 }
@@ -76,7 +79,6 @@ class LyricsAutoSyncService {
   LyricsAutoSyncService(this._ref);
 
   final Ref _ref;
-  final OnAudioQuery _audioQuery = OnAudioQuery();
 
   /// 為 [trackId] 執行對時。[language] 為語言提示(BCP-47,後端正規化)。
   /// [engine] 指定後端對齊引擎(aeneas / WhisperX)。
@@ -107,7 +109,9 @@ class LyricsAutoSyncService {
       throw const LyricsAutoSyncException(LyricsAutoSyncError.noLyrics);
     }
 
-    final audioPath = await _resolveAudioPath(trackId);
+    final audioPath = await _ref
+        .read(trackAudioResolverProvider)
+        .resolve(trackId);
     if (audioPath == null) {
       throw const LyricsAutoSyncException(LyricsAutoSyncError.noAudio);
     }
@@ -186,18 +190,6 @@ class LyricsAutoSyncService {
       ..addedAt = DateTime.now();
     await repo.save(synced);
     _ref.invalidate(trackLyricsProvider(trackId));
-  }
-
-  /// 由 trackId 反查本機音訊真實路徑(`SongModel.data`);查無 / 無法存取回 null。
-  Future<String?> _resolveAudioPath(String trackId) async {
-    final songs = await _audioQuery.querySongs(uriType: UriType.EXTERNAL);
-    for (final song in songs) {
-      if (song.id.toString() == trackId) {
-        final data = song.data;
-        return data.isNotEmpty && File(data).existsSync() ? data : null;
-      }
-    }
-    return null;
   }
 
   LyricsAutoSyncError _mapFunctionsError(FirebaseFunctionsException e) =>

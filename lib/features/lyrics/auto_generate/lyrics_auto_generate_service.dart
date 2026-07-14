@@ -6,13 +6,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 
 import '../../../core/crash_reporter.dart';
 import '../auto_sync/audio_compressor.dart';
 import '../models/lyrics_entity.dart';
 import '../providers/track_lyrics_provider.dart';
 import '../services/lyrics_repository.dart';
+import '../services/track_audio_resolver.dart';
 
 /// 必須與 Cloud Functions 部署的 region(`functions/main.py` 的 `_REGION`)一致。
 const _functionsRegion = 'asia-east1';
@@ -43,6 +43,9 @@ enum LyricsAutoGenerateError {
   /// 連線 / 服務暫時不可用。
   network,
 
+  /// 已有其他背景歌詞任務執行中(背景一次只跑一件)。
+  busy,
+
   /// 其他未預期錯誤。
   unknown,
 }
@@ -65,7 +68,6 @@ class LyricsAutoGenerateService {
   LyricsAutoGenerateService(this._ref);
 
   final Ref _ref;
-  final OnAudioQuery _audioQuery = OnAudioQuery();
 
   /// 為 [trackId] 執行自動產生。各階段以 [onStep] 回報進度。
   /// 失敗拋 [LyricsAutoGenerateException]。
@@ -81,7 +83,9 @@ class LyricsAutoGenerateService {
       );
     }
 
-    final audioPath = await _resolveAudioPath(trackId);
+    final audioPath = await _ref
+        .read(trackAudioResolverProvider)
+        .resolve(trackId);
     if (audioPath == null) {
       throw const LyricsAutoGenerateException(LyricsAutoGenerateError.noAudio);
     }
@@ -162,18 +166,6 @@ class LyricsAutoGenerateService {
       ..addedAt = DateTime.now();
     await _ref.read(lyricsRepositoryProvider).save(generated);
     _ref.invalidate(trackLyricsProvider(trackId));
-  }
-
-  /// 由 trackId 反查本機音訊真實路徑(`SongModel.data`);查無 / 無法存取回 null。
-  Future<String?> _resolveAudioPath(String trackId) async {
-    final songs = await _audioQuery.querySongs(uriType: UriType.EXTERNAL);
-    for (final song in songs) {
-      if (song.id.toString() == trackId) {
-        final data = song.data;
-        return data.isNotEmpty && File(data).existsSync() ? data : null;
-      }
-    }
-    return null;
   }
 
   LyricsAutoGenerateError _mapFunctionsError(FirebaseFunctionsException e) =>
