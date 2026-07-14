@@ -18,6 +18,8 @@ jobs:
   build:
     name: Shorebird release (AAB)
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # 建立 GitHub Release 並上傳 APK
     outputs:
       name: ${{ steps.version.outputs.name }}
       build: ${{ steps.version.outputs.build }}
@@ -134,6 +136,17 @@ jobs:
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
           retention-days: 30
+
+      # 同步發佈 APK 到 GitHub Release,提供官網固定下載連結：
+      #   https://github.com/jess0507/Lyrics-Player/releases/latest/download/app-release.apk
+      # re-run 時 release 可能已存在,故先檢查再建立;--clobber 允許覆蓋同名資產。
+      - name: Publish APK to GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: v${{ steps.version.outputs.name }}
+        run: |
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "$TAG" --generate-notes
+          gh release upload "$TAG" build/app/outputs/flutter-apk/app-release.apk --clobber
 
       - name: Write summary
         run: |
