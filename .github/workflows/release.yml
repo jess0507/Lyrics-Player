@@ -137,8 +137,9 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-      # 同步發佈 APK 到 GitHub Release,提供官網固定下載連結：
-      #   https://github.com/jess0507/Lyrics-Player/releases/latest/download/app-release.apk
+      # 同步發佈 APK 到 GitHub Release,提供固定下載連結(備援;主要下載連結
+      # 為下方 Cloud Storage 的公開連結):
+      #   https://github.com/jess0507/lyrics-player-app/releases/latest/download/app-release.apk
       # re-run 時 release 可能已存在,故先檢查再建立;--clobber 允許覆蓋同名資產。
       - name: Publish APK to GitHub Release
         env:
@@ -147,6 +148,22 @@ jobs:
         run: |
           gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "$TAG" --generate-notes
           gh release upload "$TAG" build/app/outputs/flutter-apk/app-release.apk --clobber
+
+      # 同步發佈 APK 到 GCS 公開 bucket(asia-east1,台灣下載快;GitHub
+      # Release 直連在部分地區下載很慢,此為官網主要下載連結):
+      #   https://storage.googleapis.com/seek-player-f724e-apk/app-release.apk
+      # max-age=300:同名覆蓋後最多 5 分鐘內可能拿到舊版,可接受。
+      - name: Publish APK to Cloud Storage
+        env:
+          GCS_SA_JSON: ${{ secrets.APK_GCS_SERVICE_ACCOUNT }}
+        run: |
+          printf '%s' "$GCS_SA_JSON" > "$RUNNER_TEMP/gcs-sa.json"
+          gcloud auth activate-service-account --key-file="$RUNNER_TEMP/gcs-sa.json"
+          gcloud storage cp build/app/outputs/flutter-apk/app-release.apk \
+            gs://seek-player-f724e-apk/app-release.apk \
+            --cache-control="public, max-age=300" \
+            --content-type="application/vnd.android.package-archive"
+          rm -f "$RUNNER_TEMP/gcs-sa.json"
 
       - name: Write summary
         run: |
@@ -160,6 +177,7 @@ jobs:
             echo "| track | \`internal\` |"
             echo "| AAB download URL | ${{ steps.upload.outputs.artifact-url }} |"
             echo "| APK download URL | ${{ steps.upload-apk.outputs.artifact-url }} |"
+            echo "| APK GCS URL | https://storage.googleapis.com/seek-player-f724e-apk/app-release.apk |"
           } >> "$GITHUB_STEP_SUMMARY"
 
   deploy:

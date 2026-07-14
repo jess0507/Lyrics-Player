@@ -63,6 +63,22 @@ git push origin master
 | `KEY_PASSWORD` | 金鑰密碼 |
 | `PLAY_SERVICE_ACCOUNT_JSON` | Google Play Console 服務帳號 JSON（需有「發布應用程式」權限） |
 | `SHOREBIRD_TOKEN` | Shorebird CI token（console.shorebird.dev 建立 API key） |
+| `APK_GCS_SERVICE_ACCOUNT` | GCP 服務帳號 `github-release-upload@seek-player-f724e.iam.gserviceaccount.com` 的 JSON key（僅有 `seek-player-f724e-apk` bucket 的 Storage Object Admin），供 CI 上傳 APK 到 GCS |
+
+## APK 下載連結
+
+release.yml 會把 APK 發佈到兩處：
+
+- **Cloud Storage（主要，bucket 在 asia-east1，台灣下載快）**：
+  `https://storage.googleapis.com/seek-player-f724e-apk/app-release.apk`
+- **GitHub Release（備援）**：
+  `https://github.com/jess0507/lyrics-player-app/releases/latest/download/app-release.apk`
+
+bucket `seek-player-f724e-apk` 為 uniform access + `allUsers:objectViewer`
+公開唯讀,與 Firebase 預設 bucket(storage.rules 管的那個)無關。
+物件 Cache-Control 為 `max-age=300`,覆蓋後最多 5 分鐘內可能拿到舊版。
+曾嘗試 Firebase Hosting 方案:可行,但 252MB 的 APK 每次 deploy 都會留一版
+hosting release、CLI 上傳大檔也較不穩,故改走 GCS。
 
 ### 產生 upload keystore
 
