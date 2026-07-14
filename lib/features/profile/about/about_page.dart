@@ -9,8 +9,9 @@ import 'providers/app_version_provider.dart';
 class AboutPage extends ConsumerWidget {
   const AboutPage({super.key});
 
+  // 官網(seek-player-privacy-policy repo 部署至 Firebase Hosting)的政策頁。
   static final _privacyPolicyUrl = Uri.parse(
-    'https://jess0507.github.io/seek-player-privacy-policy/',
+    'https://seek-player-f724e.web.app/privacy-policy',
   );
 
   Future<void> _openPrivacyPolicy() async {
