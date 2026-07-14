@@ -404,6 +404,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se pudo sincronizar la letra; se conservó el texto original';
 
   @override
+  String get lyrics_background_busy =>
+      'Ya se está procesando otra canción. Inténtalo de nuevo más tarde.';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Inicia sesión para usar la sincronización automática';
 

@@ -125,6 +125,7 @@
   "lyrics_auto_sync_aligning": "Alignement des paroles…",
   "lyrics_auto_sync_success": "Paroles synchronisées (auto, peut être imprécis)",
   "lyrics_auto_sync_failed": "Impossible de synchroniser les paroles ; texte d’origine conservé",
+  "lyrics_background_busy": "Une autre chanson est déjà en cours de traitement. Veuillez réessayer plus tard.",
   "lyrics_auto_sync_need_login": "Connectez-vous pour utiliser la synchronisation automatique",
   "lyrics_auto_sync_rate_limited": "Limite quotidienne de synchronisation atteinte, réessayez demain",
   "lyrics_auto_sync_no_audio": "Fichier audio introuvable",

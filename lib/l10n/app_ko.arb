@@ -125,6 +125,7 @@
   "lyrics_auto_sync_aligning": "가사 정렬 중…",
   "lyrics_auto_sync_success": "가사 동기화됨 (자동, 오차가 있을 수 있음)",
   "lyrics_auto_sync_failed": "가사를 동기화할 수 없어 원본 가사를 유지했습니다",
+  "lyrics_background_busy": "다른 곡을 처리 중입니다. 잠시 후 다시 시도해 주세요",
   "lyrics_auto_sync_need_login": "자동 동기화를 사용하려면 로그인하세요",
   "lyrics_auto_sync_rate_limited": "오늘 동기화 한도에 도달했습니다. 내일 다시 시도하세요",
   "lyrics_auto_sync_no_audio": "오디오 파일을 찾을 수 없습니다",

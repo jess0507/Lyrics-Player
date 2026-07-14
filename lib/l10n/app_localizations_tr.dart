@@ -399,6 +399,10 @@ class AppLocalizationsTr extends AppLocalizations {
       'Sözler eşitlenemedi; özgün metin korundu';
 
   @override
+  String get lyrics_background_busy =>
+      'Başka bir şarkı zaten işleniyor. Lütfen daha sonra tekrar deneyin.';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Otomatik eşitlemeyi kullanmak için giriş yapın';
 

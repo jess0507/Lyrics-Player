@@ -125,6 +125,7 @@
   "lyrics_auto_sync_aligning": "Alineando la letra…",
   "lyrics_auto_sync_success": "Letra sincronizada (automática, puede tener errores)",
   "lyrics_auto_sync_failed": "No se pudo sincronizar la letra; se conservó el texto original",
+  "lyrics_background_busy": "Ya se está procesando otra canción. Inténtalo de nuevo más tarde.",
   "lyrics_auto_sync_need_login": "Inicia sesión para usar la sincronización automática",
   "lyrics_auto_sync_rate_limited": "Has alcanzado el límite diario de sincronización, inténtalo mañana",
   "lyrics_auto_sync_no_audio": "No se encontró el archivo de audio",

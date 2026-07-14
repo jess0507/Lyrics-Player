@@ -397,6 +397,10 @@ class AppLocalizationsAr extends AppLocalizations {
       'تعذّرت مزامنة الكلمات؛ تم الإبقاء على النص الأصلي';
 
   @override
+  String get lyrics_background_busy =>
+      'تجري معالجة أغنية أخرى بالفعل. يُرجى المحاولة لاحقًا.';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'سجّل الدخول لاستخدام المزامنة التلقائية';
 

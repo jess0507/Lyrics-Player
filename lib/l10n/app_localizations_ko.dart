@@ -388,6 +388,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get lyrics_auto_sync_failed => '가사를 동기화할 수 없어 원본 가사를 유지했습니다';
 
   @override
+  String get lyrics_background_busy => '다른 곡을 처리 중입니다. 잠시 후 다시 시도해 주세요';
+
+  @override
   String get lyrics_auto_sync_need_login => '자동 동기화를 사용하려면 로그인하세요';
 
   @override

@@ -876,6 +876,12 @@ abstract class AppLocalizations {
   /// **'Couldn\'t sync lyrics; kept original text'**
   String get lyrics_auto_sync_failed;
 
+  /// No description provided for @lyrics_background_busy.
+  ///
+  /// In en, this message translates to:
+  /// **'Another song is already being processed. Please try again later.'**
+  String get lyrics_background_busy;
+
   /// No description provided for @lyrics_auto_sync_need_login.
   ///
   /// In en, this message translates to:

@@ -397,6 +397,10 @@ class AppLocalizationsRu extends AppLocalizations {
       'Не удалось синхронизировать текст; оставлен исходный';
 
   @override
+  String get lyrics_background_busy =>
+      'Уже обрабатывается другая песня. Повторите попытку позже.';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Войдите, чтобы использовать автосинхронизацию';
 

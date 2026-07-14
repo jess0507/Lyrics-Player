@@ -400,6 +400,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Impossibile sincronizzare il testo; testo originale mantenuto';
 
   @override
+  String get lyrics_background_busy =>
+      'Un altro brano è già in elaborazione. Riprova più tardi.';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Accedi per usare la sincronizzazione automatica';
 

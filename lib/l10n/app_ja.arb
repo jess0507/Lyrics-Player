@@ -125,6 +125,7 @@
   "lyrics_auto_sync_aligning": "歌詞を同期中…",
   "lyrics_auto_sync_success": "歌詞を同期しました(自動、誤差の可能性あり)",
   "lyrics_auto_sync_failed": "歌詞を同期できませんでした。元の歌詞を保持します",
+  "lyrics_background_busy": "別の曲を処理中です。しばらくしてからもう一度お試しください",
   "lyrics_auto_sync_need_login": "自動同期を使うにはログインしてください",
   "lyrics_auto_sync_rate_limited": "本日の同期回数の上限に達しました。明日お試しください",
   "lyrics_auto_sync_no_audio": "音声ファイルが見つかりません",

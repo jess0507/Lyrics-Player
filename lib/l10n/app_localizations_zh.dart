@@ -384,6 +384,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lyrics_auto_sync_failed => '同步失敗,已保留原歌詞';
 
   @override
+  String get lyrics_background_busy => '已有其他歌曲正在處理中,請稍後再試';
+
+  @override
   String get lyrics_auto_sync_need_login => '請先登入才能使用歌詞同步';
 
   @override
@@ -892,6 +895,9 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get lyrics_auto_sync_failed => '同步失败,已保留原歌词';
 
   @override
+  String get lyrics_background_busy => '已有其他歌曲正在处理中,请稍后再试';
+
+  @override
   String get lyrics_auto_sync_need_login => '请先登录才能使用歌词同步';
 
   @override
@@ -1398,6 +1404,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get lyrics_auto_sync_failed => '同步失敗,已保留原歌詞';
+
+  @override
+  String get lyrics_background_busy => '已有其他歌曲正在處理中,請稍後再試';
 
   @override
   String get lyrics_auto_sync_need_login => '請先登入才能使用歌詞同步';

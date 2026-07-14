@@ -399,6 +399,10 @@ class AppLocalizationsId extends AppLocalizations {
       'Tidak dapat menyinkronkan lirik; teks asli dipertahankan';
 
   @override
+  String get lyrics_background_busy =>
+      'Lagu lain sedang diproses. Coba lagi nanti.';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Masuk untuk menggunakan sinkronisasi otomatis';
 

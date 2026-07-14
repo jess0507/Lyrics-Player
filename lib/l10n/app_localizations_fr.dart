@@ -403,6 +403,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible de synchroniser les paroles ; texte d’origine conservé';
 
   @override
+  String get lyrics_background_busy =>
+      'Une autre chanson est déjà en cours de traitement. Veuillez réessayer plus tard.';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Connectez-vous pour utiliser la synchronisation automatique';
 

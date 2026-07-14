@@ -399,6 +399,10 @@ class AppLocalizationsHi extends AppLocalizations {
       'बोल सिंक नहीं हो सके; मूल टेक्स्ट रखा गया';
 
   @override
+  String get lyrics_background_busy =>
+      'दूसरा गाना पहले से प्रोसेस हो रहा है। कृपया बाद में फिर से कोशिश करें।';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'स्वतः सिंक उपयोग करने के लिए साइन इन करें';
 

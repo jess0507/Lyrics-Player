@@ -400,6 +400,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get lyrics_auto_sync_failed => 'Không thể đồng bộ lời; đã giữ lời gốc';
 
   @override
+  String get lyrics_background_busy =>
+      'Một bài hát khác đang được xử lý. Vui lòng thử lại sau.';
+
+  @override
   String get lyrics_auto_sync_need_login => 'Đăng nhập để dùng tự động đồng bộ';
 
   @override

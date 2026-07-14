@@ -386,6 +386,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get lyrics_auto_sync_failed => '歌詞を同期できませんでした。元の歌詞を保持します';
 
   @override
+  String get lyrics_background_busy => '別の曲を処理中です。しばらくしてからもう一度お試しください';
+
+  @override
   String get lyrics_auto_sync_need_login => '自動同期を使うにはログインしてください';
 
   @override

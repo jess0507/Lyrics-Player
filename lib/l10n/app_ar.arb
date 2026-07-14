@@ -125,6 +125,7 @@
   "lyrics_auto_sync_aligning": "جارٍ محاذاة الكلمات…",
   "lyrics_auto_sync_success": "تمت مزامنة الكلمات (تلقائيًا، قد تكون غير دقيقة)",
   "lyrics_auto_sync_failed": "تعذّرت مزامنة الكلمات؛ تم الإبقاء على النص الأصلي",
+  "lyrics_background_busy": "تجري معالجة أغنية أخرى بالفعل. يُرجى المحاولة لاحقًا.",
   "lyrics_auto_sync_need_login": "سجّل الدخول لاستخدام المزامنة التلقائية",
   "lyrics_auto_sync_rate_limited": "تم بلوغ الحد اليومي للمزامنة، حاول غدًا",
   "lyrics_auto_sync_no_audio": "لم يتم العثور على ملف الصوت",

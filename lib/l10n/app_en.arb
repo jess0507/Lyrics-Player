@@ -125,6 +125,7 @@
   "lyrics_auto_sync_aligning": "Aligning lyrics…",
   "lyrics_auto_sync_success": "Lyrics synced (auto, may be imperfect)",
   "lyrics_auto_sync_failed": "Couldn't sync lyrics; kept original text",
+  "lyrics_background_busy": "Another song is already being processed. Please try again later.",
   "lyrics_auto_sync_need_login": "Sign in to use auto-sync",
   "lyrics_auto_sync_rate_limited": "Daily auto-sync limit reached, try tomorrow",
   "lyrics_auto_sync_no_audio": "Audio file not found",

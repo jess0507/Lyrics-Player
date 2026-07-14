@@ -398,6 +398,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Couldn\'t sync lyrics; kept original text';
 
   @override
+  String get lyrics_background_busy =>
+      'Another song is already being processed. Please try again later.';
+
+  @override
   String get lyrics_auto_sync_need_login => 'Sign in to use auto-sync';
 
   @override
