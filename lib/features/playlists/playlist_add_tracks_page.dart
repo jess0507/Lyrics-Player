@@ -26,7 +26,7 @@ Future<void> showPlaylistAddTracksSheet(BuildContext context, int playlistId) {
 }
 
 /// 列出整個音樂庫供挑選加入 [playlistId]:
-/// 點擊 trailing 的「+」把該曲目加入清單,已在清單內則顯示打勾。
+/// 點擊「+」把該曲目加入清單並顯示打勾;再點一次則移除,變回「+」。
 class PlaylistAddTracksPage extends ConsumerWidget {
   const PlaylistAddTracksPage({super.key, required this.playlistId});
 
@@ -89,10 +89,14 @@ class PlaylistAddTracksPage extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final track = tracks[index];
                     final added = addedIds.contains(track.id);
-                    void add() {
-                      ref
-                          .read(playlistRepositoryProvider)
-                          .addTrack(playlistId, track.id);
+                    // 未加入 → 加入清單;已加入 → 再點一次移除,變回「+」。
+                    void toggle() {
+                      final repo = ref.read(playlistRepositoryProvider);
+                      if (added) {
+                        repo.removeTrack(playlistId, track.id);
+                      } else {
+                        repo.addTrack(playlistId, track.id);
+                      }
                     }
 
                     return ListTile(
@@ -111,16 +115,13 @@ class PlaylistAddTracksPage extends ConsumerWidget {
                       subtitle: track.artist == null
                           ? null
                           : Text(track.artist!, maxLines: 1),
-                      trailing: added
-                          ? IconButton(
-                              icon: Icon(Icons.check, color: scheme.primary),
-                              onPressed: null,
-                            )
-                          : IconButton(
-                              icon: const Icon(Icons.add),
-                              onPressed: add,
-                            ),
-                      onTap: added ? null : add,
+                      trailing: IconButton(
+                        icon: added
+                            ? Icon(Icons.check, color: scheme.primary)
+                            : const Icon(Icons.add),
+                        onPressed: toggle,
+                      ),
+                      onTap: toggle,
                     );
                   },
                 ),
