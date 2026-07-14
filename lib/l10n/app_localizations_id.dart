@@ -403,6 +403,14 @@ class AppLocalizationsId extends AppLocalizations {
       'Lagu lain sedang diproses. Coba lagi nanti.';
 
   @override
+  String get lyrics_auto_generate_running_background =>
+      'Membuat lirik di latar belakang…';
+
+  @override
+  String get lyrics_auto_sync_running_background =>
+      'Menyelaraskan lirik di latar belakang…';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Masuk untuk menggunakan sinkronisasi otomatis';
 

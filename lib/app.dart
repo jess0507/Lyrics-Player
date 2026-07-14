@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/sync/sync_service.dart';
 import 'core/update/app_update_listener.dart';
+import 'features/lyrics/background/lyrics_background_runner.dart';
 import 'l10n/app_localizations.dart';
 import 'router/app_router.dart';
 import 'shared/providers/settings_controller.dart';
@@ -15,6 +16,9 @@ class SeekPlayerApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // 啟動雲端同步（App 啟動 / 登入時依條件上傳或還原）。
     ref.watch(syncServiceProvider);
+    // 註冊背景歌詞任務的事件 port:即使任務是上個 app instance 發起
+    // (滑掉後由前景服務續跑),完成事件也能刷新歌詞與同步 flag。
+    ref.watch(lyricsBackgroundRunnerProvider);
     final settings = ref.watch(settingsControllerProvider);
     final router = ref.watch(routerProvider);
 

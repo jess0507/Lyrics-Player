@@ -403,6 +403,14 @@ class AppLocalizationsHi extends AppLocalizations {
       'दूसरा गाना पहले से प्रोसेस हो रहा है। कृपया बाद में फिर से कोशिश करें।';
 
   @override
+  String get lyrics_auto_generate_running_background =>
+      'बैकग्राउंड में लिरिक्स बनाए जा रहे हैं…';
+
+  @override
+  String get lyrics_auto_sync_running_background =>
+      'बैकग्राउंड में लिरिक्स संरेखित किए जा रहे हैं…';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'स्वतः सिंक उपयोग करने के लिए साइन इन करें';
 

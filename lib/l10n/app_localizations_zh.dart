@@ -387,6 +387,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lyrics_background_busy => '已有其他歌曲正在處理中,請稍後再試';
 
   @override
+  String get lyrics_auto_generate_running_background => '已在背景產生歌詞';
+
+  @override
+  String get lyrics_auto_sync_running_background => '已在背景對齊歌詞';
+
+  @override
   String get lyrics_auto_sync_need_login => '請先登入才能使用歌詞同步';
 
   @override
@@ -898,6 +904,12 @@ class AppLocalizationsZhCn extends AppLocalizationsZh {
   String get lyrics_background_busy => '已有其他歌曲正在处理中,请稍后再试';
 
   @override
+  String get lyrics_auto_generate_running_background => '已在后台生成歌词';
+
+  @override
+  String get lyrics_auto_sync_running_background => '已在后台对齐歌词';
+
+  @override
   String get lyrics_auto_sync_need_login => '请先登录才能使用歌词同步';
 
   @override
@@ -1407,6 +1419,12 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get lyrics_background_busy => '已有其他歌曲正在處理中,請稍後再試';
+
+  @override
+  String get lyrics_auto_generate_running_background => '已在背景產生歌詞';
+
+  @override
+  String get lyrics_auto_sync_running_background => '已在背景對齊歌詞';
 
   @override
   String get lyrics_auto_sync_need_login => '請先登入才能使用歌詞同步';

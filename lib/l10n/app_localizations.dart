@@ -882,6 +882,18 @@ abstract class AppLocalizations {
   /// **'Another song is already being processed. Please try again later.'**
   String get lyrics_background_busy;
 
+  /// No description provided for @lyrics_auto_generate_running_background.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating lyrics in the background…'**
+  String get lyrics_auto_generate_running_background;
+
+  /// No description provided for @lyrics_auto_sync_running_background.
+  ///
+  /// In en, this message translates to:
+  /// **'Aligning lyrics in the background…'**
+  String get lyrics_auto_sync_running_background;
+
   /// No description provided for @lyrics_auto_sync_need_login.
   ///
   /// In en, this message translates to:

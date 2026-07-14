@@ -401,6 +401,14 @@ class AppLocalizationsRu extends AppLocalizations {
       'Уже обрабатывается другая песня. Повторите попытку позже.';
 
   @override
+  String get lyrics_auto_generate_running_background =>
+      'Текст создаётся в фоновом режиме…';
+
+  @override
+  String get lyrics_auto_sync_running_background =>
+      'Текст синхронизируется в фоновом режиме…';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Войдите, чтобы использовать автосинхронизацию';
 

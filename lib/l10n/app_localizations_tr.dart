@@ -403,6 +403,14 @@ class AppLocalizationsTr extends AppLocalizations {
       'Başka bir şarkı zaten işleniyor. Lütfen daha sonra tekrar deneyin.';
 
   @override
+  String get lyrics_auto_generate_running_background =>
+      'Şarkı sözleri arka planda oluşturuluyor…';
+
+  @override
+  String get lyrics_auto_sync_running_background =>
+      'Şarkı sözleri arka planda hizalanıyor…';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Otomatik eşitlemeyi kullanmak için giriş yapın';
 

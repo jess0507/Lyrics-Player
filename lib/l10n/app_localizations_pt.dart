@@ -402,6 +402,14 @@ class AppLocalizationsPt extends AppLocalizations {
       'Outra música já está sendo processada. Tente novamente mais tarde.';
 
   @override
+  String get lyrics_auto_generate_running_background =>
+      'Gerando a letra em segundo plano…';
+
+  @override
+  String get lyrics_auto_sync_running_background =>
+      'Sincronizando a letra em segundo plano…';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Faça login para usar a sincronização automática';
 

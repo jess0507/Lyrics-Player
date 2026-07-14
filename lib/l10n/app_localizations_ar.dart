@@ -401,6 +401,14 @@ class AppLocalizationsAr extends AppLocalizations {
       'تجري معالجة أغنية أخرى بالفعل. يُرجى المحاولة لاحقًا.';
 
   @override
+  String get lyrics_auto_generate_running_background =>
+      'يتم إنشاء الكلمات في الخلفية…';
+
+  @override
+  String get lyrics_auto_sync_running_background =>
+      'تتم مزامنة الكلمات في الخلفية…';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'سجّل الدخول لاستخدام المزامنة التلقائية';
 

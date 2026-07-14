@@ -404,6 +404,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Un altro brano è già in elaborazione. Riprova più tardi.';
 
   @override
+  String get lyrics_auto_generate_running_background =>
+      'Generazione del testo in background…';
+
+  @override
+  String get lyrics_auto_sync_running_background =>
+      'Sincronizzazione del testo in background…';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Accedi per usare la sincronizzazione automatica';
 

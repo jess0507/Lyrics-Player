@@ -405,6 +405,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Ein anderer Titel wird bereits verarbeitet. Bitte später erneut versuchen.';
 
   @override
+  String get lyrics_auto_generate_running_background =>
+      'Songtext wird im Hintergrund erstellt…';
+
+  @override
+  String get lyrics_auto_sync_running_background =>
+      'Songtext wird im Hintergrund synchronisiert…';
+
+  @override
   String get lyrics_auto_sync_need_login =>
       'Melde dich an, um die automatische Synchronisierung zu nutzen';
 

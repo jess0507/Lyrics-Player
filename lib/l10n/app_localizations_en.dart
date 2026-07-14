@@ -402,6 +402,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Another song is already being processed. Please try again later.';
 
   @override
+  String get lyrics_auto_generate_running_background =>
+      'Generating lyrics in the background…';
+
+  @override
+  String get lyrics_auto_sync_running_background =>
+      'Aligning lyrics in the background…';
+
+  @override
   String get lyrics_auto_sync_need_login => 'Sign in to use auto-sync';
 
   @override

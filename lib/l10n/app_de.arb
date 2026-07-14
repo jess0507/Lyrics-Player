@@ -126,6 +126,8 @@
   "lyrics_auto_sync_success": "Songtext synchronisiert (automatisch, evtl. ungenau)",
   "lyrics_auto_sync_failed": "Songtext konnte nicht synchronisiert werden; Originaltext beibehalten",
   "lyrics_background_busy": "Ein anderer Titel wird bereits verarbeitet. Bitte später erneut versuchen.",
+  "lyrics_auto_generate_running_background": "Songtext wird im Hintergrund erstellt…",
+  "lyrics_auto_sync_running_background": "Songtext wird im Hintergrund synchronisiert…",
   "lyrics_auto_sync_need_login": "Melde dich an, um die automatische Synchronisierung zu nutzen",
   "lyrics_auto_sync_rate_limited": "Tageslimit für automatische Synchronisierung erreicht, versuche es morgen",
   "lyrics_auto_sync_no_audio": "Audiodatei nicht gefunden",

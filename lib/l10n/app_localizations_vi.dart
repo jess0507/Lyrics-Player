@@ -404,6 +404,14 @@ class AppLocalizationsVi extends AppLocalizations {
       'Một bài hát khác đang được xử lý. Vui lòng thử lại sau.';
 
   @override
+  String get lyrics_auto_generate_running_background =>
+      'Đang tạo lời bài hát trong nền…';
+
+  @override
+  String get lyrics_auto_sync_running_background =>
+      'Đang đồng bộ lời bài hát trong nền…';
+
+  @override
   String get lyrics_auto_sync_need_login => 'Đăng nhập để dùng tự động đồng bộ';
 
   @override
